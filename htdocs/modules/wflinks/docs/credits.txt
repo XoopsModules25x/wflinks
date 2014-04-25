@@ -1,0 +1,13 @@
+CREDITS
+==========
+
+WF-Links was originally developed by WF-Projects Team, and later enhanced by McDonald, with help from: amayer, bender, david, dqflyer, draven, frankblack, gladiac, hervet, jackj, mercibe, John N, phppp, predator, reliableSol, tom, xpider, xtheme, mcdonald (version 1.03B and higher)
+
+The WF-Projects Team would like to thank the following people for their help and support during the development phase of this module:
+EdStacey, maumed, banned, krobi, Pnooka, MarcoFr, cosmodrum, placebo333, GibaPhp
+
+Icons: famfamfam.com, Crystal Icons
+
+vCard script by: Kai Blankenhorn
+
+Auto Screenshot by: Mozshot (all source code provided under Ruby licence)

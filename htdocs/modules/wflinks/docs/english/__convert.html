@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<HTML>
+<HEAD><TITLE>Convert</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="robots" content="nofollow,noindex" />
+</HEAD>
+
+<BODY>
+
+<TABLE cellpadding="5"><td width="550" style="background-color:#FF0000; font-weight: bold;"><B><font color="#FFFFFF" size="-1" face="Verdana, Arial, Helvetica, sans-serif">Instructions for converting from myLinks to WF-Links.</font></B><P><font color="#FFFFFF" size="-1" face="Verdana, Arial, Helvetica, sans-serif">If you want to do a fresh install of WF-Links please select 'Install'.</font></TD>
+</TABLE><p><u><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Remember:  It is always a good idea to make a database backup before installing any modules.</font></u>
+<p>
+
+<p><FONT FACE="Verdana, Arial, Helvetica, sans-serif" SIZE="+2"><U><strong>Conversion from Xoops myLinks/webLinks ==> WF-Links</strong></U></FONT>
+<p><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">
+
+<br>
+Note: When you do the conversion the update script will convert the myLinks/webLinks tables in the database into WF-Links tables. After the conversion you can't use myLinks/webLinks anymore because it is missing tables then. If you want to keep your myLinks/webLinks working you would have to backup the myLinks/webLinks tables before you start updating and restore them afterwards. It is possible to have WF-Links and myLinks/webLinks running at the same time (though we don't know why you would won't that).</font>
+  <br>
+  <br>
+<ol>
+  <li><U><B><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Make a backup</font></B></U>
+  <P><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Backup the myLinks/webLinks tables from your database</font></li>
+  <li><U><B><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Upload the module to your website</font></B></U><font face="Arial">
+  <P><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Upload the '<I>modules</I>' and '<I>uploads</I>' folder to your <I>{xoops-rootdirectory}</I></font>  </li><li><U><B><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Change and verify folder permissions</font></B></U>
+    <P><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">CHMOD the following folders to 777:
+    </font>
+    <p><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><em>{xoops-rootdirectory}/uploads/images<br>
+{xoops-rootdirectory}/uploads/images/category<br>
+{xoops-rootdirectory}/uploads/images/category/thumbs<br>
+{xoops-rootdirectory}/uploads/images/flags<br>
+{xoops-rootdirectory}/uploads/images/flags/flags_small<br>
+{xoops-rootdirectory}/uploads/images/screenshots<br>
+{xoops-rootdirectory}/uploads/images/screenshots/thumbs<br>
+{xoops-rootdirectory}/uploads/images/thumbs</em></font></li>
+  <li><font size="-1" face="Verdana, Arial, Helvetica, sans-serif"><U><B>Install the module</B></U></font>
+    <P><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Login as administrator and enter Xoops Administration page. Select <I>System --> modules</I> and install WF-Links</font></li>
+  <li><U><B><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Start the conversion script</font></B></U>
+    <P><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Point your browser to <I>{xoops-rootdirectory}/modules/wflinks/update.php</I> and execute the update script. <BR>
+      Follow the instructions provided during the install procedure. <BR>
+      The script will try to determine which version or versions of myLinks or webLinks <BR> 
+    you have installed and will try to update it.</font>    
+  <li><U><B><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Update the module</font></B></U>
+    <P><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Return to <i>System --> Modules</i> and update WF-Links, otherwise the templates will be for the previous version and the pages will display correctly.</font><BR>
+    </li><li><U><B><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Configure the module</font></B></U>
+    <P><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Most importent steps now will be to setup the group permissions for the module and its blocks via <I>System --> Groups</I></font></li><li><U><B><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">Restore or remove myLinks/webLinks</font></B></U>
+    <P><font size="-1" face="Verdana, Arial, Helvetica, sans-serif">If you want to continue using myLinks or webLinks in addition to WF-Links then restore your myLinks/webLinks tables<BR>
+  now from the backup you did in step 1. If you don't want to use those anymore deactivate the old module and uninstall it.</font></li>
+  </ol>
+
+</BODY>
+</HTML>
