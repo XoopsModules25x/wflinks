@@ -1,3 +1,9 @@
+1.10 Beta 1       2014-04-23
+=================================
+- moved all images, CSS, and JS files to /assets (mamba)
+- renamed .html Smarty templates to .tpl (mamba)
+- converted old help/info files to new 2.5.7 Multi-Help format (mamba)
+
 =========================================================
 2012-12-16 1.09 Final
 =========================================================
@@ -243,7 +249,7 @@ $mydirname = basename( dirname( dirname( __FILE__ ) ) );
 =========================================================
 - Fixed bug in brokenlinks, edit option not working
 - Added Quick View option [freeop]
-- Added Google PageRank™ [sws-tech.com]
+- Added Google PageRankï¿½ [sws-tech.com]
 - Added Back button above detailed view page of link
 - Added links to Support Forums in About
 

@@ -1,5 +1,5 @@
 <?php
-// $Id: comment_delete.php 9697 2012-06-24 09:38:07Z beckmi $
+// $Id: comment_delete.php,v 1.00 2003/02/12 11:36:34 okazu Exp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

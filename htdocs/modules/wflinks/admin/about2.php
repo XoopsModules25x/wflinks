@@ -24,19 +24,16 @@ echo "<img src='" . XOOPS_URL . "/modules/".$xoopsModule->getVar('dirname')."/" 
 <div style='margin-top: 10px; color: #33538e; margin-bottom: 4px; font-size: 18px; line-height: 18px; font-weight: bold; display: block;'>" . $versioninfo -> getInfo( 'name' ) . " version " . $versioninfo -> getInfo( 'version' ) . "</div>\n
 
 <div>\n";
-if ( $versioninfo -> getInfo( 'author_realname' ) != '' )
-{
+if ( $versioninfo -> getInfo( 'author_realname' ) != '' ) {
     $author_name = $versioninfo -> getInfo( 'author' ); // . " (" . $versioninfo -> getInfo( 'author_realname' ) . ")";
-} 
-else
-{
+} else {
     $author_name = $versioninfo -> getInfo( 'author' );
-} 
+}
 echo "
-		</div>\n
-		<div>" . _MI_WFL_RELEASE . " " . $versioninfo -> getInfo( 'releasedate' ) . "</div>\n
-		<div>" . _AM_WFL_BY . " " . $author_name . "</div>\n
-		<div>" . $versioninfo -> getInfo( 'license' ) . "</div><br />\n";
+        </div>\n
+        <div>" . _MI_WFL_RELEASE . " " . $versioninfo -> getInfo( 'releasedate' ) . "</div>\n
+        <div>" . _AM_WFL_BY . " " . $author_name . "</div>\n
+        <div>" . $versioninfo -> getInfo( 'license' ) . "</div><br />\n";
 // Author Information
 $sform = new XoopsThemeForm( _MI_WFL_AUTHOR_INFO, "", "" );
 $sform -> addElement( new XoopsFormLabel( _MI_WFL_AUTHOR_NAME, $author_name ) );
@@ -77,7 +74,7 @@ if ( @file_exists( $file ) ) {
     $fp = @fopen( $file, "r" );
     $bugtext = @fread( $fp, filesize( $file ) );
     @fclose( $file );
-} 
+}
 
 $sform = new XoopsThemeForm( _MI_WFL_AUTHOR_BUGFIXES, "", "" );
 ob_start();
@@ -89,5 +86,3 @@ unset( $file );
 echo "<div style='text-align: center;'>" . _MI_WFL_COPYRIGHTIMAGE . "</div>\n";
 
 include_once 'admin_footer.php';
-
-?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: submit.php 9722 2012-06-26 02:30:10Z beckmi $
+ * $Id: submit.php v 1.0.4 21 June 2005 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -25,14 +25,14 @@ $lid = intval($lid);
 if ( false == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
     redirect_header( "index.php", 1, _MD_WFL_NOPERMISSIONTOPOST );
     exit();
-} 
+}
 
 if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
     if ( wfl_cleanRequestVars( $_REQUEST, 'submit', 0 ) ) {
         if ( false == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
             redirect_header( "index.php", 1, _MD_WFL_NOPERMISSIONTOPOST );
             exit();
-        } 
+        }
 
         $submitter = ( is_object( $xoopsUser ) && !empty( $xoopsUser ) ) ? $xoopsUser -> getVar( 'uid' ) : 0;
         $forumid = wfl_cleanRequestVars( $_REQUEST, 'forumid', 0 );
@@ -43,14 +43,14 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
         $title = $wfmyts -> addslashes( ltrim( $_REQUEST["title"] ) );
         $descriptionb = $wfmyts -> addslashes( ltrim( $_REQUEST["descriptionb"] ) );
         $keywords = $wfmyts -> addslashes( trim(substr($_POST["keywords"], 0, $xoopsModuleConfig['keywordlength']) ) );
-        
+
         if ($xoopsModuleConfig['usercantag']) {
           $item_tag = $wfmyts -> addslashes( ltrim( $_REQUEST["item_tag"] ) );
         } else {
           $item_tag = '';
         }
-        
-        if ($xoopsModuleConfig['useaddress']){
+
+        if ($xoopsModuleConfig['useaddress']) {
         $googlemap = ( $_POST["googlemap"] != "http://maps.google.com" ) ? $wfmyts -> addslashes( $_POST["googlemap"] ) : '';
         $yahoomap = ( $_POST["yahoomap"] != "http://maps.yahoo.com" ) ? $wfmyts -> addslashes( $_POST["yahoomap"] ) : '';
         $multimap = ( $_POST["multimap"] != "http://www.multimap.com" ) ? $wfmyts -> addslashes( $_POST["multimap"] ) : '';
@@ -75,7 +75,7 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
         $publishdate = 0;
         $ipaddress = $_SERVER['REMOTE_ADDR'];
 
-        if ( $lid == 0 ) {
+        if ($lid == 0) {
             $status = 0;
             $publishdate = 0;
             $message = _MD_WFL_THANKSFORINFO;
@@ -83,21 +83,21 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
                 $publishdate = time();
                 $status = 1;
                 $message = _MD_WFL_ISAPPROVED;
-            } 
-            
+            }
+
             $sql = "INSERT INTO " . $xoopsDB -> prefix( 'wflinks_links' ) . "	(lid, cid, title, url, submitter, status, date, hits, rating, votes, comments, forumid, published, expired, offline, description, ipaddress, notifypub, country, keywords, item_tag, googlemap, yahoomap, multimap, street1, street2, town, state, zip, tel, fax, voip, mobile, email, vat ) ";
 
             $sql .= " VALUES 	('', $cid, '$title', '$url', '$submitter', '$status', '$date', 0, 0, 0, 0, '$forumid', '$publishdate', 0, '$offline', '$descriptionb', '$ipaddress', '$notifypub', '$country', '$keywords', '$item_tag', '$googlemap', '$yahoomap', '$multimap', '$street1', '$street2', '$town', '$state', '$zip', '$tel', '$fax', '$voip', '$mobile', '$email', '$vat' )";
-            
+
             if ( !$result = $xoopsDB -> query( $sql ) ) {
                 $_error = $xoopsDB -> error() . " : " . $xoopsDB -> errno();
                 XoopsErrorHandler_HandleError( E_USER_WARNING, $_error, __FILE__, __LINE__ );
-            } 
+            }
             // $newid = $xoopsDB -> getInsertId();
             $newid = mysql_insert_id();
-        
+
 // Add item_tag to Tag-module
-            if ( $lid == 0) {
+            if ($lid == 0) {
                  $tagupdate = wfl_tagupdate($newid, $item_tag);
             } else {
                  $tagupdate = wfl_tagupdate($lid, $item_tag);
@@ -109,7 +109,7 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
             $tags = array();
             $tags['LINK_NAME'] = $title;
             $tags['LINK_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/singlelink.php?cid=' . intval($cid) . '&amp;lid=' . intval($newid);
-            
+
             $sql = "SELECT title FROM " . $xoopsDB -> prefix( 'wflinks_cat' ) . " WHERE cid=" . intval($cid);
             $result = $xoopsDB -> query( $sql );
             $row = $xoopsDB -> fetchArray( $result );
@@ -124,12 +124,12 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
                 $tags['WAITINGFILES_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/admin/newlinks.php';
                 $notification_handler -> triggerEvent( 'global', 0, 'link_submit', $tags );
                 $notification_handler -> triggerEvent( 'category', $cid, 'link_submit', $tags );
-                if ( $notifypub ) {
+                if ($notifypub) {
                     include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
                     $notification_handler -> subscribe( 'link', $newid, 'approve', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE );
-                } 
+                }
                 redirect_header( 'index.php', 2, _MD_WFL_THANKSFORINFO );
-            } 
+            }
         } else {
             if ( true == wfl_checkgroups( $cid, 'WFLinkAutoApp' ) || $approve == 1 ) {
                 $updated = time();
@@ -137,7 +137,7 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
                 if ( !$result = $xoopsDB -> query( $sql ) ) {
                     $_error = $xoopsDB -> error() . " : " . $xoopsDB -> errno();
                     XoopsErrorHandler_HandleError( E_USER_WARNING, $_error, __FILE__, __LINE__ );
-                } 
+                }
 
                 $notification_handler = &xoops_gethandler( 'notification' );
                 $tags = array();
@@ -162,7 +162,7 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
                 if ( !$result = $xoopsDB -> query( $sql ) ) {
                     $_error = $xoopsDB -> error() . " : " . $xoopsDB -> errno();
                     XoopsErrorHandler_HandleError( E_USER_WARNING, $_error, __FILE__, __LINE__ );
-                } 
+                }
 
                 $tags = array();
                 $tags['MODIFYREPORTS_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/admin/main.php?op=listModReq';
@@ -172,14 +172,14 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
                 $tags['WAITINGFILES_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/admin/main.php?op=listNewlinks';
                 $notification_handler -> triggerEvent( 'global', 0, 'link_submit', $tags );
                 $notification_handler -> triggerEvent( 'category', intval($cid), 'link_submit', $tags );
-                if ( $notifypub ) {
+                if ($notifypub) {
                     include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
                     $notification_handler -> subscribe( 'link', $newid, 'approve', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE );
-                } 
+                }
                 $_message = _MD_WFL_THANKSFORINFO;
-            } 
+            }
             redirect_header( "index.php", 2, $_message );
-        } 
+        }
     } else {
         global $xoopsModuleConfig;
 
@@ -187,23 +187,22 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
 
 //Show disclaimer
         if ( $xoopsModuleConfig['showdisclaimer'] && !isset( $_GET['agree'] ) && $approve == 0 ) {
-		$xoopsOption['template_main'] = 'wflinks_disclaimer.html';
-	    include XOOPS_ROOT_PATH . '/header.php';
-		
-		$xoopsTpl -> assign('image_header', wfl_imageheader());
-		$xoopsTpl -> assign('disclaimer', $wfmyts -> displayTarea($xoopsModuleConfig['disclaimer'], 1, 1, 1, 1, 1));
-		$xoopsTpl -> assign('cancel_location', XOOPS_URL . '/modules/' . $xoopsModule -> getVar('dirname') . '/index.php');
-		$xoopsTpl -> assign('link_disclaimer', false);
-		if (!isset($_REQUEST['lid'])) {
-			$xoopsTpl -> assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule -> getVar('dirname') . '/submit.php?agree=1');
-		}
-		elseif (isset($_REQUEST['lid'])) {
-			$lid = intval($_REQUEST['lid']);
-			$xoopsTpl -> assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule -> getVar('dirname') . '/submit.php?agree=1&amp;lid='.$lid);
-		}
-	        include XOOPS_ROOT_PATH . '/footer.php';
-	        exit();
-	}
+        $xoopsOption['template_main'] = 'wflinks_disclaimer.tpl';
+        include XOOPS_ROOT_PATH . '/header.php';
+
+        $xoopsTpl -> assign('image_header', wfl_imageheader());
+        $xoopsTpl -> assign('disclaimer', $wfmyts -> displayTarea($xoopsModuleConfig['disclaimer'], 1, 1, 1, 1, 1));
+        $xoopsTpl -> assign('cancel_location', XOOPS_URL . '/modules/' . $xoopsModule -> getVar('dirname') . '/index.php');
+        $xoopsTpl -> assign('link_disclaimer', false);
+        if (!isset($_REQUEST['lid'])) {
+            $xoopsTpl -> assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule -> getVar('dirname') . '/submit.php?agree=1');
+        } elseif (isset($_REQUEST['lid'])) {
+            $lid = intval($_REQUEST['lid']);
+            $xoopsTpl -> assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule -> getVar('dirname') . '/submit.php?agree=1&amp;lid='.$lid);
+        }
+            include XOOPS_ROOT_PATH . '/footer.php';
+            exit();
+    }
 
         echo "<br /><div style='text-align: center;'>" . wfl_imageheader() . "</div><br />\n";
         echo "<div>" . _MD_WFL_SUB_SNEWMNAMEDESC . "</div>\n<br />\n";
@@ -245,7 +244,7 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
         $email = $link_array['email'] ? $wfmyts -> htmlSpecialCharsStrip( $link_array['email'] ) : '';
         $vat = $link_array['vat'] ? $wfmyts -> htmlSpecialCharsStrip( $link_array['vat'] ) : '';
 
-     	$sform = new XoopsThemeForm( _MD_WFL_SUBMITCATHEAD, "storyform", xoops_getenv( 'PHP_SELF' ) );
+         $sform = new XoopsThemeForm( _MD_WFL_SUBMITCATHEAD, "storyform", xoops_getenv( 'PHP_SELF' ) );
         $sform -> setExtra( 'enctype="multipart/form-data"' );
 
 // Title form
@@ -255,7 +254,7 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
         $url_text = new XoopsFormText('', 'url', 70, 255, $url);
         $url_tray = new XoopsFormElementTray(_MD_WFL_DLURL, '');
         $url_tray -> addElement( $url_text , true ) ;
-        $url_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/images/icon/world.png' onClick=\"window.open(document.storyform.url.value,'','');return(false);\" alt='Check URL' />" ));
+        $url_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/assets/images/icon/world.png' onClick=\"window.open(document.storyform.url.value,'','');return(false);\" alt='Check URL' />" ));
         $sform -> addElement( $url_tray );
 
 // Category selection menu
@@ -269,8 +268,8 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
             }
         }
         ob_start();
-			$mytree -> makeMySelBox( 'title', 'title', $cid, 0 );
-			$sform -> addElement( new XoopsFormLabel( _MD_WFL_CATEGORYC, ob_get_contents() ) );
+            $mytree -> makeMySelBox( 'title', 'title', $cid, 0 );
+            $sform -> addElement( new XoopsFormLabel( _MD_WFL_CATEGORYC, ob_get_contents() ) );
         ob_end_clean();
 
 // Link description form
@@ -298,7 +297,7 @@ $optionsTrayNote = new XoopsFormElementTray(_MD_WFL_DESCRIPTIONC, '<br />');
     $keywords = new XoopsFormTextArea( _MD_WFL_KEYWORDS, 'keywords', $keywords, 7, 60, false );
     $keywords -> setDescription( "<small>" . _MD_WFL_KEYWORDS_NOTE . "</small>");
     $sform -> addElement($keywords);
-        
+
 // Insert tags if Tag-module is installed and if user is allowed
 if ($xoopsModuleConfig['usercantag']) {
     if (wfl_tag_module_included()) {
@@ -315,21 +314,21 @@ if ($xoopsModuleConfig['useaddress']) {
     $googlemap_text = new XoopsFormText('', 'googlemap', 70, 1024, $googlemap);
     $googlemap_tray = new XoopsFormElementTray(_MD_WFL_LINK_GOOGLEMAP, '');
     $googlemap_tray -> addElement( $googlemap_text , false ) ;
-    $googlemap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/images/icon/google_map.png' onClick=\"window.open(document.storyform.googlemap.value,'','');return(false);\" alt='" . _MD_WFL_LINK_CHECKMAP . "' />" ));
+    $googlemap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/assets/images/icon/google_map.png' onClick=\"window.open(document.storyform.googlemap.value,'','');return(false);\" alt='" . _MD_WFL_LINK_CHECKMAP . "' />" ));
     $sform -> addElement( $googlemap_tray );
 
 // Yahoo Maps
     $yahoomap_text = new XoopsFormText('', 'yahoomap', 70, 1024, $yahoomap);
     $yahoomap_tray = new XoopsFormElementTray(_MD_WFL_LINK_YAHOOMAP, '');
     $yahoomap_tray -> addElement( $yahoomap_text , false ) ;
-    $yahoomap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/images/icon/yahoo_map.png' onClick=\"window.open(document.storyform.yahoomap.value,'','');return(false);\" alt='" . _MD_WFL_LINK_CHECKMAP . "' />" ));
+    $yahoomap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/assets/images/icon/yahoo_map.png' onClick=\"window.open(document.storyform.yahoomap.value,'','');return(false);\" alt='" . _MD_WFL_LINK_CHECKMAP . "' />" ));
     $sform -> addElement( $yahoomap_tray );
 
 // Multimap
     $multimap_text = new XoopsFormText('', 'multimap', 70, 1024, $multimap);
     $multimap_tray = new XoopsFormElementTray(_MD_WFL_LINK_MULTIMAP, '');
     $multimap_tray -> addElement( $multimap_text , false ) ;
-    $multimap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/images/icon/multimap.png' onClick=\"window.open(document.storyform.multimap.value,'','');return(false);\" alt='" . _MD_WFL_LINK_CHECKMAP . "' />" ));
+    $multimap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/assets/images/icon/multimap.png' onClick=\"window.open(document.storyform.multimap.value,'','');return(false);\" alt='" . _MD_WFL_LINK_CHECKMAP . "' />" ));
     $sform -> addElement( $multimap_tray );
 
 // Address forms
@@ -364,22 +363,22 @@ if ($xoopsModuleConfig['useaddress']) {
     $sform -> addElement( new XoopsFormSelectCountry( _MD_WFL_COUNTRY, 'country', $country ), false);
 
     $option_tray = new XoopsFormElementTray( _MD_WFL_OPTIONS, '<br />' );
-        if ( !$approve ) {
+        if (!$approve) {
             $notify_checkbox = new XoopsFormCheckBox( '', 'notifypub' );
             $notify_checkbox -> addOption( 1, _MD_WFL_NOTIFYAPPROVE );
             $option_tray -> addElement( $notify_checkbox );
         } else {
             $sform -> addElement( new XoopsFormHidden( 'notifypub', 0 ) );
-        } 
+        }
         if ( true == wfl_checkgroups( $cid, 'WFLinkAppPerm' ) && $lid > 0 ) {
             $approve_checkbox = new XoopsFormCheckBox( '', 'approve', $approve );
             $approve_checkbox -> addOption( 1, _MD_WFL_APPROVE );
             $option_tray -> addElement( $approve_checkbox );
-        } else if ( true == wfl_checkgroups( $cid, 'WFLinkAutoApp' ) ) {
+        } elseif ( true == wfl_checkgroups( $cid, 'WFLinkAutoApp' ) ) {
             $sform -> addElement( new XoopsFormHidden( 'approve', 1 ) );
         } else {
             $sform -> addElement( new XoopsFormHidden( 'approve', 0 ) );
-        } 
+        }
         $sform -> addElement( $option_tray );
         $button_tray = new XoopsFormElementTray( '', '' );
         $button_tray -> addElement( new XoopsFormButton( '', 'submit', _SUBMIT, 'submit' ) );
@@ -387,10 +386,8 @@ if ($xoopsModuleConfig['useaddress']) {
         $sform -> addElement( $button_tray );
         $sform -> display();
         include XOOPS_ROOT_PATH . '/footer.php';
-    } 
+    }
 } else {
     redirect_header( 'index.php', 2, _MD_WFL_NOPERMISSIONTOPOST );
     exit();
-} 
-
-?>
+}

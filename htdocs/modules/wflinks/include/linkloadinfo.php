@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: linkloadinfo.php 9723 2012-06-26 09:34:10Z beckmi $
+ * $Id: linkloadinfo.php v 1.00 21 June 2005 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -42,7 +42,7 @@ if ( isset( $link_arr['screenshot'] ) ) {
     if ( !empty( $link_arr['screenshot'] ) && file_exists( XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['screenshots'] . '/' . xoops_trim( $link_arr['screenshot'] ) ) ) {
         if ( isset( $xoopsModuleConfig['usethumbs'] ) && $xoopsModuleConfig['usethumbs'] == 1 ) {
             $_thumb_image = new wfThumbsNails( $link['screenshot_full'], $xoopsModuleConfig['screenshots'], 'thumbs' );
-            if ( $_thumb_image ) {
+            if ($_thumb_image) {
                 $_thumb_image -> setUseThumbs( 1 );
                 $_thumb_image -> setImageType( 'gd2' );
                 $_image = $_thumb_image -> do_thumb( $xoopsModuleConfig['shotwidth'],
@@ -59,7 +59,7 @@ if ( isset( $link_arr['screenshot'] ) ) {
     }
 }
 
-if ( $moderate == 0 ) {
+if ($moderate == 0) {
     $time = ( $link_arr['updated'] != 0 ) ? $link_arr['updated'] : $link_arr['published'];
     $is_updated = ( $link_arr['updated'] != 0 ) ? _MD_WFL_UPDATEDON : _MD_WFL_PUBLISHDATE;
     $xoopsTpl -> assign( 'lang_subdate' , $is_updated );
@@ -68,7 +68,7 @@ if ( $moderate == 0 ) {
     $is_updated = _MD_WFL_SUBMITDATE;
     $xoopsTpl -> assign( 'lang_subdate' , $is_updated );
 }
- 
+
 $link['updated'] = formatTimestamp( $time, $xoopsModuleConfig['dateformat'] );
 $description = $wfmyts -> displayTarea( $link_arr['description'], 1, 1, 1, 1, 1 );
 
@@ -88,11 +88,11 @@ $link['comments'] = $link_arr['comments'];
 $whoisurl = str_replace( 'http://', '', $link['url']);
 
 $link['adminlink'] = '';
-if ( $link['isadmin'] == true && $moderate == 0 ) {
-    $link['adminlink'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/admin/index.php"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/images/icon/computer.png" alt="' . _MD_WFL_ADMINSECTION . '" title="' . _MD_WFL_ADMINSECTION . '" align="absmiddle"/></a>&nbsp;';
+if ($link['isadmin'] == true && $moderate == 0) {
+    $link['adminlink'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/admin/index.php"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/assets/images/icon/computer.png" alt="' . _MD_WFL_ADMINSECTION . '" title="' . _MD_WFL_ADMINSECTION . '" align="absmiddle"/></a>&nbsp;';
     $link['adminlink'] .=  '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/admin/main.php?op=edit&amp;lid=' . $link_arr['lid'] . '"><img src="' . $xoopsModule->getInfo('icons16') . '/edit.png" alt="' . _MD_WFL_EDIT . '" title="' . _MD_WFL_EDIT . '" align="absmiddle"/></a>&nbsp;';
     $link['adminlink'] .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/admin/main.php?op=delete&amp;lid=' . $link_arr['lid'] . '"><img src="' . $xoopsModule->getInfo('icons16') . '/delete.png" alt="' . _MD_WFL_DELETE . '" title="' . _MD_WFL_DELETE . '" align="absmiddle"/></a>&nbsp;';
-    $link['adminlink'] .= '<a href="http://whois.domaintools.com/' . $whoisurl . '" target="_blank"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/images/icon/domaintools.png" alt="WHOIS" title="WHOIS" align="absmiddle"/></a>';
+    $link['adminlink'] .= '<a href="http://whois.domaintools.com/' . $whoisurl . '" target="_blank"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/assets/images/icon/domaintools.png" alt="WHOIS" title="WHOIS" align="absmiddle"/></a>';
 } else {
     $link['adminlink'] = '[ <a href="' . XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/submit.php?op=edit&amp;lid=' . $link_arr['lid'] . '&approve=1">' . _MD_WFL_APPROVE . '</a> | ';
     $link['adminlink'] .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/submit.php?op=delete&amp;lid=' . $link_arr['lid'] . '">' . _MD_WFL_DELETE . '</a> ]';
@@ -111,7 +111,7 @@ if ( is_object( $xoopsUser ) && !empty( $xoopsUser ) ) {
   }
 }
 
-switch ( $xoopsModuleConfig['selectforum'] ) {
+switch ($xoopsModuleConfig['selectforum']) {
     case '1':
         $forum = 'newbb';
         $forum_path_prefix = '/modules/newbb/viewforum.php?forum=';
@@ -124,11 +124,11 @@ switch ( $xoopsModuleConfig['selectforum'] ) {
         $forum = 'pbboard';
         $forum_path_prefix = '/modules/pbboard/viewforum.php?f=';
         break;
-	case '4':
+    case '4':
         $forum = 'newbbex';
         $forum_path_prefix = '/modules/newbbex/viewforum.php?forum=';
-        break;	
-} 
+        break;
+}
 $xoopsforumModule = $xoopsModule -> getByDirname( $forum );
 if ( is_object( $xoopsforumModule ) && $xoopsforumModule -> getVar( 'isactive' ) ) {
     $link['forumid'] = ( $link_arr['forumid'] > 0 ) ? $link_arr['forumid'] : 0;

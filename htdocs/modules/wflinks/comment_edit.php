@@ -1,5 +1,5 @@
 <?php
-// $Id: comment_edit.php 8180 2011-11-07 01:12:36Z beckmi $
+// $Id: comment_edit.php,v 1.00 2003/02/12 11:36:34 okazu Exp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -26,4 +26,3 @@
 //  ------------------------------------------------------------------------ //
 include '../../mainfile.php';
 include XOOPS_ROOT_PATH.'/include/comment_edit.php';
-?>

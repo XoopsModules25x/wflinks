@@ -2,15 +2,15 @@
 
 /**
  * SpotList
- * 
- * @package 
- * @author John N 
+ *
+ * @package
+ * @author John N
  * @copyright Copyright (c) 2005
- * @version $Id: class_lists.php 9692 2012-06-23 18:19:45Z beckmi $
- * @access public 
+ * @version $Id$
+ * @access public
  */
-class fileList {
-
+class fileList
+{
     var $filelist = array();
 
     var $value;
@@ -25,18 +25,19 @@ class fileList {
 
     /**
      * SpotList::SpotList()
-     * 
-     * @param string $path 
-     * @param unknown $value 
-     * @param string $selected 
-     * @param integer $size 
-     * @param integer $emptyselect 
-     * @param integer $type 
-     * @param string $prefix 
-     * @param string $suffix 
-     * @return 
+     *
+     * @param string  $path
+     * @param unknown $value
+     * @param string  $selected
+     * @param integer $size
+     * @param integer $emptyselect
+     * @param integer $type
+     * @param string  $prefix
+     * @param string  $suffix
+     * @return
      */
-    function fileList( $path = "uploads", $value = null, $selected='', $size = 1  ) {
+    function fileList( $path = "uploads", $value = null, $selected='', $size = 1  )
+    {
         $this -> value = $value;
         $this -> selection = $selected;
         $this -> size = intval( $size );
@@ -45,64 +46,71 @@ class fileList {
         if ( !is_dir( $path_to_check ) ) {
             if ( false === @mkdir( "$path_to_check", 0777 ) ) {
                 XoopsErrorHandler_HandleError( E_USER_WARNING, $path_to_check." does not exist!", __FILE__, __LINE__ );
-                return false;                
-            } 
-        } 
+
+                return false;
+            }
+        }
         $this -> path = $path;
-    } 
+    }
 
     /**
      * SpotList::setNoselection()
-     * 
-     * @param integer $value 
-     * @return 
+     *
+     * @param integer $value
+     * @return
      */
 
-    function setEmptyselect( $value = 0 ) {
+    function setEmptyselect( $value = 0 )
+    {
         $this -> emptyselect = ( intval($value) != 1 ) ? 0 : 1;
-    } 
+    }
 
-    function setNoselection( $value = 0 ) {
+    function setNoselection( $value = 0 )
+    {
         $this -> noselection = ( intval($value) != 1 ) ? 0 : 1;
-    } 
+    }
 
-    function setPrefix( $value='' ) {
+    function setPrefix( $value='' )
+    {
         $this -> prefix = ( strval($value) != '') ? strval( $value ) : '';
-    } 
+    }
 
-    function setSuffix( $value='' ) {
+    function setSuffix( $value='' )
+    {
         $this -> suffix = ( strval($value) != '') ? strval( $value ) : '';
-    } 
+    }
 
-    function setlistType( $value='images' ) {
+    function setlistType( $value='images' )
+    {
         $this -> type = strval( strtolower($value) );
-    }	
+    }
     /**
      * SpotList::show_selection()
-     * 
-     * @return 
+     *
+     * @return
      */
     function &show_selection() {
         $ret = "<select size='" . $this -> size() . "' name='$this->value()'>";
-        if ( $this -> emptyselect ) {
+        if ($this -> emptyselect) {
             $ret .= "<option value='" . $this -> value() . "'>----------------------</option>";
-        } 
-        foreach( $this -> filelist as $content ) {
+        }
+        foreach ($this -> filelist as $content) {
             $opt_selected = "";
 
             if ( $content[0] == $this -> selected() ) {
                 $opt_selected = "selected='selected'";
-            } 
+            }
             $ret .= "<option value='" . $content . "' $opt_selected>" . $content . "</option>";
-        } 
+        }
         $ret .= "</select>";
+
         return $ret;
-    } 
+    }
 
     /**
      * SpotList::getListTypeAsArray()
-     * 
-     * @return 
+     *
+     * @return
      */
     function &getListTypeAsArray() {
         $filelist = array();
@@ -124,11 +132,11 @@ class fileList {
                 if ( $this -> noselection )
                     $this -> filelist[0] = _AM_WFL_NOFILESELECT;
                 break;
-        } 
+        }
 
         if ( substr( $this -> path, -1 ) == '/' ) {
             $this -> path = substr( $this -> path, 0, -1 );
-        } 
+        }
 
         $_full_path = XOOPS_ROOT_PATH . "/{$this->path}";
 
@@ -139,46 +147,53 @@ class fileList {
                         Continue;
                     $file = $this -> prefix . $file;
                     $this -> filelist[$file] = $file;
-                } 
-            } 
+                }
+            }
             closedir( $handle );
             asort( $this -> filelist );
             reset( $this -> filelist );
-        } 
+        }
+
         return $this -> filelist;
-    } 
+    }
 
-    function value() {
+    function value()
+    {
         return $this -> value;
-    } 
+    }
 
-    function selected() {
+    function selected()
+    {
         return $this -> selected;
-    } 
+    }
 
-    function paths() {
+    function paths()
+    {
         return $this -> path;
-    } 
+    }
 
-    function size() {
+    function size()
+    {
         return $this -> size;
-    } 
+    }
 
-    function emptyselect() {
+    function emptyselect()
+    {
         return $this -> emptyselect;
-    } 
+    }
 
-    function type() {
+    function type()
+    {
         return $this -> type;
-    } 
+    }
 
-    function prefix() {
+    function prefix()
+    {
         return $this -> prefix;
-    } 
+    }
 
-    function suffix() {
+    function suffix()
+    {
         return $this -> suffix;
-    } 
-} 
-
-?>
+    }
+}

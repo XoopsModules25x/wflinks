@@ -38,20 +38,16 @@ if ($totalcats > 0) {
     );
 }
 
-
 if ($totallinks > 0) {
     $indexAdmin->addInfoBoxLine(
         _AM_WFL_MINDEX_LINKSUMMARY,
         "<infolabel>" . '<a href="main.php">' . _AM_WFL_SFILES . '</a><b>' . "</infolabel>", $totallinks, 'Green'
     );
-}
-
-else {
+} else {
     $indexAdmin->addInfoBoxLine(
         _AM_WFL_MINDEX_LINKSUMMARY, "<infolabel>" . _AM_WFL_SFILES . "</infolabel>", $totallinks, 'Green'
     );
 }
-
 
 if ($totalnewlinks > 0) {
     $indexAdmin->addInfoBoxLine(
@@ -87,7 +83,6 @@ if ($totalbrokenlinks > 0) {
         $totalbrokenlinks . "</infotext>", 'Red'
     );
 }
-
 
 echo $indexAdmin->addNavigation('index.php');
 echo $indexAdmin->renderIndex();

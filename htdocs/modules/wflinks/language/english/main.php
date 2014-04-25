@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: main.php 11245 2013-03-18 03:29:10Z cesag $
+ * $Id: main.php 10055 2012-08-11 12:46:10Z beckmi $
  * Module: WF-links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,6 +9,7 @@
  * Licence: GNU
  * Format: UTF-8
  */
+
 define("_MD_WFL_NOLINK","This link does not exist!");
 define("_MD_WFL_SUBCATLISTING","Category Listing");
 define("_MD_WFL_ISADMINNOTICE","Webmaster: There is a problem with this image.");
@@ -62,8 +63,8 @@ define("_MD_WFL_SUBMITTER","Publisher");
 define("_MD_WFL_UPDATEDON","Updated On");
 define("_MD_WFL_PRICEFREE","Free");
 define("_MD_WFL_VIEWDETAILS","View Full Details");
-define("_MD_WFL_OPTIONS", "Options: ");
-define("_MD_WFL_NOTIFYAPPROVE", "Notify me when this link is approved");
+define("_MD_WFL_OPTIONS", 'Options: ');
+define("_MD_WFL_NOTIFYAPPROVE", 'Notify me when this link is approved');
 define("_MD_WFL_VOTEAPPRE","Your vote is appreciated.");
 define("_MD_WFL_THANKYOU","Thank you for taking the time to vote here at %s"); // %s is your site name
 define("_MD_WFL_VOTEONCE","Please do not vote for the same resource more than once.");
@@ -90,7 +91,7 @@ define("_MD_WFL_NORATING","No rating selected.");
 define("_MD_WFL_VOTEFORTITLE","Rate This Link: ");
 define("_MD_WFL_CANTVOTEOWN","You cannot vote on the resource you submitted.<br />All votes are logged and reviewed.");
 define("_MD_WFL_SUBMITLINK","Submit link");
-define("_MD_WFL_SUB_SNEWMNAMEDESC",'<ul><li>All new links"s are subject to validation and may take up to 24 hours before they appear in our listing.</li><li>We reserve the rights to refuse any submitted link or change the content without approval.</li></ul>');
+define("_MD_WFL_SUB_SNEWMNAMEDESC","<ul><li>All new links's are subject to validation and may take up to 24 hours before they appear in our listing.</li><li>We reserve the rights to refuse any submitted link or change the content without approval.</li></ul>");
 define("_MD_WFL_MAINLISTING","Main Category Listings");
 define("_MD_WFL_LASTWEEK","Last Week");
 define("_MD_WFL_LAST30DAYS","Last 30 Days");
@@ -115,6 +116,7 @@ define("_MD_WFL_BROWSETOTOPIC","<b>Browse links by alphabetical listing</b>");
 define("_MD_WFL_WEBMASTERACKNOW","Broken Report Acknowledged: ");
 define("_MD_WFL_WEBMASTERCONFIRM","Broken Report Confirmed: ");
 define("_MD_WFL_ERRORSENDEMAIL","Broken Report Confirmed But Error sending notification email to webmaster.");
+
 define("_MD_WFL_DELETE","Delete");
 define("_MD_WFL_DISPLAYING","Displayed by: ");
 define("_MD_WFL_LEGENDTEXTNEW","New Today");
@@ -123,9 +125,10 @@ define("_MD_WFL_LEGENDTEXTTHISWEEK","New This Week");
 define("_MD_WFL_LEGENDTEXTNEWLAST","Over 1 Week");
 define("_MD_WFL_THISFILEDOESNOTEXIST","Error: This link does not exist!");
 define("_MD_WFL_BROKENREPORTED","Broken link Reported");
-define("_MD_WFL_REV_SNEWMNAMEDESC"," 
+
+define("_MD_WFL_REV_SNEWMNAMEDESC","
 Please completely fill out the form below, and we'll add your review as soon as possible.<br /><br />
-Thank you for taking the time to submit your opinion. We want to give our users a possibility to find quality software faster.<br /><br />All reviews will be reviewed by one of our webmasters before they are put up on the web site. 
+Thank you for taking the time to submit your opinion. We want to give our users a possibility to find quality software faster.<br /><br />All reviews will be reviewed by one of our webmasters before they are put up on the web site.
 ");
 define("_MD_WFL_ISNOTAPPROVED","Your submission has to be approved by a moderator first.");
 define("_MD_WFL_HOMEPAGETITLEC","Home Page Title: ");
@@ -144,15 +147,19 @@ define("_MD_WFL_INFORUM","Discuss In Forum");
 // added frankblack
 define("_MD_WFL_NOTALLOWESTOSUBMIT","You are not allowed to submit links");
 define("_MD_WFL_INFONOSAVEDB","Information not saved to database: <br /><br />");
+
 define("_MD_WFL_NEWLAST","New Submitted Before Last Week");
 define("_MD_WFL_NEWTHIS","New Submitted Within This week");
 define("_MD_WFL_THREE","New Submitted Within Last Three days");
 define("_MD_WFL_TODAY","New Submitted Today");
 define("_MD_WFL_NO_FILES","No Links Yet");
+
 define("_MD_WFL_NOPERMISSIONTOPOST","You do not have permission to post in this category.");
+
 define("_MD_WFL_PUBLISHDATE","Published");
 define("_MD_WFL_APPROVE","Approve");
 define("_MD_WFL_MODERATOR_OPTIONS","Moderator Options");
+
 // added by McDonald
 define("_MD_WFL_COUNTRY","Country:");
 define("_MD_WFL_COUNTRYB","<b>Country:</b>");
@@ -181,16 +188,18 @@ define("_MD_WFL_TELEPHONE","Telephone");
 define("_MD_WFL_TEL","Tel. ");
 define("_MD_WFL_FAX","Fax ");
 define("_MD_WFL_GETMAP","Get map");
+
 // Version 1.05 RC5
 define("_MD_WFL_VOIP","VoIP ");
 define("_MD_WFL_PRINT","Print");
 define("_MD_WFL_NOITEMSELECTED","You did not select a valid link!");
 define("_MD_WFL_MOBILE","Mobile");
+
 // Version 1.05 RC6
 define("_MD_WFL_VAT","VAT");
 define("_MD_WFL_VATWIKI", 'For more information see <a href="http://en.wikipedia.org/wiki/Value_added_tax_identification_number" target="_blank">Wikipedia</a>');
 define("_MD_WFL_EMAIL","Email");
-define("_MD_WFL_LINK_CREATEADDRESS", "<b>Address form</b>");
+define("_MD_WFL_LINK_CREATEADDRESS", '<b>Address form</b>');
+
 //Version 1.06 RC2
-define("_MD_WFL_STOPIT","STOP IT YOU FOOL!!");
-?>
+define('_MD_WFL_STOPIT','STOP IT YOU FOOL!!');

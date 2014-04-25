@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: index.php 9692 2012-06-23 18:19:45Z beckmi $
+ * $Id: index.php v 1.00 03 july 2004 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -14,7 +14,7 @@ include 'header.php';
 $start = wfl_cleanRequestVars( $_REQUEST, 'start', 0 );
 $start = intval( $start );
 
-$xoopsOption['template_main'] = 'wflinks_index.html';
+$xoopsOption['template_main'] = 'wflinks_index.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
 global $xoopsModuleConfig;
@@ -66,29 +66,29 @@ while ( $myrow = $xoopsDB -> fetchArray( $result ) ) {
         $space = 1;
         $chcount = 1;
         $subcategories = "";
-        foreach( $arr as $ele ) {
+        foreach ($arr as $ele) {
             if ( true == wfl_checkgroups( $ele['cid'] ) ) {
-                if ( $xoopsModuleConfig['subcats'] == 1 ) {
+                if ($xoopsModuleConfig['subcats'] == 1) {
                     $chtitle = $wfmyts -> htmlSpecialCharsStrip( $ele['title'] );
-                    if ( $chcount > 5 ) {
+                    if ($chcount > 5) {
                         $subcategories .= '...';
                         break;
-                    } 
-                    if ( $space > 0 ) {
+                    }
+                    if ($space > 0) {
                       $subcategories .= "<a href='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/viewcat.php?cid=" . $ele['cid'] . "'>" . $chtitle . "</a><br />";
                     }
                     $space++;
                     $chcount++;
-                } 
-            } 
-        } 
+                }
+            }
+        }
 
         // This code is copyright WF-Projects
         // Using this code without our permission or removing this code voids the license agreement
         $_image = ( $myrow['imgurl'] ) ? urldecode( $myrow['imgurl'] ) : '';
-		if ( $_image != '' && $xoopsModuleConfig['usethumbs'] ) {
+        if ($_image != '' && $xoopsModuleConfig['usethumbs']) {
                   $_thumb_image = new wfThumbsNails( $_image, $xoopsModuleConfig['catimage'], 'thumbs' );
-                  if ( $_thumb_image ) { 
+                  if ($_thumb_image) {
                     $_thumb_image -> setUseThumbs( 1 );
                     $_thumb_image -> setImageType( 'gd2' );
                     $_image = $_thumb_image -> do_thumb( $xoopsModuleConfig['imagequality'],
@@ -96,7 +96,7 @@ while ( $myrow = $xoopsDB -> fetchArray( $result ) ) {
                                                          $xoopsModuleConfig['keepaspect']);
                     }
                  }
-	if ( empty( $_image ) || $_image == '' ) {
+    if ( empty( $_image ) || $_image == '' ) {
             $imgurl = $indicator['image'];
         } else {
             $imgurl = "{$xoopsModuleConfig['catimage']}/$_image";
@@ -112,16 +112,16 @@ while ( $myrow = $xoopsDB -> fetchArray( $result ) ) {
                 'alttext' => $myrow['description'] )
             );
         $count++;
-    } 
-} 
-switch ( $total_cat ) {
+    }
+}
+switch ($total_cat) {
     case '1':
         $lang_thereare = _MD_WFL_THEREIS;
         break;
     default:
         $lang_thereare = _MD_WFL_THEREARE;
         break;
-} 
+}
 $xoopsTpl -> assign( 'lang_thereare', sprintf( $lang_thereare, $total_cat, $listings['count'] ) );
 $xoopsTpl -> assign( 'module_dir', $xoopsModule -> getVar( 'dirname' ) );
 
@@ -141,21 +141,21 @@ $lastlinks = $xoopsDB -> fetchArray( $sql );
 
 if ($lastlinks['lastlinksyn'] == 1 && $lastlinks['lastlinkstotal'] > 0) {
 
-  $result = $xoopsDB -> query( "SELECT COUNT(*) FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE published > 0 
-								AND published <= " . $time . " 
-								AND (expired = 0 OR expired > " . $time . ") 
-								AND offline = 0 
-								ORDER BY published DESC", 0, 0 );
+  $result = $xoopsDB -> query( "SELECT COUNT(*) FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE published > 0
+                                AND published <= " . $time . "
+                                AND (expired = 0 OR expired > " . $time . ")
+                                AND offline = 0
+                                ORDER BY published DESC", 0, 0 );
   list( $count ) = $xoopsDB -> fetchRow( $result );
 
   $count = (($count > $lastlinks['lastlinkstotal']) && ($lastlinks['lastlinkstotal'] != 0)) ? $lastlinks['lastlinkstotal'] : $count;
   $limit = (($start + $xoopsModuleConfig['perpage']) > $count) ? ($count - $start) : $xoopsModuleConfig['perpage'];
 
-  $result = $xoopsDB -> query( "SELECT * FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE published > 0 
-								AND published <= " . $time . " 
-								AND (expired = 0 OR expired > " . $time . ") 
-								AND offline = 0 
-								ORDER BY published DESC", $limit , $start );
+  $result = $xoopsDB -> query( "SELECT * FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE published > 0
+                                AND published <= " . $time . "
+                                AND (expired = 0 OR expired > " . $time . ")
+                                AND offline = 0
+                                ORDER BY published DESC", $limit , $start );
   while ( $link_arr = $xoopsDB -> fetchArray( $result ) ) {
         $res_type = 0;
         $moderate = 0;
@@ -163,13 +163,11 @@ if ($lastlinks['lastlinksyn'] == 1 && $lastlinks['lastlinkstotal'] > 0) {
         require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/include/linkloadinfo.php';
         $xoopsTpl -> append( 'link', $link );
   }
-  
+
   $pagenav = new XoopsPageNav( $count, $xoopsModuleConfig['perpage'] , $start, 'start' );
   $xoopsTpl -> assign( 'pagenav', $pagenav -> renderNav() );
-  
+
   $xoopsTpl -> assign( 'showlatest', $lastlinks['lastlinksyn'] );
 }
 
 include XOOPS_ROOT_PATH . '/footer.php';
-
-?>

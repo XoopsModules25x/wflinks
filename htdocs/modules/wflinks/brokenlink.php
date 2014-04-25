@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: brokenlink.php 9723 2012-06-26 09:34:10Z beckmi $
+ * $Id: broken.php v 1.00 21 June 2005 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -16,7 +16,7 @@ $lid = wfl_cleanRequestVars( $_REQUEST, 'lid', 0 );
 $lid = intval($lid);
 $buttonn = _MD_WFL_SUBMITBROKEN;
 $buttonn = strtolower($buttonn);
- 
+
 switch ( strtolower($op) ) {
     case $buttonn:
         global $xoopsUser;
@@ -30,7 +30,7 @@ switch ( strtolower($op) ) {
 // Check if REG user is trying to report twice.
         $result = $xoopsDB -> query( "SELECT COUNT(*) FROM " . $xoopsDB -> prefix( 'wflinks_broken' ) . " WHERE lid=" . intval($lid) );
         list ( $count ) = $xoopsDB -> fetchRow( $result );
-        if ( $count > 0 ) {
+        if ($count > 0) {
             redirect_header( 'index.php', 2, _MD_WFL_ALREADYREPORTED );
             exit();
         } else {
@@ -38,7 +38,7 @@ switch ( strtolower($op) ) {
             $sql = sprintf( "INSERT INTO %s (reportid, lid, sender, ip, date, confirmed, acknowledged, title ) VALUES ( %u, %u, %u, %s, %u, %u, %u, %s)", $xoopsDB -> prefix( 'wflinks_broken' ), $reportid, $lid, $sender, $xoopsDB -> quoteString( $ip ), $time, 0, 0, $xoopsDB -> quoteString( $title ) );
             if ( ! $result = $xoopsDB -> query( $sql ) ) {
                 $error[] = _MD_WFL_ERROR;
-            } 
+            }
             $newid = $xoopsDB -> getInsertId();
 
 // Send notifications
@@ -80,17 +80,17 @@ switch ( strtolower($op) ) {
                 $message = ( $xoopsMailer -> send() ) ? _MD_WFL_BROKENREPORTED : _MD_WFL_ERRORSENDEMAIL;
             } else {
                 $message = _MD_WFL_ERRORSENDEMAIL;
-            } 
+            }
             redirect_header( 'index.php', 2, $message );
-        } 
+        }
         break;
 
     default:
 
-        $xoopsOption['template_main'] = 'wflinks_brokenlink.html';
+        $xoopsOption['template_main'] = 'wflinks_brokenlink.tpl';
         include XOOPS_ROOT_PATH . '/header.php';
         xoops_load('XoopsUserUtility');
-        
+
         $catarray['imageheader'] = wfl_imageheader();
         $catarray['letters'] = wfl_letters();
         $catarray['toolbar'] = wfl_toolbar();
@@ -116,7 +116,7 @@ switch ( strtolower($op) ) {
             if ( !is_array( $link_arr ) || empty($link_arr) ) {
                 redirect_header( 'index.php', 0 , _MD_WFL_THISFILEDOESNOTEXIST );
                 exit();
-            } 
+            }
 
 // file info
             $link['title'] = $wfmyts -> htmlSpecialCharsStrip( $link_arr['title'] );
@@ -128,17 +128,15 @@ switch ( strtolower($op) ) {
             $xoopsTpl -> assign( 'link_id', intval($lid) );
             $xoopsTpl -> assign( 'lang_subdate' , $is_updated );
             $xoopsTpl -> assign( 'link', $link );
-        } 
-	
+        }
+
         if ( is_object($xoTheme) ) {
           $xoTheme -> addMeta( 'meta', 'robots', 'noindex,nofollow' );
         } else {
           $xoopsTpl -> assign( 'xoops_meta_robots', 'noindex,nofollow' );
         }
-        
+
         $xoopsTpl -> assign( 'module_dir', $xoopsModule -> getVar( 'dirname' ) );
         include XOOPS_ROOT_PATH . '/footer.php';
         break;
 } // switch
-
-?>

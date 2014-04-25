@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: newstory.php 9692 2012-06-23 18:19:45Z beckmi $
+ * $Id: newsstory.php v 1.00 21 June 2005 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -41,8 +41,6 @@ $newsModule = &$modhandler -> getByDirname( "news" );
 $tags['STORY_URL'] = XOOPS_URL . '/modules/news/article.php?storyid=' . $story -> storyid();
 if ( !empty( $isnew ) ) {
     $notification_handler -> triggerEvent( 'story', $story -> storyid(), 'approve', $tags );
-} 
+}
 $notification_handler -> triggerEvent( 'global', 0, 'new_story', $tags );
 unset( $xoopsModule );
-
-?>

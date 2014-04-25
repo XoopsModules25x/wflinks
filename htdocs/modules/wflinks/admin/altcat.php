@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: altcat.php 9694 2012-06-23 20:42:45Z beckmi $
+ * $Id: altcat.php,v 1.00 2005/03/17 15:10:41 mercibe Exp $
  * Module: WF
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -16,7 +16,8 @@ global $xoopsModuleConfig;
 $op = wfl_cleanRequestVars( $_REQUEST, 'op', '' );
 $lid = intval( wfl_cleanRequestVars( $_REQUEST, 'lid', 0 ) );
 
-function makeTreeCheckTable( $xt, $itemid, $title, $checks ) {
+function makeTreeCheckTable( $xt, $itemid, $title, $checks )
+{
     global $wfmyts;
 
     echo "<div style='text-align: left;'>\n";
@@ -31,15 +32,15 @@ function makeTreeCheckTable( $xt, $itemid, $title, $checks ) {
         $disabled = ( $cid == intval( $_GET['cid'] ) ) ? "disabled='yes'" : "";
         $level = 1;
         echo "
-		<tr style='text-align: left;'>
-		 <td width='30%' class='head'>$name</td>
-		 <td class='head'>
-		 	<input type='checkbox' name='cid-" . intval($cid) . "' value='0' " . $checked . " " . $disabled . "/>
-		 </td>
-		</tr>\n";
+        <tr style='text-align: left;'>
+         <td width='30%' class='head'>$name</td>
+         <td class='head'>
+             <input type='checkbox' name='cid-" . intval($cid) . "' value='0' " . $checked . " " . $disabled . "/>
+         </td>
+        </tr>\n";
         $arr = $xt -> getChildTreeArray( intval($cid), $title );
 
-        foreach ( $arr as $cat ) {
+        foreach ($arr as $cat) {
             $cat['prefix'] = str_replace( ".", "-", $cat['prefix'] );
             $catpath = $cat['prefix'] . "&nbsp;" . $wfmyts -> htmlSpecialCharsStrip( $cat[$title] ) . "&nbsp;";
             $checked = array_key_exists( $cat['cid'], $checks ) ? "checked='checked'" : "";
@@ -47,45 +48,47 @@ function makeTreeCheckTable( $xt, $itemid, $title, $checks ) {
             $level = substr_count( $cat['prefix'], '-' ) + 1;
 //            echo "<tr><td>" . $catpath . "<input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "/></td></tr>\n";
         echo "
-		<tr style='text-align: left;'>
-		 <td width='30%' class='even'>$catpath</td>
-		 <td class='even'>
-		 	<input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "/>
-		 </td>
-		</tr>\n";
+        <tr style='text-align: left;'>
+         <td width='30%' class='even'>$catpath</td>
+         <td class='even'>
+             <input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "/>
+         </td>
+        </tr>\n";
         }
 
-    } 
+    }
     echo "<tr>
-	       <td width='30%' class='head'></td>
-		   <td class='even' style='text-align: left;'>
-		    <input type='submit' class='mainbutton' value='save'/>
-		    <input type='hidden' name='op' value='save'/>
-		    <input type='hidden' name='lid' value='" . $itemid . "'/>
-		    </td>
-		  </tr>";
+           <td width='30%' class='head'></td>
+           <td class='even' style='text-align: left;'>
+            <input type='submit' class='mainbutton' value='save'/>
+            <input type='hidden' name='op' value='save'/>
+            <input type='hidden' name='lid' value='" . $itemid . "'/>
+            </td>
+          </tr>";
     echo "</table></form></div>\n";
-} 
+}
 
 switch ( strtolower( $op ) ) {
-    case 'save': 
+    case 'save':
         // first delete all alternate categories for this topic
         $sql = "DELETE FROM " . $xoopsDB -> prefix( 'wflinks_altcat' ) . " WHERE lid=" . intval($lid);
         if ( !$result = $xoopsDB -> query( $sql ) ) {
             XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
             return false;
-        } 
+        }
 
         $k = array_keys( $_REQUEST );
-        foreach( $k as $sid ) {
+        foreach ($k as $sid) {
             if ( preg_match( "/cid-([0-9]*)/", $sid, $cid ) ) {
                 $sql = "INSERT INTO " . $xoopsDB -> prefix( 'wflinks_altcat' ) . "(cid, lid) VALUES('" . $cid[1] . "','" . intval($lid) . "')";
                 if ( !$result = $xoopsDB -> query( $sql ) ) {
                     XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
                     return false;
-                } 
-            } 
-        } 
+                }
+            }
+        }
         redirect_header( "index.php", 1, _AM_WFL_ALTCAT_CREATED );
         break;
 
@@ -94,22 +97,20 @@ switch ( strtolower( $op ) ) {
         xoops_cp_header();
         //wfl_adminmenu( _AM_WFL_MALTCAT );
         echo "
-			<fieldset style='border: #e8e8e8 1px solid;'><legend style='display: inline; font-weight: bold; color: #0A3760;'>" . _AM_WFL_ALTCAT_MODIFYF . "</legend>\n
-			<div style='padding: 8px;'>" . _AM_WFL_ALTCAT_INFOTEXT . "</div>\n
-			</fieldset>\n
-		";
+            <fieldset style='border: #e8e8e8 1px solid;'><legend style='display: inline; font-weight: bold; color: #0A3760;'>" . _AM_WFL_ALTCAT_MODIFYF . "</legend>\n
+            <div style='padding: 8px;'>" . _AM_WFL_ALTCAT_INFOTEXT . "</div>\n
+            </fieldset>\n
+        ";
 
-        echo "<div style='text-align: left; font-size: larger;'><h4>" . $wfmyts -> htmlSpecialCharsStrip( trim( $_GET['title'] ) ) . "</h4></div>"; 
+        echo "<div style='text-align: left; font-size: larger;'><h4>" . $wfmyts -> htmlSpecialCharsStrip( trim( $_GET['title'] ) ) . "</h4></div>";
         // Get an array of all alternate categories for this topic
         $sql = $xoopsDB -> query( "SELECT cid FROM " . $xoopsDB -> prefix( 'wflinks_altcat' ) . " WHERE lid=" . intval($lid) . " ORDER BY lid" );
         $altcats = array();
         while ( $altcat = $xoopsDB -> fetchArray( $sql ) ) {
             $altcats[$altcat['cid']] = true;
-        } 
+        }
         $mytree = new XoopsTree( $xoopsDB -> prefix( 'wflinks_cat' ), 'cid', 'pid' );
 
         makeTreeCheckTable( $mytree, intval($lid), "title", $altcats );
         include_once 'admin_footer.php';
-} 
-
-?>
+}

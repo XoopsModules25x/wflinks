@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: newlinks.php 9723 2012-06-26 09:34:10Z beckmi $
+ * $Id: newlinks.php v 1.00 21 June 2005 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -22,8 +22,9 @@ switch ( strtolower( $op ) ) {
         $sql = "SELECT cid, title, notifypub FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE lid=" . $lid;
         if ( !$result = $xoopsDB -> query( $sql ) ) {
             XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
             return false;
-        } 
+        }
         list( $cid, $title, $notifypub ) = $xoopsDB -> fetchRow( $result );
 
          // Update the database
@@ -47,8 +48,8 @@ switch ( strtolower( $op ) ) {
             $notification_handler -> triggerEvent( 'category', $cid, 'new_link', $tags );
             if ( intval($notifypub) == 1 ) {
                 $notification_handler -> triggerEvent( 'link', $lid, 'approve', $tags );
-            } 
-        } 
+            }
+        }
         redirect_header( 'newlinks.php', 1, _AM_WFL_SUB_NEWFILECREATED );
         break;
 
@@ -61,8 +62,9 @@ switch ( strtolower( $op ) ) {
         $sql = "SELECT * FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE published = 0 ORDER BY lid DESC" ;
         if ( !$result = $xoopsDB -> query( $sql ) ) {
             XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
             return false;
-        } 
+        }
         $new_array = $xoopsDB -> query( $sql, $xoopsModuleConfig['admin_perpage'], $start );
         $new_array_count = $xoopsDB -> getRowsNum( $xoopsDB -> query( $sql ) );
 
@@ -85,7 +87,7 @@ switch ( strtolower( $op ) ) {
         echo "<th width='15%'>" . _AM_WFL_MINDEX_SUBMITTED . "</th>\n";
         echo "<th width='7%'>" . _AM_WFL_MINDEX_ACTION . "</th>\n";
         echo "</tr>\n";
-        if ( $new_array_count > 0 ) {
+        if ($new_array_count > 0) {
             while ( $new = $xoopsDB -> fetchArray( $new_array ) ) {
                 $lid = intval( $new['lid'] );
                 $rating = number_format( $new['rating'], 2 );
@@ -106,10 +108,10 @@ switch ( strtolower( $op ) ) {
                 echo "<td class='even' style='text-align: center;'>$datetime</td>\n";
                 echo "<td class='even' style='text-align: center;' nowrap>$icon</td>\n";
                 echo "</tr>\n";
-            } 
+            }
         } else {
             echo "<tr><td style='text-align: center;' class='head' colspan='6'>" . _AM_WFL_SUB_NOFILESWAITING . "</td></tr>";
-        } 
+        }
         echo "</table>\n";
 
         include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
@@ -118,6 +120,4 @@ switch ( strtolower( $op ) ) {
         echo '<div align="right" style="padding: 8px;">' . $pagenav -> renderNav() . '</div>';
         include_once 'admin_footer.php';
         break;
-} 
-
-?>
+}

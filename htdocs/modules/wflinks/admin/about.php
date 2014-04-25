@@ -1,6 +1,6 @@
 <?php
 /**
- * Mastop Go2 module
+ * WF-Links
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,7 +11,7 @@
  *
  * @copyright    The XOOPS Project (http://www.xoops.org)
  * @license      {@link http://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
- * @package      MastopGo2
+ * @package      WF-Links
  * @since        2.5.0
  * @author       Mage, Mamba
  * @version      $Id $

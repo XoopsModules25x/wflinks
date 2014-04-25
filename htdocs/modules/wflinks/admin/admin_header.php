@@ -1,6 +1,6 @@
 <?php
 /**
- * XoopsTube module
+ * WF-Links
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,7 +11,7 @@
  *
  * @copyright      The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license        http://www.gnu.org/licenses/gpl-2.0.html GNU Public License
- * @package        xoopstube
+ * @package        WF-Links
  * @since          1.0.5
  * @author         XOOPS Development Team
  * @version        $Id $
@@ -41,11 +41,7 @@ $pathIcon16      = '../' . $xoopsModule->getInfo('icons16');
 $pathIcon32      = '../' . $xoopsModule->getInfo('icons32');
 $pathModuleAdmin = $xoopsModule->getInfo('dirmoduleadmin');
 
-if (file_exists($GLOBALS['xoops']->path($pathModuleAdmin . '/moduleadmin.php'))) {
-    include_once $GLOBALS['xoops']->path($pathModuleAdmin . '/moduleadmin.php');
-} else {
-    redirect_header("../../../admin.php", 5, _AM_WFL_MODULEADMIN_MISSING, FALSE);
-}
+include_once $GLOBALS['xoops']->path($pathModuleAdmin.'/moduleadmin.php');
 
 include XOOPS_ROOT_PATH . '/modules/' . $mydirname . '/include/config.php';
 include_once XOOPS_ROOT_PATH . '/modules/' . $mydirname . '/include/functions.php';
@@ -61,21 +57,21 @@ $wfmyts = new wflTextSanitizer(); // MyTextSanitizer object
 $imagearray = array(
             'editimg' => "<img src='$pathIcon16/edit.png' alt='" . _AM_WFL_ICO_EDIT . "' align='middle'>",
             'deleteimg' => "<img src='$pathIcon16/delete.png' alt='" . _AM_WFL_ICO_DELETE . "' align='middle'>",
-	    'altcat' => "<img src='$pathIcon16/folder_add.png' alt='" . _AM_WFL_ALTCAT_CREATEF . "' align='middle'>",
+        'altcat' => "<img src='$pathIcon16/folder_add.png' alt='" . _AM_WFL_ALTCAT_CREATEF . "' align='middle'>",
             'online' => "<img src='$pathIcon16/1.png' alt='" . _AM_WFL_ICO_ONLINE . "' align='middle'>",
             'offline' => "<img src='$pathIcon16/0.png' alt='" . _AM_WFL_ICO_OFFLINE . "' align='middle'>",
-            'expired' => "<img src='../images/icon/clock_red.png' alt='" . _AM_WFL_ICO_EXPIRE . "' align='middle'>",
+            'expired' => "<img src='../assets/images/icon/clock_red.png' alt='" . _AM_WFL_ICO_EXPIRE . "' align='middle'>",
             'approved' => "<img src='$pathIcon16/1.png' alt=''" . _AM_WFL_ICO_APPROVED . "' align='middle'>",
             'notapproved' => "<img src='$pathIcon16/0.png' alt='" . _AM_WFL_ICO_NOTAPPROVED . "' align='middle'>",
-            'relatedfaq' => "<img src='../images/icon/link.gif' alt='" . _AM_WFL_ICO_LINK . "' align='absmiddle'>",
-            'relatedurl' => "<img src='../images/icon/urllink.gif' alt='" . _AM_WFL_ICO_URL . "' align='middle'>",
-            'addfaq' => "<img src='../images/icon/add.gif' alt='" . _AM_WFL_ICO_ADD . "' align='middle'>",
+            'relatedfaq' => "<img src='../assets/images/icon/link.gif' alt='" . _AM_WFL_ICO_LINK . "' align='absmiddle'>",
+            'relatedurl' => "<img src='../assets/images/icon/urllink.gif' alt='" . _AM_WFL_ICO_URL . "' align='middle'>",
+            'addfaq' => "<img src='../assets/images/icon/add.gif' alt='" . _AM_WFL_ICO_ADD . "' align='middle'>",
             'approve' => "<img src='$pathIcon16/1.png' alt='" . _AM_WFL_ICO_APPROVE . "' align='middle'>",
-            'statsimg' => "<img src='../images/icon/stats.gif' alt='" . _AM_WFL_ICO_STATS . "' align='middle'>",
+            'statsimg' => "<img src='../assets/images/icon/stats.gif' alt='" . _AM_WFL_ICO_STATS . "' align='middle'>",
             'ignore' => "<img src='$pathIcon16/0.png' alt='" . _AM_WFL_ICO_IGNORE . "' align='middle'>",
             'ack_yes' => "<img src='$pathIcon16/1.png' alt='" . _AM_WFL_ICO_ACK . "' align='middle'>",
             'ack_no' => "<img src='$pathIcon16/0.png' alt='" . _AM_WFL_ICO_REPORT . "' align='middle'>",
             'con_yes' => "<img src='$pathIcon16/1.png' alt='" . _AM_WFL_ICO_CONFIRM . "' align='middle'>",
             'con_no' => "<img src='$pathIcon16/0.png' alt='" . _AM_WFL_ICO_CONBROKEN . "' align='middle'>",
             'view' => "<img src='$pathIcon16/search.png' alt='" . _AM_WFL_ICO_VIEW . "' align='middle'>"
-	);
+    );
