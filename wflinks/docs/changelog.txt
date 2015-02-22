@@ -1,0 +1,421 @@
+=========================================================
+2012-12-16 1.09 Final
+=========================================================
+
+- finalizing version (mamba)
+
+=========================================================
+2012-06-25 1.09 Beta 2
+=========================================================
+
+- changed editor list selection to dynamic (mamba)
+- replace http://mozshot.nemui.org with http://open.thumbshots.org for screenshots (Shine)
+- fixed bug related to $wfmyts constructor overriding (mamba)
+
+=========================================================
+2012-06-24 1.09 Beta 1
+=========================================================
+Shine and Mamba:
+Fixed: Admin section:
+- missing image: Frameworks/moduleclasses/icons/16/folder_add.png
+- Fixed: Startpage counters don't work in other language than english.
+- Fixed: admin/index.php : Line prox 56 and Prox line 78:  was calling 2 ().php files which belong to other module (result of conversion).
+- Changed main menu: moved manual into help. Added 'Link management'
+=========================================================
+2012-04-25  1.08 Beta 1
+=========================================================
+
+- converted to XOOPS 2.5.x Admin GUI (mamba)
+
+===========================================================
+23-6-2012 1.07 Final
+===========================================================
+- Fixed: 2 bugs popped up after release 1.07 Final (shine)
+- Changed standard directory where flags are hold. Moved them to uploads/flags. (File: xoopsversion.php)
+- Changed standard directory where images: category, screenshots are hold. Moved them to: uploads/wflinks/category and uploads/wflinks/screenshots (file: xoopsversion.php)
+
+(below 2 bugs popped up:
+Found a small typo in WF-Links 1.07 that causes new links not to be displayed correctly on the Index Page.
+To fix this open the file ../templates/wflinks_index.html and find this line:
+Code:
+<{include file="db:wflinks_linkload.html" link=$link[i]}>
+
+Replace the above line with the following:
+Code:
+<{include file="db:wflinks_linkload.html" wfllink=$link[i]}>
+
+Save the file, upload it to your server and update WF-Links from the Module Administration.
+----------------------------
+Bug in include/notifications.php
+
+--------------------------------------------------------------------------------
+
+When notifications are enabled an error might occur.
+
+Fix
+Open the file include/notifications.inc and replace this line:
+Code:
+$mydirname = basename( dirname( __FILE__ ) );
+
+
+with this line:
+Code:
+$mydirname = basename( dirname( dirname( __FILE__ ) ) );
+
+
+=========================================================
+14.12.2008 1.07 Final
+=========================================================
+- Fixed: mysterious links in catview (hopefully)
+- Fixed: setting 'total amount of characters for description'
+- Fixed: unclosed div-tag in wflinks_viewcat.html
+- Fixed: unclosed div-tag in wflinks_print.html
+- Fixed: body-tag declared twice in wflinks_print.html
+
+=========================================================
+18.10.2008 1.06 Final
+=========================================================
+- Added Newbbex to list of forums
+- User gets redirected back to link after voting
+- Street2 can be used for all known addresses
+- Extended list of address formats (include/address.php)
+- Search result are sorted by title ascending
+- Categories in Popular an Top Rated are sorted by setting in Preferences
+- Removed justification from description
+- Set Quick View option of by default
+
+- Fixed bug: alternative cats were not deleted
+- Fixed bug: blank page with Cancel button ratingpage
+- Fixed bug: printing of screenshot when Display Screenshot is set to No
+
+- Changed: references to class/xoopsmodule.php to kernel/module.php [vaughan]
+
+- Updated the online documentation
+- dutch [mcdonald]
+- english [mcdonald]
+- portuguese-brazilian [gibaphp]
+
+- Removed file ../templates/wflinks_linkloadsimple.html
+- Removed file ../docs/english/readme1st.txt
+
+
+=========================================================
+18.08.2008 1.06 RC-2
+=========================================================
+- Added noindex,nofollow meta-tag to broken- and rating pages
+- Added option to Index Page to show Latest Links [trabis & mcdonald]
+
+- Converted dutch & english language files into UTF-8
+
+- Fixed rating page, removed closing div-tag
+- Fixed mimetype setting for Forum icon
+- Fixed notice Vote Data in main index
+
+
+=========================================================
+26.07.2008 1.06 RC-1
+=========================================================
+- Install folder can be renamed
+- Replaced date() by formatTimestamp()
+- Re-styled information block above submit form in administration
+- Links in blocks will be ordered by publication date instead of submit date
+- Modify option visible for submitter only
+- Added disclaimer template [m0nty]
+- Added Tag Cloud & Top Tags blocks, and added tags to template
+
+- Added German language files with UTF-8 [xoops-magazine]
+- Added Portugese language files (utf-8) [gibaphp]
+- Added Portuguese-Brazilian language files (utf-8) [gibaphp]
+
+- Fixed bug for urls containing spaces or %20
+- Fixed bug where category was set as a subcat of itself
+- Fixed modification feature (address items, etc.)
+
+
+=========================================================
+20.05.2008 1.05 Final
+=========================================================
+- Added wflinks_disclaimer.html Template for disclaimer text in submit.php & visit.php [vaughan]
+
+
+=========================================================
+19.04.2008 1.05 RC-6
+=========================================================
+- Added screenshot to print output
+- Added module icon for impressCMS
+- Added 'expired' icon to Status column in main index
+- Added center bottom blocks to WF-Links block settings
+- Added email field to submit forms and vCard
+- Added VAT field to submit forms
+- Added option to set the flags folder
+- Added option for Auto Screenshots
+
+- Updated module icon for impressCMS
+- Submit form News story only active if News module is installed
+- Replaced MS Live Maps by Multimap
+
+- Fixed multilanguage issue in impressCMS
+- Fixed comment template issue
+- Fixed bug in News story submit option
+
+
+=========================================================
+24.03.2008 1.05 RC-5
+=========================================================
+- Added vCard feature to address
+- Added Print feature
+- Added Mobile/Cell phone field to submit forms
+- Added Sponsor (banner) feature to categories
+- Added block for Sponsor (banner) statistics
+- Added option to set date format for blocks
+- Added option to Preferences to turn off address forms
+- Updated countries conform ISO-3166
+- Swapped names 'Publisher' and 'Submitter'
+- Extended ranges Popular Count and Links per Page in Preferences
+
+
+=========================================================
+08.03.2008 1.05 RC-4
+=========================================================
+- Fixed XSS vulnerabilities [Vaughan/McDonald]
+- Fixed bug in sub-cat listing
+- Fixed bug page nav in Recent Links
+
+
+=========================================================
+29.02.2008 1.05 RC-3
+=========================================================
+- Added VoIP number field to submit forms
+- Corrected street 1 typo in dutch langfile
+- Revamped Set Publishing Date
+- Different date format can be set for admin section
+- Removed files bugfixlist0.php & bugfixlist1.php
+- Fixed bug in editors function (FCKEditor)
+
+
+=========================================================
+21.02.2008 1.05 RC-2
+=========================================================
+- Added German language files [sato-san & Burkhard]
+- Added address and map features to user submit form
+- Added TinyMCE to list of editors (works for XOOPS & ImpressCMS)
+- Added Control Panel icons for ImpressCMS
+- Changed Warning system to recognise if folders are writeable y/n
+- Replaced form for meta keywords
+- Fixed 'Latest Listings' page
+- Minor improvements in subcat listing template
+
+
+=========================================================
+29.01.2008 1.05 RC-1
+=========================================================
+- Added WHOIS icon to frontpage and Main Index for admins (www.DomainTools.com)
+- Added address feature
+- Added Google, Yahoo and MS Live Maps feature
+- Fixed option to move links from category to category
+- Modified include/update.php, no need for SmartObject anymore
+
+
+=========================================================
+24.01.2008 1.04 Stable
+=========================================================
+- Changed version number to 1.04
+- Fixed search routine
+- Fixed category path in singlelink view
+- Fixed some typos
+- Improved 'Back' button
+- PageRank can be switched off in Preferences
+- Added main category title to main index
+- Added icon in submit form for checking url
+- Added Pagerank to Pingtime page as extra check for brokenlinks
+- Added Latest Listings to Main Menu
+- Added editor DHTML Extended
+- Added social bookmarks
+- Added support for Tag-module
+- Added extra page nav above link listing in Main Index
+- Editor for user & admin can be different (Preferences)
+- Removed Spaw editor from selection menu
+- Replaced icons by new ones (famfamfam.org)
+
+
+=========================================================
+20.12.2007 1.0.3c Stable
+=========================================================
+- Fixed bug in brokenlinks, edit option not working
+- Added Quick View option [freeop]
+- Added Google PageRank™ [sws-tech.com]
+- Added Back button above detailed view page of link
+- Added links to Support Forums in About
+
+
+=========================================================
+09.11.2007 1.0.3c Stable
+=========================================================
+- Added option in Prefs to turn on/off 'Other links by'
+- Amount of characters of description in category view can be set
+- Comment option not visible when disabled in Preferences [peter55]
+- Added option for sorting categories by weight or title
+- Rewrote Permissions page
+
+
+=========================================================
+10.09.2007 1.0.3c Stable
+=========================================================
+- Removed some redundant code from singlelink.html
+
+
+=========================================================
+02.09.2007 1.0.3c Stable
+=========================================================
+- Removed installscript.php and admin/resources.php
+- Tables wf_resources and wf_resource_types will be removed on update
+- Corrections for field length of meta keywords
+- Added corrected language file for SmartObject module
+
+
+=========================================================
+03.08.2007 1.0.3c Stable
+=========================================================
+- Amount of characters for field length of keywords can
+be set in Preferences
+- Removed Inbetween from WYSIWYG editors list
+
+
+=========================================================
+03.06.2007 1.0.3c Stable
+=========================================================
+fixed bug: Notice from linkload.php
+fixed bug: Error displayed when updating module
+
+- removed 'Moderator Options'
+
+
+=========================================================
+25.05.2007 1.0.3c Stable
+=========================================================
+- Category titles visible in browser title bar
+
+
+=========================================================
+23.05.2007 1.0.3c Stable
+=========================================================
+- modified Latest Listings page
+- new WF-Links 1.03c icon in admin section
+
+
+=========================================================
+10.05.2007 1.0.3c Stable
+=========================================================
+fixed bug: Meta keywords feature not compatible with Xoops 2.0.x [peter55]
+
+
+=========================================================
+04.04.2007 1.0.3c Stable
+=========================================================
+fixed bug: Security hole [m0nty]
+
+
+=========================================================
+06.03.2007 1.0.3c Stable
+=========================================================
+- meta keywords now replaces the Xoops meta keywords
+- title of link now appears in browser title bar
+
+
+=========================================================
+04.11.2006 1.0.3c Stable
+=========================================================
+Added feature: Use of WYSIWYG editors.
+Added feature: Country of origin of the website.
+Added feature: Meta keywords.
+
+
+=========================================================
+29.03.2006 1.0.3b Stable
+=========================================================
+fixed bug: Page Navigation fails in admin main index. [Bender]
+fixed bug: Modifying category fails. [Mithrandir?]
+fixed bug: Sorting options on front page fails. [CyberDiver]
+fixed bug: Page navigation on front page fails. [McDonald]
+fixed bug: Option like bold, italic, url, imagemanager, etc. of DHTML editor fails. [McDonald]
+fixed bug: Notice [PHP]: Undefined index: groupid in file modules/wflinks/index.php line 78. [McDonald]
+fixed bug: Icon view.gif is missing. [McDonald]
+fixed bug: Modified category menu in submit.php to be same as in admin editors. [McDonald]
+fixed bug: Comment out line 135-136 and 143-144 of xoops_version.php. [McDonald]
+fixed bug: Truncated description in wflinks_linkload.html to 256 characters. [McDonald]
+fixed bug: Popularity and Rating lists fail. [McDonald]
+fixed bug: Total links count fails when category contains sub-categories. [McDonald]
+fixed bug: Blocks not showing when outside WF-Links. [McDonald]
+fixed bug: Popular icon/text not showing. [McDonald]
+fixed bug: Link Management option in Modules -> WF-Links was same as Main Index option. [McDonald]
+
+Updated: Disabled maturity rating
+
+
+=========================================================
+21.06.2005 1.0.3 Stable
+=========================================================
+fixed bug: Smarty error Error [Xoops]: Smarty error: [in db:wflinks_linkload.html line 41]: syntax error: unidentified token '=' (cosmodrum).
+fixed bug: SQL file seems to be for mysql 4.x (contains DEFAULT CHARSET entry), Fix for backward compat with older versions of Mysql.
+fixed bug: Updated String version in Xoops_version.php to show correct module version number.
+fixed bug: resource image width issue in wflinks_singlelink.html.
+fixed bug: Resource types, updating the above should now see resource types work in admin and should be usable.
+fixed bug: Resource types, changed icon to match the proper icon in the admin link index.
+fixed bug: Resource types will no longer be taken into account when rendering veiwcat.php. Should cut down on un-needed mysql queries
+during this operation.
+
+Updated: Added 'onUpdate' to Xoops_version.php to allow for WF-Resources tables to be added to the database.
+Updated: cleaned some html in indexpage.php for 'Index Page Information'.
+
+
+=========================================================
+18.06.2005 1.0.2
+=========================================================
+fixed bug: search not working correct due to missing function.
+fixed bug: found remaining non 'group' function and used correct function.
+
+
+=========================================================
+16.06.2005 1.0.2
+=========================================================
+fixed bug: submit feature showing regardless of permissions
+fixed bug: wrong amount of links displayed in main index
+fixed bug: in some cases non published links would show in listing
+fixed bug: incorrect count shown depending on sub sections
+fixed bug: cross category permissions now correctly adhered too.
+fixed bug: page navigation should not show when more than 10 links per category.
+fixed bug: fixed text not showing as html.
+fixed bug: undefined function group() in blocks fixed.
+fixed bug: fixed bug for resource update. Resource tables should be installed on install/update
+
+Updated: permission system updated to use Xoops group permissions
+Updated: Rating permissions for each category.
+
+Added feature: Auto approve feature for submissions for each category
+Added feature: Moderator permissions and abilites for each category
+Added feature: Moderator permissions and abilites
+
+
+=========================================================
+26.03.2005 1.0.1 RC
+=========================================================
+Added feature: Check for Broken links and the ability to edit or delete them
+Added feature: Check ping times of links (in Admin )
+Added feature: Auto approve links by selected groups
+Added feature: Category image in category listing (Thanx Gigaphp)
+
+Updated: Add new version of GIJoes Admin Block hack
+Updated:New Icon Set By Xpider (Please read in the about us regarding these images use)
+
+fixed bug: Fixed redeclared thumb image (Thanks to PD-Dreams)
+fixed bug: Fixed Sql install error.
+fixed bug: Fixed cannot redclare wllists.
+fixed bug: fixed the page navigation in category listings
+fixed bug: Fixed some action icons navigation, not deleting or editing items when supposed to.
+fixed bug: "Notify me when this file is approved"
+fixed bug: Approving item no longer give white page.
+fixed bug: Submission and Moderator bugs
+fixed bug: category images where not sized to choosen sizes
+fixed bug: search permissions not working correctly
+fixed bug: smilies, images etc should work in the description of the indexpage and category listings
+Many more small bugs fixed......
