@@ -110,6 +110,7 @@ class XoopsGTicket
             $this -> clear();
             if( empty( $timeout_flag ) ) $this -> _errors[] = 'Invalid Session';
             else $this -> _errors[] = 'Time out';
+
             return false;
         }
 

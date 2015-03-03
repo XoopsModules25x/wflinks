@@ -345,7 +345,7 @@ define("_AM_WFL_ICO_REPORT","Reconnaître le rappor de lien brisé ?");
 define("_AM_WFL_ICO_CONFIRM","Rapport de lien brisé confirmé");
 define("_AM_WFL_ICO_CONBROKEN","Confirmer le rapport de lien brisé ?");
 define("_AM_WFL_ICO_RES","Editer les ressources/liens de cet élément");
-define("_AM_WFL_MOD_URLRATING","Interent Content Rating:");	// Inutilisé
+define("_AM_WFL_MOD_URLRATING","Interent Content Rating:");    // Inutilisé
 // Alternate category
 define("_AM_WFL_ALTCAT_CREATEF","Ajouter une cat&eacute;gorie alternative");
 define("_AM_WFL_MALTCAT","Gestion des cat&eacute;gories alternatives");

@@ -288,6 +288,7 @@ if ( !function_exists( 'wfl_convertorderbytrans' ) ) {
         if ( $orderby == "rating DESC" ) $orderbyTrans = _MD_WFL_RATINGHTOL;
         if ( $orderby == "country ASC" ) $orderbyTrans = _MD_WFL_COUNTRYLTOH;
         if ( $orderby == "country DESC" ) $orderbyTrans = _MD_WFL_COUNTRYHTOL;
+
         return $orderbyTrans;
     }
 }
@@ -305,6 +306,7 @@ if ( !function_exists( 'wfl_convertorderbyout' ) ) {
         if ( $orderby == "hits DESC" ) $orderby = "hitsD";
         if ( $orderby == "rating DESC" ) $orderby = "ratingD";
         if ( $orderby == "country DESC" ) $orderby = "countryD";
+
         return $orderby;
     }
 }

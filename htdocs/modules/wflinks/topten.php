@@ -16,18 +16,18 @@ include XOOPS_ROOT_PATH . '/header.php';
 
 $mytree = new XoopsTree( $xoopsDB -> prefix( 'wflinks_cat' ), 'cid', 'pid' );
 
-$action_array 	= array( 'hit' => 0, 'rate' => 1 );
-$list_array 	= array( 'hits', 'rating' );
-$lang_array 	= array( _MD_WFL_HITS, _MD_WFL_RATING );
-$rankings 	= array();
+$action_array    = array( 'hit' => 0, 'rate' => 1 );
+$list_array    = array( 'hits', 'rating' );
+$lang_array    = array( _MD_WFL_HITS, _MD_WFL_RATING );
+$rankings    = array();
 
-$sort 		= ( isset( $_GET['list'] ) && in_array( $_GET['list'], $action_array ) ) ? $_GET['list'] : 'rate';
-$sort_arr 	= $action_array[$sort];
-$sortDB 	= $list_array[$sort_arr];
+$sort        = ( isset( $_GET['list'] ) && in_array( $_GET['list'], $action_array ) ) ? $_GET['list'] : 'rate';
+$sort_arr    = $action_array[$sort];
+$sortDB    = $list_array[$sort_arr];
 
 $catarray['imageheader'] = wfl_imageheader();
-$catarray['letters'] 	 = wfl_letters();
-$catarray['toolbar'] 	 = wfl_toolbar();
+$catarray['letters']     = wfl_letters();
+$catarray['toolbar']     = wfl_toolbar();
 $xoopsTpl -> assign( 'catarray', $catarray );
 
 $arr = array();
