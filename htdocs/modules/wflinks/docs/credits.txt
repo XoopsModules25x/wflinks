@@ -1,0 +1,36 @@
+CREDITS
+==========
+
+WF-Links was originally developed by WF-Projects Team, and later enhanced by McDonald, with help from: amayer, bender, david,
+dqflyer, draven, frankblack, gladiac, hervet, jackj, mercibe, John N, phppp, predator, reliableSol,
+tom, xpider, xtheme, mcdonald (version 1.03B and higher)
+
+The WF-Projects Team would like to thank the following people for their help and support during the development phase of this module:
+EdStacey, maumed, banned, krobi, Pnooka, MarcoFr, cosmodrum, placebo333, GibaPhp
+
+Icons: famfamfam.com, Crystal Icons
+
+vCard script by: Kai Blankenhorn
+
+Auto Screenshot by: Mozshot (all source code provided under Ruby licence)
+
+Testing, documentation & support:
+----------------------------------
+WF-Projects Team: amayer, bender, catzwolf, david, dqflyer, draven, frankblack, gladiac, hervet, mercibe, liquid, phppp, predator, rectifier, reliableSol, tom, xpider, xtheme
+
+Credits for original 'mydownloads' / 'WF-Downloads':
+------------------------------------------------------
+Original Xoops Team
+Onokazu, Buennagel, The Wanderer and all the others
+Catzwolf
+liquid
+phppp
+mercibe
+nboseret
+
+We would also like to thank:
+------------------------------
+Kazumi Ono (onokazu) & Goghs Cheng (goghs) for creating Xoops in the first place
+all the people that contributed to Xoops and its community in any form
+all the people that contributed to ImpressCMS and its community in any form
+all people reporting bugs and making suggestions for future versions of this software
