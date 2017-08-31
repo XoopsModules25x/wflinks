@@ -25,7 +25,7 @@
           <td width="65%" valign="top"> <{if $wfllink.autoscrshot == 0}> <{if $show_screenshot == true}> <{if $wfllink.screenshot_full != ''}>
             <div> <a href="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/visit.php?cid=<{$wfllink.cid}>&amp;lid=<{$wfllink.id}>" target="_blank"><img src="<{$wfllink.screenshot_thumb}>" alt="" hspace="7" vspace="3" border="0" align="right" /></a> </div>
 <{/if}> <{/if}> <{/if}>
-              <{if $wfllink.autoscrshot == 1}> <div> <a href="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/visit.php?cid=<{$wfllink.cid}>&lid=<{$wfllink.id}>" target="_blank"><img src="http://open.thumbshots.org/image.pxf?url=<{$wfllink.url}>" align="right" /></a> </div> <{/if}>
+              <{if $wfllink.autoscrshot == 1}> <div> <a href="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/visit.php?cid=<{$wfllink.cid}>&lid=<{$wfllink.id}>" target="_blank"><img src="https://blinky.nemui.org/shot/large?<{$wfllink.url}>" align="right" /></a> </div> <{/if}>
             <div style="margin-left: 6px;" align="left">
             <a href="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/visit.php?cid=<{$wfllink.cid}>&amp;lid=<{$wfllink.id}>" target="_blank">
 			 <img src="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/assets/images/icon/links.gif" alt="" align="absmiddle" />
@@ -80,7 +80,7 @@
   </tr>
 
 <{if $wfllink.quickview}>
-<script language="javascript" src="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/include/quickview.js"></script>
+<script language="javascript" src="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/assets/js/quickview.js"></script>
 <tr>
   <td class="even" colspan="2" align="center" valign="center" style="padding-bottom: 3px;">
 	<i><small><script>

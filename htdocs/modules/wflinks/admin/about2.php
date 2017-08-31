@@ -15,8 +15,8 @@ global $xoopsModule;
 
 xoops_cp_header();
 
-$module_handler = &xoops_gethandler( 'module' );
-$versioninfo = &$module_handler -> get( $xoopsModule -> getVar( 'mid' ) );
+$module_handler = xoops_gethandler( 'module' );
+$versioninfo = $module_handler -> get( $xoopsModule -> getVar( 'mid' ) );
 
 //wfl_adminmenu( _AM_WFL_MLINKS );
 // Left headings...

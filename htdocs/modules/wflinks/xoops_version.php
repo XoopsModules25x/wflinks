@@ -16,7 +16,7 @@ $modversion['description'] = _MI_WFL_DESC;
 $modversion['help']        = 'page=help';
 $modversion['license']     = 'GNU GPL 2.0';
 $modversion['license_url'] = "www.gnu.org/licenses/gpl-2.0.html";
-$modversion['image']       = "assets/images/wfl_slogo.png";
+$modversion['image']       = "assets/images/logoModule.png";
 $modversion['iconsmall']   = "assets/images/wflinks_iconsmall.png";
 $modversion['iconbig']     = "assets/images/wflinks_iconbig.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
@@ -43,9 +43,9 @@ $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 
 //about
-$modversion["module_status"]       = "Beta 1";
+$modversion["module_status"]       = "Beta 2";
 $modversion['release_file']        = XOOPS_URL . "/modules/" . $modversion['dirname'] . "/docs/changelog.txt";
-$modversion['release_date']        = "2014/04/23";
+$modversion['release_date']        = "2017/08/31";
 $modversion["module_website_url"]  = "www.xoops.org/";
 $modversion["module_website_name"] = "XOOPS";
 $modversion['min_php']             = '5.5';
@@ -161,13 +161,13 @@ $modversion['blocks'][5]['can_clone'] = true ;
 $modversion['hasMain'] = 1;
 
 // This part inserts the selected topics as sub items in the Xoops main menu
-$module_handler = &xoops_gethandler( 'module' );
-$module = &$module_handler -> getByDirname( $modversion['dirname'] );
+$module_handler = xoops_gethandler( 'module' );
+$module = $module_handler -> getByDirname( $modversion['dirname'] );
 $cansubmit = 0;
 if ( is_object( $module ) ) {
     global $xoopsUser;
     $groups = ( is_object( $xoopsUser ) ) ? $xoopsUser -> getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $gperm_handler = &xoops_gethandler( 'groupperm' );
+    $gperm_handler = xoops_gethandler( 'groupperm' );
     if ( $gperm_handler -> checkRight( "WFLinkSubPerm", 0, $groups, $module -> getVar( 'mid' ) ) ) {
         $cansubmit = 1;
     }
@@ -451,7 +451,7 @@ $modversion['config'][$i]['title'] = '_MI_WFL_MAINIMGDIR';
 $modversion['config'][$i]['description'] = '_MI_WFL_MAINIMGDIRDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'modules/' . $modversion['dirname'] . '/images';
+$modversion['config'][$i]['default'] = 'modules/' . $modversion['dirname'] . '/assets/images';
 ++$i;
 $modversion['config'][$i]['name'] = 'screenshots';
 $modversion['config'][$i]['title'] = '_MI_WFL_SCREENSHOTS';

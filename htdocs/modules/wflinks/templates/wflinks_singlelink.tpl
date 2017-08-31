@@ -76,7 +76,7 @@ div.wflinks_socbookmark a:hover img
               <div>
                 <div align="center"><a href="<{$xoops_url}>/<{$shots_dir}>/<{$wfllink.screenshot_full}>" target="_blank"><img src="<{$wfllink.screenshot_thumb}>" alt="" vspace="3" hspace="7" align="middle" /></a></div>
             </div> <{/if}><{/if}><{/if}>
-              <{if $wfllink.autoscrshot == 1}> <div align="center"> <a href="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/visit.php?cid=<{$wfllink.cid}>&lid=<{$wfllink.id}>" target="_blank"><img src="http://open.thumbshots.org/image.pxf?url=<{$wfllink.url}>" align="middle" alt="" /></a> </div> <{/if}>	  </td>
+              <{if $wfllink.autoscrshot == 1}> <div align="center"> <a href="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/visit.php?cid=<{$wfllink.cid}>&lid=<{$wfllink.id}>" target="_blank"><img src="https://blinky.nemui.org/shot/xlarge?<{$wfllink.url}>" align="middle" alt="" /></a> </div> <{/if}>	  </td>
         </tr>
         <tr>
          <td colspan="2" valign="top"></td>

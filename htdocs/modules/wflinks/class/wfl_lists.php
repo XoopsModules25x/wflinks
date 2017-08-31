@@ -21,7 +21,7 @@ class wflLists
     var $prefix;
     var $suffix;
 
-    function wflLists($path="uploads", $value = null, $selected='', $size = 1, $emptyselect = 0, $type = 0, $prefix='', $suffix='')
+    function __construct($path="uploads", $value = null, $selected='', $size = 1, $emptyselect = 0, $type = 0, $prefix='', $suffix='')
     {
         $this -> value = $value;
         $this -> selection = $selected;
