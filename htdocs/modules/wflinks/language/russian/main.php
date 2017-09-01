@@ -119,7 +119,7 @@ define("_MD_WFL_ERRORSENDEMAIL","Подтвержден отчет о повре
 
 define("_MD_WFL_DELETE","Удалить");
 define("_MD_WFL_DISPLAYING","Отображается: ");
-define("_MD_WFL_LEGENDTEXTNEW","Новые за год");
+define("_MD_WFL_LEGENDTEXTNEW","Новые поступления");
 define("_MD_WFL_LEGENDTEXTNEWTHREE","Новые за 3 дня");
 define("_MD_WFL_LEGENDTEXTTHISWEEK","Новые за неделю");
 define("_MD_WFL_LEGENDTEXTNEWLAST","Более 1 недели");

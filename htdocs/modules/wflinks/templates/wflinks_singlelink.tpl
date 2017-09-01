@@ -134,4 +134,4 @@ div.wflinks_socbookmark a:hover img
 <{/if}>
 <!-- end comments loop -->
 
-<{include file="db:system_notification_select.html"}>
+<{include file="db:system_notification_select.tpl"}>
