@@ -290,12 +290,12 @@ if ($xoopsModuleConfig['useaddress']) {
       $sform -> addElement( $submitNews_radio );
 
       include_once XOOPS_ROOT_PATH . '/class/xoopstopic.php';
-      $xt = new XoopsTopic( $xoopsDB -> prefix( 'topics' ) );
+      $xt = new XoopsTopic( $xoopsDB -> prefix( 'news_topics' ) );
       ob_start();
          $xt -> makeTopicSelBox( 1, 0, "newstopicid" );
          $sform -> addElement( new XoopsFormLabel( _AM_WFL_LINK_NEWSCATEGORY, ob_get_contents() ) );
       ob_end_clean();
-      $sform -> addElement( new XoopsFormText( _AM_WFL_LINK_NEWSTITLE, 'newsTitle', 70, 255, '' ), false );
+      $sform -> addElement( new XoopsFormText( _AM_WFL_LINK_NEWSTITLE, 'topic_id', 70, 255, '' ), false );
     }
 
     if ($lid && $published == 0) {

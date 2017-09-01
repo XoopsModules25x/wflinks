@@ -275,7 +275,7 @@ define("_AM_WFL_LINK_REALLYDELETEDTHIS","Действительно удалит
 define("_AM_WFL_LINK_FILEWASDELETED","Ссылка %s успешно удалена из базы данных!");
 define("_AM_WFL_LINK_FILEAPPROVED","Ссылка одобрена и успешно обновлена ​​база данных");
 define("_AM_WFL_LINK_CREATENEWSSTORY","<b>Создать новость из ссылки</b>");
-define("_AM_WFL_LINK_SUBMITNEWS","Добавить новую ссылку в качестве пункта новостей?");
+define("_AM_WFL_LINK_SUBMITNEWS","Добавить новую ссылку в качестве новости?");
 define("_AM_WFL_LINK_NEWSCATEGORY","Выберите категорию новостей для отправки:");
 define("_AM_WFL_LINK_NEWSTITLE","Название новости:<div style='padding-top: 4px; padding-bottom: 4px;'><span style='font-weight: normal;'>Оставьте пустым для использования названия ссылки</span></div>");
 define("_AM_WFL_LINK_PUBLISHER","Имя издателя ссылки: ");
