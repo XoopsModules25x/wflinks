@@ -20,7 +20,7 @@ $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 $arr    = $mytree->getFirstChild($cid, $catsort);
 
 if (is_array($arr) > 0 && !$list && !$selectdate) {
-    if (false == wfl_checkgroups($cid)) {
+    if (false === wfl_checkgroups($cid)) {
         redirect_header('index.php', 1, _MD_WFL_MUSTREGFIRST);
     }
 }

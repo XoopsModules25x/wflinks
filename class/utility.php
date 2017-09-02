@@ -28,9 +28,9 @@ class WfLinksUtility extends XoopsObject
             if (!file_exists($folder)) {
                 if (!mkdir($folder) && !is_dir($folder)) {
                     throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-                } else {
-                    file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
                 }
+
+                file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
             }
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';

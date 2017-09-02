@@ -22,13 +22,13 @@ $lid = wfl_cleanRequestVars($_REQUEST, 'lid', 0);
 $cid = (int)$cid;
 $lid = (int)$lid;
 
-if (false == wfl_checkgroups($cid, 'WFLinkSubPerm')) {
+if (false === wfl_checkgroups($cid, 'WFLinkSubPerm')) {
     redirect_header('index.php', 1, _MD_WFL_NOPERMISSIONTOPOST);
 }
 
 if (true === wfl_checkgroups($cid, 'WFLinkSubPerm')) {
     if (wfl_cleanRequestVars($_REQUEST, 'submit', 0)) {
-        if (false == wfl_checkgroups($cid, 'WFLinkSubPerm')) {
+        if (false === wfl_checkgroups($cid, 'WFLinkSubPerm')) {
             redirect_header('index.php', 1, _MD_WFL_NOPERMISSIONTOPOST);
         }
 

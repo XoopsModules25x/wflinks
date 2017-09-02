@@ -136,7 +136,7 @@ function wfl_cleanRequestVars($array, $name = null, $def = null, $strict = false
     // Method is more for functionality rather than beauty at the moment, will correct later.
     unset($array['usercookie'], $array['PHPSESSID']);
 
-    if (is_array($array) && $name == null) {
+    if (is_array($array) && $name === null) {
         $globals = array();
         foreach (array_keys($array) as $k) {
             $value = strip_tags(trim($array[$k]));
@@ -200,20 +200,20 @@ function wfl_serverstats()
         <div style='padding: 8px;'>\n
         <div>" . _AM_WFL_LINK_SPHPINI . "</div>\n";
 
-    $safemode        = ini_get('safe_mode') ? _AM_WFL_LINK_ON . _AM_WFL_LINK_SAFEMODEPROBLEMS : _AM_WFL_LINK_OFF;
-    $registerglobals = (ini_get('register_globals') === '') ? _AM_WFL_LINK_OFF : _AM_WFL_LINK_ON;
+//    $safemode        = ini_get('safe_mode') ? _AM_WFL_LINK_ON . _AM_WFL_LINK_SAFEMODEPROBLEMS : _AM_WFL_LINK_OFF;
+//    $registerglobals = (ini_get('register_globals') === '') ? _AM_WFL_LINK_OFF : _AM_WFL_LINK_ON;
     $links           = ini_get('file_uploads') ? _AM_WFL_LINK_ON : _AM_WFL_LINK_OFF;
 
     $gdlib = function_exists('gd_info') ? _AM_WFL_LINK_GDON : _AM_WFL_LINK_GDOFF;
     echo '<li>' . _AM_WFL_LINK_GDLIBSTATUS . $gdlib;
     if (function_exists('gd_info')) {
-        if (true == $gdlib = gd_info()) {
+        if (true === $gdlib = gd_info()) {
             echo '<li>' . _AM_WFL_LINK_GDLIBVERSION . '<b>' . $gdlib['GD Version'] . '</b>';
         }
     }
     echo "<br><br>\n\n";
-    echo '<li>' . _AM_WFL_LINK_SAFEMODESTATUS . $safemode;
-    echo '<li>' . _AM_WFL_LINK_REGISTERGLOBALS . $registerglobals;
+//    echo '<li>' . _AM_WFL_LINK_SAFEMODESTATUS . $safemode;
+//    echo '<li>' . _AM_WFL_LINK_REGISTERGLOBALS . $registerglobals;
     echo '<li>' . _AM_WFL_LINK_SERVERUPLOADSTATUS . $links;
     echo '</div>';
     echo '</fieldset><br>';

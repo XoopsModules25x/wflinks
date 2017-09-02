@@ -439,7 +439,7 @@ switch (strtolower($op)) {
                 if (!$_ping_results) {
                     $_ping_results = _AM_WFL_LINK_NORESPONSE;
                 } else {
-                    $_ping_results = $_ping_results . '(s)';
+                    $_ping_results .= '(s)';
                 }
 
                 $lid   = $published['lid'];

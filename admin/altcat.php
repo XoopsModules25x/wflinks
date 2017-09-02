@@ -17,12 +17,12 @@ $op  = wfl_cleanRequestVars($_REQUEST, 'op', '');
 $lid = (int)wfl_cleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
- * @param $xt
+ * @param $xt WflinksXoopsTree
  * @param $itemid
  * @param $title
  * @param $checks
  */
-function makeTreeCheckTable($xt, $itemid, $title, $checks)
+function makeTreeCheckTable(WflinksXoopsTree $xt, $itemid, $title, $checks)
 {
     global $wfmyts;
 

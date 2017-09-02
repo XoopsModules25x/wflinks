@@ -28,9 +28,9 @@ function checkSearchgroups($cid = 0, $permType = 'WFLinkCatPerm', $redirect = fa
     if (!$gpermHandler->checkRight($permType, $cid, $groups, $module->getVar('mid'))) {
         if ($redirect === false) {
             return false;
-        } else {
-            redirect_header('index.php', 3, _NOPERM);
         }
+
+        redirect_header('index.php', 3, _NOPERM);
     }
     unset($module);
 

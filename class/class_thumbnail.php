@@ -89,7 +89,7 @@ class wfThumbsNails
         $path_to_check = XOOPS_ROOT_PATH . "/$img_path/$img_savepath";
 
         if (!is_dir($path_to_check)) {
-            if (false == mkdir("$path_to_check", 0777)) {
+            if (false === mkdir("$path_to_check", 0777)) {
                 return false;
             }
         }
@@ -266,8 +266,8 @@ class wfThumbsNails
                 if (!empty($xoopsModuleConfig['path_magick']) && is_dir($xoopsModuleConfig['path_magick'])) {
                     if (preg_match("#[A-Z]:|\\\\#Ai", __FILE__)) {
                         $cur_dir     = __DIR__;
-                        $src_file_im = '"' . $cur_dir . '\\' . strtr($this->_source_image, '/', '\\') . '"';
-                        $new_file_im = '"' . $cur_dir . '\\' . strtr($this->_save_image, '/', '\\') . '"';
+                        $src_file_im = '"' . $cur_dir . '\\' . str_replace('/', '\\', $this->_source_image) . '"';
+                        $new_file_im = '"' . $cur_dir . '\\' . str_replace('/', '\\', $this->_save_image) . '"';
                     } else {
                         $src_file_im = escapeshellarg($this->_source_image);
                         $new_file_im = escapeshellarg($this->_save_image);
@@ -363,7 +363,7 @@ class wfThumbsNails
     public function image_check()
     {
         $this->_img_info = getimagesize($this->_source_image, $imageinfo);
-        if (null == $this->_img_info) {
+        if (null === $this->_img_info) {
             return false;
         }
         // if ( $this->_img_info[0] < $this->img_width && $this->_img_info[1] < $this->img_height )
@@ -384,7 +384,7 @@ class wfThumbsNails
             return false;
         }
         $gdlib = function_exists('gd_info');
-        if (false == $gdlib = gd_info()) {
+        if (false === $gdlib = gd_info()) {
             return false;
         }
 

@@ -34,7 +34,7 @@ $sql2 = 'SELECT count(*) FROM '
         . '))';
 list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql2));
 
-if (false == wfl_checkgroups($cid = 0) && $count == 0) {
+if (false === wfl_checkgroups($cid = 0) && $count == 0) {
     redirect_header('index.php', 1, _MD_WFL_MUSTREGFIRST);
 }
 
