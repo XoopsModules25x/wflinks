@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: brokenlink.php 9694 2012-06-23 20:42:45Z beckmi $
+ * $Id: brokenlink.php v 1.00 21 June 2005 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -21,35 +21,37 @@ switch ( strtolower( $op ) ) {
         $ack = wfl_cleanRequestVars( $_REQUEST, 'ack', 0 );
         $con = wfl_cleanRequestVars( $_REQUEST, 'con', 1 );
 
-        if ( $ack && !$con ) {
+        if ($ack && !$con) {
             $acknowledged = ( $ack == 0 ) ? 1 : 0;
             $sql = "UPDATE " . $xoopsDB -> prefix( 'wflinks_broken' ) . " SET acknowledged=" . $acknowledged;
-            if ( $acknowledged == 0 ) {
+            if ($acknowledged == 0) {
                 $sql .= ", confirmed=0 ";
-            } 
+            }
             $sql .= " WHERE lid=" . $lid;
             if ( !$result = $xoopsDB -> queryF( $sql ) ) {
                 XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
                 return false;
-            } 
+            }
           //  $update_mess = _AM_WFL_BROKEN_NOWACK;
             redirect_header( "brokenlink.php?op=default", 1, _AM_WFL_BROKEN_NOWACK );
-        } 
+        }
 
-        if ( $con ) {
+        if ($con) {
             $confirmed = ( $con == 0 ) ? 1 : 0;
             $sql = "UPDATE " . $xoopsDB -> prefix( 'wflinks_broken' ) . " SET confirmed=" . $confirmed;
-            if ( $confirmed == 1 ) {
+            if ($confirmed == 1) {
                 $sql .= ", acknowledged=" . $confirmed;
-            } 
+            }
             $sql .= " WHERE lid=" . $lid;
             if ( !$result = $xoopsDB -> queryF( $sql ) ) {
                 XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
                 return false;
-            } 
+            }
             // $update_mess = _AM_WFL_BROKEN_NOWCON;
             redirect_header( "brokenlink.php?op=default", 1, _AM_WFL_BROKEN_NOWCON );
-        } 
+        }
       //  redirect_header( "brokenlink.php?op=default", 1, $update_mess );
       //  break;
 
@@ -72,41 +74,41 @@ switch ( strtolower( $op ) ) {
         xoops_cp_header();
         //wfl_adminmenu( _AM_WFL_BROKEN_FILE );
         echo "
-		<fieldset>
-		 <legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_BROKEN_REPORTINFO . "</legend>\n
-		  <div style='padding: 8px;'>" . _AM_WFL_BROKEN_REPORTSNO . "&nbsp;<b>$totalbrokenlinks</b><div>\n
-		  <div style='padding: 8px;'>\n
-		   <ul>
-		    <li>" . $imagearray['ignore'] . " " . _AM_WFL_BROKEN_IGNOREDESC . "</li>\n
-		    <li>" . $imagearray['editimg'] . " " . _AM_WFL_BROKEN_EDITDESC . "</li>
-		    <li>" . $imagearray['deleteimg'] . " " . _AM_WFL_BROKEN_DELETEDESC . "</li>\n
-		   </ul>
-		  </div>\n
-		 </fieldset>
-		<br />\n
+        <fieldset>
+         <legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_BROKEN_REPORTINFO . "</legend>\n
+          <div style='padding: 8px;'>" . _AM_WFL_BROKEN_REPORTSNO . "&nbsp;<b>$totalbrokenlinks</b><div>\n
+          <div style='padding: 8px;'>\n
+           <ul>
+            <li>" . $imagearray['ignore'] . " " . _AM_WFL_BROKEN_IGNOREDESC . "</li>\n
+            <li>" . $imagearray['editimg'] . " " . _AM_WFL_BROKEN_EDITDESC . "</li>
+            <li>" . $imagearray['deleteimg'] . " " . _AM_WFL_BROKEN_DELETEDESC . "</li>\n
+           </ul>
+          </div>\n
+         </fieldset>
+        <br />\n
 
-		<table width='100%' border='0' cellspacing='1' cellpadding='2' class='outer'>\n
-		<tr style='text-align: center;'>\n
-		<th width='3%' style='text-align: center;'>" . _AM_WFL_BROKEN_ID . "</th>\n
-		<th width='35%' style='text-align: left;'>" . _AM_WFL_BROKEN_TITLE . "</th>\n
-		<th>" . _AM_WFL_BROKEN_REPORTER . "</th>\n
-		<th>" . _AM_WFL_BROKEN_FILESUBMITTER . "</th>\n
-		<th>" . _AM_WFL_BROKEN_DATESUBMITTED . "</th>\n
-		<th>" . _AM_WFL_BROKEN_ACKNOWLEDGED . "</th>\n
-		<th>" . _AM_WFL_BROKEN_DCONFIRMED . "</th>\n		
-		<th style='text-align: center; width: 6%; white-space: nowrap;'>" . _AM_WFL_BROKEN_ACTION . "</th>\n
-		</tr>\n";
+        <table width='100%' border='0' cellspacing='1' cellpadding='2' class='outer'>\n
+        <tr style='text-align: center;'>\n
+        <th width='3%' style='text-align: center;'>" . _AM_WFL_BROKEN_ID . "</th>\n
+        <th width='35%' style='text-align: left;'>" . _AM_WFL_BROKEN_TITLE . "</th>\n
+        <th>" . _AM_WFL_BROKEN_REPORTER . "</th>\n
+        <th>" . _AM_WFL_BROKEN_FILESUBMITTER . "</th>\n
+        <th>" . _AM_WFL_BROKEN_DATESUBMITTED . "</th>\n
+        <th>" . _AM_WFL_BROKEN_ACKNOWLEDGED . "</th>\n
+        <th>" . _AM_WFL_BROKEN_DCONFIRMED . "</th>\n
+        <th style='text-align: center; width: 6%; white-space: nowrap;'>" . _AM_WFL_BROKEN_ACTION . "</th>\n
+        </tr>\n";
 
-        if ( $totalbrokenlinks == 0 ) {
+        if ($totalbrokenlinks == 0) {
             echo "<tr style='text-align: center;'><td style='text-align: center;' class='head' colspan='8'>" . _AM_WFL_BROKEN_NOFILEMATCH . "</td></tr>";
         } else {
             while ( list( $reportid, $lid, $sender, $ip, $date, $confirmed, $acknowledged ) = $xoopsDB -> fetchRow( $result ) ) {
                 $result2 = $xoopsDB -> query( "SELECT cid, title, url, submitter FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE lid=$lid" );
                 list( $cid, $linkshowname, $url, $submitter ) = $xoopsDB -> fetchRow( $result2 );
-                if ( $sender != 0 ) {
+                if ($sender != 0) {
                     $result3 = $xoopsDB -> query( "SELECT uname, email FROM " . $xoopsDB -> prefix( "users" ) . " WHERE uid=" . $sender . "" );
                     list( $sendername, $email ) = $xoopsDB -> fetchRow( $result3 );
-                } 
+                }
                 $result4 = $xoopsDB -> query( "SELECT uname, email FROM " . $xoopsDB -> prefix( "users" ) . " WHERE uid=" . $sender . "" );
                 list( $ownername, $owneremail ) = $xoopsDB -> fetchRow( $result4 );
 
@@ -117,16 +119,16 @@ switch ( strtolower( $op ) ) {
                 echo "<td class='head'>$reportid</td>\n";
                 echo "<td class='even' style='text-align: left;'><a href='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/singlelink.php?cid=" . $cid . "&amp;lid=" . $lid . "' target='_blank'>" . $linkshowname . "</a></td>\n";
 
-                if ( $email == "" ) {
+                if ($email == "") {
                     echo "<td class='even'>$sendername ($ip)";
                 } else {
                     echo "<td class='even'><a href='mailto:$email'>$sendername</a> ($ip)";
-                } 
-                if ( $owneremail == '' ) {
+                }
+                if ($owneremail == '') {
                     echo "<td class='even'>$ownername";
                 } else {
                     echo "<td class='even'><a href='mailto:$owneremail'>$ownername</a>";
-                } 
+                }
                 echo "</td>\n";
                 echo "<td class='even' style='text-align: center;'>" . formatTimestamp( $date, $xoopsModuleConfig['dateformatadmin'] ) . "</td>\n";
                 echo "<td class='even'><a href='brokenlink.php?op=updateNotice&amp;lid=" . $lid . "&ack=" . intval( $acknowledged ) . "'>" . $ack_image . " </a></td>\n";
@@ -136,10 +138,8 @@ switch ( strtolower( $op ) ) {
                 echo "<a href='main.php?op=edit&amp;lid=" . $lid . "'>" . $imagearray['editimg'] . "</a>\n";
                 echo "<a href='brokenlink.php?op=delBrokenlinks&amp;lid=" . $lid . "'>" . $imagearray['deleteimg'] . "</a>\n";
                 echo "</td></tr>\n";
-            } 
-        } 
+            }
+        }
         echo"</table>";
-} 
+}
 include_once 'admin_footer.php';
-
-?>

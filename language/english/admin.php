@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: admin.php 11245 2013-03-18 03:29:10Z cesag $
+ * $Id: admin.php 10055 2012-08-11 12:46:10Z beckmi $
  * Module: WF-links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,10 +9,13 @@
  * Licence: GNU
  * Format: UTF-8
  */
+
 define("_AM_WFL_WARNINSTALL1","<b>WARNING:</b> <u>Directory</u> %s exists on your server. <br />Please remove this directory for security reasons.");
 define("_AM_WFL_WARNINSTALL2","<b>WARNING:</b> <u>File</u> %s exists on your server. <br />Please remove this directory for security reasons.");
 define("_AM_WFL_WARNINSTALL3","<b>WARNING:</b> <u>Folder</u> %s does not exists on your server. <br />This folder is required by WF-Links.");
+
 define("_AM_WFL_MODULE_NAME","WF-Links");
+
 define("_AM_WFL_BMODIFY","Modify");
 define("_AM_WFL_BDELETE","Delete");
 define("_AM_WFL_BCREATE","Create");
@@ -51,6 +54,7 @@ define("_AM_WFL_SFILES","Links:  <strong>%s</strong> ");
 define("_AM_WFL_SNEWFILESVAL","Submitted:  <strong>%s</strong> ");
 define("_AM_WFL_SMODREQUEST","Modified:  <strong>%s</strong> ");
 define("_AM_WFL_SREVIEWS","Reviews: ");
+
 // Admin Main Menu
 define("_AM_WFL_MCATEGORY","Category Management");
 define("_AM_WFL_MLINKS","Link Management");
@@ -60,6 +64,7 @@ define("_AM_WFL_INDEXPAGE","Index Page Management");
 define("_AM_WFL_MCOMMENTS","Comments");
 define("_AM_WFL_MVOTEDATA","Vote Data");
 define("_AM_WFL_MUPLOADS","Image Upload");
+
 // Catgeory defines
 define("_AM_WFL_CCATEGORY_CREATENEW","Create New Category");
 define("_AM_WFL_CCATEGORY_MODIFY","Modify Category");
@@ -73,9 +78,10 @@ define("_AM_WFL_CCATEGORY_MODIFIED","Selected Category Modified and Database Upd
 define("_AM_WFL_CCATEGORY_DELETED","Selected Category Deleted and Database Updated Successfully");
 define("_AM_WFL_CCATEGORY_AREUSURE","WARNING: Are you sure you want to delete this Category and ALL its Links and Comments?");
 define("_AM_WFL_CCATEGORY_NOEXISTS","You must create a Category before you can add a new link");
-define("_AM_WFL_FCATEGORY_GROUPPROMPT",'Category Access Permissions:<div style="padding-top: 8px;"><span style="font-weight: normal;">Select user groups who will have access to this Category.</span></div>');
-define("_AM_WFL_FCATEGORY_SUBGROUPPROMPT",'Category Submission Permissions:<div style="padding-top: 8px;"><span style="font-weight: normal;">Select user groups who will have permission to submit new links to this Category.</span></div>');
-define("_AM_WFL_FCATEGORY_MODGROUPPROMPT",'Category Moderation Permissions:<div style="padding-top: 8px;"><span style="font-weight: normal;">Select user groups who will have permission to moderate this Category.</span></div>');
+define("_AM_WFL_FCATEGORY_GROUPPROMPT","Category Access Permissions:<div style='padding-top: 8px;'><span style='font-weight: normal;'>Select user groups who will have access to this Category.</span></div>");
+define("_AM_WFL_FCATEGORY_SUBGROUPPROMPT","Category Submission Permissions:<div style='padding-top: 8px;'><span style='font-weight: normal;'>Select user groups who will have permission to submit new links to this Category.</span></div>");
+define("_AM_WFL_FCATEGORY_MODGROUPPROMPT","Category Moderation Permissions:<div style='padding-top: 8px;'><span style='font-weight: normal;'>Select user groups who will have permission to moderate this Category.</span></div>");
+
 define("_AM_WFL_FCATEGORY_TITLE","Category Title:");
 define("_AM_WFL_FCATEGORY_WEIGHT","Category Weight:");
 define("_AM_WFL_FCATEGORY_SUBCATEGORY","Set As Sub-Category:");
@@ -144,6 +150,7 @@ define("_AM_WFL_LINK_FUPLOADURL","Upload URL: ");
 define("_AM_WFL_LINK_FOLDERSELECTION","Select Upload Destination:");
 define("_AM_WFL_LINK_FSHOWSELECTEDIMAGE","Display Selected Image:");
 define("_AM_WFL_LINK_FUPLOADIMAGE","Upload New Image to Selected Destination:");
+
 // Main Index defines
 define("_AM_WFL_MINDEX_LINKSUMMARY","Module Admin Summary");
 define("_AM_WFL_MINDEX_PUBLISHEDLINK","Published Links:");
@@ -161,10 +168,11 @@ define("_AM_WFL_MINDEX_PUBLISHED","Published");
 define("_AM_WFL_MINDEX_EXPIRE","Expired");
 define("_AM_WFL_MINDEX_NOTSET","Date Not Set");
 define("_AM_WFL_MINDEX_SUBMITTED","Date Submitted");
+
 define("_AM_WFL_MINDEX_ACTION","Action");
 define("_AM_WFL_MINDEX_NOLINKSFOUND","NOTICE: There are no links that match this criteria");
 define("_AM_WFL_MINDEX_PAGE","<b>Page:<b> ");
-define("_AM_WFL_MINDEX_PAGEINFOTXT","<ul><li>WF-links main page details.</li><li>You can easily change the image logo, heading, main index header and footer text to suit your own look</li></ul><br />Note: The Logo image choosen will be used throughout WF-links.");
+define('_AM_WFL_MINDEX_PAGEINFOTXT','<ul><li>WF-links main page details.</li><li>You can easily change the image logo, heading, main index header and footer text to suit your own look</li></ul><br />Note: The Logo image choosen will be used throughout WF-links.');
 define("_AM_WFL_MINDEX_RESPONSE","Response Time");
 // Submitted Links
 define("_AM_WFL_SUB_SUBMITTEDFILES","Submitted Links");
@@ -194,6 +202,7 @@ define("_AM_WFL_VOTE_NOVOTES","No User Votes to display");
 define("_AM_WFL_VOTE_DELETE","No User Votes to display");
 define("_AM_WFL_VOTE_DELETEDSC","<b>Deletes</b> the chosen vote information from the database.");
 define("_AM_WFL_VOTEDELETED","Selected Vote removed database updated");
+
 define("_AM_WFL_VOTE_USERAVG","Average User Rating");
 define("_AM_WFL_VOTE_TOTALRATE","Total Votes");
 define("_AM_WFL_VOTE_MAXRATE","Max Item Vote");
@@ -229,11 +238,11 @@ define("_AM_WFL_MOD_PROPOSED","Proposed link Details");
 define("_AM_WFL_MOD_ORIGINAL","Orginal link Details");
 define("_AM_WFL_MOD_REQDELETED","Modification request removed from the database");
 define("_AM_WFL_MOD_REQUPDATED","Selected link Modified and Database Updated Successfully");
-define("_AM_WFL_MOD_VIEW","View");
+define('_AM_WFL_MOD_VIEW','View');
 // Link management
 define("_AM_WFL_LINK_ID","Link ID: ");
 define("_AM_WFL_LINK_IP","Submitters IP Address: ");
-define("_AM_WFL_LINK_ALLOWEDAMIME",'<div style="padding-top: 4px; padding-bottom: 4px;"><b>Allowed Admin Link Extensions</b>:</div>');
+define("_AM_WFL_LINK_ALLOWEDAMIME","<div style='padding-top: 4px; padding-bottom: 4px;'><b>Allowed Admin Link Extensions</b>:</div>");
 define("_AM_WFL_LINK_MODIFYFILE","Modify Link Information");
 define("_AM_WFL_LINK_CREATENEWFILE","Create New Link");
 define("_AM_WFL_LINK_TITLE","Link Title: ");
@@ -241,8 +250,8 @@ define("_AM_WFL_LINK_DLURL","Link URL: ");
 define("_AM_WFL_LINK_DIRCA"," Internet Content Rating: ");
 define("_AM_WFL_LINK_DESCRIPTION","Link Description: ");
 define("_AM_WFL_LINK_CATEGORY","Link Main Category: ");
-define("_AM_WFL_LINK_FILESSTATUS",' Set link offline?<br /><br /><span style="font-weight: normal;">link will not be viewable to all users.</span>');
-define("_AM_WFL_LINK_SETASUPDATED",' Set link Status as Updated?<br /><br /><span style="font-weight: normal;">link will Display updated icon.</span>');
+define("_AM_WFL_LINK_FILESSTATUS"," Set link offline?<br /><br /><span style='font-weight: normal;'>link will not be viewable to all users.</span>");
+define("_AM_WFL_LINK_SETASUPDATED"," Set link Status as Updated?<br /><br /><span style='font-weight: normal;'>link will Display updated icon.</span>");
 define("_AM_WFL_LINK_SHOTIMAGE","Link Screenshot Image: ");
 define("_AM_WFL_LINK_DISCUSSINFORUM","Add Discuss in this Forum?");
 define("_AM_WFL_LINK_PUBLISHDATE","Link Publish Date:");
@@ -257,7 +266,7 @@ define("_AM_WFL_LINK_SETNEWPUBLISHDATE","<b>Set New Publish Date: </b><br />Publ
 define("_AM_WFL_LINK_SETPUBDATESETS","<b>Publish Date Set: </b><br />Publishes On Date:");
 define("_AM_WFL_LINK_EXPIREDATESET"," Expire date set: ");
 define("_AM_WFL_LINK_SETEXPIREDATE","<b>Set Expire Date: </b>");
-define("_AM_WFL_LINK_DELEDITMESS",'Delete Broken Report?<br /><br /><span style="font-weight: normal;">When you choose <b>YES</b> the Broken Report will automatically deleted and you confirm that the link now works again.</span>');
+define("_AM_WFL_LINK_DELEDITMESS","Delete Broken Report?<br /><br /><span style='font-weight: normal;'>When you choose <b>YES</b> the Broken Report will automatically deleted and you confirm that the link now works again.</span>");
 define("_AM_WFL_LINK_MUSTBEVALID","Screenshot image must be a valid image link under %s directory (ex. shot.gif). Leave it blank if there is no image link.");
 define("_AM_WFL_LINK_EDITAPPROVE","Approve link:");
 define("_AM_WFL_LINK_NEWFILEUPLOAD","New Link Created and Database Updated Successfully");
@@ -268,8 +277,9 @@ define("_AM_WFL_LINK_FILEAPPROVED","Link Approved and Database Updated Successfu
 define("_AM_WFL_LINK_CREATENEWSSTORY","<b>Create News Story From link</b>");
 define("_AM_WFL_LINK_SUBMITNEWS","Submit New link as News item?");
 define("_AM_WFL_LINK_NEWSCATEGORY","Select News Category to submit News:");
-define("_AM_WFL_LINK_NEWSTITLE",'News Title:<div style="padding-top: 4px; padding-bottom: 4px;"><span style="font-weight: normal;">Leave Blank to use Link Title</span></div>');
+define("_AM_WFL_LINK_NEWSTITLE","News Title:<div style='padding-top: 4px; padding-bottom: 4px;'><span style='font-weight: normal;'>Leave Blank to use Link Title</span></div>");
 define("_AM_WFL_LINK_PUBLISHER","Link Publisher Name: ");
+
 /**
  * Broken links defines
  */
@@ -287,6 +297,7 @@ define("_AM_WFL_BROKEN_ACKDESC","<b>Acknowledged</b> Set Acknowledged state of b
 define("_AM_WFL_BROKEN_CONFIRMDESC","<b>Confirmed</b> Set confirmed state of broken link report.");
 define("_AM_WFL_BROKEN_ACKNOWLEDGED","Acknowledged");
 define("_AM_WFL_BROKEN_DCONFIRMED","Confirmed");
+
 define("_AM_WFL_BROKEN_ID","ID");
 define("_AM_WFL_BROKEN_TITLE","Title");
 define("_AM_WFL_BROKEN_REPORTER","Reporter");
@@ -318,16 +329,19 @@ define("_AM_WFL_ACCESSRIGHTS","Access Rights");
 define("_AM_WFL_ICO_EDIT","Edit This Item");
 define("_AM_WFL_ICO_DELETE","Delete This Item");
 define("_AM_WFL_ICO_RESOURCE","Edit This Resource");
+
 define("_AM_WFL_ICO_ONLINE","Online");
 define("_AM_WFL_ICO_OFFLINE","Offline");
 define("_AM_WFL_ICO_APPROVED","Approved");
 define("_AM_WFL_ICO_NOTAPPROVED","Not Approved");
+
 define("_AM_WFL_ICO_LINK","Related link");
 define("_AM_WFL_ICO_URL","Add Related URL");
 define("_AM_WFL_ICO_ADD","Add");
 define("_AM_WFL_ICO_APPROVE","Approve");
 define("_AM_WFL_ICO_STATS","Stats");
 define("_AM_WFL_ICO_VIEW","View this item");
+
 define("_AM_WFL_ICO_IGNORE","Ignore");
 define("_AM_WFL_ICO_ACK","Broken Report Acknowledged");
 define("_AM_WFL_ICO_REPORT","Acknowledge Broken Report?");
@@ -340,7 +354,8 @@ define("_AM_WFL_ALTCAT_CREATEF","Add Alternate Category");
 define("_AM_WFL_MALTCAT","Alternate Category Management");
 define("_AM_WFL_ALTCAT_MODIFYF","Alternate Category Management");
 define("_AM_WFL_ALTCAT_INFOTEXT","<ul><li>Alternate categories can be added or removed easily via this form.</li></ul>");
-define("_AM_WFL_ALTCAT_CREATED","Alternate categories was saved!");
+define('_AM_WFL_ALTCAT_CREATED','Alternate categories was saved!');
+
 define("_AM_WFL_MRESOURCES","Resource Management");
 define("_AM_WFL_RES_CREATED","Resource Management");
 define("_AM_WFL_RES_ID","ID");
@@ -355,20 +370,26 @@ define("_AM_WFL_RES_DESCF","Resource description:");
 define("_AM_WFL_RES_URLF","Resource URL:");
 define("_AM_WFL_RES_ITEMIDF","Resource Item ID:");
 define("_AM_WFL_RES_INFOTEXT","<ul><li>New resources can be added, edited or removed easily via this form.</li>
-	<li>List all resources linked to a link</li>
-	<li>Modify resource name and description</li></ul>
-	");
+    <li>List all resources linked to a link</li>
+    <li>Modify resource name and description</li></ul>
+    ");
 define("_AM_WFL_LISTBROKEN","Displays Links that are possibly broken. NB: These results may not be accurate and should be taken as a rough guide.<br /><br />Please check the link does exist first before any action taken.<br /><br />");
 define("_AM_WFL_PINGTIMES","Displays the first estimated round ping time to each link.<br /><br />NB: These results may not be accurate and should be taken as a rough guide.<br /><br />");
+
 define("_AM_WFL_NO_FORUM","No forum Selected");
+
 define("_AM_WFL_PERM_RATEPERMISSIONS","Rate Permissions");
 define("_AM_WFL_PERM_RATEPERMISSIONS_TEXT","Select the groups that can rate a link in the selected categories.");
+
 define("_AM_WFL_PERM_AUTOPERMISSIONS","Auto Approve Links");
 define("_AM_WFL_PERM_AUTOPERMISSIONS_TEXT","Select the groups that will have new links auto approved without admin intervention.");
+
 define("_AM_WFL_PERM_SPERMISSIONS","Submitter Permissions");
 define("_AM_WFL_PERM_SPERMISSIONS_TEXT","Select the groups who can submit new links to selected categories.");
+
 define("_AM_WFL_PERM_APERMISSIONS","Moderator Groups");
 define("_AM_WFL_PERM_APERMISSIONS_TEXT","Select the groups who have moderator privligages for the selected categories.");
+
 // added by McDonald
 define("_AM_WFL_COUNTRY","Country:");
 define("_AM_WFL_KEYWORDS","Keywords:");
@@ -386,6 +407,7 @@ define("_AM_WFL_STATE","State");
 define("_AM_WFL_ZIPCODE","ZIP code");
 define("_AM_WFL_TELEPHONE","Telephone");
 define("_AM_WFL_FAX","Fax");
+
 // Version 1.05 RC2
 define("_AM_WFL_WARNINSTALL4","<b>WARNING:</b> <u>Folder</u> %s is not writeable. <br />This folder needs to be writeable (CHMOD 777) for WF-Links.");
 // Version 1.05 RC5
@@ -398,14 +420,16 @@ define("_AM_WFL_BANNER","Banner");
 define("_AM_WFL_FBANNER","Banner");
 define("_AM_WFL_BANNERID","Select Banner ID:");
 define("_AM_WFL_BANNERIDDSC","If you have selected a Client in the form above the banner id will not be saved!");
+
 // Version 1.05 RC6
 define("_AM_WFL_VAT","VAT Reg No");
-define("_AM_WFL_VATWIKI",'For more information see <a href="http://en.wikipedia.org/wiki/Value_added_tax_identification_number" target="_blank">Wikipedia</a>');
+define("_AM_WFL_VATWIKI","For more information see <a href='http://en.wikipedia.org/wiki/Value_added_tax_identification_number' target='_blank'>Wikipedia</a>");
 define("_AM_WFL_EMAIL","E-Mail");
 define("_AM_WFL_ICO_EXPIRE","Expired");
-define("_AM_WFL_LINK_NORESPONSE", "No Response");
-define("_AM_WFL_LINK_CREATEADDRESS", "&nbsp;<b>Address form</b>");
-define("_AM_WFL_LINK_MISCLINKSETTINGS", "&nbsp;<b>Miscellaneous Link settings</b>");
+define("_AM_WFL_LINK_NORESPONSE", 'No Response');
+define("_AM_WFL_LINK_CREATEADDRESS", '&nbsp;<b>Address form</b>');
+define("_AM_WFL_LINK_MISCLINKSETTINGS", '&nbsp;<b>Miscellaneous Link settings</b>');
+
 // Version 1.06 RC1
 define("_AM_WFL_READWRITEERROR","You either did not choose a file to upload or the server has insufficient read/writes to upload this file!");
 define("_AM_WFL_INVALIDFILESIZE","Invalid File Size");
@@ -431,7 +455,7 @@ define("_AM_WFL_ERRORSRETURNUPLOAD","<h4>Errors Returned While Uploading</h4>");
 define("_AM_WFL_DOESNOTEXIST"," does not exist!");
 define("_AM_WFL_INFORMATION","Link Information");
 define("_AM_WFL_HITS","Hits: ");
-define("_AM_WFL_PAGERANK","PageRank: ");
+define("_AM_WFL_PAGERANK","PageRankâ„¢: ");
 define("_AM_WFL_ERROR_CATISCAT","You can NOT set a category as a sub-category of itself!");
 define("_AM_WFL_MOD_COUNTRY","Country:");
 define("_AM_WFL_MOD_KEYWORDS","Keywords:");
@@ -450,14 +474,16 @@ define("_AM_WFL_MOD_VOIP","VoIP:");
 define("_AM_WFL_MOD_MOBILE","Mobile:");
 define("_AM_WFL_MOD_EMAIL","E-Mail:");
 define("_AM_WFL_MOD_VAT","VAT:");
+
 // version 1.06 RC-2
 define("_AM_WFL_IPAGE_SHOWLATEST","Show Latest Listings?");
 define("_AM_WFL_IPAGE_LATESTTOTAL","How many links to show?");
 define("_AM_WFL_IPAGE_LATESTTOTAL_DSC","0 Turns this option off.");
+
 //version 1.06 Final
 define("_AM_WFL_DOCUMENTATION","Documentation");
 define("_AM_WFL_SHOWNOIMAGE","Show no image");
 define("_AM_WFL_NOSELECTION","No selection");
 define("_AM_WFL_NOFILESELECT","No selected file");
-define("_AM_WFL_MODULEADMIN_MISSING", "Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class into /Frameworks (see /docs/readme.txt)");
-?>
+
+define( "_AM_WFL_MODULEADMIN_MISSING", 'Error: The ModuleAdmin class is missing. Please install the ModuleAdmin Class into /Frameworks (see /docs/readme.txt)');

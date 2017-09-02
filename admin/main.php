@@ -16,14 +16,16 @@ $mytree = new XoopsTree( $xoopsDB -> prefix( 'wflinks_cat' ), 'cid', 'pid' );
 $op = wfl_cleanRequestVars( $_REQUEST, 'op', '' );
 $lid = intval( wfl_cleanRequestVars( $_REQUEST, 'lid', 0 ) );
 
-function edit( $lid = 0 ) {
+function edit( $lid = 0 )
+{
     global $xoopsDB, $wfmyts, $mytree, $imagearray, $xoopsConfig, $xoopsModuleConfig, $xoopsModule, $xoopsUser;
-    
+
     $sql = "SELECT * FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE lid=" . $lid;
     if ( !$result = $xoopsDB -> query( $sql ) ) {
         XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
         return false;
-    } 
+    }
     $link_array = $xoopsDB -> fetchArray( $xoopsDB -> query( $sql ) );
 
     $directory = $xoopsModuleConfig['screenshots'];
@@ -65,44 +67,44 @@ function edit( $lid = 0 ) {
     xoops_load('XoopsUserUtility');
     //wfl_adminmenu( _AM_WFL_MLINKS );
 
-      if ( $lid > 0 ) {
+      if ($lid > 0) {
         $_vote_data = wfl_getVoteDetails( $lid );
         $text_info = "<table width='100%'>
-			 <tr>
-			  <td width='33%' valign='top'>
-			   <div><b>" . _AM_WFL_LINK_ID . " </b>" . $lid . "</div>
-			   <div><b>" . _AM_WFL_MINDEX_SUBMITTED . ": </b>" . formatTimestamp( $link_array['date'], $xoopsModuleConfig['dateformat'] ) . "</div>
-			   <div><b>" . _AM_WFL_LINK_SUBMITTER . " </b>" . XoopsUserUtility::getUnameFromId( $submitter ) . "</div>
-			   <div><b>" . _AM_WFL_LINK_IP . " </b>" . $ipaddress . "</div>
-			   <div><b>" . _AM_WFL_PAGERANK . " </b>" . pagerank($link_array['url']) . "</div>
-			   <div><b>" . _AM_WFL_HITS . " </b>" . $link_array['hits'] . "</div>
+             <tr>
+              <td width='33%' valign='top'>
+               <div><b>" . _AM_WFL_LINK_ID . " </b>" . $lid . "</div>
+               <div><b>" . _AM_WFL_MINDEX_SUBMITTED . ": </b>" . formatTimestamp( $link_array['date'], $xoopsModuleConfig['dateformat'] ) . "</div>
+               <div><b>" . _AM_WFL_LINK_SUBMITTER . " </b>" . XoopsUserUtility::getUnameFromId( $submitter ) . "</div>
+               <div><b>" . _AM_WFL_LINK_IP . " </b>" . $ipaddress . "</div>
+               <div><b>" . _AM_WFL_PAGERANK . " </b>" . pagerank($link_array['url']) . "</div>
+               <div><b>" . _AM_WFL_HITS . " </b>" . $link_array['hits'] . "</div>
 
-			  </td>
-			  <td valign='top'>
-			   <div><b>" . _AM_WFL_VOTE_TOTALRATE . ": </b>" . intval( $_vote_data['rate'] ) . "</div>
-			   <div><b>" . _AM_WFL_VOTE_USERAVG . ": </b>" . intval( round( $_vote_data['avg_rate'], 2 ) ) . "</div>
-			   <div><b>" . _AM_WFL_VOTE_MAXRATE . ": </b>" . intval( $_vote_data['min_rate'] ) . "</div>
-			   <div><b>" . _AM_WFL_VOTE_MINRATE . ": </b>" . intval( $_vote_data['max_rate'] ) . "</div>
-			  </td>
-			  <td valign='top'>
-			   <div><b>" . _AM_WFL_VOTE_MOSTVOTEDTITLE . ": </b>" . intval( $_vote_data['max_title'] ) . "</div>
-		           <div><b>" . _AM_WFL_VOTE_LEASTVOTEDTITLE . ": </b>" . intval( $_vote_data['min_title'] ) . "</div>
-			   <div><b>" . _AM_WFL_VOTE_REGISTERED . ": </b>" . ( intval( $_vote_data['rate'] - $_vote_data['null_ratinguser'] ) ) . "</div>
-			   <div><b>" . _AM_WFL_VOTE_NONREGISTERED . ": </b>" . intval( $_vote_data['null_ratinguser'] ) . "</div>
-			  </td>
-			 </tr>
-			</table>";
+              </td>
+              <td valign='top'>
+               <div><b>" . _AM_WFL_VOTE_TOTALRATE . ": </b>" . intval( $_vote_data['rate'] ) . "</div>
+               <div><b>" . _AM_WFL_VOTE_USERAVG . ": </b>" . intval( round( $_vote_data['avg_rate'], 2 ) ) . "</div>
+               <div><b>" . _AM_WFL_VOTE_MAXRATE . ": </b>" . intval( $_vote_data['min_rate'] ) . "</div>
+               <div><b>" . _AM_WFL_VOTE_MINRATE . ": </b>" . intval( $_vote_data['max_rate'] ) . "</div>
+              </td>
+              <td valign='top'>
+               <div><b>" . _AM_WFL_VOTE_MOSTVOTEDTITLE . ": </b>" . intval( $_vote_data['max_title'] ) . "</div>
+                   <div><b>" . _AM_WFL_VOTE_LEASTVOTEDTITLE . ": </b>" . intval( $_vote_data['min_title'] ) . "</div>
+               <div><b>" . _AM_WFL_VOTE_REGISTERED . ": </b>" . ( intval( $_vote_data['rate'] - $_vote_data['null_ratinguser'] ) ) . "</div>
+               <div><b>" . _AM_WFL_VOTE_NONREGISTERED . ": </b>" . intval( $_vote_data['null_ratinguser'] ) . "</div>
+              </td>
+             </tr>
+            </table>";
         echo "<fieldset style='border: #e8e8e8 1px solid;'><legend style='display: inline; font-weight: bold; color: #0A3760;'>" . _AM_WFL_INFORMATION . "</legend>\n
-			<div style='padding: 8px;'>" . $text_info . "</div>\n
-		<!--	<div style='padding: 8px;'><li>" . $imagearray['deleteimg'] . " " . _AM_WFL_VOTE_DELETEDSC . "</li></div>\n  -->
-			</fieldset>\n
-			<br />\n";
-    } 
+            <div style='padding: 8px;'>" . $text_info . "</div>\n
+        <!--	<div style='padding: 8px;'><li>" . $imagearray['deleteimg'] . " " . _AM_WFL_VOTE_DELETEDSC . "</li></div>\n  -->
+            </fieldset>\n
+            <br />\n";
+    }
     unset( $_vote_data );
 
     $caption = ( $lid ) ? _AM_WFL_LINK_MODIFYFILE : _AM_WFL_LINK_CREATENEWFILE;
     $sform = new XoopsThemeForm( $caption, "storyform", xoops_getenv( 'PHP_SELF' ) );
-    $sform -> setExtra( 'enctype="multipart / form - data"' );
+    $sform -> setExtra( 'enctype="multipart/form-data"' );
 
     if ($submitter == '') {
       $sform -> addElement( new XoopsFormHidden( 'submitter', $submitter ) );
@@ -123,8 +125,8 @@ function edit( $lid = 0 ) {
 // Link url form
     $url_text = new XoopsFormText('', 'url', 70, 255, $url);
     $url_tray = new XoopsFormElementTray(_AM_WFL_LINK_DLURL, '');
-    $url_tray -> addElement( $url_text, true) ; 
-    $url_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='../images/icon/world.png' onClick=\"window.open(document.storyform.url.value,'','');return(false);\" alt='Check URL' />" ));
+    $url_tray -> addElement( $url_text, true) ;
+    $url_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='../assets/images/icon/world.png' onClick=\"window.open(document.storyform.url.value,'','');return(false);\" alt='Check URL' />" ));
     $sform -> addElement( $url_tray );
 
 // Category form
@@ -168,7 +170,7 @@ function edit( $lid = 0 ) {
     }
 
 // Screenshot
-    $graph_array = &wflLists :: getListTypeAsArray( XOOPS_ROOT_PATH . "/" . $xoopsModuleConfig['screenshots'], $type = "images" );
+    $graph_array = wflLists :: getListTypeAsArray( XOOPS_ROOT_PATH . "/" . $xoopsModuleConfig['screenshots'], $type = "images" );
     $indeximage_select = new XoopsFormSelect( '', 'screenshot', $screenshot );
     $indeximage_select -> addOptionArray( $graph_array );
     $indeximage_select -> setExtra( "onchange = 'showImgSelected(\"image\", \"screenshot\", \"" . $xoopsModuleConfig['screenshots'] . "\", \"\", \"" . XOOPS_URL . "\")'" );
@@ -179,28 +181,28 @@ function edit( $lid = 0 ) {
         $indeximage_tray -> addElement( new XoopsFormLabel( '', " <br /><br />< img src='" . XOOPS_URL . "/" . $xoopsModuleConfig['screenshots'] . "/" . $screenshot . "' name = 'image' id = 'image' alt = '' / > " ) );
     } else {
         $indeximage_tray -> addElement( new XoopsFormLabel( '', " <br /><br /><img src='" . XOOPS_URL . "/uploads/blank.gif' name='image' id='image' alt='' / > " ) );
-    } 
+    }
     $sform -> addElement( $indeximage_tray );
 
-if ($xoopsModuleConfig['useaddress']){
+if ($xoopsModuleConfig['useaddress']) {
     $sform -> insertBreak( _AM_WFL_LINK_CREATEADDRESS, "bg3" );
 // Google Maps
     $googlemap_text = new XoopsFormText( '', 'googlemap', 70, 1024, $googlemap );
     $googlemap_tray = new XoopsFormElementTray( _AM_WFL_LINK_GOOGLEMAP, '' );
     $googlemap_tray -> addElement( $googlemap_text , false ) ;
-    $googlemap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='../images/icon/google_map.png' onClick=\"window.open(document.storyform.googlemap.value,'','');return(false);\" alt='"._AM_WFL_LINK_CHECKMAP."' />" ) );
+    $googlemap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='../assets/images/icon/google_map.png' onClick=\"window.open(document.storyform.googlemap.value,'','');return(false);\" alt='"._AM_WFL_LINK_CHECKMAP."' />" ) );
     $sform -> addElement( $googlemap_tray );
 // Yahoo Maps
     $yahoomap_text = new XoopsFormText( '', 'yahoomap', 70, 1024, $yahoomap );
     $yahoomap_tray = new XoopsFormElementTray( _AM_WFL_LINK_YAHOOMAP, '' );
     $yahoomap_tray -> addElement( $yahoomap_text , false ) ;
-    $yahoomap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='../images/icon/yahoo_map.png' onClick=\"window.open(document.storyform.yahoomap.value,'','');return(false);\" alt='"._AM_WFL_LINK_CHECKMAP."' />" ) );
+    $yahoomap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='../assets/images/icon/yahoo_map.png' onClick=\"window.open(document.storyform.yahoomap.value,'','');return(false);\" alt='"._AM_WFL_LINK_CHECKMAP."' />" ) );
     $sform -> addElement( $yahoomap_tray );
 // MS Live Maps
     $multimap_text = new XoopsFormText( '', 'multimap', 70, 1024, $multimap );
     $multimap_tray = new XoopsFormElementTray( _AM_WFL_LINK_MULTIMAP, '' );
     $multimap_tray -> addElement( $multimap_text , false ) ;
-    $multimap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='../images/icon/multimap.png' onClick=\"window.open(document.storyform.multimap.value,'','');return(false);\" alt='"._AM_WFL_LINK_CHECKMAP."' />" ) );
+    $multimap_tray -> addElement( new XoopsFormLabel( "&nbsp;<img src='../assets/images/icon/multimap.png' onClick=\"window.open(document.storyform.multimap.value,'','');return(false);\" alt='"._AM_WFL_LINK_CHECKMAP."' />" ) );
     $sform -> addElement( $multimap_tray );
 
 // Address
@@ -239,9 +241,9 @@ if ($xoopsModuleConfig['useaddress']){
     $sform -> insertBreak( _AM_WFL_LINK_MISCLINKSETTINGS, 'bg3' );
 
 // Set Publish date
-    $sform -> addElement( new XoopsFormDateTime( _AM_WFL_LINK_SETPUBLISHDATE, 'published', $size = 15, $published ));
+//    $sform -> addElement( new XoopsFormDateTime( _AM_WFL_LINK_SETPUBLISHDATE, 'published', $size = 15, $published ));
 
-    if ( $lid ) {
+    if ($lid) {
         $sform -> addElement( new XoopsFormHidden( 'was_published', $published ) );
         $sform -> addElement( new XoopsFormHidden( 'was_expired', $expired ) );
     }
@@ -270,7 +272,7 @@ if ($xoopsModuleConfig['useaddress']){
 
     $result = $xoopsDB -> query( "SELECT COUNT( * ) FROM " . $xoopsDB -> prefix( 'wflinks_broken' ) . " WHERE lid = " . $lid );
     list ( $broken_count ) = $xoopsDB -> fetchRow( $result );
-    if ( $broken_count > 0 ) {
+    if ($broken_count > 0) {
         $link_updated_radio = new XoopsFormRadioYN( _AM_WFL_LINK_DELEDITMESS, 'delbroken', 1, ' ' . _YES . '', ' ' . _NO . '' );
         $sform -> addElement( $editmess_radio );
     }
@@ -286,24 +288,24 @@ if ($xoopsModuleConfig['useaddress']){
       $sform -> insertBreak( _AM_WFL_LINK_CREATENEWSSTORY, "bg3" );
       $submitNews_radio = new XoopsFormRadioYN( _AM_WFL_LINK_SUBMITNEWS, 'submitnews', 0, ' ' . _YES . '', ' ' . _NO . '' );
       $sform -> addElement( $submitNews_radio );
-      
+
       include_once XOOPS_ROOT_PATH . '/class/xoopstopic.php';
-      $xt = new XoopsTopic( $xoopsDB -> prefix( 'topics' ) );
+      $xt = new XoopsTopic( $xoopsDB -> prefix( 'news_topics' ) );
       ob_start();
          $xt -> makeTopicSelBox( 1, 0, "newstopicid" );
          $sform -> addElement( new XoopsFormLabel( _AM_WFL_LINK_NEWSCATEGORY, ob_get_contents() ) );
       ob_end_clean();
-      $sform -> addElement( new XoopsFormText( _AM_WFL_LINK_NEWSTITLE, 'newsTitle', 70, 255, '' ), false );
+      $sform -> addElement( new XoopsFormText( _AM_WFL_LINK_NEWSTITLE, 'topic_id', 70, 255, '' ), false );
     }
 
-    if ( $lid && $published == 0 ) {
+    if ($lid && $published == 0) {
         $approved = ( $published == 0 ) ? 0 : 1;
         $approve_checkbox = new XoopsFormCheckBox( _AM_WFL_LINK_EDITAPPROVE, "approved", 1 );
         $approve_checkbox -> addOption( 1, " " );
         $sform -> addElement( $approve_checkbox );
-    } 
+    }
 
-    if ( !$lid ) {
+    if (!$lid) {
         $button_tray = new XoopsFormElementTray( '', '' );
         $button_tray -> addElement( new XoopsFormHidden( 'status', 1 ) );
         $button_tray -> addElement( new XoopsFormHidden( 'notifypub', $notifypub ) );
@@ -327,54 +329,54 @@ if ($xoopsModuleConfig['useaddress']){
         $butt_dupct2 -> setExtra( 'onclick="this.form.elements.op.value=\'linksConfigMenu\'"' );
         $button_tray -> addElement( $butt_dupct2 );
         $sform -> addElement( $button_tray );
-    } 
+    }
     $sform -> display();
-    unset( $hidden ); 
+    unset( $hidden );
     include_once 'admin_footer.php';
-} 
+}
 
-function fetchURL( $url, $timeout = 2 ) {
+function fetchURL( $url, $timeout = 2 )
+{
     $url = urldecode( $url );
     $url_parsed = parse_url( $url );
     if ( !isset( $url_parsed["host"] ) ) {
         return '';
-    } 
+    }
 
     $host = $url_parsed["host"];
-    $host = ereg_replace( "http://", "", $host );
+    $host = preg_replace( "#http://#", "", $host );
     $port = ( isset( $url_parsed["port"] ) ) ? $url_parsed["port"]: 80;
     // Open the socket
     $handle = @fsockopen( 'http://' . $host, $port, $errno, $errstr, $timeout );
-    if ( !$handle ) {
+    if (!$handle) {
         return null;
     } else {
         // Set read timeout
         stream_set_timeout( $handle, $timeout );
-        for( $i = 0;$i < 1;$i++ ) {
+        for ($i = 0;$i < 1;++$i) {
             // Time the responce
             list( $usec, $sec ) = explode( " ", microtime( true ) );
-            $start = ( float )$usec + ( float )$sec; 
+            $start = (float) $usec + (float) $sec;
             // send somthing
             $write = fwrite( $handle, "return ping\n" );
-            if ( !$write ) {
+            if (!$write) {
                 return '';
-            } 
-            fread( $handle, 1024 ); 
+            }
+            fread( $handle, 1024 );
             // Work out if we got a responce and time it
             list( $usec, $sec ) = explode( " ", microtime( true ) );
-            $laptime = ( ( float )$usec + ( float )$sec ) - $start;
-            if ( $laptime > $timeout ) {
+            $laptime = ( (float) $usec + (float) $sec ) - $start;
+            if ($laptime > $timeout) {
                 return 'No Reply';
             } else {
                 return round( $laptime, 3 );
-            } 
-        } 
+            }
+        }
         fclose( $handle );
-    } 
-} 
+    }
+}
 
-switch ( strtolower( $op ) )
-{
+switch ( strtolower( $op ) ) {
     case "pingtime";
     case "is_broken";
 
@@ -385,14 +387,15 @@ switch ( strtolower( $op ) )
         $cid = wfl_cleanRequestVars( $_REQUEST, 'cid', 0 );
 
         $sql = "SELECT * FROM " . $xoopsDB -> prefix( 'wflinks_links' );
-        if ( $cid > 0 ) {
+        if ($cid > 0) {
             $sql .= " WHERE cid=" . $cid;
-        } 
+        }
         $sql .= " ORDER BY lid DESC";
         if ( !$result = $xoopsDB -> query( $sql ) ) {
             XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
             return false;
-        } 
+        }
         $broken_array = $xoopsDB -> query( $sql, $xoopsModuleConfig['admin_perpage'], $start );
         $broken_array_count = $xoopsDB -> getRowsNum( $result );
 
@@ -402,23 +405,23 @@ switch ( strtolower( $op ) )
         xoops_cp_header();
 //        wfl_adminmenu( _AM_WFL_BINDEX, '', $heading );
         echo "
-			<table width='100%' cellspacing='1' cellpadding='2' border='0' class='outer'>\n
-			<tr>\n
-			<th style='text-align: center;'>" . _AM_WFL_MINDEX_ID . "</th>\n
-			<th style='text-align: left;'><b>" . _AM_WFL_MINDEX_TITLE . "</th>\n
-			<th style='text-align: center;'>"._AM_WFL_MINDEX_POSTER."</th>\n
-			<th style='text-align: center;'>" . _AM_WFL_MINDEX_PUBLISHED . "</th>\n
-	                <th style='text-align: center;'>" . _AM_WFL_MINDEX_RESPONSE . "</th>\n
+            <table width='100%' cellspacing='1' cellpadding='2' border='0' class='outer'>\n
+            <tr>\n
+            <th style='text-align: center;'>" . _AM_WFL_MINDEX_ID . "</th>\n
+            <th style='text-align: left;'><b>" . _AM_WFL_MINDEX_TITLE . "</th>\n
+            <th style='text-align: center;'>"._AM_WFL_MINDEX_POSTER."</th>\n
+            <th style='text-align: center;'>" . _AM_WFL_MINDEX_PUBLISHED . "</th>\n
+                    <th style='text-align: center;'>" . _AM_WFL_MINDEX_RESPONSE . "</th>\n
                         <th style='text-align: center;'>PR</th>\n
-	                <th style='text-align: center;'>" . _AM_WFL_MINDEX_ACTION . "</th>\n
-			</tr>\n
-		";
+                    <th style='text-align: center;'>" . _AM_WFL_MINDEX_ACTION . "</th>\n
+            </tr>\n
+        ";
 
-        if ( $broken_array_count > 0 ) {
+        if ($broken_array_count > 0) {
             while ( $published = $xoopsDB -> fetchArray( $broken_array ) ) {
                 $_ping_results = fetchURL( $published['url'] );
 
-                if ( !$_ping_results ) {
+                if (!$_ping_results) {
                     $_ping_results = _AM_WFL_LINK_NORESPONSE;
                 } else {
                     $_ping_results = $_ping_results . '(s)';
@@ -434,19 +437,19 @@ switch ( strtolower( $op ) )
                 $icon = "<a href='main.php?op=edit&amp;lid=" . $lid . "'>" . $imagearray['editimg'] . "</a>&nbsp;";
                 $icon .= "<a href='main.php?op=delete&amp;lid=" . $lid . "'>" . $imagearray['deleteimg'] . "</a>";
                 echo "<tr style='text-align: center;'>\n
-						<td class='head'><small>" . $lid . "</small></td>\n
-						<td class='even' style='text-align: left;'><small>" . $title . "</small></td>\n
-						<td class='even'><small>" . $submitter . "</small></td>\n
-						<td class='even'><small>" . $publish . "</small></td>\n
-						<td class='even'><small>" . $_ping_results . "</small></td>\n
-						<td class='even'><small>" . pagerank($published['url']) . "</small></td>\n
-						<td class='even'>$icon</td>\n
-						</tr>\n";
+                        <td class='head'><small>" . $lid . "</small></td>\n
+                        <td class='even' style='text-align: left;'><small>" . $title . "</small></td>\n
+                        <td class='even'><small>" . $submitter . "</small></td>\n
+                        <td class='even'><small>" . $publish . "</small></td>\n
+                        <td class='even'><small>" . $_ping_results . "</small></td>\n
+                        <td class='even'><small>" . pagerank($published['url']) . "</small></td>\n
+                        <td class='even'>$icon</td>\n
+                        </tr>\n";
                 unset( $published );
-            } 
+            }
         } else {
             wfl_linklistfooter();
-        } 
+        }
         wfl_linklistpagenav( $broken_array_count, $start, 'art', 'op=' . $op );
         include_once 'admin_footer.php';
         break;
@@ -471,7 +474,7 @@ switch ( strtolower( $op ) )
         $keywords = $wfmyts -> addslashes( trim(substr($_POST["keywords"], 0, $xoopsModuleConfig['keywordlength']) ) );
         $item_tag = $wfmyts -> addslashes( trim( $_POST["item_tag"] ) );
         $forumid = ( isset( $_POST["forumid"] ) && $_POST["forumid"] > 0 ) ? intval( $_POST["forumid"] ) : 0;
-        if ($xoopsModuleConfig['useaddress']){
+        if ($xoopsModuleConfig['useaddress']) {
            $googlemap = ( $_POST["googlemap"] != "http://maps.google.com" ) ? $wfmyts -> addslashes( $_POST["googlemap"] ) : '';
            $yahoomap = ( $_POST["yahoomap"] != "http://maps.yahoo.com" ) ? $wfmyts -> addslashes( $_POST["yahoomap"] ) : '';
            $multimap = ( $_POST["multimap"] != "http://www.multimap.com" ) ? $wfmyts -> addslashes( $_POST["multimap"] ) : '';
@@ -495,14 +498,14 @@ switch ( strtolower( $op ) )
 
         $published =  strtotime($_POST['published']['date'] ) + $_POST['published']['time'];
         $updated = ( isset( $_POST['was_published'] ) && $_POST['was_published'] == 0 ) ? 0 : time();
-        if ( $_POST['up_dated'] == 0 ) {
+        if ($_POST['up_dated'] == 0) {
             $updated = 0;
             $status = 1;
-        } 
+        }
         $offline = ( $_POST['offline'] == 1 ) ? 1 : 0;
         $approved = ( isset( $_POST['approved'] ) && $_POST['approved'] == 1 ) ? 1 : 0;
         $notifypub = ( isset( $_POST['notifypub'] ) && $_POST['notifypub'] == 1 );
-        if ( !$lid ) {
+        if (!$lid) {
             $date = time();
             $publishdate = time();
             $expiredate = '0';
@@ -516,12 +519,12 @@ switch ( strtolower( $op ) )
         if ( isset( $_POST['expiredateactivate'] ) ) {
             $expiredate = strtotime( $_POST['expired']['date'] ) + $_POST['expired']['time'];
         }
-        if ( $_POST['clearexpire'] ) {
+        if ($_POST['clearexpire']) {
             $expiredate = '0';
         }
 
 // Update or insert linkload data into database
-        if ( !$lid ) {
+        if (!$lid) {
             $date = time();
             $publishdate = time();
             $ipaddress = $_SERVER['REMOTE_ADDR'];
@@ -530,23 +533,24 @@ switch ( strtolower( $op ) )
            // $newid = $xoopsDB -> getInsertId();
         } else {
             $sql = "UPDATE " . $xoopsDB -> prefix( 'wflinks_links' ) . " SET cid = $cid, title='$title', url='$url', screenshot='$screenshot', publisher='$publisher', status='$status', forumid='$forumid', published='$published', expired='$expiredate', updated='$updated', offline='$offline', description='$descriptionb', urlrating='$urlrating', country='$country', keywords='$keywords', item_tag='$item_tag', googlemap='$googlemap', yahoomap='$yahoomap', multimap='$multimap', street1='$street1', street2='$street2', town='$town', state='$state',  zip='$zip', tel='$tel', fax='$fax', voip='$voip', mobile='$mobile', email='$email', vat='$vat' WHERE lid=" . $lid;
-        } 
+        }
         if ( !$result = $xoopsDB -> queryF( $sql ) ) {
           XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
           return false;
         }
-        
-        $newid = mysql_insert_id();
-        
+
+        $newid = mysqli_insert_id();
+
 // Add item_tag to Tag-module
-        if ( !$lid ) {
+        if (!$lid) {
           $tagupdate = wfl_tagupdate($newid, $item_tag);
         } else {
           $tagupdate = wfl_tagupdate($lid, $item_tag);
         }
 
 // Send notifications
-        if ( !$lid ) {
+        if (!$lid) {
             $tags = array();
             $tags['LINK_NAME'] = $title;
             $tags['LINK_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/singlelink.php?cid=' . $cid . '&amp;lid=' . $newid;
@@ -555,11 +559,11 @@ switch ( strtolower( $op ) )
             $row = $xoopsDB -> fetchArray( $xoopsDB -> query( $sql ) );
             $tags['CATEGORY_NAME'] = $row['title'];
             $tags['CATEGORY_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/viewcat.php?cid=' . $cid;
-            $notification_handler = &xoops_gethandler( 'notification' );
+            $notification_handler = xoops_gethandler( 'notification' );
             $notification_handler -> triggerEvent( 'global', 0, 'new_link', $tags );
             $notification_handler -> triggerEvent( 'category', $cid, 'new_link', $tags );
-        } 
-        if ( $lid && $approved && $notifypub ) {
+        }
+        if ($lid && $approved && $notifypub) {
             $tags = array();
             $tags['LINK_NAME'] = $title;
             $tags['LINK_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/singlelink.php?cid=' . $cid . '&amp;lid=' . $lid;
@@ -568,48 +572,52 @@ switch ( strtolower( $op ) )
             $row = $xoopsDB -> fetchArray( $result );
             $tags['CATEGORY_NAME'] = $row['title'];
             $tags['CATEGORY_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/viewcat.php?cid=' . $cid;
-            $notification_handler = &xoops_gethandler( 'notification' );
+            $notification_handler = xoops_gethandler( 'notification' );
             $notification_handler -> triggerEvent( 'global', 0, 'new_link', $tags );
             $notification_handler -> triggerEvent( 'category', $cid, 'new_link', $tags );
             $notification_handler -> triggerEvent( 'link', $lid, 'approve', $tags );
-        } 
+        }
         $message = ( !$lid ) ? _AM_WFL_LINK_NEWFILEUPLOAD : _AM_WFL_LINK_FILEMODIFIEDUPDATE ;
         $message = ( $lid && !$_POST['was_published'] && $approved ) ? _AM_WFL_LINK_FILEAPPROVED : $message;
         if ( wfl_cleanRequestVars( $_REQUEST, 'delbroken', 0 ) ) {
             $sql = "DELETE FROM " . $xoopsDB -> prefix( 'wflinks_broken' ) . " WHERE lid=" . $lid;
             if ( !$result = $xoopsDB -> queryF( $sql ) ) {
                 XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
                 return false;
-            } 
-        } 
+            }
+        }
         if ( wfl_cleanRequestVars( $_REQUEST, 'submitnews', 0 ) ) {
-            include_once "newstory.php";
-        } 
+            include_once 'newstory.php';
+        }
         redirect_header( "main.php", 1, $message );
         break;
 
     case "delete":
         if ( wfl_cleanRequestVars( $_REQUEST, 'confirm', 0 ) ) {
             $title = wfl_cleanRequestVars( $_REQUEST, 'title', 0 );
-			
-			// delete link
+
+            // delete link
             $sql = "DELETE FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE lid=" . $lid;
             if ( !$result = $xoopsDB -> query( $sql ) ) {
                 XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
                 return false;
             }
-			
-			// delete from altcat
+
+            // delete from altcat
             $sql = "DELETE FROM " . $xoopsDB -> prefix( 'wflinks_altcat' ) . " WHERE lid=" . $lid;
             if ( !$result = $xoopsDB -> query( $sql ) ) {
                 XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
                 return false;
             }
-			
-			// delete vote data
+
+            // delete vote data
             $sql = "DELETE FROM " . $xoopsDB -> prefix( 'wflinks_votedata' ) . " WHERE lid=" . $lid;
             if ( !$result = $xoopsDB -> query( $sql ) ) {
                 XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
                 return false;
             }
 
@@ -621,10 +629,11 @@ switch ( strtolower( $op ) )
             $sql = "SELECT lid, title, item_tag, url FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE lid=" . $lid;
             if ( !$result = $xoopsDB -> query( $sql ) ) {
                 XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
                 return false;
-            } 			
+            }
             list( $lid, $title ) = $xoopsDB -> fetchrow( $result );
-            $item_tag = $result['item_tag'];
+            $item_tag = $result->fetchArray['item_tag'];
             include 'admin_header.php';
             xoops_cp_header();
             //wfl_adminmenu( _AM_WFL_BINDEX );
@@ -634,7 +643,7 @@ switch ( strtolower( $op ) )
             $tagupdate = wfl_tagupdate($lid, $item_tag);
 
             include_once 'admin_footer.php';
-        } 
+        }
         break;
 
     case "delvote":
@@ -642,8 +651,9 @@ switch ( strtolower( $op ) )
         $sql = "DELETE FROM " . $xoopsDB -> prefix( 'wflinks_votedata' ) . " WHERE ratingid=" . $rid;
         if ( !$result = $xoopsDB -> queryF( $sql ) ) {
             XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
             return false;
-        } 
+        }
         wfl_updaterating( $rid );
         redirect_header( "main.php", 1, _AM_WFL_VOTE_VOTEDELETED );
         break;
@@ -686,7 +696,7 @@ switch ( strtolower( $op ) )
 //			</small></div></fieldset><br />\n
 //		";
 
-//        if ( $totalcats > 0 ) {
+//        if ($totalcats > 0) {
 //            $sform = new XoopsThemeForm( _AM_WFL_CCATEGORY_MODIFY, "category", "category.php" );
 //            ob_start();
 //            $mytree -> makeMySelBox( "title", "title" );
@@ -704,23 +714,21 @@ switch ( strtolower( $op ) )
 //            $sform -> display();
 //        }
 
-        if ( $totallinks > 0 ) {
+        if ($totallinks > 0) {
             $sql = "SELECT * FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE published > 0  ORDER BY lid DESC" ;
             $published_array = $xoopsDB -> query( $sql, $xoopsModuleConfig['admin_perpage'], $start );
             $published_array_count = $xoopsDB -> getRowsNum( $xoopsDB -> query( $sql ) );
             wfl_linklistheader( _AM_WFL_MINDEX_PUBLISHEDLINK );
             wfl_linklistpagenavleft( $published_array_count, $start, 'art' );
-            if ( $published_array_count > 0 ) {
+            if ($published_array_count > 0) {
                 while ( $published = $xoopsDB -> fetchArray( $published_array ) ) {
                     wfl_linklistbody( $published );
-                } 
+                }
             } else {
                 wfl_linklistfooter();
-            } 
-            wfl_linklistpagenav( $published_array_count, $start, 'art' );           
+            }
+            wfl_linklistpagenav( $published_array_count, $start, 'art' );
         }
         include_once 'admin_footer.php';
         break;
-} 
-
-?>
+}

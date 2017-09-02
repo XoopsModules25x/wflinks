@@ -5,19 +5,18 @@
  * Developer: McDonald
  * Licence: GNU
  */
- 
-if (!defined('XOOPS_ROOT_PATH')) {
-	die('XOOPS root path not defined');
-}
 
-function b_wflinks_banner_show( $options ) {
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+
+function b_wflinks_banner_show( $options )
+{
     $mydirname = basename( dirname( __FILE__ ) );
     global $xoopsDB;
 
     $block = array();
     $time = time();
-    $modhandler = &xoops_gethandler( 'module' );
-    $wflModule = &$modhandler -> getByDirname( $mydirname );
+    $modhandler = xoops_gethandler( 'module' );
+    $wflModule = $modhandler -> getByDirname( $mydirname );
 
     $result = $xoopsDB -> query( "SELECT a.cid as acid, a.title, a.client_id, a.banner_id, b.bid, b.cid, b.imptotal, b.impmade, b.clicks FROM " . $xoopsDB -> prefix( 'wflinks_cat' ) . " a, " . $xoopsDB -> prefix( 'banner' ) . " b WHERE (b.cid = a.client_id) OR (b.bid = a.banner_id) ORDER BY b.cid, b.bid, a.title ASC" );
 
@@ -29,12 +28,12 @@ function b_wflinks_banner_show( $options ) {
         $bannerload = array();
         $result2 = $xoopsDB -> query( "SELECT name FROM " . $xoopsDB -> prefix( 'bannerclient' ) . " WHERE cid=" . intval($myrow['cid']) );
         $myclient = $xoopsDB -> fetchArray( $result2 );
-        if ( $impmade == 0 ) {
+        if ($impmade == 0) {
             $percent = 0;
         } else {
             $percent = substr(100 * $clicks / $impmade, 0, 5);
         }
-        if ( $imptotal == 0 ) {
+        if ($imptotal == 0) {
             $left = 'Unlimited';
         } else {
             $left = intval($imptotal-$impmade);
@@ -53,12 +52,13 @@ function b_wflinks_banner_show( $options ) {
         $block['banners'][] = $bannerload;
     }
     unset( $_block_check_array );
+
     return $block;
 }
 
-function b_wflinks_banner_edit( $options ) {
+function b_wflinks_banner_edit( $options )
+{
     $form = "";
-    return $form;
-} 
 
-?>
+    return $form;
+}

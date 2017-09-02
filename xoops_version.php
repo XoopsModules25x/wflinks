@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: xoops_version.php 10422 2012-12-17 04:58:36Z beckmi $
+ * $Id: xoops_version.php v 1.00 21 June 2005 John N Exp $
  * Module: WF-Links
  * Version: v1.0.9
  * Release Date: 21 June 2005
@@ -8,33 +8,27 @@
  * Team: WF-Projects
  * Licence: GNU
  */
- 
-$mydirname = basename( dirname( __FILE__ ) );
 
-$modversion['name'] = _MI_WFL_NAME;
-$modversion['version'] = "1.09";
+$modversion['name']    = _MI_WFL_NAME;
+$modversion['version'] = "1.10";
 //$modversion['status'] = "RC";
 $modversion['description'] = _MI_WFL_DESC;
 $modversion['help']        = 'page=help';
 $modversion['license']     = 'GNU GPL 2.0';
-$modversion['license_url'] = "www.gnu.org/licenses/gpl-2.0.html/";
-
-$modversion['image'] = "images/wfl_slogo.png";
-
-$modversion['iconsmall'] = "images/wflinks_iconsmall.png";
-$modversion['iconbig'] = "images/wflinks_iconbig.png";
-$modversion['dirname'] = $mydirname;
-
-$modversion['author'] = "Version developers: Catzwolf / McDonald";
-$modversion['credits'] = "WF-Projects Team: Based on WF-Downloads, thanks to the dream-team for some code snippits.";
-$modversion['teammembers'] = "amayer, bender, david, dqflyer, draven, frankblack, gladiac, hervet, jackj, mercibe, John N, phppp, predator, reliableSol, tom, xpider, xtheme, mcdonald (version 1.03B and higher)";
-$modversion['author_realname'] = "WF-Project Team";
-$modversion['author_email'] = "";
-//$modversion['demo_site_url'] = "";
-//$modversion['demo_site_name'] = "WF-Projects";
-$modversion['support_site_url'] = "www.xoops.org";
+$modversion['license_url'] = "www.gnu.org/licenses/gpl-2.0.html";
+$modversion['image']       = "assets/images/logoModule.png";
+$modversion['iconsmall']   = "assets/images/wflinks_iconsmall.png";
+$modversion['iconbig']     = "assets/images/wflinks_iconbig.png";
+$modversion['dirname']     = basename(dirname(__FILE__));
+$modversion['author']      = "Version developers: Catzwolf / McDonald";
+$modversion['credits']     = "WF-Projects Team: Based on WF-Downloads, thanks to the dream-team for some code snippits.";
+$modversion['teammembers']
+                                 = "amayer, bender, david, dqflyer, draven, frankblack, gladiac, hervet, jackj, mercibe, John N, phppp, predator, reliableSol, tom, xpider, xtheme, mcdonald (version 1.03B and higher)";
+$modversion['author_realname']   = "WF-Project Team";
+$modversion['author_email']      = "";
+$modversion['support_site_url']  = "www.xoops.org";
 $modversion['support_site_name'] = "XOOPS Project";
-$modversion['submit_bug'] = "www.xoops.org/modules/newbb";
+$modversion['submit_bug']        = "www.xoops.org/modules/newbb";
 
 $modversion['warning'] = _MI_WFL_WARNINGTEXT;
 
@@ -44,18 +38,18 @@ $modversion['author_credits']         = _MI_WFL_AUTHOR_CREDITSTEXT;
 $modversion['developer_website_url']  = "www.xoops.org/";
 $modversion['developer_website_name'] = "XOOPS Project";
 
-
 $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
 $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 
 //about
-$modversion['release_date']        = '2012/12/16';
+$modversion["module_status"]       = "Beta 2";
+$modversion['release_file']        = XOOPS_URL . "/modules/" . $modversion['dirname'] . "/docs/changelog.txt";
+$modversion['release_date']        = "2017/08/31";
 $modversion["module_website_url"]  = "www.xoops.org/";
 $modversion["module_website_name"] = "XOOPS";
-$modversion["module_status"]       = "Final";
-$modversion['min_php']             = '5.2';
-$modversion['min_xoops']           = "2.5.5";
+$modversion['min_php']             = '5.5';
+$modversion['min_xoops']           = "2.5.7.2";
 $modversion['min_admin']           = '1.1';
 $modversion['min_db']              = array(
     'mysql'  => '5.0.7',
@@ -88,6 +82,35 @@ $modversion['system_menu'] = 1;
 $modversion['adminindex'] = "admin/index.php";
 $modversion['adminmenu'] = "admin/menu.php";
 
+//help files
+$i                                     = 0;
+$modversion['helpsection'][$i]['name'] = _MI_WFL_HELP_OVERVIEW;
+$modversion['helpsection'][$i]['link'] = "page=help";
+++$i;
+$modversion['helpsection'][$i]['name'] = _MI_WFL_HELP_INSTALL;
+$modversion['helpsection'][$i]['link'] = "page=install";
+++$i;
+$modversion['helpsection'][$i]['name'] = _MI_WFL_HELP_UPDATE;
+$modversion['helpsection'][$i]['link'] = "page=update";
+++$i;
+$modversion['helpsection'][$i]['name'] = _MI_WFL_HELP_CONVERT;
+$modversion['helpsection'][$i]['link'] = "page=convert";
+++$i;
+$modversion['helpsection'][$i]['name'] = _MI_WFL_HELP_PREFERENCES;
+$modversion['helpsection'][$i]['link'] = "page=preferences";
+++$i;
+$modversion['helpsection'][$i]['name'] = _MI_WFL_HELP_INDEXPAGE;
+$modversion['helpsection'][$i]['link'] = "page=indexpage";
+++$i;
+$modversion['helpsection'][$i]['name'] = _MI_WFL_HELP_CATEGORY;
+$modversion['helpsection'][$i]['link'] = "page=category";
+++$i;
+$modversion['helpsection'][$i]['name'] = _MI_WFL_HELP_PERMISSION;
+$modversion['helpsection'][$i]['link'] = "page=permission";
+++$i;
+$modversion['helpsection'][$i]['name'] = _MI_WFL_HELP_LINKS;
+$modversion['helpsection'][$i]['link'] = "page=links";
+
 // Blocks
 $modversion['blocks'][1]['file'] = "wflinks_top.php";
 $modversion['blocks'][1]['name'] = _MI_WFL_BNAME1;
@@ -95,7 +118,7 @@ $modversion['blocks'][1]['description'] = "Shows recently added links";
 $modversion['blocks'][1]['show_func'] = "b_wflinks_top_show";
 $modversion['blocks'][1]['edit_func'] = "b_wflinks_top_edit";
 $modversion['blocks'][1]['options'] = "published|10|19|d/m/Y";
-$modversion['blocks'][1]['template'] = 'wflinks_block_new.html';
+$modversion['blocks'][1]['template'] = 'wflinks_block_new.tpl';
 $modversion['blocks'][1]['can_clone'] = true ;
 
 $modversion['blocks'][2]['file'] = "wflinks_top.php";
@@ -104,7 +127,7 @@ $modversion['blocks'][2]['description'] = "Shows top clicked links";
 $modversion['blocks'][2]['show_func'] = "b_wflinks_top_show";
 $modversion['blocks'][2]['edit_func'] = "b_wflinks_top_edit";
 $modversion['blocks'][2]['options'] = "hits|10|19|d/m/Y";
-$modversion['blocks'][2]['template'] = 'wflinks_block_top.html';
+$modversion['blocks'][2]['template'] = 'wflinks_block_top.tpl';
 $modversion['blocks'][2]['can_clone'] = true ;
 
 $modversion['blocks'][3]['file'] = "wflinks_banner.php";
@@ -113,7 +136,7 @@ $modversion['blocks'][3]['description'] = "Shows top clicked banners";
 $modversion['blocks'][3]['show_func'] = "b_wflinks_banner_show";
 $modversion['blocks'][3]['edit_func'] = "b_wflinks_banner_edit";
 $modversion['blocks'][3]['options'] = "hits|10|19";
-$modversion['blocks'][3]['template'] = 'wflinks_block_banner.html';
+$modversion['blocks'][3]['template'] = 'wflinks_block_banner.tpl';
 $modversion['blocks'][3]['can_clone'] = true ;
 
 $modversion['blocks'][4]['file'] = "wflinks_block_tag.php";
@@ -122,7 +145,7 @@ $modversion['blocks'][4]['description'] = "Show tag cloud";
 $modversion['blocks'][4]['show_func'] = "wflinks_tag_block_cloud_show";
 $modversion['blocks'][4]['edit_func'] = "wflinks_tag_block_cloud_edit";
 $modversion['blocks'][4]['options'] = "100|0|150|80";
-$modversion['blocks'][4]['template'] = 'wflinks_tag_block_cloud.html';
+$modversion['blocks'][4]['template'] = 'wflinks_tag_block_cloud.tpl';
 $modversion['blocks'][4]['can_clone'] = true ;
 
 $modversion['blocks'][5]['file'] = "wflinks_block_tag.php";
@@ -131,37 +154,37 @@ $modversion['blocks'][5]['description'] = "Show top tag";
 $modversion['blocks'][5]['show_func'] = "wflinks_tag_block_top_show";
 $modversion['blocks'][5]['edit_func'] = "wflinks_tag_block_top_edit";
 $modversion['blocks'][5]['options'] = "50|30|c";
-$modversion['blocks'][5]['template'] = 'wflinks_tag_block_tag.html';
+$modversion['blocks'][5]['template'] = 'wflinks_tag_block_tag.tpl';
 $modversion['blocks'][5]['can_clone'] = true ;
 
 // Menu
 $modversion['hasMain'] = 1;
 
 // This part inserts the selected topics as sub items in the Xoops main menu
-$module_handler = &xoops_gethandler( 'module' );
-$module = &$module_handler -> getByDirname( $modversion['dirname'] );
+$module_handler = xoops_gethandler( 'module' );
+$module = $module_handler -> getByDirname( $modversion['dirname'] );
 $cansubmit = 0;
 if ( is_object( $module ) ) {
     global $xoopsUser;
     $groups = ( is_object( $xoopsUser ) ) ? $xoopsUser -> getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $gperm_handler = &xoops_gethandler( 'groupperm' );
+    $gperm_handler = xoops_gethandler( 'groupperm' );
     if ( $gperm_handler -> checkRight( "WFLinkSubPerm", 0, $groups, $module -> getVar( 'mid' ) ) ) {
         $cansubmit = 1;
-    } 
-} 
-if ( $cansubmit == 1 ) {
+    }
+}
+if ($cansubmit == 1) {
     $modversion['sub'][0]['name'] = _MI_WFL_SMNAME1;
     $modversion['sub'][0]['url'] = "submit.php";
-} 
+}
 unset( $cansubmit );
 
 $i = 1;
 $modversion['sub'][$i]['name'] = _MI_WFL_SMNAME2;
 $modversion['sub'][$i]['url'] = "topten.php?list=hit";
-$i++;
+++$i;
 $modversion['sub'][$i]['name'] = _MI_WFL_SMNAME3;
 $modversion['sub'][$i]['url'] = "topten.php?list=rate";
-$i++;
+++$i;
 $modversion['sub'][$i]['name'] = _MI_WFL_SMNAME4;
 $modversion['sub'][$i]['url'] = "newlist.php?newlinkshowdays=7";
 unset( $i );
@@ -183,30 +206,30 @@ $modversion['comments']['callback']['approve'] = 'wflinks_com_approve';
 $modversion['comments']['callback']['update'] = 'wflinks_com_update';
 
 // Templates
-$modversion['templates'][1]['file'] = 'wflinks_brokenlink.html';
+$modversion['templates'][1]['file'] = 'wflinks_brokenlink.tpl';
 $modversion['templates'][1]['description'] = '';
-$modversion['templates'][2]['file'] = 'wflinks_linkload.html';
+$modversion['templates'][2]['file'] = 'wflinks_linkload.tpl';
 $modversion['templates'][2]['description'] = '';
-$modversion['templates'][3]['file'] = 'wflinks_index.html';
+$modversion['templates'][3]['file'] = 'wflinks_index.tpl';
 $modversion['templates'][3]['description'] = '';
-$modversion['templates'][5]['file'] = 'wflinks_ratelink.html';
+$modversion['templates'][5]['file'] = 'wflinks_ratelink.tpl';
 $modversion['templates'][5]['description'] = '';
-$modversion['templates'][6]['file'] = 'wflinks_singlelink.html';
+$modversion['templates'][6]['file'] = 'wflinks_singlelink.tpl';
 $modversion['templates'][6]['description'] = '';
-$modversion['templates'][8]['file'] = 'wflinks_topten.html';
+$modversion['templates'][8]['file'] = 'wflinks_topten.tpl';
 $modversion['templates'][8]['description'] = '';
-$modversion['templates'][9]['file'] = 'wflinks_viewcat.html';
+$modversion['templates'][9]['file'] = 'wflinks_viewcat.tpl';
 $modversion['templates'][9]['description'] = '';
-$modversion['templates'][10]['file'] = 'wflinks_newlistindex.html';
+$modversion['templates'][10]['file'] = 'wflinks_newlistindex.tpl';
 $modversion['templates'][10]['description'] = '';
-$modversion['templates'][11]['file'] = 'wflinks_print.html';
+$modversion['templates'][11]['file'] = 'wflinks_print.tpl';
 $modversion['templates'][11]['description'] = '';
-$modversion['templates'][12]['file'] = 'wflinks_disclaimer.html';
+$modversion['templates'][12]['file'] = 'wflinks_disclaimer.tpl';
 $modversion['templates'][12]['description'] = '';
 
 // Module config setting
 $i=0;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'popular';
 $modversion['config'][$i]['title'] = '_MI_WFL_POPULAR';
 $modversion['config'][$i]['description'] = '_MI_WFL_POPULARDSC';
@@ -214,7 +237,7 @@ $modversion['config'][$i]['formtype'] = 'select';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 100;
 $modversion['config'][$i]['options'] = array( '5' => 5, '10' => 10, '50' => 50, '100' => 100, '200' => 200, '500' => 500, '1000' => 1000, '1500' => 1500, '2000' => 2000 );
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'displayicons';
 $modversion['config'][$i]['title'] = '_MI_WFL_ICONDISPLAY';
 $modversion['config'][$i]['description'] = '_MI_WFL_DISPLAYICONDSC';
@@ -222,21 +245,21 @@ $modversion['config'][$i]['formtype'] = 'select';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 1;
 $modversion['config'][$i]['options'] = array( '_MI_WFL_DISPLAYICON1' => 1, '_MI_WFL_DISPLAYICON2' => 2, '_MI_WFL_DISPLAYICON3' => 3 );
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'daysnew';
 $modversion['config'][$i]['title'] = '_MI_WFL_DAYSNEW';
 $modversion['config'][$i]['description'] = '_MI_WFL_DAYSNEWDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 10;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'daysupdated';
 $modversion['config'][$i]['title'] = '_MI_WFL_DAYSUPDATED';
 $modversion['config'][$i]['description'] = '_MI_WFL_DAYSUPDATEDDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 10;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'perpage';
 $modversion['config'][$i]['title'] = '_MI_WFL_PERPAGE';
 $modversion['config'][$i]['description'] = '_MI_WFL_PERPAGEDSC';
@@ -244,7 +267,7 @@ $modversion['config'][$i]['formtype'] = 'select';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 10;
 $modversion['config'][$i]['options'] = array( '5' => 5, '10' => 10, '15' => 15, '20' => 20, '25' => 25, '30' => 30, '50' => 50, '75' => 75, '100' => 100, '200' => 200 );
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'admin_perpage';
 $modversion['config'][$i]['title'] = '_MI_WFL_ADMINPAGE';
 $modversion['config'][$i]['description'] = '_MI_WFL_AMDMINPAGEDSC';
@@ -252,7 +275,7 @@ $modversion['config'][$i]['formtype'] = 'select';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 10;
 $modversion['config'][$i]['options'] = array( '5' => 5, '10' => 10, '15' => 15, '20' => 20, '25' => 25, '30' => 30, '50' => 50, '75' => 75, '100' => 100, '200' => 200 );
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'linkxorder';
 $modversion['config'][$i]['title'] = '_MI_WFL_ARTICLESSORT';
 $modversion['config'][$i]['description'] = '_MI_WFL_ARTICLESSORTDSC';
@@ -270,7 +293,7 @@ $modversion['config'][$i]['options'] = array( '_MI_WFL_TITLE_A' => 'title ASC',
                                               '_MI_WFL_COUNTRY_A' => 'country ASC',
                                               '_MI_WFL_COUNTRY_D' => 'country DESC'
                                              );
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'sortcats';
 $modversion['config'][$i]['title'] = '_MI_WFL_SORTCATS';
 $modversion['config'][$i]['description'] = '_MI_WFL_SORTCATSDSC';
@@ -278,7 +301,7 @@ $modversion['config'][$i]['formtype'] = 'select';
 $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = 'title';
 $modversion['config'][$i]['options'] = array( '_MI_WFL_TITLE' => 'title', '_MI_WFL_WEIGHT' => 'weight' );
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'subcats';
 $modversion['config'][$i]['title'] = '_MI_WFL_SUBCATS';
 $modversion['config'][$i]['description'] = '_MI_WFL_SUBCATSDSC';
@@ -286,7 +309,7 @@ $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
 //--------------------------------------------------------------------
-//$i++;
+//++$i;
 //$modversion['config'][$i]['name'] = 'form_options';
 //$modversion['config'][$i]['title'] = '_MI_WFL_EDITOR';
 //$modversion['config'][$i]['description'] = '_MI_WFL_EDITORCHOICE';
@@ -302,7 +325,7 @@ $modversion['config'][$i]['default'] = 0;
 //												_MI_WFL_FORM_TINYEDITOR => 'tinyeditor',
 //												_MI_WFL_FORM_TINYMCE => 'tinymce'
 //                                              );
-//$i++;
+//++$i;
 //$modversion['config'][$i]['name'] = 'form_optionsuser';
 //$modversion['config'][$i]['title'] = '_MI_WFL_EDITORUSER';
 //$modversion['config'][$i]['description'] = '_MI_WFL_EDITORCHOICEUSER';
@@ -319,7 +342,7 @@ $modversion['config'][$i]['default'] = 0;
 //												_MI_WFL_FORM_TINYMCE => 'tinymce'
 //                                              );
 //--------------------------------------------------------------------
-$i++;
+++$i;
 xoops_load('XoopsEditorHandler');
 $editor_handler = XoopsEditorHandler::getInstance();
 $editorList     = array_flip($editor_handler->getList());
@@ -334,8 +357,7 @@ $modversion['config'][$i] = array(
     'default'     => 'dhtmltextarea'
 );
 
-
-$i++;
+++$i;
 $modversion['config'][$i] = array(
     'name'        => 'form_optionsuser',
     'title'       => '_MI_WFL_EDITORUSER',
@@ -346,126 +368,126 @@ $modversion['config'][$i] = array(
     'default'     => 'dhtmltextarea'
 );
 
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'screenshot';
 $modversion['config'][$i]['title'] = '_MI_WFL_USESHOTS';
 $modversion['config'][$i]['description'] = '_MI_WFL_USESHOTSDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 1;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'usethumbs';
 $modversion['config'][$i]['title'] = '_MI_WFL_USETHUMBS';
 $modversion['config'][$i]['description'] = '_MI_WFL_USETHUMBSDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'updatethumbs';
 $modversion['config'][$i]['title'] = '_MI_WFL_IMGUPDATE';
 $modversion['config'][$i]['description'] = '_MI_WFL_IMGUPDATEDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 1;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'imagequality';
 $modversion['config'][$i]['title'] = '_MI_WFL_QUALITY';
 $modversion['config'][$i]['description'] = '_MI_WFL_QUALITYDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 100;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'keepaspect';
 $modversion['config'][$i]['title'] = '_MI_WFL_KEEPASPECT';
 $modversion['config'][$i]['description'] = '_MI_WFL_KEEPASPECTDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'shotwidth';
 $modversion['config'][$i]['title'] = '_MI_WFL_SHOTWIDTH';
 $modversion['config'][$i]['description'] = '_MI_WFL_SHOTWIDTHDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 140;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'shotheight';
 $modversion['config'][$i]['title'] = '_MI_WFL_SHOTHEIGHT';
 $modversion['config'][$i]['description'] = '_MI_WFL_SHOTHEIGHTDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 79;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'maxfilesize';
 $modversion['config'][$i]['title'] = '_MI_WFL_MAXFILESIZE';
 $modversion['config'][$i]['description'] = '_MI_WFL_MAXFILESIZEDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 200000;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'maximgwidth';
 $modversion['config'][$i]['title'] = '_MI_WFL_IMGWIDTH';
 $modversion['config'][$i]['description'] = '_MI_WFL_IMGWIDTHDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 600;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'maximgheight';
 $modversion['config'][$i]['title'] = '_MI_WFL_IMGHEIGHT';
 $modversion['config'][$i]['description'] = '_MI_WFL_IMGHEIGHTDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 600;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'useautothumb';
 $modversion['config'][$i]['title'] = '_MI_WFL_USEAUTOSCRSHOT';
 $modversion['config'][$i]['description'] = '_MI_WFL_USEAUTOSCRSHOTDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'mainimagedir';
 $modversion['config'][$i]['title'] = '_MI_WFL_MAINIMGDIR';
 $modversion['config'][$i]['description'] = '_MI_WFL_MAINIMGDIRDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = 'modules/' . $mydirname . '/images';
-$i++;
+$modversion['config'][$i]['default'] = 'modules/' . $modversion['dirname'] . '/assets/images';
+++$i;
 $modversion['config'][$i]['name'] = 'screenshots';
 $modversion['config'][$i]['title'] = '_MI_WFL_SCREENSHOTS';
 $modversion['config'][$i]['description'] = '_MI_WFL_SCREENSHOTSDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = 'uploads/wflinks/screenshots';
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'catimage';
 $modversion['config'][$i]['title'] = '_MI_WFL_CATEGORYIMG';
 $modversion['config'][$i]['description'] = '_MI_WFL_CATEGORYIMGDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = 'uploads/wflinks/category';
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'flagimage';
 $modversion['config'][$i]['title'] = '_MI_WFL_FLAGIMG';
 $modversion['config'][$i]['description'] = '_MI_WFL_FLAGIMGDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = 'uploads/flags/flags_small';
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'dateformat';
 $modversion['config'][$i]['title'] = '_MI_WFL_DATEFORMAT';
 $modversion['config'][$i]['description'] = '_MI_WFL_DATEFORMATDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = 'D, d-M-Y';
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'dateformatadmin';
 $modversion['config'][$i]['title'] = '_MI_WFL_DATEFORMATADMIN';
 $modversion['config'][$i]['description'] = '_MI_WFL_DATEFORMATADMINDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = 'D, d-M-Y - G:i';
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'totalchars';
 $modversion['config'][$i]['title'] = '_MI_WFL_TOTALCHARS';
 $modversion['config'][$i]['description'] = '_MI_WFL_TOTALCHARSDSC';
@@ -473,112 +495,112 @@ $modversion['config'][$i]['formtype'] = 'select';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 200;
 $modversion['config'][$i]['options'] = array( '100' => 100, '200' => 200, '300' => 300, '400' => 400, '500' => 500, '750' => 750 );
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'keywordlength';
 $modversion['config'][$i]['title'] = '_MI_WFL_KEYLENGTH';
 $modversion['config'][$i]['description'] = '_MI_WFL_KEYLENGTHDSC';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 255;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'otherlinks';
 $modversion['config'][$i]['title'] = '_MI_WFL_OTHERLINKS';
 $modversion['config'][$i]['description'] = '_MI_WFL_OTHERLINKSDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 1;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'quickview';
 $modversion['config'][$i]['title'] = '_MI_WFL_QUICKVIEW';
 $modversion['config'][$i]['description'] = '_MI_WFL_QUICKVIEWDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'showsbookmarks';
 $modversion['config'][$i]['title'] = '_MI_WFL_SHOWSBOOKMARKS';
 $modversion['config'][$i]['description'] = '_MI_WFL_SHOWSBOOKMARKSDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 1;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'showpagerank';
 $modversion['config'][$i]['title'] = '_MI_WFL_SHOWPAGERANK';
 $modversion['config'][$i]['description'] = '_MI_WFL_SHOWPAGERANKSDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 1;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'usercantag';
 $modversion['config'][$i]['title'] = '_MI_WFL_USERTAGDESCR';
 $modversion['config'][$i]['description'] = '_MI_WFL_USERTAGDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'useaddress';
 $modversion['config'][$i]['title'] = '_MI_WFL_USEADDRESSDESCR';
 $modversion['config'][$i]['description'] = '_MI_WFL_USEADDRESSDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 1;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'footerprint';
 $modversion['config'][$i]['title'] = '_MI_WFL_FOOTERPRINT';
 $modversion['config'][$i]['description'] = '_MI_WFL_FOOTERPRINTDSC';
 $modversion['config'][$i]['formtype'] = 'textarea';
 $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = XOOPS_URL;
-//$i++;
+//++$i;
 //$modversion['config'][$i]['name'] = 'printheader';
 //$modversion['config'][$i]['title'] = '_MI_WFL_HEADERPRINT';
 //$modversion['config'][$i]['description'] = '_MI_WFL_HEADERPRINTDSC';
 //$modversion['config'][$i]['formtype'] = 'textarea';
 //$modversion['config'][$i]['valuetype'] = 'text';
 //$modversion['config'][$i]['default'] = '';
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'printlogourl';
 $modversion['config'][$i]['title'] = '_MI_WFL_LOGOURLPRINT';
 $modversion['config'][$i]['description'] = '_MI_WFL_LOGOURLDSCPRINT';
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = XOOPS_URL . '/modules/' . $modversion['dirname'] . '/images/logo-en.gif';
-$i++;
+$modversion['config'][$i]['default'] = XOOPS_URL . '/modules/' . $modversion['dirname'] . '/assets/images/logo-en.gif';
+++$i;
 $modversion['config'][$i]['name'] = 'showdisclaimer';
 $modversion['config'][$i]['title'] = '_MI_WFL_SHOWDISCLAIMER';
 $modversion['config'][$i]['description'] = '_MI_WFL_SHOWDISCLAIMERDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'disclaimer';
 $modversion['config'][$i]['title'] = '_MI_WFL_DISCLAIMER';
 $modversion['config'][$i]['description'] = '_MI_WFL_DISCLAIMERDSC';
 $modversion['config'][$i]['formtype'] = 'textarea';
 $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = 'We have the right, but not the obligation to monitor and review submissions submitted by users, in the forums. We shall not be responsible for any of the content of these messages. We further reserve the right, to delete, move or edit submissions that the we, in its exclusive discretion, deems abusive, defamatory, obscene or in violation of any Copyright or Trademark laws or otherwise objectionable.';
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'showlinkdisclaimer';
 $modversion['config'][$i]['title'] = '_MI_WFL_SHOWLINKDISCL';
 $modversion['config'][$i]['description'] = '_MI_WFL_SHOWLINKDISCLDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'linkdisclaimer';
 $modversion['config'][$i]['title'] = '_MI_WFL_LINKDISCLAIMER';
 $modversion['config'][$i]['description'] = '_MI_WFL_LINKDISCLAIMERDSC';
 $modversion['config'][$i]['formtype'] = 'textarea';
 $modversion['config'][$i]['valuetype'] = 'text';
 $modversion['config'][$i]['default'] = 'The links on this site are provided as is without warranty either expressed or implied. linkloaded files should be checked for possible virus infection using the most up-to-date detection and security packages. If you have a question concerning a particular piece of software, feel free to contact the developer. We refuse liability for any damage or loss resulting from the use or misuse of any software offered from this site for linkloading. If you have any doubt at all about the safety and operation of software made available to you on this site, do not linkload it.<br /><br />Contact us if you have questions concerning this disclaimer.';
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'copyright';
 $modversion['config'][$i]['title'] = '_MI_WFL_COPYRIGHT';
 $modversion['config'][$i]['description'] = '_MI_WFL_COPYRIGHTDSC';
 $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 1;
-$i++;
+++$i;
 $modversion['config'][$i]['name'] = 'selectforum';
 $modversion['config'][$i]['title'] = '_MI_WFL_SELECTFORUM';
 $modversion['config'][$i]['description'] = '_MI_WFL_SELECTFORUMDSC';
@@ -681,9 +703,6 @@ $modversion['notification']['event'][8]['mail_template'] = 'link_approve_notify'
 $modversion['notification']['event'][8]['mail_subject'] = _MI_WFL_LINK_APPROVE_NOTIFYSBJ;
 
 // On Update
-if ( ! empty( $_POST['fct'] ) && ! empty( $_POST['op'] ) && $_POST['fct'] == 'modulesadmin' && $_POST['op'] == 'update_ok' && $_POST['dirname'] == $modversion['dirname'] )
-{
+if ( ! empty( $_POST['fct'] ) && ! empty( $_POST['op'] ) && $_POST['fct'] == 'modulesadmin' && $_POST['op'] == 'update_ok' && $_POST['dirname'] == $modversion['dirname'] ) {
     include dirname( __FILE__ ) . "/include/onupdate.inc.php" ;
-} 
-
-?>
+}

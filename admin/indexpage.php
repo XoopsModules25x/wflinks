@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: indexpage.php 9706 2012-06-24 20:24:10Z beckmi $
+ * $Id: indexpage.php v 1.0.3 05 july 2004 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -34,8 +34,9 @@ switch ( strtolower( $op ) ) {
         $sql = "UPDATE " . $xoopsDB -> prefix( 'wflinks_indexpage' ) . " set indexheading='$indexheading', indexheader='$indexheader', indexfooter='$indexfooter', indeximage='$indeximage', indexheaderalign='$indexheaderalign ', indexfooteralign='$indexfooteralign', nohtml='$nohtml', nosmiley='$nosmiley', noxcodes='$noxcodes', noimages='$noimages', nobreak='$nobreak', lastlinksyn='$lastlinksyn', lastlinkstotal='$lastlinkstotal'";
         if ( !$result = $xoopsDB -> query( $sql ) ) {
             XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
             return false;
-        } 
+        }
         redirect_header( "index.php", 1, _AM_WFL_IPAGE_UPDATED );
         break;
 
@@ -43,17 +44,18 @@ switch ( strtolower( $op ) ) {
         $sql = "SELECT indeximage, indexheading, indexheader, indexfooter, nohtml, nosmiley, noxcodes, noimages, nobreak, indexheaderalign, indexfooteralign, lastlinksyn, lastlinkstotal FROM " . $xoopsDB -> prefix( 'wflinks_indexpage' );
         if ( !$result = $xoopsDB -> query( $sql ) ) {
             XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
             return false;
-        } 
+        }
         list( $indeximage, $indexheading, $indexheader, $indexfooter, $nohtml, $nosmiley, $noxcodes, $noimages, $nobreak, $indexheaderalign, $indexfooteralign, $lastlinksyn, $lastlinkstotal ) = $xoopsDB -> fetchrow( $result );
 
         xoops_cp_header();
 
         echo "
-		 <fieldset><legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_IPAGE_INFORMATION . "</legend>\n
-		 <div style='padding: 8px;'>" . _AM_WFL_MINDEX_PAGEINFOTXT . "</div>\n
-		 </fieldset><br />\n
-		";
+         <fieldset><legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_IPAGE_INFORMATION . "</legend>\n
+         <div style='padding: 8px;'>" . _AM_WFL_MINDEX_PAGEINFOTXT . "</div>\n
+         </fieldset><br />\n
+        ";
 
         $sform = new XoopsThemeForm( _AM_WFL_IPAGE_MODIFY, "op", xoops_getenv( 'PHP_SELF' ) );
         $sform -> addElement( new XoopsFormText( _AM_WFL_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading ), false );
@@ -67,7 +69,7 @@ switch ( strtolower( $op ) ) {
             $indeximage_tray -> addElement( new XoopsFormLabel( '', "<br /><br /><img src='" . XOOPS_URL . "/" . $xoopsModuleConfig['mainimagedir'] . "/" . $indeximage . "' name='image' id='image' alt='' />" ) );
         } else {
             $indeximage_tray -> addElement( new XoopsFormLabel( '', "<br /><br /><img src='" . XOOPS_URL . "/uploads/blank.gif' name='image' id='image' alt='' />" ) );
-        } 
+        }
         $sform -> addElement( $indeximage_tray );
 
         $editor = wfl_getWysiwygForm( _AM_WFL_IPAGE_CHEADING, 'indexheader', $indexheader, 15, 60, '');
@@ -82,32 +84,32 @@ switch ( strtolower( $op ) ) {
         $sform -> addElement( $footeralign_select );
 
         $options_tray = new XoopsFormElementTray( _AM_WFL_TEXTOPTIONS, '<br />' );
-	//html option
+    //html option
         $html_checkbox = new XoopsFormCheckBox( '', 'nohtml', $nohtml );
         $html_checkbox -> addOption( 1, _AM_WFL_DISABLEHTML );
         $options_tray -> addElement( $html_checkbox );
-	//smiley option
+    //smiley option
         $smiley_checkbox = new XoopsFormCheckBox( '', 'nosmiley', $nosmiley );
         $smiley_checkbox -> addOption( 1, _AM_WFL_DISABLESMILEY );
         $options_tray -> addElement( $smiley_checkbox );
-	//xcodes option
+    //xcodes option
         $xcodes_checkbox = new XoopsFormCheckBox( '', 'noxcodes', $noxcodes );
         $xcodes_checkbox -> addOption( 1, _AM_WFL_DISABLEXCODE );
         $options_tray -> addElement( $xcodes_checkbox );
-	//noimages option
+    //noimages option
         $noimages_checkbox = new XoopsFormCheckBox( '', 'noimages', $noimages );
         $noimages_checkbox -> addOption( 1, _AM_WFL_DISABLEIMAGES );
         $options_tray -> addElement( $noimages_checkbox );
-	//breaks option
+    //breaks option
         $breaks_checkbox = new XoopsFormCheckBox( '', 'nobreak', $nobreak );
         $breaks_checkbox -> addOption( 1, _AM_WFL_DISABLEBREAK );
         $options_tray -> addElement( $breaks_checkbox );
         $sform -> addElement( $options_tray );
-        
+
         $sform -> addElement(  new XoopsFormRadioYN( _AM_WFL_IPAGE_SHOWLATEST, 'lastlinksyn', $lastlinksyn, ' ' . _YES . '', ' ' . _NO . '' ) );
 
         $lastlinkstotalform = new XoopsFormText( _AM_WFL_IPAGE_LATESTTOTAL, 'lastlinkstotal', 2, 2, $lastlinkstotal );
-		$lastlinkstotalform -> setDescription( "<small>" . _AM_WFL_IPAGE_LATESTTOTAL_DSC . "</small>");
+        $lastlinkstotalform -> setDescription( "<small>" . _AM_WFL_IPAGE_LATESTTOTAL_DSC . "</small>");
         $sform -> addElement( $lastlinkstotalform, false );
 
         $button_tray = new XoopsFormElementTray( '', '' );
@@ -117,7 +119,5 @@ switch ( strtolower( $op ) ) {
         $sform -> addElement( $button_tray );
         $sform -> display();
         break;
-} 
+}
 include_once 'admin_footer.php';
-
-?>

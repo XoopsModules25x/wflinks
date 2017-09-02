@@ -6,7 +6,7 @@
  * Team: WF-Projects
  * Licence: GNU
  */
- 
+
 include 'header.php';
 
 // Begin Main page Heading etc
@@ -23,9 +23,9 @@ if ( is_array( $arr ) > 0 && !$list && !$selectdate ) {
     if ( false == wfl_checkgroups( $cid ) ) {
         redirect_header( 'index.php', 1, _MD_WFL_MUSTREGFIRST );
         exit();
-    } 
+    }
 }
-$xoopsOption['template_main'] = 'wflinks_viewcat.html';
+$xoopsOption['template_main'] = 'wflinks_viewcat.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
 global $xoopsModuleConfig;
@@ -41,22 +41,22 @@ $time = time();
 // Display Sub-categories for selected Category
 if ( is_array( $arr ) > 0 && !$list && !$selectdate ) {
     $scount = 1;
-    foreach( $arr as $ele ) {
+    foreach ($arr as $ele) {
         if ( wfl_checkgroups( $ele['cid'] ) == false ) {
             continue;
-        } 
+        }
         $sub_arr = array();
         $sub_arr = $mytree -> getFirstChild( $ele['cid'], 'title' );
         $space = 1;
         $chcount = 1;
         $infercategories = '';
-        foreach( $sub_arr as $sub_ele ) {
+        foreach ($sub_arr as $sub_ele) {
             // Subitem file count
             $hassubitems = wfl_getTotalItems( $sub_ele['cid'] );
             // Filter group permissions
             if ( true == wfl_checkgroups( $sub_ele['cid'] ) ) {
                 // If subcategory count > 5 then finish adding subcats to $infercategories and end
-                if ( $chcount > 5 ) {
+                if ($chcount > 5) {
                     $infercategories .= '...';
                     break;
                 }
@@ -72,9 +72,9 @@ if ( is_array( $arr ) > 0 && !$list && !$selectdate ) {
 // This code is copyright WF-Projects
 // Using this code without our permission or removing this code voids the license agreement
         $_image = ( $ele['imgurl'] ) ? urldecode( $ele['imgurl'] ) : '';
-		if ( $_image != '' && $xoopsModuleConfig['usethumbs'] ) {
+        if ($_image != '' && $xoopsModuleConfig['usethumbs']) {
                   $_thumb_image = new wfThumbsNails( $_image, $xoopsModuleConfig['catimage'], 'thumbs' );
-                  if ( $_thumb_image ) {
+                  if ($_thumb_image) {
                     $_thumb_image -> setUseThumbs( 1 );
                     $_thumb_image -> setImageType( 'gd2' );
                     $_image = $_thumb_image -> do_thumb( $xoopsModuleConfig['shotwidth'],
@@ -84,8 +84,8 @@ if ( is_array( $arr ) > 0 && !$list && !$selectdate ) {
                     $xoopsModuleConfig['keepaspect']
                     );
             }
-        } 
-		if ( empty( $_image ) || $_image == '' ) {
+        }
+        if ( empty( $_image ) || $_image == '' ) {
                   $imgurl = $indicator['image'];
                  } else {
                   $imgurl = "{$xoopsModuleConfig['catimage']}/$_image";
@@ -112,12 +112,13 @@ $smiley = ( $head_arr['nosmiley'] ) ? 0 : 1;
 $xcodes = ( $head_arr['noxcodes'] ) ? 0 : 1;
 $images = ( $head_arr['noimages'] ) ? 0 : 1;
 $breaks = ( $head_arr['nobreak'] ) ? 1 : 0;
+
 $description = $wfmyts -> displayTarea( $head_arr['description'], $html, $smiley, $xcodes, $images, $breaks );
 $xoopsTpl -> assign( 'description', $description );
 $xoopsTpl -> assign( 'xoops_pagetitle', $head_arr['title'] );
 //$xoopsTpl -> assign( 'client_banner', wfl_getbanner_from_id_client($head_arr['client_id']) );
 
-if ($head_arr['client_id'] > 0){
+if ($head_arr['client_id'] > 0) {
   $catarray['imageheader'] = wfl_getbanner_from_id_client( $head_arr['client_id'] );
 } elseif ($head_arr['banner_id'] > 0) {
   $catarray['imageheader'] = wfl_getbanner_from_id_banner( $head_arr['banner_id'] );
@@ -134,8 +135,7 @@ $xoopsTpl -> assign( 'show_categort_title', true );
 $start = wfl_cleanRequestVars( $_REQUEST, 'start', 0 );
 $orderby = ( isset( $_REQUEST['orderby'] ) && !empty( $_REQUEST['orderby'] ) ) ? wfl_convertorderbyin( htmlspecialchars($_REQUEST['orderby']) ) : wfl_convertorderbyin( $xoopsModuleConfig['linkxorder'] );
 
-
-if ( $selectdate ) {
+if ($selectdate) {
     $d = date( 'j', $selectdate );
     $m = date( 'm', $selectdate );
     $y = date( 'Y', $selectdate );
@@ -144,9 +144,9 @@ if ( $selectdate ) {
     $stat_end = mktime ( 23, 59, 59, $m, $d, $y );
 
     $query = " WHERE published >= " . $stat_begin . " AND published <= " . $stat_end . "
-		AND (expired = 0 OR expired > " . $time . ")
-		AND offline = 0
-		AND cid > 0";
+        AND (expired = 0 OR expired > " . $time . ")
+        AND offline = 0
+        AND cid > 0";
 
     $sql = "SELECT * FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . $query . " ORDER BY " . $orderby;
     $result = $xoopsDB -> query( $sql, $xoopsModuleConfig['perpage'] , $start );
@@ -156,7 +156,7 @@ if ( $selectdate ) {
 
     $list_by = 'selectdate=' . $selectdate;
 
-} elseif ( $list ) {
+} elseif ($list) {
 
     $query = " WHERE title LIKE '$list%' AND (published > 0 AND published <= " . $time . ") AND (expired = 0 OR expired > " . $time . ") AND offline = 0 AND cid > 0";
 
@@ -198,17 +198,17 @@ if ( $selectdate ) {
     $xoopsTpl -> assign( 'module_dir', $xoopsModule -> getVar( 'dirname' ) );
 
 // Show links
-if ( $count > 0 ) {
+if ($count > 0) {
     $moderate = 0;
     while ( $link_arr = $xoopsDB -> fetchArray( $result ) ) {
         $res_type = 0;
         require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/include/linkloadinfo.php';
         $xoopsTpl -> append( 'wfllink', $link );
-    } 
+    }
 
 // Show order box
     $xoopsTpl -> assign( 'show_links', false );
-    if ( $count > 1 && $cid != 0 ) {
+    if ($count > 1 && $cid != 0) {
         $xoopsTpl -> assign( 'show_links', true );
         $orderbyTrans = wfl_convertorderbytrans( $orderby );
         $xoopsTpl -> assign( 'lang_cursortedby', sprintf( _MD_WFL_CURSORTBY, wfl_convertorderbytrans( $orderby ) ) );
@@ -227,5 +227,3 @@ if ( $count > 0 ) {
 unset( $link_arr );
 
 include XOOPS_ROOT_PATH . '/footer.php';
-
-?>

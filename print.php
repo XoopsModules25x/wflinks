@@ -15,9 +15,9 @@ $lid = wfl_cleanRequestVars( $_REQUEST, 'lid', 0 );
 $lid = intval($lid);
 
 $error_message = _MD_WFL_NOITEMSELECTED;
-if ( $lid == 0 ) {
-	redirect_header("javascript:history.go(-1)", 1, $error_message);
-	exit();
+if ($lid == 0) {
+    redirect_header("javascript:history.go(-1)", 1, $error_message);
+    exit();
 }
 
 global $xoopsDB, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
@@ -35,11 +35,11 @@ $xoopsTpl -> assign( 'printsitename', XOOPS_URL );
 $xoopsTpl -> assign( 'printcategoryname', $mycat['title'] );
 
 if ($xoopsModuleConfig['screenshot']) {
-	if ($xoopsModuleConfig['useautothumb']) {
-		$xoopsTpl -> assign( 'printscrshot', '<img src="http://mozshot.nemui.org/shot/200x200?' . $myrow['url'] . '" alt="" title="" border="0" />' );
-	} else {
-		$xoopsTpl -> assign( 'printscrshot', '<img src="' . XOOPS_URL . '/' . $xoopsModuleConfig['screenshots'] .'/'. $myrow['screenshot'] . '" alt="" title="" border="0" />' );
-	}		
+    if ($xoopsModuleConfig['useautothumb']) {
+        $xoopsTpl -> assign( 'printscrshot', '<img src="http://mozshot.nemui.org/shot/200x200?' . $myrow['url'] . '" alt="" title="" border="0" />' );
+    } else {
+        $xoopsTpl -> assign( 'printscrshot', '<img src="' . XOOPS_URL . '/' . $xoopsModuleConfig['screenshots'] .'/'. $myrow['screenshot'] . '" alt="" title="" border="0" />' );
+    }
 }
 
 $xoopsTpl -> assign( 'printtitle', $myts -> displayTarea($myrow['title']) );
@@ -47,7 +47,7 @@ $xoopsTpl -> assign( 'printdescription', $myrow['description'] );
 $xoopsTpl -> assign( 'printfooter', $xoopsModuleConfig['footerprint'] );
 $xoopsTpl -> assign( 'lang_category', _MD_WFL_CATEGORY );
 
-if ( $xoopsModuleConfig['printlogourl'] ) {
+if ($xoopsModuleConfig['printlogourl']) {
   $xoopsTpl -> assign( 'printlogo', '<img src="' . $xoopsModuleConfig['printlogourl'] . '" alt="" title="" border="0" />' );
 } else {
   $xoopsTpl -> assign( 'printlogo', '' );
@@ -67,41 +67,41 @@ $url = $myrow['url'];
 $email = printemailcnvrt($myrow['email']);
 $country = wfl_countryname( $myrow['country'] );
 
-if ( $street1 == '' || $town == '' || $xoopsModuleConfig['useaddress'] == 0 ) {
+if ($street1 == '' || $town == '' || $xoopsModuleConfig['useaddress'] == 0) {
   $print['addryn'] = 0;
 } else {
   $print['addryn'] = 1;
   $address = wfl_address( $street1, $town, $state, $zip, $country );
   $print['address'] = '<b>' . _MD_WFL_ADDRESS . '</b><br />' . wfl_address( $street1, $street2, $town, $state, $zip, $country ) . '<br />' . $country;
-  if ( $tel == '' ) {
+  if ($tel == '') {
     $print['tel'] = '';
     } else {
-      $print['tel'] = '<br />' . '<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/images/icon/telephone.png" title="" alt="" align="absmiddle" />&nbsp;' . $tel;
+      $print['tel'] = '<br />' . '<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/assets/images/icon/telephone.png" title="" alt="" align="absmiddle" />&nbsp;' . $tel;
     }
-  if ( $mobile == '' ) {
+  if ($mobile == '') {
     $print['mobile'] = '';
     } else {
-      $print['mobile'] = '<br />' .'<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/images/icon/phone.png" title="" alt="" align="absmiddle" />&nbsp;'  . $mobile;
+      $print['mobile'] = '<br />' .'<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/assets/images/icon/phone.png" title="" alt="" align="absmiddle" />&nbsp;'  . $mobile;
     }
-  if ( $voip == '' ) {
+  if ($voip == '') {
     $print['voip'] = '';
     } else {
-      $print['voip'] = '<br />' .'<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/images/icon/voip.png" title="" alt="" align="absmiddle" />&nbsp;'  . $voip;
+      $print['voip'] = '<br />' .'<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/assets/images/icon/voip.png" title="" alt="" align="absmiddle" />&nbsp;'  . $voip;
     }
-  if ( $fax == '' ) {
+  if ($fax == '') {
     $print['fax'] = '';
     } else {
-      $print['fax'] = '<br />' . '<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/images/icon/fax.png" title="" alt="" align="absmiddle" />&nbsp;' . $fax;
+      $print['fax'] = '<br />' . '<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/assets/images/icon/fax.png" title="" alt="" align="absmiddle" />&nbsp;' . $fax;
     }
-  if ( $email == '' ) {
+  if ($email == '') {
     $print['email'] = '';
     } else {
-      $print['email'] = '<br />' . '<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/images/icon/email.png" title="" alt="" align="absmiddle" />&nbsp;' . $email;
+      $print['email'] = '<br />' . '<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/assets/images/icon/email.png" title="" alt="" align="absmiddle" />&nbsp;' . $email;
     }
   }
 $xoopsTpl -> assign( 'print', $print );
 
-$xoopsTpl -> assign( 'worldwideweb', '<br />' . '<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/images/icon/world.png" title="" alt="" align="absmiddle" />&nbsp;' . $url );
+$xoopsTpl -> assign( 'worldwideweb', '<br />' . '<img src="' . XOOPS_URL . '/modules/' . $mydirname . '/assets/images/icon/world.png" title="" alt="" align="absmiddle" />&nbsp;' . $url );
 
 // Start of meta tags
 global $xoopsTpl, $xoTheme;
@@ -116,26 +116,25 @@ while ( $i < $maxWords - 1 && $i < count( $words ) ) {
 if ( isset( $words[$i] ) ) {
   $newWords[] = trim($words[$i]);
   }
-$i++;
+++$i;
 }
 
 $link_meta_description = implode( ' ', $newWords );
 
-	if ( is_object( $xoTheme ) ) {
-		$xoTheme -> addMeta( 'meta', 'keywords', $myrow['keywords'] );
-		$xoTheme -> addMeta( 'meta', 'title', $myrow['title'] );
-		$xoTheme -> addMeta( 'meta', 'description', $link_meta_description );
-	} else {
-		$xoopsTpl -> assign('xoops_meta_keywords', $myrow['keywords'] );
-		$xoopsTpl -> assign( 'xoops_meta_description', $link_meta_description );
-	}
-	$xoopsTpl -> assign( 'xoops_pagetitle', $myrow['title'] );
-	$xoopsTpl -> assign( 'xoops_meta_author', $myrow['publisher'] );
-	$xoopsTpl -> assign( 'xoops_sitename', $xoopsConfig['sitename'] );
-	$xoopsTpl -> assign( 'xoops_meta_robots', "noindex,nofollow" );
-	$xoopsTpl -> assign( 'xoops_meta_copyright', $xoopsConfig['sitename'] );
+    if ( is_object( $xoTheme ) ) {
+        $xoTheme -> addMeta( 'meta', 'keywords', $myrow['keywords'] );
+        $xoTheme -> addMeta( 'meta', 'title', $myrow['title'] );
+        $xoTheme -> addMeta( 'meta', 'description', $link_meta_description );
+    } else {
+        $xoopsTpl -> assign('xoops_meta_keywords', $myrow['keywords'] );
+        $xoopsTpl -> assign( 'xoops_meta_description', $link_meta_description );
+    }
+    $xoopsTpl -> assign( 'xoops_pagetitle', $myrow['title'] );
+    $xoopsTpl -> assign( 'xoops_meta_author', $myrow['publisher'] );
+    $xoopsTpl -> assign( 'xoops_sitename', $xoopsConfig['sitename'] );
+    $xoopsTpl -> assign( 'xoops_meta_robots', "noindex,nofollow" );
+    $xoopsTpl -> assign( 'xoops_meta_copyright', $xoopsConfig['sitename'] );
 // End of meta tags
 
 $xoopsTpl -> assign( 'module_dir', $mydirname );
-$xoopsTpl -> display( 'db:wflinks_print.html' );
-?>
+$xoopsTpl -> display( 'db:wflinks_print.tpl' );

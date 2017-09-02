@@ -1,5 +1,5 @@
 <?php
-// $Id: comment_new.php 9692 2012-06-23 18:19:45Z beckmi $
+// $Id: comment_new.php,v 1.6 2003/03/25 11:08:16 buennagel Exp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -35,4 +35,3 @@ if ($com_itemid > 0) {
     $com_replytitle = $row['title'];
     include XOOPS_ROOT_PATH.'/include/comment_new.php';
 }
-?>

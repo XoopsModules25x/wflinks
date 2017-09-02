@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: ratelink.php 9692 2012-06-23 18:19:45Z beckmi $
+ * $Id: ratelink.php,v 2.3 11 july 2004 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -20,30 +20,30 @@ $lid = intval($lid);
 $ip = getenv( "REMOTE_ADDR" );
 $ratinguser = ( !is_object( $xoopsUser ) ) ? 0 : $xoopsUser -> getVar( 'uid' );
 
-if ( $ratinguser != 0 ) {
+if ($ratinguser != 0) {
     $result = $xoopsDB -> query( "SELECT cid, submitter FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE lid=" . intval($lid) );
     while ( list( $cid, $ratinguserDB ) = $xoopsDB -> fetchRow( $result ) ) {
-        if ( $ratinguserDB == $ratinguser ) {
+        if ($ratinguserDB == $ratinguser) {
             $ratemessage = _MD_WFL_CANTVOTEOWN;
             redirect_header( 'singlelink.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage );
             exit();
-        } 
-    } 
+        }
+    }
     // Check if REG user is trying to vote twice.
     $result = $xoopsDB -> query( "SELECT cid, ratinguser FROM " . $xoopsDB -> prefix( 'wflinks_votedata' ) . " WHERE lid=" . intval($lid) );
     while ( list( $cid, $ratinguserDB ) = $xoopsDB -> fetchRow( $result ) ) {
-        if ( $ratinguserDB == $ratinguser ) {
+        if ($ratinguserDB == $ratinguser) {
             $ratemessage = _MD_WFL_VOTEONCE;
             redirect_header( 'singlelink.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage );
             exit();
-        } 
-    } 
+        }
+    }
 } else {
     // Check if ANONYMOUS user is trying to vote more than once per day.
     $yesterday = ( time() - ( 86400 * $anonwaitdays ) );
     $result = $xoopsDB -> query( "SELECT COUNT(*) FROM " . $xoopsDB -> prefix( 'wflinks_votedata' ) . " WHERE lid=" . intval($lid) . " AND ratinguser=0 AND ratinghostname=" . $ip . "  AND ratingtimestamp > " . $yesterday );
     list( $anonvotecount ) = $xoopsDB -> fetchRow( $result );
-    if ( $anonvotecount >= 1 ) {
+    if ($anonvotecount >= 1) {
         redirect_header( 'singlelink.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, _MD_WFL_VOTEONCE );
         exit();
     }
@@ -62,7 +62,7 @@ if ( !empty( $_POST['submit'] ) ) {
     $cid = intval($cid);
     $rating = intval($rating);
     // Check if Rating is Null
-    if ( $rating == "--" ) {
+    if ($rating == "--") {
         redirect_header( 'ratelink.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, _MD_WFL_NORATING );
         exit();
     }
@@ -80,7 +80,7 @@ if ( !empty( $_POST['submit'] ) ) {
     redirect_header( 'singlelink.php?cid=' . intval($cid) . '&amp;lid=' . intval($lid), 4, $ratemessage );
     exit();
 } else {
-    $xoopsOption['template_main'] = 'wflinks_ratelink.html';
+    $xoopsOption['template_main'] = 'wflinks_ratelink.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
 
     $catarray['imageheader'] = wfl_imageheader();
@@ -102,7 +102,7 @@ if ( !empty( $_POST['submit'] ) ) {
       $xoopsTpl -> assign( 'xoops_meta_robots', 'noindex,nofollow' );
     }
 
-	$xoopsTpl -> assign( 'module_dir', $xoopsModule -> getVar( 'dirname' ) );
+    $xoopsTpl -> assign( 'module_dir', $xoopsModule -> getVar( 'dirname' ) );
     include XOOPS_ROOT_PATH . '/footer.php';
 }
 
@@ -114,4 +114,3 @@ if ( is_object($xoTheme) ) {
 
 $xoopsTpl -> assign( 'module_dir', $xoopsModule -> getVar( 'dirname' ) );
 include XOOPS_ROOT_PATH . '/footer.php';
-?>

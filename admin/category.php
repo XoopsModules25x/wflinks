@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: category.php 9706 2012-06-24 20:24:10Z beckmi $
+ * $Id: category.php v 1.00 21 June 2005 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -17,15 +17,16 @@ $op = '';
 if (isset($_POST)) {
     foreach ($_POST as $k => $v) {
         ${$k} = $v;
-    } 
-} 
+    }
+}
 if (isset($_GET)) {
     foreach ($_GET as $k => $v) {
         ${$k} = $v;
-    } 
+    }
 }
 
-function createcat($cid = 0) {
+function createcat($cid = 0)
+{
     include_once '../class/wfl_lists.php';
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
@@ -71,7 +72,7 @@ function createcat($cid = 0) {
         $groups = $gperm_handler -> getGroupIds('WFLinkCatPerm', $cid, $xoopsModule -> getVar('mid'));
         $groups = $groups;
     } else {
-	$groups = true;
+    $groups = true;
     }
 
     $sform = new XoopsThemeForm($heading, "op", xoops_getenv('PHP_SELF'));
@@ -79,7 +80,7 @@ function createcat($cid = 0) {
 
     $sform -> addElement(new XoopsFormText(_AM_WFL_FCATEGORY_TITLE, 'title', 50, 80, $title), true);
     $sform -> addElement(new XoopsFormText(_AM_WFL_FCATEGORY_WEIGHT, 'weight', 10, 80, $weight), false);
-    
+
     if ($totalcats > 0 && $cid) {
        $mytreechose = new XoopsTree($xoopsDB -> prefix('wflinks_cat'), "cid", "pid");
        ob_start();
@@ -104,7 +105,7 @@ function createcat($cid = 0) {
         $indeximage_tray -> addElement(new XoopsFormLabel('', "<br /><br /><img src='" . XOOPS_URL . "/" . $xoopsModuleConfig['catimage'] . "/" . $imgurl . "' name='image' id='image' alt='' />"));
     } else {
         $indeximage_tray -> addElement(new XoopsFormLabel('', "<br /><br /><img src='" . XOOPS_URL . "/uploads/blank.gif' name='image' id='image' alt='' />"));
-    } 
+    }
     $sform -> addElement($indeximage_tray);
 
     $editor = wfl_getWysiwygForm( _AM_WFL_FCATEGORY_DESCRIPTION, 'description', $description, 15, 60, '');
@@ -117,12 +118,12 @@ function createcat($cid = 0) {
     $client_array = array();
     $client_array[0] = '&nbsp;';
     while ($myrow = $xoopsDB -> fetchArray($result)) {
-		$client_array[$myrow['cid']] = $myrow['name'];
-	}
+        $client_array[$myrow['cid']] = $myrow['name'];
+    }
     $client_select -> addOptionArray($client_array);
     $client_select -> setDescription(_AM_WFL_CATSPONSORDSC);
     $sform -> addElement( $client_select );
-    
+
 // Select Banner
     $banner_select = new XoopsFormSelect( _AM_WFL_BANNERID, 'banner_id', $banner_id, false);
     $sql = "SELECT bid, cid FROM " . $xoopsDB -> prefix('banner') . " ORDER BY bid ASC";
@@ -130,8 +131,8 @@ function createcat($cid = 0) {
     $banner_array = array();
     $banner_array[0] = '&nbsp;';
     while ($myrow = $xoopsDB -> fetchArray($result)) {
-		$banner_array[$myrow['bid']] = $myrow['bid'];
-	}
+        $banner_array[$myrow['bid']] = $myrow['bid'];
+    }
     $banner_select -> addOptionArray($banner_array);
     $banner_select -> setDescription(_AM_WFL_BANNERIDDSC);
     $sform -> addElement( $banner_select );
@@ -158,7 +159,7 @@ function createcat($cid = 0) {
     $breaks_checkbox -> addOption(1, _AM_WFL_DISABLEBREAK);
     $options_tray -> addElement($breaks_checkbox);
     $sform -> addElement($options_tray);
-    
+
 //    $sform -> addElement(new XoopsFormSelectGroup(_AM_WFL_FCATEGORY_GROUPPROMPT, "groups", true, $groups, 5, true));
 
     $sform -> addElement(new XoopsFormHidden('cid', $cid));
@@ -192,13 +193,13 @@ function createcat($cid = 0) {
         $butt_cancel = new XoopsFormButton('', '', _AM_WFL_BCANCEL, 'button');
         $butt_cancel -> setExtra('onclick="history.go(-1)"');
         $button_tray -> addElement($butt_cancel);
-    } 
+    }
     $sform -> addElement($button_tray);
     $sform -> display();
 
     $result2 = $xoopsDB -> query("SELECT COUNT(*) FROM " . $xoopsDB -> prefix('wflinks_cat') . "");
     list($numrows) = $xoopsDB -> fetchRow($result2);
-} 
+}
 
 if (!isset($_POST['op'])) {
     $op = isset($_GET['op']) ? $_GET['op'] : 'main';
@@ -244,16 +245,16 @@ switch ($op) {
             }
             if (!$target) {
                 redirect_header("category.php?op=move&ok=0&cid=$source", 5, _AM_WFL_CCATEGORY_MODIFY_FAILEDT);
-            } 
+            }
             $sql = "UPDATE " . $xoopsDB -> prefix('wflinks_links') . " set cid = " . $target . " WHERE cid =" . $source;
             $result = $xoopsDB -> queryF($sql);
             $error = _AM_WFL_DBERROR . ": <br /><br />" . $sql;
             if (!$result) {
                 trigger_error($error, E_USER_ERROR);
-            } 
+            }
             redirect_header("category.php?op=default", 1, _AM_WFL_CCATEGORY_MODIFY_MOVED);
             exit();
-        } 
+        }
         break;
 
     case "addCat":
@@ -272,7 +273,7 @@ switch ($op) {
           $banner_id = 0;
         } else {
           $banner_id = ( isset( $_REQUEST["banner_id"] ) ) ? $_REQUEST["banner_id"] : 0;
-        }  
+        }
 
         $nohtml = ( isset( $_REQUEST["nohtml"] ) ) ? $_REQUEST["nohtml"] : 0;
         $nosmiley = ( isset( $_REQUEST["nosmiley"] ) ) ? $_REQUEST["nosmiley"] : 0;
@@ -280,15 +281,15 @@ switch ($op) {
         $noimages = ( isset( $_REQUEST["noimages"] ) ) ? $_REQUEST["noimages"] : 0;
         $nobreak = isset( $_REQUEST['nobreak'] );
 
-        if ( !$cid ) {
+        if (!$cid) {
             $cid = 0;
             $sql = "INSERT INTO " . $xoopsDB -> prefix( 'wflinks_cat' ) . " (cid, pid, title, imgurl, description, nohtml, nosmiley, noxcodes, noimages, nobreak, weight, spotlighttop, spotlighthis, client_id, banner_id ) VALUES ('', $pid, '$title', '$imgurl', '$descriptionb', '$nohtml', '$nosmiley', '$noxcodes', '$noimages', '$nobreak', '$weight',  '$spotlighttop', '$spotlighthis', '$client_id', '$banner_id' )";
-            if ( $cid == 0 ) {
+            if ($cid == 0) {
                 $newid = $xoopsDB -> getInsertId();
             }
 
             // Notify of new category
-           
+
             global $xoopsModule;
             $tags = array();
             $tags['CATEGORY_NAME'] = $title;
@@ -303,11 +304,12 @@ switch ($op) {
             }
             $sql = "UPDATE " . $xoopsDB -> prefix( 'wflinks_cat' ) . " SET title ='$title', imgurl='$imgurl', pid =$pid, description='$descriptionb', spotlighthis='$spotlighthis' , spotlighttop='$spotlighttop', nohtml='$nohtml', nosmiley='$nosmiley', noxcodes='$noxcodes', noimages='$noimages', nobreak='$nobreak', weight='$weight', client_id='$client_id', banner_id='$banner_id' WHERE cid=" . $cid;
             $database_mess = _AM_WFL_CCATEGORY_MODIFIED;
-        } 
+        }
         if ( !$result = $xoopsDB -> query( $sql ) ) {
             XoopsErrorHandler_HandleError( E_USER_WARNING, $sql, __FILE__, __LINE__ );
+
             return false;
-        } 
+        }
         redirect_header( "category.php", 1, $database_mess );
         break;
 
@@ -324,56 +326,56 @@ switch ($op) {
             $arr = $mytree -> getAllChildId($cid);
             $lcount = count($arr);
 
-            for ($i = 0; $i < $lcount; $i++) {
+            for ($i = 0; $i < $lcount; ++$i) {
                 // get all links in each subcategory
-                $result = $xoopsDB -> query("SELECT lid FROM " . $xoopsDB -> prefix('wflinks_links') . " WHERE cid=" . $arr[$i] . ""); 
+                $result = $xoopsDB -> query("SELECT lid FROM " . $xoopsDB -> prefix('wflinks_links') . " WHERE cid=" . $arr[$i] . "");
                 // now for each linkload, delete the text data and vote ata associated with the linkload
                 while (list($lid) = $xoopsDB -> fetchRow($result)) {
                     $sql = sprintf("DELETE FROM %s WHERE lid = %u", $xoopsDB -> prefix('wflinks_votedata'), $lid);
                     $xoopsDB -> query($sql);
                     $sql = sprintf("DELETE FROM %s WHERE lid = %u", $xoopsDB -> prefix('wflinks_links'), $lid);
-                    $xoopsDB -> query($sql); 
+                    $xoopsDB -> query($sql);
 
                     // delete comments
                     xoops_comment_delete($xoopsModule -> getVar('mid'), $lid);
-                } 
+                }
                 // all links for each subcategory are deleted, now delete the subcategory data
                 $sql = sprintf("DELETE FROM %s WHERE cid = %u", $xoopsDB -> prefix('wflinks_cat'), $arr[$i]);
                 $xoopsDB -> query($sql);
-				// delete altcat entries
-				$sql = sprintf("DELETE FROM %s WHERE cid = %u", $xoopsDB -> prefix('wflinks_altcat'), $arr[$i]);
+                // delete altcat entries
+                $sql = sprintf("DELETE FROM %s WHERE cid = %u", $xoopsDB -> prefix('wflinks_altcat'), $arr[$i]);
                 $xoopsDB -> query($sql);
-            } 
+            }
             // all subcategory and associated data are deleted, now delete category data and its associated data
             $result = $xoopsDB -> query("SELECT lid FROM " . $xoopsDB -> prefix('wflinks_links') . " WHERE cid=" . $cid . "");
             while (list($lid) = $xoopsDB -> fetchRow($result)) {
                 $sql = sprintf("DELETE FROM %s WHERE lid = %u", $xoopsDB -> prefix('wflinks_links'), $lid);
-                $xoopsDB -> query($sql); 
+                $xoopsDB -> query($sql);
                 // delete comments
                 xoops_comment_delete($xoopsModule -> getVar('mid'), $lid);
                 $sql = sprintf("DELETE FROM %s WHERE lid = %u", $xoopsDB -> prefix('wflinks_votedata'), $lid);
                 $xoopsDB -> query($sql);
             }
-			// delete altcat entries
-			$sql = sprintf("DELETE FROM %s WHERE cid = %u", $xoopsDB -> prefix('wflinks_altcat'), $cid);
+            // delete altcat entries
+            $sql = sprintf("DELETE FROM %s WHERE cid = %u", $xoopsDB -> prefix('wflinks_altcat'), $cid);
             $xoopsDB -> query($sql);
-			// delete category	
+            // delete category
             $sql = sprintf("DELETE FROM %s WHERE cid = %u", $xoopsDB -> prefix('wflinks_cat'), $cid);
             $error = _AM_WFL_DBERROR . ": <br /><br />" . $sql;
-			
-			// delete group permissions
+
+            // delete group permissions
             xoops_groupperm_deletebymoditem ($xoopsModule -> getVar('mid'), 'WFLinkCatPerm', $cid);
             if (!$result = $xoopsDB -> query($sql)) {
                 trigger_error($error, E_USER_ERROR);
             }
-			
+
             redirect_header("category.php", 1, _AM_WFL_CCATEGORY_DELETED);
             exit();
         } else {
             xoops_cp_header();
             xoops_confirm(array('op' => 'del', 'cid' => $cid, 'ok' => 1), 'category.php', _AM_WFL_CCATEGORY_AREUSURE);
             xoops_cp_footer();
-        } 
+        }
         break;
 
     case "modCat":
@@ -417,9 +419,8 @@ switch ($op) {
             $dup_tray -> addElement($butt_dupct);
             $sform -> addElement($dup_tray);
             $sform -> display();
-        } 
+        }
         createcat(0);
         include_once 'admin_footer.php';
         break;
 }
-?>

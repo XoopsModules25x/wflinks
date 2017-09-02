@@ -167,7 +167,7 @@ CREATE TABLE `wflinks_mod` (
   `requestdate` int(11) NOT NULL default '0',
   `urlrating` tinyint(1) NOT NULL default '0',
   `country` varchar(5) NOT NULL default '',
-  `keywords` text NOT NULL,
+  `keywords` text NOT NULL default '',
   `item_tag` text NOT NULL,
   `googlemap` text NOT NULL,
   `yahoomap` text NOT NULL,

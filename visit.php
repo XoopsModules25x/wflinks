@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: visit.php 9692 2012-06-23 18:19:45Z beckmi $
+ * $Id: visit.php v 1.00 21 June 2005 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -31,23 +31,21 @@ list( $count ) = $xoopsDB -> fetchRow( $xoopsDB -> query( $sql2 ) );
 if ( false == wfl_checkgroups( $cid ) && $count == 0 ) {
     redirect_header( "index.php", 1, _MD_WFL_MUSTREGFIRST );
     exit();
-} 
-
-if ( $xoopsModuleConfig['showlinkdisclaimer'] && $agreed == 0 )
-{
-	$xoopsOption['template_main'] = 'wflinks_disclaimer.html';
-	include XOOPS_ROOT_PATH . '/header.php';
-
-	$xoopsTpl->assign('image_header', wfl_imageheader());
-	$xoopsTpl->assign('linkdisclaimer', $wfmyts->displayTarea($xoopsModuleConfig['linkdisclaimer'], 1, 1, 1, 1, 1));
-	$xoopsTpl->assign('cancel_location', XOOPS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/index.php');
-	$xoopsTpl->assign('agree_location', XOOPS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/visit.php?agree=1&amp;lid='.intval($lid).'&amp;cid='.intval($cid));
-	$xoopsTpl->assign('link_disclaimer', true);
-
-	include XOOPS_ROOT_PATH . '/footer.php';
-	exit();
 }
-else {
+
+if ($xoopsModuleConfig['showlinkdisclaimer'] && $agreed == 0) {
+    $xoopsOption['template_main'] = 'wflinks_disclaimer.tpl';
+    include XOOPS_ROOT_PATH . '/header.php';
+
+    $xoopsTpl->assign('image_header', wfl_imageheader());
+    $xoopsTpl->assign('linkdisclaimer', $wfmyts->displayTarea($xoopsModuleConfig['linkdisclaimer'], 1, 1, 1, 1, 1));
+    $xoopsTpl->assign('cancel_location', XOOPS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/index.php');
+    $xoopsTpl->assign('agree_location', XOOPS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/visit.php?agree=1&amp;lid='.intval($lid).'&amp;cid='.intval($cid));
+    $xoopsTpl->assign('link_disclaimer', true);
+
+    include XOOPS_ROOT_PATH . '/footer.php';
+    exit();
+} else {
     $url = '';
     $sql = "UPDATE " . $xoopsDB -> prefix( 'wflinks_links' ) . " SET hits=hits+1 WHERE lid=" . intval($lid);
     $result = $xoopsDB -> queryF( $sql );
@@ -59,19 +57,17 @@ else {
     } else {
         list( $url ) = $xoopsDB -> fetchRow( $result );
         $url = htmlSpecialChars( preg_replace( '/javascript:/si' , 'java script:', $url ), ENT_QUOTES );
-    } 
+    }
 
     if ( !empty( $url ) ) {
         header( "Cache-Control: no-store, no-cache, must-revalidate" );
-        header( "Cache-Control: post-check=0, pre-check=0", false ); 
+        header( "Cache-Control: post-check=0, pre-check=0", false );
         // HTTP/1.0
-        header( "Pragma: no-cache" ); 
+        header( "Pragma: no-cache" );
         // Date in the past
-        header( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" ); 
+        header( "Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
         // always modified
         header( "Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . " GMT" );
         echo "<html><head><meta http-equiv=\"Refresh\" content=\"0; URL=".$url."\"></meta></head><body></body></html>";
-    } 
-} 
-
-?>
+    }
+}

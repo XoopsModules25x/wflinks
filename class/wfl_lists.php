@@ -1,7 +1,7 @@
 <?php
 /**
  * Class: wflLists
- * $Id: wfl_lists.php 9692 2012-06-23 18:19:45Z beckmi $
+ * $Id: wfl_list.php v 1.00 21 June 2005 John N Exp $
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,7 +9,7 @@
  * Team: WF-Projects
  * Licence: GNU
  */
- 
+
 class wflLists
 {
     var $value;
@@ -21,7 +21,8 @@ class wflLists
     var $prefix;
     var $suffix;
 
-    function wflLists($path="uploads", $value = null, $selected='', $size = 1, $emptyselect = 0, $type = 0, $prefix='', $suffix='') {
+    function __construct($path="uploads", $value = null, $selected='', $size = 1, $emptyselect = 0, $type = 0, $prefix='', $suffix='')
+    {
         $this -> value = $value;
         $this -> selection = $selected;
         $this -> path = $path;
@@ -35,7 +36,7 @@ class wflLists
         if ($this -> emptyselect) {
             $ret .= "<option value='" . $this -> value() . "'>----------------------</option>";
         }
-        foreach($this_array as $content) {
+        foreach ($this_array as $content) {
             $opt_selected="";
 
             if ($content[0] == $this -> selected()) {
@@ -44,6 +45,7 @@ class wflLists
             $ret .= "<option value='" . $content . "' $opt_selected>" . $content . "</option>";
         }
         $ret .= "</select>";
+
         return $ret;
     }
 
@@ -60,16 +62,17 @@ class wflLists
                     }
                 }
             }
-            closedir($handle); 
+            closedir($handle);
 
             reset($dirlist);
         }
+
         return $dirlist;
     }
 
     function &getListTypeAsArray($dirname, $type='', $prefix="", $noselection = 1) {
-	
-		$filelist = array();
+
+        $filelist = array();
         switch (trim($type)) {
             case "images":
                 $types="[.gif|.jpg|.png]";
@@ -91,7 +94,7 @@ class wflLists
         if (substr($dirname, -1) == '/') {
             $dirname = substr($dirname, 0, -1);
         }
-		
+
         if (is_dir($dirname) && $handle = opendir($dirname)) {
             while (false !== ($file = readdir($handle))) {
                 if (!preg_match("/^[.]{1,2}$/", $file) && preg_match("/$types$/i", $file) && is_file($dirname . '/' . $file)) {
@@ -105,6 +108,7 @@ class wflLists
             asort($filelist);
             reset($filelist);
         }
+
         return $filelist;
     }
 
@@ -112,69 +116,75 @@ class wflLists
         global $xoopsDB;
         switch ( xoops_trim( $type ) ) {
             case 2:
-				$sql = "SELECT id, name FROM " . $xoopsDB->prefix( "ibf_forums" ) . " ORDER BY id";
+                $sql = "SELECT id, name FROM " . $xoopsDB->prefix( "ibf_forums" ) . " ORDER BY id";
                 break;
             case 3:
                 $sql = "SELECT forum_id, forum_name FROM " . $xoopsDB->prefix( "pbb_forums" ) . " ORDER BY forum_id";
                 break;
-			case 4:
-				$sql = "SELECT forum_id, forum_name FROM " . $xoopsDB -> prefix('bbex_forums') . " ORDER BY forum_id";
-				break;
+            case 4:
+                $sql = "SELECT forum_id, forum_name FROM " . $xoopsDB -> prefix('bbex_forums') . " ORDER BY forum_id";
+                break;
             case 1:
             case 0:
             default:
                 $sql = "SELECT forum_id, forum_name FROM " . $xoopsDB->prefix( "bb_forums" ) . " ORDER BY forum_id";
                 break;
-        } 
+        }
         $result = $xoopsDB->query( $sql );
-	
-	    $noforum = ( defined( '_WFL_NO_FORUM' ) ) ? _WFL_NO_FORUM : _AM_WFL_NO_FORUM;		
-	
-		echo "<select size='1' name='forumid'>";
+
+        $noforum = ( defined( '_WFL_NO_FORUM' ) ) ? _WFL_NO_FORUM : _AM_WFL_NO_FORUM;
+
+        echo "<select size='1' name='forumid'>";
         echo "<option value='0'>" . $noforum . "</option>";
         while (list($forum_id, $forum_name ) = $xoopsDB -> fetchRow($result)) {
-	        $opt_selected = "";
-            if ( $forum_id == $selected ) {
+            $opt_selected = "";
+            if ($forum_id == $selected) {
                 $opt_selected = "selected='selected'";
-            } 
+            }
             echo "<option value='" . $forum_id . "' $opt_selected>" . $forum_name . "</option>";
-        } 
-        echo "</select>"; 
-       	return $forum_array;
-    } 	
-	
-	
-    function value() {
+        }
+        echo "</select>";
+
+           return $forum_array;
+    }
+
+    function value()
+    {
         return $this->value;
     }
 
-    function selected() {
+    function selected()
+    {
         return $this->selected;
     }
 
-    function paths() {
+    function paths()
+    {
         return $this->path;
     }
 
-    function size() {
+    function size()
+    {
         return $this->size;
     }
 
-    function emptyselect() {
+    function emptyselect()
+    {
         return $this->emptyselect;
     }
 
-    function type() {
+    function type()
+    {
         return $this->type;
     }
 
-    function prefix() {
+    function prefix()
+    {
         return $this->prefix;
     }
 
-    function suffix() {
+    function suffix()
+    {
         return $this->suffix;
     }
 }
-
-?>

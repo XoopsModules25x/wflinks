@@ -1,5 +1,5 @@
 <?php
-// $Id: comment_functions.php 9692 2012-06-23 18:19:45Z beckmi $
+// $Id: comment_functions.php,v 1.00 2003/02/12 11:36:35 John N Exp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -27,13 +27,14 @@
 
 // comment callback functions
 
-function wflinks_com_update($linkload_id, $total_num) {
-	$db =& XoopsDatabaseFactory::getdatabaseconnection();
-	$sql = 'UPDATE ' . $db -> prefix( 'wflinks_links' ).' SET comments=' . $total_num . ' WHERE lid=' . $linkload_id;
-	$db -> query($sql);
+function wflinks_com_update($linkload_id, $total_num)
+{
+    $db =& XoopsDatabaseFactory::getdatabaseconnection();
+    $sql = 'UPDATE ' . $db -> prefix( 'wflinks_links' ).' SET comments=' . $total_num . ' WHERE lid=' . $linkload_id;
+    $db -> query($sql);
 }
 
-function wflinks_com_approve(&$comment) {
-	// notification mail here
+function wflinks_com_approve(&$comment)
+{
+    // notification mail here
 }
-?>
