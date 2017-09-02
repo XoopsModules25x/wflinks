@@ -10,7 +10,7 @@
 [![Latest Pre-Release](https://img.shields.io/github/tag/XoopsModules25x/wflinks.svg?style=flat)](https://github.com/XoopsModules25x/wflinks/tags/)
 [![Latest Version](https://img.shields.io/github/release/XoopsModules25x/wflinks.svg?style=flat)](https://github.com/XoopsModules25x/wflinks/releases/)
 
-**WF-Links ** for [XOOPS CMS](https://xoops.org) is a module for XOOPS that helps you to create a link section with multiple categories and sub-categories. 
+**WF-Links** for [XOOPS CMS](https://xoops.org) is a module for XOOPS that helps you to create a link section with multiple categories and sub-categories. 
 
 [![Tutorial Available](https://xoops.org/images/tutorial-available-blue.svg)](https://www.gitbook.com/book/xoops/xoops-wflinks-module/) Tutorial: see [GitBook](https://www.gitbook.com/book/xoops/xoops-wflinks-module/). 
 To contribute to the Tutorial, [fork it on GitHub](https://github.com/XoopsDocs/wflinks-tutorial)
