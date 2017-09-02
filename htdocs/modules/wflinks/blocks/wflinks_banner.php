@@ -15,8 +15,8 @@ function b_wflinks_banner_show( $options )
 
     $block = array();
     $time = time();
-    $modhandler = &xoops_gethandler( 'module' );
-    $wflModule = &$modhandler -> getByDirname( $mydirname );
+    $modhandler = xoops_gethandler( 'module' );
+    $wflModule = $modhandler -> getByDirname( $mydirname );
 
     $result = $xoopsDB -> query( "SELECT a.cid as acid, a.title, a.client_id, a.banner_id, b.bid, b.cid, b.imptotal, b.impmade, b.clicks FROM " . $xoopsDB -> prefix( 'wflinks_cat' ) . " a, " . $xoopsDB -> prefix( 'banner' ) . " b WHERE (b.cid = a.client_id) OR (b.bid = a.banner_id) ORDER BY b.cid, b.bid, a.title ASC" );
 

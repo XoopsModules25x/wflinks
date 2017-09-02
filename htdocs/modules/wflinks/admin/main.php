@@ -104,7 +104,7 @@ function edit( $lid = 0 )
 
     $caption = ( $lid ) ? _AM_WFL_LINK_MODIFYFILE : _AM_WFL_LINK_CREATENEWFILE;
     $sform = new XoopsThemeForm( $caption, "storyform", xoops_getenv( 'PHP_SELF' ) );
-    $sform -> setExtra( 'enctype="multipart / form - data"' );
+    $sform -> setExtra( 'enctype="multipart/form-data"' );
 
     if ($submitter == '') {
       $sform -> addElement( new XoopsFormHidden( 'submitter', $submitter ) );
@@ -170,7 +170,7 @@ function edit( $lid = 0 )
     }
 
 // Screenshot
-    $graph_array = &wflLists :: getListTypeAsArray( XOOPS_ROOT_PATH . "/" . $xoopsModuleConfig['screenshots'], $type = "images" );
+    $graph_array = wflLists :: getListTypeAsArray( XOOPS_ROOT_PATH . "/" . $xoopsModuleConfig['screenshots'], $type = "images" );
     $indeximage_select = new XoopsFormSelect( '', 'screenshot', $screenshot );
     $indeximage_select -> addOptionArray( $graph_array );
     $indeximage_select -> setExtra( "onchange = 'showImgSelected(\"image\", \"screenshot\", \"" . $xoopsModuleConfig['screenshots'] . "\", \"\", \"" . XOOPS_URL . "\")'" );
@@ -241,7 +241,7 @@ if ($xoopsModuleConfig['useaddress']) {
     $sform -> insertBreak( _AM_WFL_LINK_MISCLINKSETTINGS, 'bg3' );
 
 // Set Publish date
-    $sform -> addElement( new XoopsFormDateTime( _AM_WFL_LINK_SETPUBLISHDATE, 'published', $size = 15, $published ));
+//    $sform -> addElement( new XoopsFormDateTime( _AM_WFL_LINK_SETPUBLISHDATE, 'published', $size = 15, $published ));
 
     if ($lid) {
         $sform -> addElement( new XoopsFormHidden( 'was_published', $published ) );
@@ -290,12 +290,12 @@ if ($xoopsModuleConfig['useaddress']) {
       $sform -> addElement( $submitNews_radio );
 
       include_once XOOPS_ROOT_PATH . '/class/xoopstopic.php';
-      $xt = new XoopsTopic( $xoopsDB -> prefix( 'topics' ) );
+      $xt = new XoopsTopic( $xoopsDB -> prefix( 'news_topics' ) );
       ob_start();
          $xt -> makeTopicSelBox( 1, 0, "newstopicid" );
          $sform -> addElement( new XoopsFormLabel( _AM_WFL_LINK_NEWSCATEGORY, ob_get_contents() ) );
       ob_end_clean();
-      $sform -> addElement( new XoopsFormText( _AM_WFL_LINK_NEWSTITLE, 'newsTitle', 70, 255, '' ), false );
+      $sform -> addElement( new XoopsFormText( _AM_WFL_LINK_NEWSTITLE, 'topic_id', 70, 255, '' ), false );
     }
 
     if ($lid && $published == 0) {
@@ -540,7 +540,7 @@ switch ( strtolower( $op ) ) {
           return false;
         }
 
-        $newid = mysql_insert_id();
+        $newid = mysqli_insert_id();
 
 // Add item_tag to Tag-module
         if (!$lid) {
@@ -559,7 +559,7 @@ switch ( strtolower( $op ) ) {
             $row = $xoopsDB -> fetchArray( $xoopsDB -> query( $sql ) );
             $tags['CATEGORY_NAME'] = $row['title'];
             $tags['CATEGORY_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/viewcat.php?cid=' . $cid;
-            $notification_handler = &xoops_gethandler( 'notification' );
+            $notification_handler = xoops_gethandler( 'notification' );
             $notification_handler -> triggerEvent( 'global', 0, 'new_link', $tags );
             $notification_handler -> triggerEvent( 'category', $cid, 'new_link', $tags );
         }
@@ -572,7 +572,7 @@ switch ( strtolower( $op ) ) {
             $row = $xoopsDB -> fetchArray( $result );
             $tags['CATEGORY_NAME'] = $row['title'];
             $tags['CATEGORY_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/viewcat.php?cid=' . $cid;
-            $notification_handler = &xoops_gethandler( 'notification' );
+            $notification_handler = xoops_gethandler( 'notification' );
             $notification_handler -> triggerEvent( 'global', 0, 'new_link', $tags );
             $notification_handler -> triggerEvent( 'category', $cid, 'new_link', $tags );
             $notification_handler -> triggerEvent( 'link', $lid, 'approve', $tags );
@@ -633,7 +633,7 @@ switch ( strtolower( $op ) ) {
                 return false;
             }
             list( $lid, $title ) = $xoopsDB -> fetchrow( $result );
-            $item_tag = $result['item_tag'];
+            $item_tag = $result->fetchArray['item_tag'];
             include 'admin_header.php';
             xoops_cp_header();
             //wfl_adminmenu( _AM_WFL_BINDEX );

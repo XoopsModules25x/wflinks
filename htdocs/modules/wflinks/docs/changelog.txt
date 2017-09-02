@@ -1,3 +1,10 @@
+1.10 Beta 2       2017-08-31
+=================================
+- modification for XOOPS 2.5.9
+- fixed the creation of screenshots
+- changed some icons
+- some corrections were made
+
 1.10 Beta 1       2014-04-23
 =================================
 - moved all images, CSS, and JS files to /assets (mamba)

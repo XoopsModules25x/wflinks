@@ -55,7 +55,7 @@ class wfThumbsNails
      * @param string $_img_path
      * @param string $_img_savepath
      */
-    function wfThumbsNails( $img_name = null, $img_path = null, $img_savepath = null )
+    function __construct( $img_name = null, $img_path = null, $img_savepath = null )
     {
         if ( !preg_match( "/\.(jpg|gif|png|jpeg)$/i", $img_name ) ) {
             return false;

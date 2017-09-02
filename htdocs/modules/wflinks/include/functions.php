@@ -16,7 +16,7 @@ defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
  * @param boolean $optional
  * @return
  */
-function &wfl_gethandler( $name, $optional = false ) {
+function wfl_gethandler( $name, $optional = false ) {
     global $handlers, $xoopsModule;
 
     $name = strtolower( trim( $name ) );
@@ -42,7 +42,7 @@ function wfl_checkgroups( $cid = 0, $permType = 'WFLinkCatPerm', $redirect = fal
     global $xoopsUser, $xoopsModule;
 
     $groups = is_object( $xoopsUser ) ? $xoopsUser -> getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $gperm_handler = &xoops_gethandler( 'groupperm' );
+    $gperm_handler = xoops_gethandler( 'groupperm' );
     if ( !$gperm_handler -> checkRight( $permType, $cid, $groups, $xoopsModule -> getVar( 'mid' ) ) ) {
         if ($redirect == false) {
             return false;
@@ -104,7 +104,7 @@ function wfl_calcVoteData( $sel_id = 0 )
     return $ret;
 }
 
-function wfl_cleanRequestVars( &$array, $name = null, $def = null, $strict = false, $lengthcheck = 15 )
+function wfl_cleanRequestVars( $array, $name = null, $def = null, $strict = false, $lengthcheck = 15 )
 {
 // Sanitise $_request for further use.  This method gives more control and security.
 // Method is more for functionality rather than beauty at the moment, will correct later.
@@ -447,7 +447,7 @@ function wfl_displayimage( $image = '', $path = '', $imgsource = '', $alttext = 
         $showimage .= "<img src='" . XOOPS_URL . "/{$imgsource}/{$image}' border='0' alt='" . $alttext . "' /></a>";
     } else {
         if ( $xoopsUser && $xoopsUser -> isAdmin( $xoopsModule -> getVar( 'mid' ) ) ) {
-            $showimage .= "<img src='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/assets/images/brokenimg.gif' alt='" . _MD_WFL_ISADMINNOTICE . "' /></a>";
+            $showimage .= "<img src='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/assets/images/brokenimg.png' alt='" . _MD_WFL_ISADMINNOTICE . "' /></a>";
         } else {
             $showimage .= "<img src='" . XOOPS_URL . "/modules/" . $xoopsModule -> getVar( 'dirname' ) . "/assets/images/blank.gif' alt='" . $alttext . "' /></a>";
         }

@@ -60,7 +60,7 @@
 <td width="100%">
   <!-- Start link loop -->
    <{section name=i loop=$link}>
-	 <{include file="db:wflinks_linkload.html" link=$link[i]}>
+	 <{include file="db:wflinks_linkload.tpl" link=$link[i]}>
    <{/section}>
   <!-- End link loop -->
 </td></tr>

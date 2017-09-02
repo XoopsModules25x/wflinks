@@ -23,10 +23,10 @@ function checkBlockgroups( $cid = 0, $permType = 'WFLinkCatPerm', $redirect = fa
     global $xoopsUser;
 
     $groups = is_object( $xoopsUser ) ? $xoopsUser -> getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $gperm_handler = &xoops_gethandler( 'groupperm' );
+    $gperm_handler = xoops_gethandler( 'groupperm' );
 
-    $module_handler = &xoops_gethandler( 'module' );
-    $module = &$module_handler -> getByDirname( $mydirname );
+    $module_handler = xoops_gethandler( 'module' );
+    $module = $module_handler -> getByDirname( $mydirname );
 
     if ( !$gperm_handler -> checkRight( $permType, $cid, $groups, $module -> getVar( 'mid' ) ) ) {
         if ($redirect == false) {
@@ -56,11 +56,11 @@ function b_wflinks_top_show( $options )
 
     $block = array();
     $time = time();
-    $modhandler = &xoops_gethandler( 'module' );
-    $wflModule = &$modhandler -> getByDirname( $mydirname );
-    $config_handler = &xoops_gethandler( 'config' );
-    $wflModuleConfig = &$config_handler -> getConfigsByCat( 0, $wflModule -> getVar( 'mid' ) );
-    $wfmyts = &MyTextSanitizer :: getInstance();
+    $modhandler = xoops_gethandler( 'module' );
+    $wflModule = $modhandler -> getByDirname( $mydirname );
+    $config_handler = xoops_gethandler( 'config' );
+    $wflModuleConfig = $config_handler -> getConfigsByCat( 0, $wflModule -> getVar( 'mid' ) );
+    $wfmyts = MyTextSanitizer :: getInstance();
 
     $result = $xoopsDB -> query( "SELECT lid, cid, title, published, hits FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE published > 0 AND published <= " . $time . " AND (expired = 0 OR expired > " . $time . ") AND offline = 0 ORDER BY " . $options[0] . " DESC", $options[1], 0 );
     while ( $myrow = $xoopsDB -> fetchArray( $result ) ) {

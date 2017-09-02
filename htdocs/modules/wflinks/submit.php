@@ -94,7 +94,7 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
                 XoopsErrorHandler_HandleError( E_USER_WARNING, $_error, __FILE__, __LINE__ );
             }
             // $newid = $xoopsDB -> getInsertId();
-            $newid = mysql_insert_id();
+            $newid = mysqli_insert_id();
 
 // Add item_tag to Tag-module
             if ($lid == 0) {
@@ -166,7 +166,7 @@ if ( true == wfl_checkgroups( $cid, 'WFLinkSubPerm' ) ) {
 
                 $tags = array();
                 $tags['MODIFYREPORTS_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/admin/main.php?op=listModReq';
-                $notification_handler = &xoops_gethandler( 'notification' );
+                $notification_handler = xoops_gethandler( 'notification' );
                 $notification_handler -> triggerEvent( 'global', 0, 'link_modify', $tags );
 
                 $tags['WAITINGFILES_URL'] = XOOPS_URL . '/modules/' . $xoopsModule -> getVar( 'dirname' ) . '/admin/main.php?op=listNewlinks';

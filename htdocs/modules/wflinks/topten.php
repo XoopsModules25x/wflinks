@@ -58,7 +58,7 @@ while ( list( $cid, $ctitle ) = $xoopsDB -> fetchRow( $result ) ) {
         }
     }
 }
-$xoopsTpl -> assign( 'back' , '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule -> getvar( 'dirname' ) . '/assets/images/icon/back.png" /></a>' );
+$xoopsTpl -> assign( 'back' , '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule -> getvar( 'dirname' ) . '/assets/images/back.png" /></a>' );
 $xoopsTpl -> assign( 'lang_sortby' , $lang_array[$sort_arr] );
 $xoopsTpl -> assign( 'rankings', $rankings );
 $xoopsTpl -> assign( 'module_dir', $xoopsModule -> getVar( 'dirname' ) );
