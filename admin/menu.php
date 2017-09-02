@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: index.php v 1.00 03 july 2004 John N Exp $
+ *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,44 +9,40 @@
  * Licence: GNU
  */
 
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
+//
 
-$path = dirname(dirname(dirname(dirname(__FILE__))));
-include_once $path . '/mainfile.php';
+$moduleDirName = basename(dirname(__DIR__));
 
-$dirname         = basename(dirname(dirname(__FILE__)));
-$module_handler  = xoops_gethandler('module');
-$module          = $module_handler->getByDirname($dirname);
-$pathIcon32      = $module->getInfo('icons32');
-$pathModuleAdmin = $module->getInfo('dirmoduleadmin');
-$pathLanguage    = $path . $pathModuleAdmin;
-
-if (!file_exists($fileinc = $pathLanguage . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/' . 'main.php')) {
-    $fileinc = $pathLanguage . '/language/english/main.php';
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
 }
 
-include_once $fileinc;
+$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+//$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+
+$moduleHelper->loadLanguage('modinfo');
 
 $adminmenu = array();
 
 $i = 1;
 
-$adminmenu[$i]["title"] = _AM_MODULEADMIN_HOME;
-$adminmenu[$i]["link"]  = "admin/index.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/home.png';
+$adminmenu[$i]['title'] = _AM_MODULEADMIN_HOME;
+$adminmenu[$i]['link']  = 'admin/index.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
 ++$i;
 
-$adminmenu[$i]["title"] =  _MI_WFL_MLINKS;
-$adminmenu[$i]["link"]  = "admin/main.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/manage.png';
+$adminmenu[$i]['title'] = _MI_WFL_MLINKS;
+$adminmenu[$i]['link']  = 'admin/main.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/manage.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_WFL_MCATEGORY;
-$adminmenu[$i]['link']  = "admin/category.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/category.png';
+$adminmenu[$i]['link']  = 'admin/category.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/category.png';
 ++$i;
-$adminmenu[$i]["title"] =  _MI_WFL_INDEXPAGE;
-$adminmenu[$i]["link"]  = "admin/indexpage.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/index.png';
+$adminmenu[$i]['title'] = _MI_WFL_INDEXPAGE;
+$adminmenu[$i]['link']  = 'admin/indexpage.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/index.png';
 
 //++$i;
 //$adminmenu[$i]['title'] = _MI_WFL_MLINKS;
@@ -54,20 +50,20 @@ $adminmenu[$i]["icon"]  = $pathIcon32 . '/index.png';
 //$adminmenu[$i]["icon"]  = $pathIcon32 . '/category.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_WFL_SNEWFILESVAL;
-$adminmenu[$i]['link']  = "admin/newlinks.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/add.png';
+$adminmenu[$i]['link']  = 'admin/newlinks.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/add.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_WFL_SMODREQUEST;
-$adminmenu[$i]['link']  = "admin/modifications.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/update.png';
+$adminmenu[$i]['link']  = 'admin/modifications.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/update.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_WFL_SBROKENSUBMIT;
-$adminmenu[$i]['link']  = "admin/brokenlink.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/brokenlink.png';
+$adminmenu[$i]['link']  = 'admin/brokenlink.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/brokenlink.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_WFL_MUPLOADS;
-$adminmenu[$i]['link']  = "admin/upload.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/photo.png';
+$adminmenu[$i]['link']  = 'admin/upload.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/photo.png';
 
 //++$i;
 //$adminmenu[$i]['title'] = _MI_WFL_BLOCKADMIN;
@@ -75,13 +71,13 @@ $adminmenu[$i]["icon"]  = $pathIcon32 . '/photo.png';
 //$adminmenu[$i]["icon"]  = $pathIcon32 . '/block.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_WFL_PERMISSIONS;
-$adminmenu[$i]['link']  = "admin/permissions.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/permissions.png';
+$adminmenu[$i]['link']  = 'admin/permissions.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/permissions.png';
 
 ++$i;
 $adminmenu[$i]['title'] = _MI_WFL_MVOTEDATA;
-$adminmenu[$i]['link']  = "admin/votedata.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/poll.png';
+$adminmenu[$i]['link']  = 'admin/votedata.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/poll.png';
 
 //++$i;
 //$adminmenu[$i]['title'] = _MI_WFL_DOCUMENTATION;
@@ -90,8 +86,8 @@ $adminmenu[$i]["icon"]  = $pathIcon32 . '/poll.png';
 
 ++$i;
 $adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
-$adminmenu[$i]["link"]  = "admin/about.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/about.png';
+$adminmenu[$i]['link']  = 'admin/about.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/about.png';
 //++$i;
 //$adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
 //$adminmenu[$i]["link"]  = "admin/about2.php";

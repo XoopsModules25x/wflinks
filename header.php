@@ -1,6 +1,6 @@
 <?php
 /**
- * $Id: header.php v 1.00 21 June 2005 John N Exp $
+ *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,20 +9,20 @@
  * Licence: GNU
  */
 
-$mydirname = basename( dirname( __FILE__ ) );
+$moduleDirName = basename(__DIR__);
 
-include_once '../../mainfile.php';
-include XOOPS_ROOT_PATH . '/modules/' . $mydirname . '/include/config.php';
-include XOOPS_ROOT_PATH . '/modules/' . $mydirname . '/include/functions.php';
-include_once XOOPS_ROOT_PATH . '/modules/' . $mydirname . '/class/class_thumbnail.php';
-include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
+require_once __DIR__ . '/../../mainfile.php';
+include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/config.php';
+include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/functions.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/class_thumbnail.php';
+require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.php';
 
-if ( !file_exists( "language/" . $xoopsConfig['language'] . "/main.php" ) ) {
-    include 'language/'. $xoopsConfig['language'] . "/main.php";
+if (!file_exists(__DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php')) {
+    require_once __DIR__ . '/language/english/main.php';
 }
 
-include_once XOOPS_ROOT_PATH . '/modules/' . $mydirname . '/class/myts_extended.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/myts_extended.php';
 $wfmyts = new wflTextSanitizer(); // MyTextSanitizer object
 
 global $xoopModuleConfig;

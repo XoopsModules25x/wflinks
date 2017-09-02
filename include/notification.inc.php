@@ -1,5 +1,5 @@
 <?php
-/* $Id: notification.inc.php,v 1.3 21 June 2005 John N Exp $
+/*
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -8,52 +8,61 @@
  * Licence: GNU
  */
 
+/**
+ * @param $category
+ * @param $item_id
+ *
+ * @return null
+ */
 function wflinks_notify_iteminfo($category, $item_id)
 {
-        $mydirname = basename( dirname(  dirname( __FILE__ ) ) );
+    $moduleDirName = basename(dirname(__DIR__));
     global $xoopsModule, $xoopsModuleConfig, $xoopsConfig;
 
-    if (empty($xoopsModule) || $xoopsModule -> getVar('dirname') != $mydirname) {
-        $module_handler =& xoops_gethandler('module');
-        $module =& $module_handler -> getByDirname($mydirname);
-        $config_handler =& xoops_gethandler('config');
-        $config =& $config_handler -> getConfigsByCat(0, $module -> getVar('mid'));
+    if (empty($xoopsModule) || $xoopsModule->getVar('dirname') != $moduleDirName) {
+        /** @var XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
+        $module        = $moduleHandler->getByDirname($moduleDirName);
+        $configHandler = xoops_getHandler('config');
+        $config        = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
     } else {
         $module =& $xoopsModule;
         $config =& $xoopsModuleConfig;
     }
 
-    if ($category == 'global') {
+    if ($category === 'global') {
         $item['name'] = '';
-        $item['url'] = '';
+        $item['url']  = '';
 
         return $item;
     }
 
     global $xoopsDB;
-    if ($category == 'category') {
+    if ($category === 'category') {
         // Assume we have a valid category id
-        $sql="SELECT title FROM " . $xoopsDB -> prefix( 'wflinks_cat' ) . " WHERE cid=" . $item_id;
-        if (!$result = $xoopsDB -> query($sql)) {
+        $sql = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE cid=' . $item_id;
+        if (!$result = $xoopsDB->query($sql)) {
             return false;
         }
-        $result_array = $xoopsDB -> fetchArray($result);
+        $result_array = $xoopsDB->fetchArray($result);
         $item['name'] = $result_array['title'];
-        $item['url'] = XOOPS_URL . '/modules/' . $mydirname . '/viewcat.php?cid=' . $item_id;
+        $item['url']  = XOOPS_URL . '/modules/' . $moduleDirName . '/viewcat.php?cid=' . $item_id;
 
         return $item;
     }
 
-    if ($category == 'link') {
+    if ($category === 'link') {
         // Assume we have a valid file id
-        $sql="SELECT cid,title FROM " . $xoopsDB -> prefix( 'wflinks_links' ) . " WHERE lid=" . $item_id;
-        if (!$result = $xoopsDB -> query($sql)) {
+        $sql = 'SELECT cid,title FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $item_id;
+        if (!$result = $xoopsDB->query($sql)) {
             return false;
         }
-        $result_array = $xoopsDB -> fetchArray($result);
+        $result_array = $xoopsDB->fetchArray($result);
         $item['name'] = $result_array['title'];
-        $item['url'] = XOOPS_URL . '/modules/' . $mydirname . '/singlelink.php?cid=' . $result_array['cid'] . '&amp;lid=' . $item_id;
+        $item['url']  = XOOPS_URL . '/modules/' . $moduleDirName . '/singlelink.php?cid=' . $result_array['cid'] . '&amp;lid=' . $item_id;
 
         return $item;
     }
+
+    return null;
 }

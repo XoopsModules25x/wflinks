@@ -1,90 +1,95 @@
 # phpMyAdmin SQL Dump
 # version 2.6.0-pl3
 # http://www.phpmyadmin.net
-# 
+#
 
-# 
+#
 # Table structure for table 'wflinks_altcat'
 #
 
 CREATE TABLE wflinks_altcat (
-  lid int(11) unsigned NOT NULL default '0',
-  cid int(5) unsigned NOT NULL default '0',
-  PRIMARY KEY  (lid,cid)
-) ENGINE=MyISAM;
+  lid INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  cid INT(5) UNSIGNED  NOT NULL DEFAULT '0',
+  PRIMARY KEY (lid, cid)
+)
+  ENGINE = MyISAM;
 
-# 
+#
 # Table structure for table 'wflinks_broken'
 #
 
 CREATE TABLE wflinks_broken (
-  reportid int(5) NOT NULL auto_increment,
-  lid int(11) NOT NULL default '0',
-  sender int(11) NOT NULL default '0',
-  ip varchar(20) NOT NULL default '',
-  `date` varchar(11) NOT NULL default '0',
-  confirmed enum('0','1') NOT NULL default '0',
-  acknowledged enum('0','1') NOT NULL default '0',
-  title varchar(255) NOT NULL default '',
-  PRIMARY KEY  (reportid),
+  reportid     INT(5)          NOT NULL AUTO_INCREMENT,
+  lid          INT(11)         NOT NULL DEFAULT '0',
+  sender       INT(11)         NOT NULL DEFAULT '0',
+  ip           VARCHAR(20)     NOT NULL DEFAULT '',
+  `date`       VARCHAR(11)     NOT NULL DEFAULT '0',
+  confirmed    ENUM ('0', '1') NOT NULL DEFAULT '0',
+  acknowledged ENUM ('0', '1') NOT NULL DEFAULT '0',
+  title        VARCHAR(255)    NOT NULL DEFAULT '',
+  PRIMARY KEY (reportid),
   KEY lid (lid),
   KEY sender (sender),
   KEY ip (ip)
-) ENGINE=MyISAM;
+)
+  ENGINE = MyISAM;
 
 #
 # Table structure for table 'wflinks_cat'
 #
 
 CREATE TABLE wflinks_cat (
-  cid int(5) unsigned NOT NULL auto_increment,
-  pid int(5) unsigned NOT NULL default '0',
-  title varchar(50) NOT NULL default '',
-  imgurl varchar(150) NOT NULL default '',
-  description varchar(255) NOT NULL default '',
-  total int(11) NOT NULL default '0',
-  spotlighttop int(11) NOT NULL default '0',
-  spotlighthis int(11) NOT NULL default '0',
-  nohtml int(1) NOT NULL default '0',
-  nosmiley int(1) NOT NULL default '0',
-  noxcodes int(1) NOT NULL default '0',
-  noimages int(1) NOT NULL default '0',
-  nobreak int(1) NOT NULL default '1',
-  weight int(11) NOT NULL default '0',
-  client_id int(5) NOT NULL default '0',
-  banner_id int(5) NOT NULL default '0',
-  PRIMARY KEY  (cid),
+  cid          INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  pid          INT(5) UNSIGNED NOT NULL DEFAULT '0',
+  title        VARCHAR(50)     NOT NULL DEFAULT '',
+  imgurl       VARCHAR(150)    NOT NULL DEFAULT '',
+  description  VARCHAR(255)    NOT NULL DEFAULT '',
+  total        INT(11)         NOT NULL DEFAULT '0',
+  spotlighttop INT(11)         NOT NULL DEFAULT '0',
+  spotlighthis INT(11)         NOT NULL DEFAULT '0',
+  nohtml       INT(1)          NOT NULL DEFAULT '0',
+  nosmiley     INT(1)          NOT NULL DEFAULT '0',
+  noxcodes     INT(1)          NOT NULL DEFAULT '0',
+  noimages     INT(1)          NOT NULL DEFAULT '0',
+  nobreak      INT(1)          NOT NULL DEFAULT '1',
+  weight       INT(11)         NOT NULL DEFAULT '0',
+  client_id    INT(5)          NOT NULL DEFAULT '0',
+  banner_id    INT(5)          NOT NULL DEFAULT '0',
+  PRIMARY KEY (cid),
   KEY pid (pid)
-) ENGINE=MyISAM;
+)
+  ENGINE = MyISAM;
 
 #
 # Table structure for table 'wflinks_indexpage'
 #
 
 CREATE TABLE wflinks_indexpage (
-  indeximage varchar(255) NOT NULL default 'blank.gif',
-  indexheading varchar(255) NOT NULL default 'WF-Links',
-  indexheader text NOT NULL,
-  indexfooter text NOT NULL,
-  nohtml tinyint(8) NOT NULL default '1',
-  nosmiley tinyint(8) NOT NULL default '1',
-  noxcodes tinyint(8) NOT NULL default '1',
-  noimages tinyint(8) NOT NULL default '1',
-  nobreak tinyint(4) NOT NULL default '0',
-  indexheaderalign varchar(25) NOT NULL default 'left',
-  indexfooteralign varchar(25) NOT NULL default 'center',
-  lastlinksyn tinyint(1) NOT NULL default '0',
-  lastlinkstotal varchar(5) NOT NULL default '50',
+  indeximage       VARCHAR(255) NOT NULL DEFAULT 'blank.gif',
+  indexheading     VARCHAR(255) NOT NULL DEFAULT 'WF-Links',
+  indexheader      TEXT         NOT NULL,
+  indexfooter      TEXT         NOT NULL,
+  nohtml           TINYINT(8)   NOT NULL DEFAULT '1',
+  nosmiley         TINYINT(8)   NOT NULL DEFAULT '1',
+  noxcodes         TINYINT(8)   NOT NULL DEFAULT '1',
+  noimages         TINYINT(8)   NOT NULL DEFAULT '1',
+  nobreak          TINYINT(4)   NOT NULL DEFAULT '0',
+  indexheaderalign VARCHAR(25)  NOT NULL DEFAULT 'left',
+  indexfooteralign VARCHAR(25)  NOT NULL DEFAULT 'center',
+  lastlinksyn      TINYINT(1)   NOT NULL DEFAULT '0',
+  lastlinkstotal   VARCHAR(5)   NOT NULL DEFAULT '50',
   FULLTEXT KEY `indexheading` (`indexheading`),
   FULLTEXT KEY `indexheader` (`indexheader`),
   FULLTEXT KEY `indexfooter` (`indexfooter`)
-) ENGINE=MyISAM;
+)
+  ENGINE = MyISAM;
 
 #
 # Dumping data for table 'wflinks_indexpage'
 #
 
-INSERT INTO wflinks_indexpage (indeximage,indexheading,indexheader,indexfooter,nohtml,nosmiley,noxcodes,noimages,nobreak,indexheaderalign,indexfooteralign,lastlinksyn,lastlinkstotal) VALUES ('logo-en.gif', 'WF-Links', 'Welcome to the WF-Links.', 'WF-Links Footer', 0, 0, 0, 0, 1, 'left', 'left', 0, 5);
+INSERT INTO wflinks_indexpage (indeximage, indexheading, indexheader, indexfooter, nohtml, nosmiley, noxcodes, noimages, nobreak, indexheaderalign, indexfooteralign, lastlinksyn, lastlinkstotal)
+VALUES ('logo-en.gif', 'WF-Links', 'Welcome to the WF-Links.', 'WF-Links Footer', 0, 0, 0, 0, 1, 'left', 'left', 0, 5);
 
 # ############################
 
@@ -93,113 +98,116 @@ INSERT INTO wflinks_indexpage (indeximage,indexheading,indexheader,indexfooter,n
 #
 
 CREATE TABLE `wflinks_links` (
-  `lid` int(11) unsigned NOT NULL auto_increment,
-  `cid` int(5) unsigned NOT NULL default '0',
-  `title` varchar(100) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `screenshot` varchar(255) NOT NULL,
-  `submitter` int(11) NOT NULL default '0',
-  `publisher` varchar(255) NOT NULL,
-  `status` tinyint(2) NOT NULL default '0',
-  `date` int(10) NOT NULL default '0',
-  `hits` int(11) unsigned NOT NULL default '0',
-  `rating` double(6,4) NOT NULL default '0.0000',
-  `votes` int(11) unsigned NOT NULL default '0',
-  `comments` int(11) unsigned NOT NULL default '0',
-  `forumid` int(11) NOT NULL default '0',
-  `published` int(11) NOT NULL default '0',
-  `expired` int(10) NOT NULL default '0',
-  `updated` int(11) NOT NULL default '0',
-  `offline` tinyint(1) NOT NULL default '0',
-  `description` text NOT NULL,
-  `ipaddress` varchar(120) NOT NULL default '0',
-  `notifypub` int(1) NOT NULL default '0',
-  `urlrating` tinyint(1) NOT NULL default '0',
-  `country` varchar(5) NOT NULL default '',
-  `keywords` text NOT NULL,
-  `item_tag` text NOT NULL,
-  `googlemap` text NOT NULL,
-  `yahoomap` text NOT NULL,
-  `multimap` text NOT NULL,
-  `street1` varchar(255) NOT NULL,
-  `street2` varchar(255) NOT NULL,
-  `town` varchar(255) NOT NULL,
-  `zip` varchar(25) NOT NULL,
-  `state` varchar(255) NOT NULL,
-  `tel` varchar(25) NOT NULL,
-  `fax` varchar(25) NOT NULL,
-  `voip` varchar(25) NOT NULL,
-  `mobile` varchar(25) NOT NULL,
-  `email` varchar(60) NOT NULL,
-  `vat` varchar(25) NOT NULL,
-  PRIMARY KEY  (`lid`),
+  `lid`         INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `cid`         INT(5) UNSIGNED  NOT NULL DEFAULT '0',
+  `title`       VARCHAR(100)     NOT NULL,
+  `url`         VARCHAR(255)     NOT NULL,
+  `screenshot`  VARCHAR(255)     NOT NULL,
+  `submitter`   INT(11)          NOT NULL DEFAULT '0',
+  `publisher`   VARCHAR(255)     NOT NULL,
+  `status`      TINYINT(2)       NOT NULL DEFAULT '0',
+  `date`        INT(10)          NOT NULL DEFAULT '0',
+  `hits`        INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `rating`      DOUBLE(6, 4)     NOT NULL DEFAULT '0.0000',
+  `votes`       INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `comments`    INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `forumid`     INT(11)          NOT NULL DEFAULT '0',
+  `published`   INT(11)          NOT NULL DEFAULT '0',
+  `expired`     INT(10)          NOT NULL DEFAULT '0',
+  `updated`     INT(11)          NOT NULL DEFAULT '0',
+  `offline`     TINYINT(1)       NOT NULL DEFAULT '0',
+  `description` TEXT             NOT NULL,
+  `ipaddress`   VARCHAR(120)     NOT NULL DEFAULT '0',
+  `notifypub`   INT(1)           NOT NULL DEFAULT '0',
+  `urlrating`   TINYINT(1)       NOT NULL DEFAULT '0',
+  `country`     VARCHAR(5)       NOT NULL DEFAULT '',
+  `keywords`    TEXT             NOT NULL,
+  `item_tag`    TEXT             NOT NULL,
+  `googlemap`   TEXT             NOT NULL,
+  `yahoomap`    TEXT             NOT NULL,
+  `multimap`    TEXT             NOT NULL,
+  `street1`     VARCHAR(255)     NOT NULL,
+  `street2`     VARCHAR(255)     NOT NULL,
+  `town`        VARCHAR(255)     NOT NULL,
+  `zip`         VARCHAR(25)      NOT NULL,
+  `state`       VARCHAR(255)     NOT NULL,
+  `tel`         VARCHAR(25)      NOT NULL,
+  `fax`         VARCHAR(25)      NOT NULL,
+  `voip`        VARCHAR(25)      NOT NULL,
+  `mobile`      VARCHAR(25)      NOT NULL,
+  `email`       VARCHAR(60)      NOT NULL,
+  `vat`         VARCHAR(25)      NOT NULL,
+  PRIMARY KEY (`lid`),
   KEY `cid` (`cid`),
   KEY `status` (`status`),
   KEY `title` (`title`(40))
-) ENGINE=MyISAM;
+)
+  ENGINE = MyISAM;
 
 #
 # Table structure for table 'wflinks_mod'
 #
 
 CREATE TABLE `wflinks_mod` (
-  `requestid` int(11) NOT NULL auto_increment,
-  `lid` int(11) unsigned NOT NULL default '0',
-  `cid` int(5) unsigned NOT NULL default '0',
-  `title` varchar(255) NOT NULL default '',
-  `url` varchar(255) NOT NULL default '',
-  `screenshot` varchar(255) NOT NULL default '',
-  `submitter` int(11) NOT NULL default '0',
-  `publisher` text NOT NULL,
-  `status` tinyint(2) NOT NULL default '0',
-  `date` int(10) NOT NULL default '0',
-  `hits` int(11) unsigned NOT NULL default '0',
-  `rating` double(6,4) NOT NULL default '0.0000',
-  `votes` int(11) unsigned NOT NULL default '0',
-  `comments` int(11) unsigned NOT NULL default '0',
-  `forumid` int(11) NOT NULL default '0',
-  `published` int(10) NOT NULL default '0',
-  `expired` int(10) NOT NULL default '0',
-  `updated` int(11) NOT NULL default '0',
-  `offline` tinyint(1) NOT NULL default '0',
-  `description` text NOT NULL,
-  `modifysubmitter` int(11) NOT NULL default '0',
-  `requestdate` int(11) NOT NULL default '0',
-  `urlrating` tinyint(1) NOT NULL default '0',
-  `country` varchar(5) NOT NULL default '',
-  `keywords` text NOT NULL default '',
-  `item_tag` text NOT NULL,
-  `googlemap` text NOT NULL,
-  `yahoomap` text NOT NULL,
-  `multimap` text NOT NULL,
-  `street1` varchar(255) NOT NULL default '',
-  `street2` varchar(255) NOT NULL default '',
-  `town` varchar(255) NOT NULL default '',
-  `zip` varchar(25) NOT NULL default '',
-  `state` varchar(255) NOT NULL default '',
-  `tel` varchar(25) NOT NULL default '',
-  `fax` varchar(25) NOT NULL default '',
-  `voip` varchar(25) NOT NULL default '',
-  `mobile` varchar(25) NOT NULL default '',
-  `email` varchar(60) NOT NULL default '',
-  `vat` varchar(25) NOT NULL default '',
-  PRIMARY KEY  (`requestid`)
-) ENGINE=MyISAM;
+  `requestid`       INT(11)          NOT NULL AUTO_INCREMENT,
+  `lid`             INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `cid`             INT(5) UNSIGNED  NOT NULL DEFAULT '0',
+  `title`           VARCHAR(255)     NOT NULL DEFAULT '',
+  `url`             VARCHAR(255)     NOT NULL DEFAULT '',
+  `screenshot`      VARCHAR(255)     NOT NULL DEFAULT '',
+  `submitter`       INT(11)          NOT NULL DEFAULT '0',
+  `publisher`       TEXT             NOT NULL,
+  `status`          TINYINT(2)       NOT NULL DEFAULT '0',
+  `date`            INT(10)          NOT NULL DEFAULT '0',
+  `hits`            INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `rating`          DOUBLE(6, 4)     NOT NULL DEFAULT '0.0000',
+  `votes`           INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `comments`        INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `forumid`         INT(11)          NOT NULL DEFAULT '0',
+  `published`       INT(10)          NOT NULL DEFAULT '0',
+  `expired`         INT(10)          NOT NULL DEFAULT '0',
+  `updated`         INT(11)          NOT NULL DEFAULT '0',
+  `offline`         TINYINT(1)       NOT NULL DEFAULT '0',
+  `description`     TEXT             NOT NULL,
+  `modifysubmitter` INT(11)          NOT NULL DEFAULT '0',
+  `requestdate`     INT(11)          NOT NULL DEFAULT '0',
+  `urlrating`       TINYINT(1)       NOT NULL DEFAULT '0',
+  `country`         VARCHAR(5)       NOT NULL DEFAULT '',
+  `keywords`        TEXT             NOT NULL,
+  `item_tag`        TEXT             NOT NULL,
+  `googlemap`       TEXT             NOT NULL,
+  `yahoomap`        TEXT             NOT NULL,
+  `multimap`        TEXT             NOT NULL,
+  `street1`         VARCHAR(255)     NOT NULL DEFAULT '',
+  `street2`         VARCHAR(255)     NOT NULL DEFAULT '',
+  `town`            VARCHAR(255)     NOT NULL DEFAULT '',
+  `zip`             VARCHAR(25)      NOT NULL DEFAULT '',
+  `state`           VARCHAR(255)     NOT NULL DEFAULT '',
+  `tel`             VARCHAR(25)      NOT NULL DEFAULT '',
+  `fax`             VARCHAR(25)      NOT NULL DEFAULT '',
+  `voip`            VARCHAR(25)      NOT NULL DEFAULT '',
+  `mobile`          VARCHAR(25)      NOT NULL DEFAULT '',
+  `email`           VARCHAR(60)      NOT NULL DEFAULT '',
+  `vat`             VARCHAR(25)      NOT NULL DEFAULT '',
+  PRIMARY KEY (`requestid`)
+)
+  ENGINE = MyISAM;
 
 #
 # Table structure for table 'wflinks_votedata'
 #
 
 CREATE TABLE wflinks_votedata (
-  ratingid int(11) unsigned NOT NULL auto_increment,
-  lid int(11) unsigned NOT NULL default '0',
-  ratinguser int(11) NOT NULL default '0',
-  rating tinyint(3) unsigned NOT NULL default '0',
-  ratinghostname varchar(60) NOT NULL default '',
-  ratingtimestamp int(10) NOT NULL default '0',
-  title varchar(255) NOT NULL default '',
-  PRIMARY KEY  (ratingid),
+  ratingid        INT(11) UNSIGNED    NOT NULL AUTO_INCREMENT,
+  lid             INT(11) UNSIGNED    NOT NULL DEFAULT '0',
+  ratinguser      INT(11)             NOT NULL DEFAULT '0',
+  rating          TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
+  ratinghostname  VARCHAR(60)         NOT NULL DEFAULT '',
+  ratingtimestamp INT(10)             NOT NULL DEFAULT '0',
+  title           VARCHAR(255)        NOT NULL DEFAULT '',
+  PRIMARY KEY (ratingid),
   KEY ratinguser (ratinguser),
   KEY ratinghostname (ratinghostname),
   KEY lid (lid)
-) ENGINE=MyISAM;
+)
+  ENGINE = MyISAM;

@@ -35,8 +35,8 @@ HOW TO USE:
 
 3) edit admin/menu.php and append a menu item like this:
 
-	$adminmenu[] = array( 'title' => _MI_SYSTEM_ADMENU2 ,
-	                      'link' => "admin/myblocksadmin.php" ) ;
+    $adminmenu[] = array( 'title' => _MI_SYSTEM_ADMENU2 ,
+                          'link' => "admin/myblocksadmin.php" ) ;
 
 4) If you want to add a feature keeping block's options when module is updated:
 
@@ -45,7 +45,7 @@ HOW TO USE:
 [code]
 // On Update
 if( ! empty( $_POST['fct'] ) && ! empty( $_POST['op'] ) && $_POST['fct'] == 'modulesadmin' && $_POST['op'] == 'update_ok' && $_POST['dirname'] == $modversion['dirname'] ) {
-	include dirname( __FILE__ ) . "/include/onupdate.inc.php" ;
+    include dirname( __FILE__ ) . "/include/onupdate.inc.php" ;
 }
 [/code]
 
@@ -108,98 +108,3 @@ CHANGELOG:
 COPYRIGHT:
 
 I do not insist on the right of these codes, and don't guarantee.
-
-
--------------------------------------------------------------
-(for Japanese)
-
-●要旨
-
-モジュールの管理画面に、そのモジュールだけのブロック管理・グループ
-管理画面を追加するためのファイル群です。
-
-
-●背景
-
-XOOPSのブロック管理・グループ管理はあまりにも使いづらいと思います。
-グループを追加した時ならともかく、モジュールを追加した時なんて最悪で
-す。
-
-そんな苦痛から逃れようと、作ったのがこのmyblocksadminです。
-
-モジュール毎に、ブロック管理・グループ管理が出来るので、非常に使いや
-すくなっていると自負しています。
-
-しかも、今では、ワンタイムチケットの導入・スーパーグローバルの
-foreach展開の廃止という２つの大きな変更により、コアよりもはるかに
-セキュアなコーディングとなっています。
-
-また、0.2 の目玉機能がブロックの複製機能です。
-カテゴリー絞り込み機能の持ったブロックが複製できれば、非常に強力な機
-能となるはずです。
-
-
-管理画面を持つモジュールすべてに、これが入ると本当に助かるのですが。
-
-
-●使い方：
-
-
-1) まずは解凍して下さい。
-
-
-2) 以下の５ファイルを modules/(dirname)/admin にコピーしてください。
-   admin.php というファイルは、mymenu にも含まれていますが、コンパチです。
-
-     myblocksadmin.php
-     myblockform.php
-     mygroupperm.php
-     mygrouppermform.php
-     admin.php
-
-
-3) 以下の３ファイルを modules/(dirname)include にコピーしてください。
-   gtickets.php というファイルは、mymenu にも含まれますが、コンパチです。
-
-     blocksadmin.inc.php
-     gtickets.php
-     updateblock.inc.php (下の5が必要な場合のみ)
-
-
-4) admin/menu.php をエディタで開き、こんな感じで１行追加して下さい。
-
-	$adminmenu[] = array( 'title' => _MI_SYSTEM_ADMENU2 ,
-	                      'link' => "admin/myblocksadmin.php" ) ;
-
-
-5) もし、ブロックオプションの保存機能が必要でしたら、xoops_version.php の最後に、
-
-[code]
-// On Update
-if( ! empty( $_POST['fct'] ) && ! empty( $_POST['op'] ) && $_POST['fct'] == 'modulesadmin' && $_POST['op'] == 'update_ok' && $_POST['dirname'] == $modversion['dirname'] ) {
-	include dirname( __FILE__ ) . "/include/onupdate.inc.php" ;
-}
-[/code]
-
-  と記述し、onupdate.inc.php.sample を 
-
-  modules/(dirname)/include/onupdate.inc.php
-
-  としてコピーし、その中身を編集して下さい。
-
-
-6) ブロックの複製機能を利用する場合は、xoops_version.php のブロック記述部に
-
-[code]
-$modversion['blocks'][(block_number)]['can_clone'] = true ;
-[/code]
-
-  と一行追加して下さい。
-
-
-(※)   5 および 6 は、必要な場合のみのオプションです。
-
-
-すべてのモジュール作者の方へ:
-
-「ぜひお試し下さい!!」

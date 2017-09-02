@@ -1,7 +1,8 @@
 <?php
+
 /**
  * Class: wflTextSanitizer
- * $Id: myts_extended.php v 1.00 21 June 2005 John N Exp $
+ *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -11,9 +12,13 @@
  */
 class wflTextSanitizer extends MyTextSanitizer
 {
-
-    function htmlSpecialCharsStrip( $text )
+    /**
+     * @param $text
+     *
+     * @return string
+     */
+    public function htmlSpecialCharsStrip($text)
     {
-        return $this -> htmlSpecialChars( $this -> stripSlashesGPC( $text) );
+        return $this->htmlSpecialChars($this->stripSlashesGPC($text));
     }
 }

@@ -4,24 +4,23 @@
  * SpotList
  *
  * @package
- * @author John N
+ * @author    John N
  * @copyright Copyright (c) 2005
- * @version $Id$
- * @access public
+ * @access    public
  */
 class fileList
 {
-    var $filelist = array();
+    public $filelist = array();
 
-    var $value;
-    var $selected;
-    var $path='uploads';
-    var $size;
-    var $emptyselect;
-    var $type;
-    var $prefix;
-    var $suffix;
-    var $noselection;
+    public $value;
+    public $selected;
+    public $path = 'uploads';
+    public $size;
+    public $emptyselect;
+    public $type;
+    public $prefix;
+    public $suffix;
+    public $noselection;
 
     /**
      * SpotList::SpotList()
@@ -30,79 +29,96 @@ class fileList
      * @param unknown $value
      * @param string  $selected
      * @param integer $size
-     * @param integer $emptyselect
-     * @param integer $type
-     * @param string  $prefix
-     * @param string  $suffix
-     * @return
+     *
+     * @internal param int $emptyselect
+     * @internal param int $type
+     * @internal param string $prefix
+     * @internal param string $suffix
      */
-    function fileList( $path = "uploads", $value = null, $selected='', $size = 1  )
+    public function __construct($path = 'uploads', $value = null, $selected = '', $size = 1)
     {
-        $this -> value = $value;
-        $this -> selection = $selected;
-        $this -> size = intval( $size );
+        $this->value     = $value;
+        $this->selection = $selected;
+        $this->size      = (int)$size;
 
         $path_to_check = XOOPS_ROOT_PATH . "/{$path}";
-        if ( !is_dir( $path_to_check ) ) {
-            if ( false === @mkdir( "$path_to_check", 0777 ) ) {
-                XoopsErrorHandler_HandleError( E_USER_WARNING, $path_to_check." does not exist!", __FILE__, __LINE__ );
+        if (!is_dir($path_to_check)) {
+            if (false === @mkdir("$path_to_check", 0777)) {
+                XoopsErrorHandler_HandleError(E_USER_WARNING, $path_to_check . ' does not exist!', __FILE__, __LINE__);
 
                 return false;
             }
         }
-        $this -> path = $path;
+        $this->path = $path;
+
+        return null;
     }
 
     /**
      * SpotList::setNoselection()
      *
      * @param integer $value
-     * @return
+     *
+     * @return void
      */
 
-    function setEmptyselect( $value = 0 )
+    public function setEmptyselect($value = 0)
     {
-        $this -> emptyselect = ( intval($value) != 1 ) ? 0 : 1;
+        $this->emptyselect = ((int)$value != 1) ? 0 : 1;
     }
 
-    function setNoselection( $value = 0 )
+    /**
+     * @param int $value
+     */
+    public function setNoselection($value = 0)
     {
-        $this -> noselection = ( intval($value) != 1 ) ? 0 : 1;
+        $this->noselection = ((int)$value != 1) ? 0 : 1;
     }
 
-    function setPrefix( $value='' )
+    /**
+     * @param string $value
+     */
+    public function setPrefix($value = '')
     {
-        $this -> prefix = ( strval($value) != '') ? strval( $value ) : '';
+        $this->prefix = ((string)$value !== '') ? (string)$value : '';
     }
 
-    function setSuffix( $value='' )
+    /**
+     * @param string $value
+     */
+    public function setSuffix($value = '')
     {
-        $this -> suffix = ( strval($value) != '') ? strval( $value ) : '';
+        $this->suffix = ((string)$value !== '') ? (string)$value : '';
     }
 
-    function setlistType( $value='images' )
+    /**
+     * @param string $value
+     */
+    public function setlistType($value = 'images')
     {
-        $this -> type = strval( strtolower($value) );
+        $this->type = strtolower($value);
     }
+
     /**
      * SpotList::show_selection()
      *
-     * @return
+     * @return string
      */
-    function &show_selection() {
-        $ret = "<select size='" . $this -> size() . "' name='$this->value()'>";
-        if ($this -> emptyselect) {
-            $ret .= "<option value='" . $this -> value() . "'>----------------------</option>";
+    public function &show_selection()
+    {
+        $ret = "<select size='" . $this->size() . "' name='$this->value()'>";
+        if ($this->emptyselect) {
+            $ret .= "<option value='" . $this->value() . "'>----------------------</option>";
         }
-        foreach ($this -> filelist as $content) {
-            $opt_selected = "";
+        foreach ($this->filelist as $content) {
+            $opt_selected = '';
 
-            if ( $content[0] == $this -> selected() ) {
-                $opt_selected = "selected='selected'";
+            if ($content[0] == $this->selected()) {
+                $opt_selected = 'selected';
             }
-            $ret .= "<option value='" . $content . "' $opt_selected>" . $content . "</option>";
+            $ret .= "<option value='" . $content . "' $opt_selected>" . $content . '</option>';
         }
-        $ret .= "</select>";
+        $ret .= '</select>';
 
         return $ret;
     }
@@ -110,90 +126,105 @@ class fileList
     /**
      * SpotList::getListTypeAsArray()
      *
-     * @return
+     * @return array
      */
-    function &getListTypeAsArray() {
+    public function &getListTypeAsArray()
+    {
         $filelist = array();
-        switch ( trim( $this -> type ) ) {
-            case "images":
-                $types = "[.gif|.jpg|.png]";
-                if ( $this -> noselection )
-                    $this -> filelist[0] = _AM_WFL_SHOWNOIMAGE;
+        switch (trim($this->type)) {
+            case 'images':
+                $types = '[.gif|.jpg|.png]';
+                if ($this->noselection) {
+                    $this->filelist[0] = _AM_WFL_SHOWNOIMAGE;
+                }
                 break;
 
-            case "html":
-                $types = "[.htm|.html|.xhtml|.php|.php3|.phtml|.txt]";
-                if ( $this -> noselection )
-                    $this -> filelist[0] = _AM_WFL_NOSELECTION;
+            case 'html':
+                $types = '[.htm|.html|.xhtml|.php|.php3|.phtml|.txt]';
+                if ($this->noselection) {
+                    $this->filelist[0] = _AM_WFL_NOSELECTION;
+                }
                 break;
 
             default:
-                $types = "";
-                if ( $this -> noselection )
-                    $this -> filelist[0] = _AM_WFL_NOFILESELECT;
+                $types = '';
+                if ($this->noselection) {
+                    $this->filelist[0] = _AM_WFL_NOFILESELECT;
+                }
                 break;
         }
 
-        if ( substr( $this -> path, -1 ) == '/' ) {
-            $this -> path = substr( $this -> path, 0, -1 );
+        if (substr($this->path, -1) === '/') {
+            $this->path = substr($this->path, 0, -1);
         }
 
         $_full_path = XOOPS_ROOT_PATH . "/{$this->path}";
 
-        if ( is_dir( $_full_path ) && $handle = opendir( $_full_path ) ) {
-            while ( false !== ( $file = readdir( $handle ) ) ) {
-                if ( !preg_match( "/^[.]{1,2}$/", $file ) && preg_match( "/$types$/i", $file ) && is_file( $_full_path . "/" . $file ) ) {
-                    if ( strtolower( $file ) == "blank.gif" )
-                        Continue;
-                    $file = $this -> prefix . $file;
-                    $this -> filelist[$file] = $file;
+        if (is_dir($_full_path) && $handle = opendir($_full_path)) {
+            while (false !== ($file = readdir($handle))) {
+                if (!preg_match('/^[.]{1,2}$/', $file) && preg_match("/$types$/i", $file)
+                    && is_file($_full_path . '/' . $file)) {
+                    if (strtolower($file) === 'blank.gif') {
+                        continue;
+                    }
+                    $file                  = $this->prefix . $file;
+                    $this->filelist[$file] = $file;
                 }
             }
-            closedir( $handle );
-            asort( $this -> filelist );
-            reset( $this -> filelist );
+            closedir($handle);
+            asort($this->filelist);
+            reset($this->filelist);
         }
 
-        return $this -> filelist;
+        return $this->filelist;
     }
 
-    function value()
+    /**
+     * @return null|unknown
+     */
+    public function value()
     {
-        return $this -> value;
+        return $this->value;
     }
 
-    function selected()
+    public function selected()
     {
-        return $this -> selected;
+        return $this->selected;
     }
 
-    function paths()
+    /**
+     * @return string
+     */
+    public function paths()
     {
-        return $this -> path;
+        return $this->path;
     }
 
-    function size()
+    /**
+     * @return int
+     */
+    public function size()
     {
-        return $this -> size;
+        return $this->size;
     }
 
-    function emptyselect()
+    public function emptyselect()
     {
-        return $this -> emptyselect;
+        return $this->emptyselect;
     }
 
-    function type()
+    public function type()
     {
-        return $this -> type;
+        return $this->type;
     }
 
-    function prefix()
+    public function prefix()
     {
-        return $this -> prefix;
+        return $this->prefix;
     }
 
-    function suffix()
+    public function suffix()
     {
-        return $this -> suffix;
+        return $this->suffix;
     }
 }
