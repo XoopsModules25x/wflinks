@@ -39,9 +39,9 @@ function checkBlockgroups($cid = 0, $permType = 'WFLinkCatPerm', $redirect = fal
     if (!$gpermHandler->checkRight($permType, $cid, $groups, $module->getVar('mid'))) {
         if ($redirect === false) {
             return false;
-        } else {
-            redirect_header('index.php', 3, _NOPERM);
         }
+
+        redirect_header('index.php', 3, _NOPERM);
     }
     unset($module);
 
@@ -76,7 +76,7 @@ function b_wflinks_top_show($options)
 
     $result = $xoopsDB->query('SELECT lid, cid, title, published, hits FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0 AND published <= ' . $time . ' AND (expired = 0 OR expired > ' . $time . ') AND offline = 0 ORDER BY ' . $options[0] . ' DESC', $options[1], 0);
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        if (false == checkBlockgroups($myrow['cid']) || $myrow['cid'] == 0) {
+        if (false === checkBlockgroups($myrow['cid']) || $myrow['cid'] == 0) {
             continue;
         }
         $linkload = array();
