@@ -35,7 +35,7 @@ $result = $xoopsDB->query('SELECT cid, title, pid FROM ' . $xoopsDB->prefix('wfl
 
 $e = 0;
 while (list($cid, $ctitle) = $xoopsDB->fetchRow($result)) {
-    if (true == wfl_checkgroups($cid)) {
+    if (true === wfl_checkgroups($cid)) {
         $query = 'SELECT lid, cid, title, hits, rating, votes FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time() . ') AND offline = 0 AND (cid=' . (int)$cid;
         $arr   = $mytree->getAllChildId($cid);
         for ($i = 0, $iMax = count($arr); $i < $iMax; ++$i) {

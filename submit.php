@@ -26,7 +26,7 @@ if (false == wfl_checkgroups($cid, 'WFLinkSubPerm')) {
     redirect_header('index.php', 1, _MD_WFL_NOPERMISSIONTOPOST);
 }
 
-if (true == wfl_checkgroups($cid, 'WFLinkSubPerm')) {
+if (true === wfl_checkgroups($cid, 'WFLinkSubPerm')) {
     if (wfl_cleanRequestVars($_REQUEST, 'submit', 0)) {
         if (false == wfl_checkgroups($cid, 'WFLinkSubPerm')) {
             redirect_header('index.php', 1, _MD_WFL_NOPERMISSIONTOPOST);
@@ -77,7 +77,7 @@ if (true == wfl_checkgroups($cid, 'WFLinkSubPerm')) {
             $status      = 0;
             $publishdate = 0;
             $message     = _MD_WFL_THANKSFORINFO;
-            if (true == wfl_checkgroups($cid, 'WFLinkAutoApp')) {
+            if (true === wfl_checkgroups($cid, 'WFLinkAutoApp')) {
                 $publishdate = time();
                 $status      = 1;
                 $message     = _MD_WFL_ISAPPROVED;
@@ -116,7 +116,7 @@ if (true == wfl_checkgroups($cid, 'WFLinkSubPerm')) {
 
             $tags['CATEGORY_NAME'] = $row['title'];
             $tags['CATEGORY_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $cid;
-            if (true == wfl_checkgroups($cid, 'WFLinkAutoApp')) {
+            if (true === wfl_checkgroups($cid, 'WFLinkAutoApp')) {
                 $notificationHandler->triggerEvent('global', 0, 'new_link', $tags);
                 $notificationHandler->triggerEvent('category', $cid, 'new_link', $tags);
                 redirect_header('index.php', 2, _MD_WFL_ISAPPROVED);
@@ -131,7 +131,7 @@ if (true == wfl_checkgroups($cid, 'WFLinkSubPerm')) {
                 redirect_header('index.php', 2, _MD_WFL_THANKSFORINFO);
             }
         } else {
-            if (true == wfl_checkgroups($cid, 'WFLinkAutoApp') || $approve == 1) {
+            if (true === wfl_checkgroups($cid, 'WFLinkAutoApp') || $approve == 1) {
                 $updated = time();
                 $sql     = 'UPDATE '
                            . $xoopsDB->prefix('wflinks_links')
@@ -268,7 +268,7 @@ if (true == wfl_checkgroups($cid, 'WFLinkSubPerm')) {
         $sql        = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . ' ORDER BY title';
         $result     = $xoopsDB->query($sql);
         while ($myrow = $xoopsDB->fetchArray($result)) {
-            if (true == wfl_checkgroups($myrow['cid'], 'WFLinkSubPerm')) {
+            if (true === wfl_checkgroups($myrow['cid'], 'WFLinkSubPerm')) {
                 $submitcats[$myrow['cid']] = $myrow['title'];
             }
         }
@@ -375,11 +375,11 @@ if (true == wfl_checkgroups($cid, 'WFLinkSubPerm')) {
         } else {
             $sform->addElement(new XoopsFormHidden('notifypub', 0));
         }
-        if (true == wfl_checkgroups($cid, 'WFLinkAppPerm') && $lid > 0) {
+        if (true === wfl_checkgroups($cid, 'WFLinkAppPerm') && $lid > 0) {
             $approve_checkbox = new XoopsFormCheckBox('', 'approve', $approve);
             $approve_checkbox->addOption(1, _MD_WFL_APPROVE);
             $option_tray->addElement($approve_checkbox);
-        } elseif (true == wfl_checkgroups($cid, 'WFLinkAutoApp')) {
+        } elseif (true === wfl_checkgroups($cid, 'WFLinkAutoApp')) {
             $sform->addElement(new XoopsFormHidden('approve', 1));
         } else {
             $sform->addElement(new XoopsFormHidden('approve', 0));

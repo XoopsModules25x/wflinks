@@ -183,7 +183,7 @@ function wfl_cleanRequestVars($array, $name = null, $def = null, $strict = false
 function wfl_toolbar($cid = 0)
 {
     $toolbar = '[ ';
-    if (true == wfl_checkgroups($cid, 'WFLinkSubPerm')) {
+    if (true === wfl_checkgroups($cid, 'WFLinkSubPerm')) {
         $toolbar .= "<a href='submit.php?cid=" . $cid . "'>" . _MD_WFL_SUBMITLINK . '</a> | ';
     }
     $toolbar .= "<a href='newlist.php?newlinkshowdays=7'>" . _MD_WFL_LATESTLIST . "</a> | <a href='topten.php?list=hit'>" . _MD_WFL_POPULARITY . '</a>  ]';
@@ -506,7 +506,7 @@ function wfl_getTotalItems($sel_id = 0, $get_child = 0, $return_sql = 0)
     $arr    = array();
     $result = $xoopsDB->query($sql);
     while (list($lid, $cid, $published) = $xoopsDB->fetchRow($result)) {
-        if (true == wfl_checkgroups()) {
+        if (true === wfl_checkgroups()) {
             ++$count;
             $published_date = ($published > $published_date) ? $published : $published_date;
         }

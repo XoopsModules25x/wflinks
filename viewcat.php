@@ -53,7 +53,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
             // Subitem file count
             $hassubitems = wfl_getTotalItems($sub_ele['cid']);
             // Filter group permissions
-            if (true == wfl_checkgroups($sub_ele['cid'])) {
+            if (true === wfl_checkgroups($sub_ele['cid'])) {
                 // If subcategory count > 5 then finish adding subcats to $infercategories and end
                 if ($chcount > 5) {
                     $infercategories .= '...';

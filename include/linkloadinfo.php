@@ -137,7 +137,7 @@ $votestring = ($link_arr['votes'] == 1) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMV
 $link['useradminlink'] = 0;
 if (is_object($xoopsUser) && !empty($xoopsUser)) {
     $_user_submitter = $xoopsUser->getvar('uid') == $link_arr['submitter'];
-    if (true == wfl_checkgroups($cid)) {
+    if (true === wfl_checkgroups($cid)) {
         $link['useradminlink'] = 1;
         if ($xoopsUser->getVar('uid') == $link_arr['submitter']) {
             $link['usermodify'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $link_arr['lid'] . '"> ' . _MD_WFL_MODIFY . '</a> |';
