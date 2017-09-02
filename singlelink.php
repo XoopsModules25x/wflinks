@@ -214,7 +214,7 @@ $link['showsbookmarx'] = $xoopsModuleConfig['showsbookmarks'];
 $link['showpagerank']  = $xoopsModuleConfig['showpagerank'];
 $xoopsTpl->assign('wfllink', $link);
 
-$xoopsTpl->assign('back', '<a href="history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png"></a>'); // Displays Back button
+$xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png"></a>'); // Displays Back button
 
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 

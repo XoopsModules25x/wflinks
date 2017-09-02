@@ -23,72 +23,71 @@ $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
 
 $moduleHelper->loadLanguage('modinfo');
 
-$adminmenu = array();
-
-$i = 1;
-
-$adminmenu[$i]['title'] = _AM_MODULEADMIN_HOME;
-$adminmenu[$i]['link']  = 'admin/index.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
-++$i;
-
-$adminmenu[$i]['title'] = _MI_WFL_MLINKS;
-$adminmenu[$i]['link']  = 'admin/main.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/manage.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_WFL_MCATEGORY;
-$adminmenu[$i]['link']  = 'admin/category.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/category.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_WFL_INDEXPAGE;
-$adminmenu[$i]['link']  = 'admin/indexpage.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/index.png';
-
-//++$i;
-//$adminmenu[$i]['title'] = _MI_WFL_MLINKS;
-//$adminmenu[$i]['link']="admin/main.php?op=edit";
-//$adminmenu[$i]["icon"]  = $pathIcon32 . '/category.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_WFL_SNEWFILESVAL;
-$adminmenu[$i]['link']  = 'admin/newlinks.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/add.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_WFL_SMODREQUEST;
-$adminmenu[$i]['link']  = 'admin/modifications.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/update.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_WFL_SBROKENSUBMIT;
-$adminmenu[$i]['link']  = 'admin/brokenlink.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/brokenlink.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_WFL_MUPLOADS;
-$adminmenu[$i]['link']  = 'admin/upload.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/photo.png';
-
-//++$i;
-//$adminmenu[$i]['title'] = _MI_WFL_BLOCKADMIN;
-//$adminmenu[$i]['link']  = 'admin/blocksadmin.php';
-//$adminmenu[$i]["icon"]  = $pathIcon32 . '/block.png';
-++$i;
-$adminmenu[$i]['title'] = _MI_WFL_PERMISSIONS;
-$adminmenu[$i]['link']  = 'admin/permissions.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/permissions.png';
-
-++$i;
-$adminmenu[$i]['title'] = _MI_WFL_MVOTEDATA;
-$adminmenu[$i]['link']  = 'admin/votedata.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/poll.png';
-
-//++$i;
-//$adminmenu[$i]['title'] = _MI_WFL_DOCUMENTATION;
-//$adminmenu[$i]['link']  = "docs/english/readme.html";
-//$adminmenu[$i]["icon"]  = $pathIcon32 . '/help.png';
-
-++$i;
-$adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
-$adminmenu[$i]['link']  = 'admin/about.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/about.png';
-//++$i;
-//$adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
-//$adminmenu[$i]["link"]  = "admin/about2.php";
-//$adminmenu[$i]["icon"]  = $pathIcon32 . '/about.png';
+$adminmenu = array(
+    array(
+            'title'  =>  _AM_MODULEADMIN_HOME,
+            'link'   =>  'admin/index.php',
+            'desc'   =>  _AM_MODULEADMIN_HOME,
+            'icon'   =>  $pathIcon32 . '/home.png'
+         ),
+    array(
+            'title'  =>  _MI_WFL_INDEXPAGE,
+            'link'   =>  'admin/indexpage.php',
+            'desc'   =>  _MI_WFL_INDEXPAGE_DESC,            
+            'icon'   =>  $pathIcon32 . '/index.png'
+         ),         
+    array(
+            'title'  =>  _MI_WFL_MCATEGORY,
+            'link'   =>  'admin/category.php',
+            'desc'   =>  _MI_WFL_MCATEGORY_DESC,            
+            'icon'   =>  $pathIcon32 . '/category.png',
+         ),         
+    array(
+            'title'  =>  _MI_WFL_MLINKS,
+            'link'   =>  'admin/main.php',
+            'desc'   =>  _MI_WFL_MLINKS_DESC,
+            'icon'   =>  $pathIcon32 . '/manage.png'
+         ),
+    array(
+            'title'  =>  _MI_WFL_SNEWFILESVAL,
+            'link'   =>  'admin/newlinks.php',
+            'desc'   =>  _MI_WFL_SNEWFILESVAL,            
+            'icon'   =>  $pathIcon32 . '/add.png'
+         ),            
+    array(
+            'title'  =>  _MI_WFL_SMODREQUEST,
+            'link'   =>  'admin/modifications.php',
+            'desc'   =>  _MI_WFL_SMODREQUEST,
+            'icon'   =>  $pathIcon32 . '/update.png'
+         ),            
+    array(
+            'title'  =>  _MI_WFL_SBROKENSUBMIT,
+            'link'   =>  'admin/brokenlink.php',
+            'desc'   =>  _MI_WFL_SBROKENSUBMIT,            
+            'icon'   =>  $pathIcon32 . '/brokenlink.png'
+         ),            
+    array(
+            'title'  =>  _MI_WFL_MUPLOADS,
+            'link'   =>  'admin/upload.php',
+            'desc'   =>  _MI_WFL_MUPLOADS,
+            'icon'   =>  $pathIcon32 . '/photo.png'
+         ),            
+    array(
+            'title'  =>  _MI_WFL_PERMISSIONS,
+            'link'   =>  'admin/permissions.php',
+            'desc'   =>  _MI_WFL_PERMISSIONS_DESC,            
+            'icon'   =>  $pathIcon32 . '/permissions.png'
+         ),            
+    array(
+            'title'  =>  _MI_WFL_MVOTEDATA,
+            'link'   =>  'admin/votedata.php',
+            'desc'   =>  _MI_WFL_MVOTEDATA,            
+            'icon'   =>  $pathIcon32 . '/poll.png'
+         ),            
+    array(
+            'title'  =>  _AM_MODULEADMIN_ABOUT,
+            'link'   =>  'admin/about.php',
+            'desc'   =>  _AM_MODULEADMIN_ABOUT,            
+            'icon'   =>  $pathIcon32 . '/about.png'
+         ), 
+);
