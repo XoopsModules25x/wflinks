@@ -1,3 +1,10 @@
+<h5>1.11 Beta 2       [2017-09-02]</h5>
+<hr>
+- fixed the possibility of publishing news (aerograf)
+- fixed the possibility of publishing newbb (aerograf)
+- reworked help (aerograf)
+
+
 <h5>1.10 RC-1        [2017-09-01]</h5>
 <hr>
 - code cosmetics (mamba)

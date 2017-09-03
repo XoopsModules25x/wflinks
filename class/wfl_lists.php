@@ -174,7 +174,7 @@ class wflLists
             case 1:
             case 0:
             default:
-                $sql = 'SELECT forum_id, forum_name FROM ' . $xoopsDB->prefix('bb_forums') . ' ORDER BY forum_id';
+                $sql = 'SELECT forum_id, forum_name FROM ' . $xoopsDB->prefix('newbb_forums') . ' ORDER BY forum_id';
                 break;
         }
         $result = $xoopsDB->query($sql);

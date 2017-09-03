@@ -125,7 +125,7 @@
                             <div align="center"><a
                                         href="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/visit.php?cid=<{$wfllink.cid}>&lid=<{$wfllink.id}>"
                                         target="_blank"><img
-                                            src="http://open.thumbshots.org/image.pxf?url=<{$wfllink.url}>"
+                                            src="https://blinky.nemui.org/shot/xlarge?<{$wfllink.url}>"
                                             align="middle" alt=""></a></div>
                         <{/if}>      </td>
                 </tr>

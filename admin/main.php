@@ -246,7 +246,7 @@ function edit($lid = 0)
     $sform->insertBreak(_AM_WFL_LINK_MISCLINKSETTINGS, 'bg3');
 
     // Set Publish date
-    $sform->addElement(new XoopsFormDateTime(_AM_WFL_LINK_SETPUBLISHDATE, 'published', $size = 15, $published));
+    $sform->addElement(new XoopsFormDateTime(_AM_WFL_LINK_SETPUBLISHDATE, 'was_published', $size = 15, $published));
 
     if ($lid) {
         $sform->addElement(new XoopsFormHidden('was_published', $published));
@@ -295,12 +295,12 @@ function edit($lid = 0)
         $sform->addElement($submitNews_radio);
 
         require_once XOOPS_ROOT_PATH . '/class/xoopstopic.php';
-        $xt = new XoopsTopic($xoopsDB->prefix('topics'));
+        $xt = new XoopsTopic($xoopsDB->prefix('news_topics'));
         ob_start();
         $xt->makeTopicSelBox(1, 0, 'newstopicid');
         $sform->addElement(new XoopsFormLabel(_AM_WFL_LINK_NEWSCATEGORY, ob_get_contents()));
         ob_end_clean();
-        $sform->addElement(new XoopsFormText(_AM_WFL_LINK_NEWSTITLE, 'newsTitle', 70, 255, ''), false);
+        $sform->addElement(new XoopsFormText(_AM_WFL_LINK_NEWSTITLE, 'topic_id', 70, 255, ''), false);
     }
 
     if ($lid && $published == 0) {
@@ -653,7 +653,7 @@ switch (strtolower($op)) {
                 return false;
             }
             list($lid, $title) = $xoopsDB->fetchRow($result);
-            $item_tag = $result['item_tag'];
+            $item_tag = $result->fetchArray['item_tag'];
             require_once __DIR__ . '/admin_header.php';
             xoops_cp_header();
             //wfl_adminmenu( _AM_WFL_BINDEX );
