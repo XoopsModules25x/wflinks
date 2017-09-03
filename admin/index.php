@@ -55,6 +55,22 @@ if ($totalbrokenlinks > 0) {
 } else {
     $adminObject->addInfoBoxLine(sprintf( '<infolabel>' . _AM_WFL_SBROKENSUBMIT . '</infolabel><infotext>', $totalbrokenlinks . '</infotext>'),'', 'Red');
 }
+$adminObject->addInfoBox(_AM_WFL_CHECKINGFOLDER);
+if (is_dir("../../../uploads/wflinks/category")) {
+    $adminObject->addInfoBoxLine('<label><img src="../../../Frameworks/moduleclasses/icons/16/1.png"><span class="Green">' . _AM_WFL_CHECKINGFOLDER_FOLDER_CAT_YES . '</span></label>', '', '');
+} else {
+    $adminObject->addInfoBoxLine('<label><img src="../../../Frameworks/moduleclasses/icons/16/0.png"><span class="Red">' . _AM_WFL_CHECKINGFOLDER_FOLDER_CAT_NO . '</span></label>', '', '');
+}
+if (is_dir("../../../uploads/wflinks/screenshots")) {
+    $adminObject->addInfoBoxLine('<label><img src="../../../Frameworks/moduleclasses/icons/16/1.png"><span class="Green">' . _AM_WFL_CHECKINGFOLDER_FOLDER_SCREEN_YES . '</span></label>', '', '');
+} else {
+    $adminObject->addInfoBoxLine('<label><img src="../../../Frameworks/moduleclasses/icons/16/0.png"><span class="Red">' . _AM_WFL_CHECKINGFOLDER_FOLDER_SCREEN_NO . '</span></label>', '', '');
+}
+if (is_dir("../../../uploads/flags")) {
+    $adminObject->addInfoBoxLine('<label><img src="../../../Frameworks/moduleclasses/icons/16/1.png"><span class="Green">' . _AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_YES . '</span></label>', '', '');
+} else {
+    $adminObject->addInfoBoxLine('<label><img src="../../../Frameworks/moduleclasses/icons/16/0.png"><span class="Red">' . _AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_NO . '</span></label>', '', '');
+}
 
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();

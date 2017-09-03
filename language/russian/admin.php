@@ -496,3 +496,12 @@ define('_AM_WFL_ERROR_COLUMN', 'Не удалось создать столбе�
 define('_AM_WFL_ERROR_BAD_XOOPS', 'Этот модуль требует XOOPS %s+ (%s установлено)');
 define('_AM_WFL_ERROR_BAD_PHP', 'Для этого модуля требуется версия PHP %s+ (%s установлено)');
 define('_AM_WFL_ERROR_TAG_REMOVAL', 'Не удалось удалить теги из модуля тегов');
+
+// Checking folders
+define('_AM_WFL_CHECKINGFOLDER', 'Проверка папок');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_CAT_YES', 'Папка \'/uploads/wflinks/category\' существует');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_CAT_NO', 'Папка \'/uploads/wflinks/category\' не существует. Создайте указанную папку с CHMOD 777.');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_SCREEN_YES', 'Папка \'/uploads/wflinks/screenshots\' существует');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_SCREEN_NO', 'Папка \'/uploads/wflinks/screenshots\' не существует. Создайте указанную папку с CHMOD 777.');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_YES', 'Папка \'/uploads/flags\' существует');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_NO', 'Папка \'/uploads/flags\' не существует. Скопируйте из папки \'EXTRA/htdocs/uploads\' папку \'flags\' в указанное место.');
