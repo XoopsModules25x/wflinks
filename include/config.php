@@ -65,13 +65,13 @@ return (object)[
         constant($capsDirName . '_UPLOAD_PATH'),
         constant($capsDirName . '_UPLOAD_PATH') . '/category',
         constant($capsDirName . '_UPLOAD_PATH') . '/screenshots',
-//        XOOPS_UPLOAD_PATH . '/flags'
+        //        XOOPS_UPLOAD_PATH . '/flags'
     ],
     'blankFiles'    => [
         constant($capsDirName . '_UPLOAD_PATH'),
         constant($capsDirName . '_UPLOAD_PATH') . '/category',
         constant($capsDirName . '_UPLOAD_PATH') . '/screenshots',
-//        XOOPS_UPLOAD_PATH . '/flags'
+        //        XOOPS_UPLOAD_PATH . '/flags'
     ],
 
     'templateFolders' => [

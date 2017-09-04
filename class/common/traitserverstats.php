@@ -8,12 +8,12 @@
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 /**
  * @copyright   XOOPS Project (https://xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      mamba <mambax7@gmail.com>
  */
-
 trait ServerStats
 {
     /**
@@ -24,20 +24,20 @@ trait ServerStats
     public static function getServerStats()
     {
         //mb    $wfdownloads = WfdownloadsWfdownloads::getInstance();
-        $moduleDirName  = basename(dirname(dirname(__DIR__)));
+        $moduleDirName      = basename(dirname(dirname(__DIR__)));
         $moduleDirNameUpper = strtoupper($moduleDirName);
         xoops_loadLanguage('common', $moduleDirName);
-        $html  = '';
-//        $sql   = 'SELECT metavalue';
-//        $sql   .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('wfdownloads_meta');
-//        $sql   .= " WHERE metakey='version' LIMIT 1";
-//        $query = $GLOBALS['xoopsDB']->query($sql);
-//        list($meta) = $GLOBALS['xoopsDB']->fetchRow($query);
+        $html = '';
+        //        $sql   = 'SELECT metavalue';
+        //        $sql   .= ' FROM ' . $GLOBALS['xoopsDB']->prefix('wfdownloads_meta');
+        //        $sql   .= " WHERE metakey='version' LIMIT 1";
+        //        $query = $GLOBALS['xoopsDB']->query($sql);
+        //        list($meta) = $GLOBALS['xoopsDB']->fetchRow($query);
         $html .= "<fieldset><legend style='font-weight: bold; color: #900;'>" . constant('CO_' . $moduleDirNameUpper . '_IMAGEINFO') . "</legend>\n";
         $html .= "<div style='padding: 8px;'>\n";
-//        $html .= '<div>' . constant('CO_' . $moduleDirNameUpper . '_METAVERSION') . $meta . "</div>\n";
-//        $html .= "<br>\n";
-//        $html .= "<br>\n";
+        //        $html .= '<div>' . constant('CO_' . $moduleDirNameUpper . '_METAVERSION') . $meta . "</div>\n";
+        //        $html .= "<br>\n";
+        //        $html .= "<br>\n";
         $html .= '<div>' . constant('CO_' . $moduleDirNameUpper . '_SPHPINI') . "</div>\n";
         $html .= "<ul>\n";
         //

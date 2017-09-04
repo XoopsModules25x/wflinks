@@ -196,8 +196,8 @@ class vCard
         $region = '',
         $zip = '',
         $country = '',
-        $type = ''
-    ) {
+        $type = '')
+    {
         // $type may be DOM | INTL | POSTAL | PARCEL | HOME | WORK or any combination of these: e.g. "WORK;PARCEL;POSTAL"
         $key = 'ADR';
         if ($type !== '') {
@@ -229,8 +229,8 @@ class vCard
         $region = '',
         $zip = '',
         $country = '',
-        $type = 'HOME;POSTAL'
-    ) {
+        $type = 'HOME;POSTAL')
+    {
         $label = '';
         if ($postoffice !== '') {
             $label .= "$postoffice\r\n";

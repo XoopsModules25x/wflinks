@@ -840,8 +840,8 @@ class WfLinksUtility extends XoopsObject
         $redirecturl = 'index.php',
         $num = 0,
         $redirect = 0,
-        $usertype = 1
-    ) {
+        $usertype = 1)
+    {
         global $FILES, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
 
         $down = array();

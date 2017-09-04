@@ -18,7 +18,7 @@
  * @author          Xoops Development Team
  */
 
-$moduleDirName  = basename(dirname(dirname(__DIR__)));
+$moduleDirName      = basename(dirname(dirname(__DIR__)));
 $moduleDirNameUpper = strtoupper($moduleDirName);
 
 define('CO_' . $moduleDirNameUpper . '_GDLIBSTATUS', 'GD library support: ');

@@ -117,7 +117,7 @@ define('_MI_WFL_SUBMITTED2', 'Submission Date');
 define('_MI_WFL_COPYRIGHT', 'Copyright Notice:');
 define('_MI_WFL_COPYRIGHTDSC', 'Select to display a copyright notice on link page.');
 // Description of each config items
-define('_MI_WFL_SUBCATSDSC', 'Select Yes to display sub-categories. Selecting No will hide sub-categories from the listings');
+define('_MI_WFL_SUBCATSDSC', 'SELECT Yes TO display sub-categories. Selecting NO will hide sub-categories FROM the listings');
 
 // Text for notifications
 define('_MI_WFL_GLOBAL_NOTIFY', 'Global');
@@ -205,10 +205,8 @@ define('_MI_WFL_AUTHOR_CREDITSTEXT', 'The WF-Projects Team would like to thank t
 define('_MI_WFL_AUTHOR_BUGFIXES', 'Bug Fix History');
 
 define('_MI_WFL_COPYRIGHT2', 'Copyright');
-define(
-    '_MI_WFL_COPYRIGHTIMAGE',
-       'Unless stated otherwise, this Module (WF-Links) and its images are copyright to the WF-Projects team.<br /><br />You have the permission to copy, edit and change WF-Links to suit your personal requirements. You agree not to modify, adapt and redistribute the source code of the Software without the express permission from the WF-Projects team.<br /><br />PageRank is a trademark of Google Inc.'
-);
+define('_MI_WFL_COPYRIGHTIMAGE',
+       'Unless stated otherwise, this Module (WF-Links) and its images are copyright to the WF-Projects team.<br /><br />You have the permission to copy, edit and change WF-Links to suit your personal requirements. You agree not to modify, adapt and redistribute the source code of the Software without the express permission from the WF-Projects team.<br /><br />PageRank is a trademark of Google Inc.');
 
 define('_MI_WFL_SELECTFORUM', 'Select Forum:');
 define('_MI_WFL_SELECTFORUMDSC', 'Select the forum you have installed and will be used by WF-Links.');

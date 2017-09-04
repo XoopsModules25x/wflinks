@@ -507,8 +507,8 @@ function myblocksadmin_update_block(
     $bctype,
     $bcachetime,
     $bmodule,
-    $options = array()
-) {
+    $options = array())
+{
     global $xoopsConfig;
     /* if (empty($bmodule)) {
         xoops_cp_header();

@@ -205,10 +205,8 @@ define('_MI_WFL_AUTHOR_CREDITSTEXT', 'Команда WF-Projects хотела б
 define('_MI_WFL_AUTHOR_BUGFIXES', 'История ошибок');
 
 define('_MI_WFL_COPYRIGHT2', 'Авторские права');
-define(
-    '_MI_WFL_COPYRIGHTIMAGE',
-       'Если не указано иное, этот модуль (WF-Links) и его изображения являются авторскими правами команды WF-Projects.<br /><br />У Вас есть разрешение на копирование, редактирование и изменение WF-Links в соответствии с вашими личными требованиями. Вы соглашаетесь не изменять, не адаптировать и не распространять исходный код Программного обеспечения без прямого разрешения команды WF-Projects.<br /><br />PageRank является товарным знаком Google Inc.'
-);
+define('_MI_WFL_COPYRIGHTIMAGE',
+       'Если не указано иное, этот модуль (WF-Links) и его изображения являются авторскими правами команды WF-Projects.<br /><br />У Вас есть разрешение на копирование, редактирование и изменение WF-Links в соответствии с вашими личными требованиями. Вы соглашаетесь не изменять, не адаптировать и не распространять исходный код Программного обеспечения без прямого разрешения команды WF-Projects.<br /><br />PageRank является товарным знаком Google Inc.');
 
 define('_MI_WFL_SELECTFORUM', 'Выберите форум:');
 define('_MI_WFL_SELECTFORUMDSC', 'Выберите форум, который Вы установили, и будете использовать с WF-Links.');
@@ -325,7 +323,7 @@ define('_MI_WFL_DIRNAME', basename(dirname(dirname(__DIR__))));
 
 // ----------------- Help -----------------
 
-define('_MI_WFL_HELP_HEADER', __DIR__.'/help/helpheader.tpl');
+define('_MI_WFL_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_WFL_BACK_2_ADMIN', 'Назад к администрации ');
 define('_MI_WFL_OVERVIEW', 'Обзор');
 define('_MI_WFL_HELP', 'Помощь');

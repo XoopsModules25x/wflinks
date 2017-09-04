@@ -56,7 +56,6 @@ if ($totalbrokenlinks > 0) {
     $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_WFL_SBROKENSUBMIT . '</infolabel><infotext>', $totalbrokenlinks . '</infotext>'), '', 'Red');
 }
 
-
 //$adminObject->addInfoBox(_AM_WFL_CHECKINGFOLDER);
 if (is_dir('../../../uploads/wflinks/category')) {
     $adminObject->addConfigBoxLine('<img src="../../../Frameworks/moduleclasses/icons/16/1.png"><span class="Green">' . _AM_WFL_CHECKINGFOLDER_FOLDER_CAT_YES . '</span>', '', '');
@@ -74,7 +73,6 @@ if (is_dir('../../../uploads/flags')) {
     $adminObject->addConfigBoxLine('<label><img src="../../../Frameworks/moduleclasses/icons/16/0.png"><span class="Red">' . _AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_NO . '</span></label>', '', '');
 }
 
-
 /** @var WflinksUtility $utilityClass */
 $utilityClass = ucfirst($moduleDirName) . 'Utility';
 if (!class_exists($utilityClass)) {
@@ -86,12 +84,10 @@ foreach (array_keys($configurator->uploadFolders) as $i) {
     $utilityClass::createFolder($configurator->uploadFolders[$i]);
 }
 
-
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();
 
 //$moduleDirName = basename(dirname(__DIR__));
-
 
 echo $utilityClass::getServerStats();
 
