@@ -42,10 +42,9 @@ if (true === WfLinksUtility::checkGroups($cid, 'WFLinkSubPerm')) {
         $descriptionb = $wfmyts->addSlashes(ltrim($_REQUEST['descriptionb']));
         $keywords     = $wfmyts->addSlashes(trim(substr($_POST['keywords'], 0, $xoopsModuleConfig['keywordlength'])));
 
+        $item_tag = '';
         if ($xoopsModuleConfig['usercantag']) {
             $item_tag = $wfmyts->addSlashes(ltrim($_REQUEST['item_tag']));
-        } else {
-            $item_tag = '';
         }
 
         if ($xoopsModuleConfig['useaddress']) {
@@ -131,7 +130,7 @@ if (true === WfLinksUtility::checkGroups($cid, 'WFLinkSubPerm')) {
                 redirect_header('index.php', 2, _MD_WFL_THANKSFORINFO);
             }
         } else {
-            if (true === WfLinksUtility::checkGroups($cid, 'WFLinkAutoApp') || $approve == 1) {
+            if (1 == $approve || true === WfLinksUtility::checkGroups($cid, 'WFLinkAutoApp')) {
                 $updated = time();
                 $sql     = 'UPDATE '
                            . $xoopsDB->prefix('wflinks_links')
@@ -191,7 +190,7 @@ if (true === WfLinksUtility::checkGroups($cid, 'WFLinkSubPerm')) {
         $approve = WfLinksUtility::cleanRequestVars($_REQUEST, 'approve', 0);
 
         //Show disclaimer
-        if ($xoopsModuleConfig['showdisclaimer'] && !isset($_GET['agree']) && $approve == 0) {
+        if (!isset($_GET['agree']) && $xoopsModuleConfig['showdisclaimer'] && $approve == 0) {
             $GLOBALS['xoopsOption']['template_main'] = 'wflinks_disclaimer.tpl';
             include XOOPS_ROOT_PATH . '/header.php';
 
@@ -375,7 +374,7 @@ if (true === WfLinksUtility::checkGroups($cid, 'WFLinkSubPerm')) {
         } else {
             $sform->addElement(new XoopsFormHidden('notifypub', 0));
         }
-        if (true === WfLinksUtility::checkGroups($cid, 'WFLinkAppPerm') && $lid > 0) {
+        if ($lid > 0 && true === WfLinksUtility::checkGroups($cid, 'WFLinkAppPerm')) {
             $approve_checkbox = new XoopsFormCheckBox('', 'approve', $approve);
             $approve_checkbox->addOption(1, _MD_WFL_APPROVE);
             $option_tray->addElement($approve_checkbox);

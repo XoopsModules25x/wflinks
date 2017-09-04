@@ -363,30 +363,30 @@ function fetchURL($url, $timeout = 2)
     $handle = @fsockopen('http://' . $host, $port, $errno, $errstr, $timeout);
     if (!$handle) {
         return null;
-    } else {
-        // Set read timeout
-        stream_set_timeout($handle, $timeout);
-        for ($i = 0; $i < 1; ++$i) {
-            // Time the responce
-            list($usec, $sec) = explode(' ', microtime(true));
-            $start = (float)$usec + (float)$sec;
-            // send somthing
-            $write = fwrite($handle, "return ping\n");
-            if (!$write) {
-                return '';
-            }
-            fread($handle, 1024);
-            // Work out if we got a responce and time it
-            list($usec, $sec) = explode(' ', microtime(true));
-            $laptime = ((float)$usec + (float)$sec) - $start;
-            if ($laptime > $timeout) {
-                return 'No Reply';
-            } else {
-                return round($laptime, 3);
-            }
-        }
-        fclose($handle);
     }
+
+    // Set read timeout
+    stream_set_timeout($handle, $timeout);
+    for ($i = 0; $i < 1; ++$i) {
+        // Time the responce
+        list($usec, $sec) = explode(' ', microtime(true));
+        $start = (float)$usec + (float)$sec;
+        // send somthing
+        $write = fwrite($handle, "return ping\n");
+        if (!$write) {
+            return '';
+        }
+        fread($handle, 1024);
+        // Work out if we got a responce and time it
+        list($usec, $sec) = explode(' ', microtime(true));
+        $laptime = ((float)$usec + (float)$sec) - $start;
+        if ($laptime > $timeout) {
+            return 'No Reply';
+        } else {
+            return round($laptime, 3);
+        }
+    }
+    fclose($handle);
 
     return null;
 }

@@ -139,7 +139,7 @@ class XoopsMediaUploader
             $this->setErrors(_AM_WFL_READWRITEERROR);
 
             return false;
-        } elseif (is_array($_FILES[$media_name]['name']) && isset($index)) {
+        } elseif (isset($index) && is_array($_FILES[$media_name]['name'])) {
             $index              = (int)$index;
             $this->mediaName    = get_magic_quotes_gpc() ? stripslashes($_FILES[$media_name]['name'][$index]) : $_FILES[$media_name]['name'][$index];
             $this->mediaType    = $_FILES[$media_name]['type'][$index];
@@ -332,11 +332,7 @@ class XoopsMediaUploader
             $this->setErrors(_AM_WFL_FAILEDUPLOADING . $this->mediaName);
         }
 
-        if (count($this->errors) > 0) {
-            return false;
-        }
-
-        return true;
+        return !(count($this->errors) > 0);
     }
 
     /**
@@ -355,7 +351,7 @@ class XoopsMediaUploader
         if (isset($this->targetFileName)) {
             $this->savedFileName = $this->targetFileName;
         } elseif (isset($this->prefix)) {
-            $this->savedFileName = uniqid($this->prefix) . '.' . strtolower($matched[1]);
+            $this->savedFileName = uniqid($this->prefix, true) . '.' . strtolower($matched[1]);
         } else {
             $this->savedFileName = strtolower($this->mediaName);
         }
@@ -438,11 +434,7 @@ class XoopsMediaUploader
      */
     public function checkMimeType()
     {
-        if (count($this->allowedMimeTypes) > 0 && !in_array($this->mediaType, $this->allowedMimeTypes)) {
-            return false;
-        }
-
-        return true;
+        return !(count($this->allowedMimeTypes) > 0 && !in_array($this->mediaType, $this->allowedMimeTypes));
     }
 
     /**

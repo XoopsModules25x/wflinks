@@ -281,6 +281,7 @@ define('_AM_WFL_LINK_NEWSCATEGORY', 'Select News Category to submit News:');
 define('_AM_WFL_LINK_NEWSTITLE', "News Title:<div style='padding-top: 4px; padding-bottom: 4px;'><span style='font-weight: normal;'>Leave Blank to use Link Title</span></div>");
 define('_AM_WFL_LINK_PUBLISHER', 'Link Publisher Name: ');
 
+
 /**
  * Broken links defines
  */
@@ -506,3 +507,5 @@ define('_AM_WFL_CHECKINGFOLDER_FOLDER_SCREEN_YES', 'Folder \'/uploads/wflinks/sc
 define('_AM_WFL_CHECKINGFOLDER_FOLDER_SCREEN_NO', 'Folder \'/uploads/wflinks/screenshots\' does not exist. Create the specified folder with CHMOD 777.');
 define('_AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_YES', 'Folder \'/uploads/flags\' exist');
 define('_AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_NO', 'Folder \'/uploads/flags\' does not exist. Copy from folder \'EXTRA/htdocs/uploads\' the folder \'flags\' in the specified place.');
+
+define('_AM_WFL_LINK_EXPIREWARNING', 'Link Expired');

@@ -39,7 +39,7 @@ class WfLinksUtility extends XoopsObject
                 $handlers[$name] = new $class($GLOBALS['xoopsDB']);
             }
         }
-        if (!isset($handlers[$name]) && !$optional) {
+        if (!$optional && !isset($handlers[$name])) {
             trigger_error('<div>Class <b>' . $class . '</b> does not exist.</div>
                         <div>Handler Name: ' . $name, E_USER_ERROR) . '</div>';
         }
@@ -63,9 +63,9 @@ class WfLinksUtility extends XoopsObject
         if (!$gpermHandler->checkRight($permType, $cid, $groups, $xoopsModule->getVar('mid'))) {
             if ($redirect === false) {
                 return false;
-            } else {
-                redirect_header('index.php', 3, _NOPERM);
             }
+
+            redirect_header('index.php', 3, _NOPERM);
         }
 
         return true;
@@ -148,7 +148,7 @@ class WfLinksUtility extends XoopsObject
             $globals = array();
             foreach (array_keys($array) as $k) {
                 $value = strip_tags(trim($array[$k]));
-                if (strlen($value >= $lengthcheck)) {
+                if ('' !== $value >= $lengthcheck) {
                     return null;
                 }
                 if (ctype_digit($value)) {
@@ -164,11 +164,11 @@ class WfLinksUtility extends XoopsObject
 
             return $globals;
         }
-        if (!isset($array[$name]) || !array_key_exists($name, $array)) {
+        if (!array_key_exists($name, $array) || !isset($array[$name])) {
             return $def;
-        } else {
-            $value = strip_tags(trim($array[$name]));
         }
+
+        $value = strip_tags(trim($array[$name]));
         if (ctype_digit($value)) {
             $value = (int)$value;
         } else {
@@ -199,33 +199,6 @@ class WfLinksUtility extends XoopsObject
         return $toolbar;
     }
 
-    // static::getServerStats()
-    // @return
-    public static function getServerStats()
-    {
-        echo "
-    <fieldset><legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_LINK_IMAGEINFO . "</legend>\n
-        <div style='padding: 8px;'>\n
-        <div>" . _AM_WFL_LINK_SPHPINI . "</div>\n";
-
-        //    $safemode        = ini_get('safe_mode') ? _AM_WFL_LINK_ON . _AM_WFL_LINK_SAFEMODEPROBLEMS : _AM_WFL_LINK_OFF;
-        //    $registerglobals = (ini_get('register_globals') === '') ? _AM_WFL_LINK_OFF : _AM_WFL_LINK_ON;
-        $links = ini_get('file_uploads') ? _AM_WFL_LINK_ON : _AM_WFL_LINK_OFF;
-
-        $gdlib = function_exists('gd_info') ? _AM_WFL_LINK_GDON : _AM_WFL_LINK_GDOFF;
-        echo '<li>' . _AM_WFL_LINK_GDLIBSTATUS . $gdlib;
-        if (function_exists('gd_info')) {
-            if (true === $gdlib = gd_info()) {
-                echo '<li>' . _AM_WFL_LINK_GDLIBVERSION . '<b>' . $gdlib['GD Version'] . '</b>';
-            }
-        }
-        echo "<br><br>\n\n";
-        //    echo '<li>' . _AM_WFL_LINK_SAFEMODESTATUS . $safemode;
-        //    echo '<li>' . _AM_WFL_LINK_REGISTERGLOBALS . $registerglobals;
-        echo '<li>' . _AM_WFL_LINK_SERVERUPLOADSTATUS . $links;
-        echo '</div>';
-        echo '</fieldset><br>';
-    }
 
     // displayicons()
     // @param  $time
@@ -377,7 +350,7 @@ class WfLinksUtility extends XoopsObject
         $count          = 0;
         $published_date = 0;
 
-        $arr    = array();
+        $items  = array();
         $result = $xoopsDB->query($sql);
         while (list($lid, $cid, $published) = $xoopsDB->fetchRow($result)) {
             if (true === static::checkGroups()) {
@@ -388,9 +361,8 @@ class WfLinksUtility extends XoopsObject
 
         $child_count = 0;
         if ($get_child == 1) {
-            $arr  = $mytree->getAllChildId($sel_id);
-            $size = count($arr);
-            for ($i = 0, $iMax = count($arr); $i < $iMax; ++$i) {
+            $items = $mytree->getAllChildId($sel_id);
+            foreach ($items as $item) {
                 $query2 = 'SELECT DISTINCT a.lid, a.cid, published FROM '
                           . $xoopsDB->prefix('wflinks_links')
                           . ' a LEFT JOIN '
@@ -403,9 +375,9 @@ class WfLinksUtility extends XoopsObject
                           . time()
                           . ') AND offline = 0 '
                           . ' AND (b.cid=a.cid OR (a.cid='
-                          . $arr[$i]
+                          . $item
                           . ' OR b.cid='
-                          . $arr[$i]
+                          . $item
                           . ')) ';
 
                 $result2 = $xoopsDB->query($query2);
@@ -847,7 +819,7 @@ class WfLinksUtility extends XoopsObject
         $down = array();
         require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/uploader.php';
         if (empty($allowed_mimetypes)) {
-            $allowed_mimetypes = wfl_retmime($FILES['userfile']['name'], $usertype);
+            $allowed_mimetypes = wfl_getmime($FILES['userfile']['name'], $usertype);
         }
         $upload_dir = XOOPS_ROOT_PATH . '/' . $uploaddir . '/';
 
@@ -954,11 +926,11 @@ class WfLinksUtility extends XoopsObject
         //    } else {
         //        $published_status = ( $published['published'] == 0 ) ? "<a href='newlinks.php'>" . $imagearray['offline'] . "</a>" : $imagearray['offline'];
         //    }
-        if ((($published['expired'] && $published['expired'] > time()) or $published['expired'] == 0)
+        if ($published['offline'] == 0
             && ($published['published'] && $published['published'] < time())
-            && $published['offline'] == 0) {
+                           && (($published['expired'] && $published['expired'] > time()) || $published['expired'] == 0)) {
             $published_status = $imagearray['online'];
-        } elseif (($published['expired'] && $published['expired'] < time()) && $published['offline'] == 0) {
+        } elseif ($published['offline'] == 0 && ($published['expired'] && $published['expired'] < time())) {
             $published_status = $imagearray['expired'];
         } else {
             $published_status = ($published['published'] == 0) ? "<a href='newlinks.php'>" . $imagearray['offline'] . '</a>' : $imagearray['offline'];
@@ -1570,7 +1542,7 @@ class WfLinksUtility extends XoopsObject
      *
      * @return array
      */
-    public function mix($a, $b, $c)
+    public static function mix($a, $b, $c)
     {
         $a -= $b;
         $a -= $c;
@@ -1610,7 +1582,7 @@ class WfLinksUtility extends XoopsObject
      *
      * @return mixed
      */
-    public function GoogleCH($url, $length = null, $init = 0xE6359A60)
+    public static function GoogleCH($url, $length = null, $init = 0xE6359A60)
     {
         if (null === $length) {
             $length = count($url);
@@ -1681,7 +1653,7 @@ class WfLinksUtility extends XoopsObject
      *
      * @return mixed
      */
-    public function strord($string)
+    public static function strord($string)
     {
         for ($i = 0, $iMax = strlen($string); $i < $iMax; ++$i) {
             $result[$i] = ord($string{$i});
@@ -1695,7 +1667,7 @@ class WfLinksUtility extends XoopsObject
      *
      * @return bool|string
      */
-    public function pagerank($url)
+    public static function pagerank($url)
     {
         $pagerank = '';
         $ch       = '6' . GoogleCH(strord('info:' . $url));
@@ -1999,7 +1971,7 @@ class WfLinksUtility extends XoopsObject
             $DEP_CHAR = 127;
             $pos_st   = 0;
             $action   = false;
-            for ($pos_i = 0; $pos_i < strlen($strs[$i]); ++$pos_i) {
+            for ($pos_i = 0, $pos_iMax = strlen($strs[$i]); $pos_i < $pos_iMax; ++$pos_i) {
                 if (ord(substr($strs[$i], $pos_i, 1)) > 127) {
                     ++$pos_i;
                 }

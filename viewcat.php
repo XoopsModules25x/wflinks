@@ -81,10 +81,9 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
                 $_image = $_thumb_image->do_thumb($xoopsModuleConfig['shotwidth'], $xoopsModuleConfig['shotheight'], $xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
             }
         }
+        $imgurl = "{$xoopsModuleConfig['catimage']}/$_image";
         if (empty($_image) || $_image === '') {
             $imgurl = $indicator['image'];
-        } else {
-            $imgurl = "{$xoopsModuleConfig['catimage']}/$_image";
         }
         // End
         $xoopsTpl->append('subcategories', array(

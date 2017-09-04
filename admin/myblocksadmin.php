@@ -187,10 +187,9 @@ function list_blocks()
             }
         }
         // delete link if it is cloned block
+        $delete_link = '';
         if ($block_arr[$i]->getVar('block_type') === 'D' || $block_arr[$i]->getVar('block_type') === 'C') {
             $delete_link = "<br><a href='admin.php?fct=blocksadmin&amp;op=delete&amp;bid=$bid'>" . _DELETE . '</a>';
-        } else {
-            $delete_link = '';
         }
         // clone link if it is marked as cloneable block
         // $modversion['blocks'][n]['can_clone']
@@ -209,10 +208,9 @@ function list_blocks()
                 }
             }
         }
+        $clone_link = '';
         if ($can_clone) {
             $clone_link = "<br><a href='admin.php?fct=blocksadmin&amp;op=clone&amp;bid=$bid'>" . _CLONE . '</a>';
-        } else {
-            $clone_link = '';
         }
         // displaying part
         echo "
@@ -306,9 +304,9 @@ function get_block_configs()
     error_reporting($error_reporting_level);
     if (empty($modversion['blocks'])) {
         return array();
-    } else {
-        return $modversion['blocks'];
     }
+
+    return $modversion['blocks'];
 }
 
 function list_groups()

@@ -86,7 +86,7 @@ $link['comments'] = $link_arr['comments'];
 $whoisurl         = str_replace('http://', '', $link['url']);
 
 $link['adminlink'] = '';
-if ($link['isadmin'] === true && $moderate == 0) {
+if (0 == $moderate && $link['isadmin'] === true) {
     $link['adminlink'] = '<a href="'
                          . XOOPS_URL
                          . '/modules/'

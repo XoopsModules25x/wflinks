@@ -30,6 +30,7 @@ function checkBlockgroups($cid = 0, $permType = 'WFLinkCatPerm', $redirect = fal
     global $xoopsUser;
 
     $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    /** @var \XoopsGroupPermHandler $gpermHandler */
     $gpermHandler = xoops_getHandler('groupperm');
 
     /** @var XoopsModuleHandler $moduleHandler */
@@ -76,7 +77,7 @@ function b_wflinks_top_show($options)
 
     $result = $xoopsDB->query('SELECT lid, cid, title, published, hits FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0 AND published <= ' . $time . ' AND (expired = 0 OR expired > ' . $time . ') AND offline = 0 ORDER BY ' . $options[0] . ' DESC', $options[1], 0);
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        if (false === checkBlockgroups($myrow['cid']) || $myrow['cid'] == 0) {
+        if (0 == $myrow['cid'] || false === checkBlockgroups($myrow['cid'])) {
             continue;
         }
         $linkload = array();

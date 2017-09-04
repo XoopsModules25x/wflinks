@@ -331,12 +331,10 @@ switch ($op) {
 
         if ($ok == 1) {
             // get all subcategories under the specified category
-            $arr    = $mytree->getAllChildId($cid);
-            $lcount = count($arr);
-
-            for ($i = 0; $i < $lcount; ++$i) {
+            $subcategories    = $mytree->getAllChildId($cid);
+            foreach ($subcategories as $subcategory) {
                 // get all links in each subcategory
-                $result = $xoopsDB->query('SELECT lid FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE cid=' . $arr[$i] . '');
+                $result = $xoopsDB->query('SELECT lid FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE cid=' . $subcategory . ' ');
                 // now for each linkload, delete the text data and vote ata associated with the linkload
                 while (list($lid) = $xoopsDB->fetchRow($result)) {
                     $sql = sprintf('DELETE FROM %s WHERE lid = %u', $xoopsDB->prefix('wflinks_votedata'), $lid);
@@ -348,10 +346,10 @@ switch ($op) {
                     xoops_comment_delete($xoopsModule->getVar('mid'), $lid);
                 }
                 // all links for each subcategory are deleted, now delete the subcategory data
-                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_cat'), $arr[$i]);
+                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_cat'), $subcategory);
                 $xoopsDB->query($sql);
                 // delete altcat entries
-                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_altcat'), $arr[$i]);
+                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_altcat'), $subcategory);
                 $xoopsDB->query($sql);
             }
             // all subcategory and associated data are deleted, now delete category data and its associated data

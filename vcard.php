@@ -82,7 +82,7 @@ function vcard_quoted_printable_encode($input, $line_max = 76)
     $escape    = '=';
     $output    = '';
 
-    for ($j = 0; $j < count($lines); ++$j) {
+    for ($j = 0, $jMax = count($lines); $j < $jMax; ++$j) {
         $line    = $lines[$j];
         $linlen  = strlen($line);
         $newline = '';
@@ -371,10 +371,9 @@ $v->setName('', '', '', '');
 // $v -> setBirthday("1960-07-31");
 
 // Address
+$street = $street1;
 if ($street2) {
     $street = $street1 . ', ' . $street2;
-} else {
-    $street = $street1;
 }
 $v->setAddress('', '', $street, $town, $state, $zip, $country, 'WORK');
 

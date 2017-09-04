@@ -62,7 +62,7 @@ class wfThumbsNails
     public function __construct($img_name = null, $img_path = null, $img_savepath = null)
     {
         if (!preg_match("/\.(jpg|gif|png|jpeg)$/i", $img_name)) {
-            return false;
+//            return false;
         }
 
         /*
@@ -90,11 +90,11 @@ class wfThumbsNails
 
         if (!is_dir($path_to_check)) {
             if (false === mkdir("$path_to_check", 0777)) {
-                return false;
+//                return false;
             }
         }
 
-        return null;
+//        return null;
     }
 
     /**
@@ -144,23 +144,23 @@ class wfThumbsNails
         $this->_source_url   = XOOPS_URL . "/{$this->_img_path}";
         $this->_source_image = "{$this->_source_path}/{$this->_img_name}";
 
-        if (isset($img_width) && null !== $img_width) {
+        if (null !== $img_width && isset($img_width)) {
             $this->img_width = (int)$img_width;
         }
 
-        if (isset($img_height) && null !== $img_height) {
+        if (null !== $img_height && isset($img_height)) {
             $this->img_height = (int)$img_height;
         }
 
-        if (isset($img_quality) && null !== $img_quality) {
+        if (null !== $img_quality && isset($img_quality)) {
             $this->img_quality = (int)$img_quality;
         }
 
-        if (isset($img_update) && null !== $img_update) {
+        if (null !== $img_update && isset($img_update)) {
             $this->img_update = (int)$img_update;
         }
 
-        if (isset($img_aspect) && null !== $img_aspect) {
+        if (null !== $img_aspect && isset($img_aspect)) {
             $this->img_aspect = (int)$img_aspect;
         }
 
@@ -363,12 +363,9 @@ class wfThumbsNails
     public function image_check()
     {
         $this->_img_info = getimagesize($this->_source_image, $imageinfo);
-        if (null === $this->_img_info) {
-            return false;
-        }
         // if ( $this->_img_info[0] < $this->img_width && $this->_img_info[1] < $this->img_height )
         // return false;
-        return true;
+        return !(null === $this->_img_info);
     }
 
     /**
@@ -376,7 +373,7 @@ class wfThumbsNails
      *
      * Private function
      *
-     * @return false if gd lib not found on the system
+     * @return array|false if gd lib not found on the system
      */
     public function gd_lib_check()
     {
