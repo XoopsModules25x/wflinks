@@ -340,9 +340,9 @@ if (!empty($_POST['submit'])) {
     redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/myblocksadmin.php$query4redirect", 1, _AM_SYSTEM_DBUPDATED);
 }
 
-include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/functions.php';
+include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/utility.php';
 xoops_cp_header();
-//wfl_adminmenu();
+//WfLinksUtility::getAdminMenu();
 
 if (file_exists('./mymenu.php')) {
     require_once __DIR__ . '/mymenu.php';

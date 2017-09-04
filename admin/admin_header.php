@@ -47,7 +47,7 @@ if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl))
 }
 
 include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/config.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/functions.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/utility.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfl_lists.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/myts_extended.php';
 

@@ -16,9 +16,9 @@ include XOOPS_ROOT_PATH . '/header.php';
 
 global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
 
-$catarray['imageheader'] = wfl_imageheader();
-//$catarray['letters'] = wfl_letters();
-//$catarray['toolbar'] = wfl_toolbar();
+$catarray['imageheader'] = WfLinksUtility::getImageHeader();
+//$catarray['letters'] = WfLinksUtility::getLetters();
+//$catarray['toolbar'] = WfLinksUtility::getToolbar();
 $xoopsTpl->assign('catarray', $catarray);
 
 if (isset($_GET['newlinkshowdays'])) {

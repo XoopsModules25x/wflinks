@@ -11,8 +11,8 @@
 
 require_once __DIR__ . '/header.php';
 
-$op      = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$lid     = wfl_cleanRequestVars($_REQUEST, 'lid', 0);
+$op      = WfLinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$lid     = WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid     = (int)$lid;
 $buttonn = _MD_WFL_SUBMITBROKEN;
 $buttonn = strtolower($buttonn);
@@ -23,7 +23,7 @@ switch (strtolower($op)) {
 
         $sender = (is_object($xoopsUser) && !empty($xoopsUser)) ? $xoopsUser->getVar('uid') : 0;
         $ip     = getenv('REMOTE_ADDR');
-        $title  = wfl_cleanRequestVars($_REQUEST, 'title', '');
+        $title  = WfLinksUtility::cleanRequestVars($_REQUEST, 'title', '');
         $title  = $wfmyts->addSlashes($title);
         $time   = time();
 
@@ -90,9 +90,9 @@ switch (strtolower($op)) {
         include XOOPS_ROOT_PATH . '/header.php';
         xoops_load('XoopsUserUtility');
 
-        $catarray['imageheader'] = wfl_imageheader();
-        $catarray['letters']     = wfl_letters();
-        $catarray['toolbar']     = wfl_toolbar();
+        $catarray['imageheader'] = WfLinksUtility::getImageHeader();
+        $catarray['letters']     = WfLinksUtility::getLetters();
+        $catarray['toolbar']     = WfLinksUtility::getToolbar();
         $xoopsTpl->assign('catarray', $catarray);
 
         $sql      = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid;

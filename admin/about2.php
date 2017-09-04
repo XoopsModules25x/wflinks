@@ -19,7 +19,7 @@ xoops_cp_header();
 $moduleHandler = xoops_getHandler('module');
 $versioninfo   = $moduleHandler->get($xoopsModule->getVar('mid'));
 
-//wfl_adminmenu( _AM_WFL_MLINKS );
+//WfLinksUtility::getAdminMenu( _AM_WFL_MLINKS );
 // Left headings...
 echo "<img src='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $versioninfo->getInfo('image') . "' alt='' hspace='10' vspace='0'></a>\n
 <div style='margin-top: 10px; color: #33538e; margin-bottom: 4px; font-size: 18px; line-height: 18px; font-weight: bold; display: block;'>" . $versioninfo->getInfo('name') . ' version ' . $versioninfo->getInfo('version') . "</div>\n

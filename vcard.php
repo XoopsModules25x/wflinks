@@ -330,7 +330,7 @@ class vCard
 
 require_once __DIR__ . '/header.php';
 
-$lid = wfl_cleanRequestVars($_REQUEST, 'lid', 0);
+$lid = WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid = (int)$lid;
 
 global $xoopsDB;
@@ -343,7 +343,7 @@ $street2 = $vcard_arr['street2'];
 $town    = $vcard_arr['town'];
 $zip     = $vcard_arr['zip'];
 $state   = $vcard_arr['state'];
-$country = wfl_countryname($vcard_arr['country']);
+$country = WfLinksUtility::getCountryName($vcard_arr['country']);
 $tel     = $vcard_arr['tel'];
 $mobile  = $vcard_arr['mobile'];
 $fax     = $vcard_arr['fax'];

@@ -53,7 +53,7 @@ function createcat($cid = 0)
     $client_id    = 0;
     $banner_id    = 0;
     $heading      = _AM_WFL_CCATEGORY_CREATENEW;
-    $totalcats    = wfl_totalcategory();
+    $totalcats    = WfLinksUtility::getTotalCategory();
 
     if ($cid) {
         $sql          = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . " WHERE cid=$cid";
@@ -113,7 +113,7 @@ function createcat($cid = 0)
     }
     $sform->addElement($indeximage_tray);
 
-    $editor = wfl_getWysiwygForm(_AM_WFL_FCATEGORY_DESCRIPTION, 'description', $description, 15, 60, '');
+    $editor = WfLinksUtility::getWysiwygForm(_AM_WFL_FCATEGORY_DESCRIPTION, 'description', $description, 15, 60, '');
     $sform->addElement($editor, false);
 
     // Select Client/Sponsor
@@ -218,7 +218,7 @@ switch ($op) {
             $cid = isset($_POST['cid']) ? $_POST['cid'] : $_GET['cid'];
 
             xoops_cp_header();
-            //wfl_adminmenu(_AM_WFL_MCATEGORY);
+            //WfLinksUtility::getAdminMenu(_AM_WFL_MCATEGORY);
 
             require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
             $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
@@ -388,7 +388,7 @@ switch ($op) {
     case 'modCat':
         $cid = isset($_POST['cid']) ? $_POST['cid'] : 0;
         xoops_cp_header();
-        //wfl_adminmenu(_AM_WFL_MCATEGORY);
+        //WfLinksUtility::getAdminMenu(_AM_WFL_MCATEGORY);
         createcat($cid);
         xoops_cp_footer();
         break;
@@ -396,7 +396,7 @@ switch ($op) {
     case 'main':
     default:
         xoops_cp_header();
-        //wfl_adminmenu(_AM_WFL_MCATEGORY);
+        //WfLinksUtility::getAdminMenu(_AM_WFL_MCATEGORY);
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         $adminObject->addItemButton(_MI_WFL_ADD_LINK, 'main.php?op=edit', 'add', '');
@@ -406,7 +406,7 @@ switch ($op) {
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         $mytree    = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
         $sform     = new XoopsThemeForm(_AM_WFL_CCATEGORY_MODIFY, 'category', xoops_getenv('PHP_SELF'), 'post', true);
-        $totalcats = wfl_totalcategory();
+        $totalcats = WfLinksUtility::getTotalCategory();
 
         if ($totalcats > 0) {
             ob_start();

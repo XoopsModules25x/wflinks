@@ -13,8 +13,8 @@ require_once __DIR__ . '/admin_header.php';
 
 global $xoopsModuleConfig;
 
-$op  = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$cid = wfl_cleanRequestVars($_REQUEST, 'cid', 0);
+$op  = WfLinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$cid = WfLinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
 
 switch (strtolower($op)) {
     case 'save':
@@ -74,7 +74,7 @@ switch (strtolower($op)) {
         }
         $sform->addElement($indeximage_tray);
 
-        $editor = wfl_getWysiwygForm(_AM_WFL_IPAGE_CHEADING, 'indexheader', $indexheader, 15, 60, '');
+        $editor = WfLinksUtility::getWysiwygForm(_AM_WFL_IPAGE_CHEADING, 'indexheader', $indexheader, 15, 60, '');
         $sform->addElement($editor, false);
 
         $headeralign_select = new XoopsFormSelect(_AM_WFL_IPAGE_CHEADINGA, 'indexheaderalign', $indexheaderalign);

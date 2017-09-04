@@ -76,7 +76,7 @@ $link['publisher'] = (isset($link_arr['publisher'])
 
 $country             = $link_arr['country'];
 $link['country']     = XOOPS_URL . '/' . $xoopsModuleConfig['flagimage'] . '/' . $country . '.gif';
-$link['countryname'] = wfl_countryname($link_arr['country']);
+$link['countryname'] = WfLinksUtility::getCountryName($link_arr['country']);
 
 $mail_subject     = rawurlencode(sprintf(_MD_WFL_INTFILEFOUND, $xoopsConfig['sitename']));
 $mail_body        = rawurlencode(sprintf(_MD_WFL_INTFILEFOUND, $xoopsConfig['sitename']) . ':  ' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlelink.php?cid=' . $link_arr['cid'] . '&amp;lid=' . $link_arr['lid']);
@@ -137,7 +137,7 @@ $votestring = ($link_arr['votes'] == 1) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMV
 $link['useradminlink'] = 0;
 if (is_object($xoopsUser) && !empty($xoopsUser)) {
     $_user_submitter = $xoopsUser->getvar('uid') == $link_arr['submitter'];
-    if (true === wfl_checkgroups($cid)) {
+    if (true === WfLinksUtility::checkGroups($cid)) {
         $link['useradminlink'] = 1;
         if ($xoopsUser->getVar('uid') == $link_arr['submitter']) {
             $link['usermodify'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $link_arr['lid'] . '"> ' . _MD_WFL_MODIFY . '</a> |';
@@ -179,8 +179,8 @@ $xoopsTpl->assign('commentz', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModu
 
 $xoopsTpl->assign('print', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/print.php?lid=' . $link_arr['lid'] . '"  target="_blank">' . _MD_WFL_PRINT . '</a>');
 
-$link['icons']         = wfl_displayicons($link_arr['published'], $link_arr['status'], $link_arr['hits']);
-$link['allow_rating']  = wfl_checkgroups($cid, 'WFLinkRatePerms') ? true : false;
+$link['icons']         = WfLinksUtility::displayIcons($link_arr['published'], $link_arr['status'], $link_arr['hits']);
+$link['allow_rating']  = WfLinksUtility::checkGroups($cid, 'WFLinkRatePerms') ? true : false;
 $link['total_chars']   = $xoopsModuleConfig['totalchars'];
 $link['module_dir']    = $xoopsModule->getVar('dirname');
 $link['otherlinx']     = $xoopsModuleConfig['otherlinks'];

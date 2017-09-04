@@ -13,8 +13,8 @@ require_once __DIR__ . '/admin_header.php';
 
 global $xoopsModuleConfig;
 
-$op  = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$lid = (int)wfl_cleanRequestVars($_REQUEST, 'lid', 0);
+$op  = WfLinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$lid = (int)WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
  * @param $xt WflinksXoopsTree
@@ -100,7 +100,7 @@ switch (strtolower($op)) {
     case 'main':
     default:
         xoops_cp_header();
-        //wfl_adminmenu( _AM_WFL_MALTCAT );
+        //WfLinksUtility::getAdminMenu( _AM_WFL_MALTCAT );
         echo "
             <fieldset style='border: #e8e8e8 1px solid;'><legend style='display: inline; font-weight: bold; color: #0A3760;'>" . _AM_WFL_ALTCAT_MODIFYF . "</legend>\n
             <div style='padding: 8px;'>" . _AM_WFL_ALTCAT_INFOTEXT . "</div>\n

@@ -13,14 +13,14 @@ require_once __DIR__ . '/admin_header.php';
 
 global $mytree, $xoopsModuleConfig;
 xoops_load('XoopsUserUtility');
-$op        = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$requestid = wfl_cleanRequestVars($_REQUEST, 'requestid', 0);
+$op        = WfLinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$requestid = WfLinksUtility::cleanRequestVars($_REQUEST, 'requestid', 0);
 
 switch (strtolower($op)) {
     case 'listmodreqshow':
 
         xoops_cp_header();
-        //wfl_adminmenu( _AM_WFL_MOD_MODREQUESTS );
+        //WfLinksUtility::getAdminMenu( _AM_WFL_MOD_MODREQUESTS );
 
         $sql       = 'SELECT modifysubmitter, requestid, lid, cid, title, url, description, screenshot, forumid, country, keywords, item_tag, googlemap, yahoomap, multimap, street1, street2, town, state, zip, tel, fax, voip, mobile, email, vat FROM '
                      . $xoopsDB->prefix('wflinks_mod')
@@ -70,7 +70,7 @@ switch (strtolower($op)) {
                 }
             }
             if ($key === 'country') {
-                $content = wfl_countryname($mod_array['country']);
+                $content = WfLinksUtility::getCountryName($mod_array['country']);
             }
             $sform->addElement(new XoopsFormLabel($lang_def, $content));
         }
@@ -110,7 +110,7 @@ switch (strtolower($op)) {
                 }
             }
             if ($key === 'country') {
-                $content = wfl_countryname($mod_array['country']);
+                $content = WfLinksUtility::getCountryName($mod_array['country']);
             }
             $sform->addElement(new XoopsFormLabel($lang_def, $content));
         }
@@ -188,7 +188,7 @@ switch (strtolower($op)) {
         $totalmodrequests = $xoopsDB->getRowsNum($xoopsDB->query($sql));
 
         xoops_cp_header();
-        //wfl_adminmenu( _AM_WFL_MOD_MODREQUESTS );
+        //WfLinksUtility::getAdminMenu( _AM_WFL_MOD_MODREQUESTS );
         echo "<fieldset><legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_MOD_MODREQUESTSINFO . "</legend>\n";
         echo "<div style='padding: 8px;'>" . _AM_WFL_MOD_TOTMODREQUESTS . " <b>$totalmodrequests<></div>\n";
         echo "</fieldset><br>\n";

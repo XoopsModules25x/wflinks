@@ -11,9 +11,9 @@
 
 require_once __DIR__ . '/admin_header.php';
 
-$op        = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$lid       = wfl_cleanRequestVars($_REQUEST, 'lid', '');
-$requestid = wfl_cleanRequestVars($_REQUEST, 'requestid', 0);
+$op        = WfLinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$lid       = WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', '');
+$requestid = WfLinksUtility::cleanRequestVars($_REQUEST, 'requestid', 0);
 
 switch (strtolower($op)) {
     case 'approve':
@@ -58,7 +58,7 @@ switch (strtolower($op)) {
 
         global $xoopsModuleConfig;
         xoops_load('XoopsUserUtility');
-        $start = wfl_cleanRequestVars($_REQUEST, 'start', 0);
+        $start = WfLinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
         $sql   = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published = 0 ORDER BY lid DESC';
         if (!$result = $xoopsDB->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
@@ -69,7 +69,7 @@ switch (strtolower($op)) {
         $new_array_count = $xoopsDB->getRowsNum($xoopsDB->query($sql));
 
         xoops_cp_header();
-        //wfl_adminmenu( _AM_WFL_SUB_SUBMITTEDFILES );
+        //WfLinksUtility::getAdminMenu( _AM_WFL_SUB_SUBMITTEDFILES );
 
         echo "<fieldset><legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_SUB_FILESWAITINGINFO . "</legend>\n";
         echo "<div style='padding: 8px;'>" . _AM_WFL_SUB_FILESWAITINGVALIDATION . "&nbsp;<b>$new_array_count</b><div>\n";

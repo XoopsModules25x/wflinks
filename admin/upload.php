@@ -23,7 +23,7 @@ switch (strtolower($op)) {
                 redirect_header('upload.php', 2, _AM_WFL_LINK_IMAGEEXIST);
             }
             $allowed_mimetypes = array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png');
-            wfl_uploading($_FILES, $_POST['uploadpath'], $allowed_mimetypes, 'upload.php', 1, 0);
+            WfLinksUtility::uploadFiles($_FILES, $_POST['uploadpath'], $allowed_mimetypes, 'upload.php', 1, 0);
             redirect_header('upload.php', 2, _AM_WFL_LINK_IMAGEUPLOAD);
         } else {
             redirect_header('upload.php', 2, _AM_WFL_LINK_NOIMAGEEXIST);
@@ -74,8 +74,8 @@ switch (strtolower($op)) {
             3 => _AM_WFL_LINK_FMAINIMAGEDIR
         );
 
-        //wfl_adminmenu( _AM_WFL_MUPLOADS );
-        wfl_serverstats();
+        //WfLinksUtility::getAdminMenu( _AM_WFL_MUPLOADS );
+        WfLinksUtility::getServerStats();
         if ($rootpath > 0) {
             echo '<div><b>' . _AM_WFL_LINK_FUPLOADPATH . '</b> ' . XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath] . "</div>\n";
             echo '<div><b>' . _AM_WFL_LINK_FUPLOADURL . '</b> ' . XOOPS_URL . '/' . $dirarray[$rootpath] . "</div><br>\n";
@@ -87,7 +87,7 @@ switch (strtolower($op)) {
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
         $iform->addElement(new XoopsFormHidden('dir', $rootpath));
-        wfl_getDirSelectOption($namelist, $dirarray, $namearray);
+        WfLinksUtility::getDirSelectOption($namelist, $dirarray, $namearray);
         $iform->addElement(new XoopsFormLabel(_AM_WFL_LINK_FOLDERSELECTION, ob_get_contents()));
         ob_end_clean();
 

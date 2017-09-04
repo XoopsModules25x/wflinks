@@ -11,7 +11,7 @@ $moduleDirName = basename(__DIR__);
 require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 
-$lid = wfl_cleanRequestVars($_REQUEST, 'lid', 0);
+$lid = WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid = (int)$lid;
 
 $error_message = _MD_WFL_NOITEMSELECTED;
@@ -64,7 +64,7 @@ $voip    = $myrow['voip'];
 $fax     = $myrow['fax'];
 $url     = $myrow['url'];
 $email   = printemailcnvrt($myrow['email']);
-$country = wfl_countryname($myrow['country']);
+$country = WfLinksUtility::getCountryName($myrow['country']);
 
 if ($street1 === '' || $town === '' || $xoopsModuleConfig['useaddress'] == 0) {
     $print['addryn'] = 0;
@@ -107,7 +107,7 @@ global $xoopsTpl, $xoTheme;
 
 $maxWords = 100;
 $words    = array();
-$words    = explode(' ', wfl_html2text($myrow['description']));
+$words    = explode(' ', WfLinksUtility::convertHtml2text($myrow['description']));
 $newWords = array();
 $i        = 0;
 

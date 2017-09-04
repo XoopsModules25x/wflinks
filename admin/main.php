@@ -13,8 +13,8 @@ require_once __DIR__ . '/admin_header.php';
 
 $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 
-$op  = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$lid = (int)wfl_cleanRequestVars($_REQUEST, 'lid', 0);
+$op  = WfLinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$lid = (int)WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
  * @param int $lid
@@ -70,10 +70,10 @@ function edit($lid = 0)
     require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     xoops_load('XoopsUserUtility');
-    //wfl_adminmenu( _AM_WFL_MLINKS );
+    //WfLinksUtility::getAdminMenu( _AM_WFL_MLINKS );
 
     if ($lid > 0) {
-        $_vote_data = wfl_getVoteDetails($lid);
+        $_vote_data = WfLinksUtility::getVoteDetails($lid);
         $text_info  = "<table width='100%'>
              <tr>
               <td width='33%' valign='top'>
@@ -141,7 +141,7 @@ function edit($lid = 0)
     ob_end_clean();
 
     // Link description form
-    //    $editor = wfl_getWysiwygForm( _AM_WFL_LINK_DESCRIPTION, 'descriptionb', $descriptionb, 15, 60 );
+    //    $editor = WfLinksUtility::getWysiwygForm( _AM_WFL_LINK_DESCRIPTION, 'descriptionb', $descriptionb, 15, 60 );
     //    $sform -> addElement($editor, false);
     $optionsTrayNote = new XoopsFormElementTray(_AM_WFL_LINK_DESCRIPTION, '<br>');
     if (class_exists('XoopsFormEditor')) {
@@ -166,7 +166,7 @@ function edit($lid = 0)
     $sform->addElement($keywords);
 
     // Insert tags if Tag-module is installed
-    if (wfl_tag_module_included()) {
+    if (WfLinksUtility::isTagModuleIncluded()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
         $text_tags = new TagFormTag('item_tag', 70, 255, $link_array['item_tag'], 0);
         $sform->addElement($text_tags);
@@ -289,7 +289,7 @@ function edit($lid = 0)
     ob_end_clean();
 
     //Create News Story
-    if (wfl_news_module_included()) {
+    if (WfLinksUtility::isNewsModuleIncluded()) {
         $sform->insertBreak(_AM_WFL_LINK_CREATENEWSSTORY, 'bg3');
         $submitNews_radio = new XoopsFormRadioYN(_AM_WFL_LINK_SUBMITNEWS, 'submitnews', 0, ' ' . _YES . '', ' ' . _NO . '');
         $sform->addElement($submitNews_radio);
@@ -397,9 +397,9 @@ switch (strtolower($op)) {
 
         $_type = ($op === 'pingtime') ? 'is_broken' : 'pingtime';
 
-        $start = wfl_cleanRequestVars($_REQUEST, 'start', 0);
-        $ping  = wfl_cleanRequestVars($_REQUEST, 'ping', 0);
-        $cid   = wfl_cleanRequestVars($_REQUEST, 'cid', 0);
+        $start = WfLinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
+        $ping  = WfLinksUtility::cleanRequestVars($_REQUEST, 'ping', 0);
+        $cid   = WfLinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
 
         $sql = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_links');
         if ($cid > 0) {
@@ -418,7 +418,7 @@ switch (strtolower($op)) {
 
         require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
-        //        wfl_adminmenu( _AM_WFL_BINDEX, '', $heading );
+        //        WfLinksUtility::getAdminMenu( _AM_WFL_BINDEX, '', $heading );
         echo "
             <table width='100%' cellspacing='1' cellpadding='2' border='0' class='outer'>\n
             <tr>\n
@@ -464,9 +464,9 @@ switch (strtolower($op)) {
                 unset($published);
             }
         } else {
-            wfl_linklistfooter();
+            WfLinksUtility::getLinkListFooter();
         }
-        wfl_linklistpagenav($broken_array_count, $start, 'art', 'op=' . $op);
+        WfLinksUtility::getLinkListPageNav($broken_array_count, $start, 'art', 'op=' . $op);
         require_once __DIR__ . '/admin_footer.php';
         break;
 
@@ -503,7 +503,7 @@ switch (strtolower($op)) {
             $fax       = $wfmyts->addSlashes(trim($_POST['fax']));
             $voip      = $wfmyts->addSlashes(trim($_POST['voip']));
             $mobile    = $wfmyts->addSlashes(trim($_POST['mobile']));
-            $email     = emailcnvrt($wfmyts->addSlashes(trim($_POST['email'])));
+            $email     = WfLinksUtility::convertEmail($wfmyts->addSlashes(trim($_POST['email'])));
             $vat       = $wfmyts->addSlashes(trim($_POST['vat']));
         } else {
             $googlemap = $yahoomap = $multimap = $street1 = $street2 = $town = $state = $zip = $tel = $fax = $voip = $mobile = $email = $vat = '';
@@ -565,9 +565,9 @@ switch (strtolower($op)) {
 
         // Add item_tag to Tag-module
         if (!$lid) {
-            $tagupdate = wfl_tagupdate($newid, $item_tag);
+            $tagupdate = WfLinksUtility::updateTag($newid, $item_tag);
         } else {
-            $tagupdate = wfl_tagupdate($lid, $item_tag);
+            $tagupdate = WfLinksUtility::updateTag($lid, $item_tag);
         }
 
         // Send notifications
@@ -600,7 +600,7 @@ switch (strtolower($op)) {
         }
         $message = (!$lid) ? _AM_WFL_LINK_NEWFILEUPLOAD : _AM_WFL_LINK_FILEMODIFIEDUPDATE;
         $message = ($lid && !$_POST['was_published'] && $approved) ? _AM_WFL_LINK_FILEAPPROVED : $message;
-        if (wfl_cleanRequestVars($_REQUEST, 'delbroken', 0)) {
+        if (WfLinksUtility::cleanRequestVars($_REQUEST, 'delbroken', 0)) {
             $sql = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_broken') . ' WHERE lid=' . $lid;
             if (!$result = $xoopsDB->queryF($sql)) {
                 XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
@@ -608,15 +608,15 @@ switch (strtolower($op)) {
                 return false;
             }
         }
-        if (wfl_cleanRequestVars($_REQUEST, 'submitnews', 0)) {
+        if (WfLinksUtility::cleanRequestVars($_REQUEST, 'submitnews', 0)) {
             require_once __DIR__ . '/newstory.php';
         }
         redirect_header('main.php', 1, $message);
         break;
 
     case 'delete':
-        if (wfl_cleanRequestVars($_REQUEST, 'confirm', 0)) {
-            $title = wfl_cleanRequestVars($_REQUEST, 'title', 0);
+        if (WfLinksUtility::cleanRequestVars($_REQUEST, 'confirm', 0)) {
+            $title = WfLinksUtility::cleanRequestVars($_REQUEST, 'title', 0);
 
             // delete link
             $sql = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid;
@@ -656,36 +656,36 @@ switch (strtolower($op)) {
             $item_tag = $result->fetchArray['item_tag'];
             require_once __DIR__ . '/admin_header.php';
             xoops_cp_header();
-            //wfl_adminmenu( _AM_WFL_BINDEX );
+            //WfLinksUtility::getAdminMenu( _AM_WFL_BINDEX );
             xoops_confirm(array('op' => 'delete', 'lid' => $lid, 'confirm' => 1, 'title' => $title), 'main.php', _AM_WFL_LINK_REALLYDELETEDTHIS . '<br><br>' . $title, _DELETE);
 
             // Remove item_tag from Tag-module
-            $tagupdate = wfl_tagupdate($lid, $item_tag);
+            $tagupdate = WfLinksUtility::updateTag($lid, $item_tag);
 
             require_once __DIR__ . '/admin_footer.php';
         }
         break;
 
     case 'delvote':
-        $rid = wfl_cleanRequestVars($_REQUEST, 'rid', 0);
+        $rid = WfLinksUtility::cleanRequestVars($_REQUEST, 'rid', 0);
         $sql = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_votedata') . ' WHERE ratingid=' . $rid;
         if (!$result = $xoopsDB->queryF($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
-        wfl_updaterating($rid);
+        WfLinksUtility::updateRating($rid);
         redirect_header('main.php', 1, _AM_WFL_VOTE_VOTEDELETED);
         break;
 
     case 'main':
     default:
-        $start     = wfl_cleanRequestVars($_REQUEST, 'start', 0);
-        $start1    = wfl_cleanRequestVars($_REQUEST, 'start1', 0);
-        $start2    = wfl_cleanRequestVars($_REQUEST, 'start2', 0);
-        $start3    = wfl_cleanRequestVars($_REQUEST, 'start3', 0);
-        $start4    = wfl_cleanRequestVars($_REQUEST, 'start4', 0);
-        $totalcats = wfl_totalcategory();
+        $start     = WfLinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
+        $start1    = WfLinksUtility::cleanRequestVars($_REQUEST, 'start1', 0);
+        $start2    = WfLinksUtility::cleanRequestVars($_REQUEST, 'start2', 0);
+        $start3    = WfLinksUtility::cleanRequestVars($_REQUEST, 'start3', 0);
+        $start4    = WfLinksUtility::cleanRequestVars($_REQUEST, 'start4', 0);
+        $totalcats = WfLinksUtility::getTotalCategory();
 
         $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('wflinks_broken'));
         list($totalbrokenlinks) = $xoopsDB->fetchRow($result);
@@ -704,7 +704,7 @@ switch (strtolower($op)) {
         $adminObject->addItemButton(_MI_WFL_ADD_CATEGORY, 'category.php', 'add', '');
         $adminObject->displayButton('left', '');
 
-        //wfl_adminmenu( _AM_WFL_BINDEX );
+        //WfLinksUtility::getAdminMenu( _AM_WFL_BINDEX );
         //        echo "
         //          <fieldset style='border: #e8e8e8 1px solid;'><legend style='display: inline; font-weight: bold; color: #0A3760;'>" . _AM_WFL_MINDEX_LINKSUMMARY . "</legend>\n
         //          <div style='padding: 8px;'><small>\n
@@ -738,16 +738,16 @@ switch (strtolower($op)) {
             $sql                   = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0  ORDER BY lid DESC';
             $published_array       = $xoopsDB->query($sql, $xoopsModuleConfig['admin_perpage'], $start);
             $published_array_count = $xoopsDB->getRowsNum($xoopsDB->query($sql));
-            wfl_linklistheader(_AM_WFL_MINDEX_PUBLISHEDLINK);
-            wfl_linklistpagenavleft($published_array_count, $start, 'art');
+            WfLinksUtility::getLinkListHeader(_AM_WFL_MINDEX_PUBLISHEDLINK);
+            WfLinksUtility::getLinkListPageNavLeft($published_array_count, $start, 'art');
             if ($published_array_count > 0) {
                 while ($published = $xoopsDB->fetchArray($published_array)) {
-                    wfl_linklistbody($published);
+                    WfLinksUtility::getLinkListBody($published);
                 }
             } else {
-                wfl_linklistfooter();
+                WfLinksUtility::getLinkListFooter();
             }
-            wfl_linklistpagenav($published_array_count, $start, 'art');
+            WfLinksUtility::getLinkListPageNav($published_array_count, $start, 'art');
         }
         require_once __DIR__ . '/admin_footer.php';
         break;
