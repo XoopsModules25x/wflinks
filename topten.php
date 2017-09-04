@@ -25,9 +25,9 @@ $sort     = (isset($_GET['list']) && in_array($_GET['list'], $action_array)) ? $
 $sort_arr = $action_array[$sort];
 $sortDB   = $list_array[$sort_arr];
 
-$catarray['imageheader'] = WfLinksUtility::getImageHeader();
-$catarray['letters']     = WfLinksUtility::getLetters();
-$catarray['toolbar']     = WfLinksUtility::getToolbar();
+$catarray['imageheader'] = WflinksUtility::getImageHeader();
+$catarray['letters']     = WflinksUtility::getLetters();
+$catarray['toolbar']     = WflinksUtility::getToolbar();
 $xoopsTpl->assign('catarray', $catarray);
 
 $links    = array();
@@ -35,7 +35,7 @@ $result = $xoopsDB->query('SELECT cid, title, pid FROM ' . $xoopsDB->prefix('wfl
 
 $e = 0;
 while (list($cid, $ctitle) = $xoopsDB->fetchRow($result)) {
-    if (true === WfLinksUtility::checkGroups($cid)) {
+    if (true === WflinksUtility::checkGroups($cid)) {
         $query = 'SELECT lid, cid, title, hits, rating, votes FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time() . ') AND offline = 0 AND (cid=' . (int)$cid;
         $links   = $mytree->getAllChildId($cid);
         foreach ($links as $link) {

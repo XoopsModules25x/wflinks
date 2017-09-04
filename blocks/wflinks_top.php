@@ -67,7 +67,7 @@ function b_wflinks_top_show($options)
     $moduleDirName = basename(dirname(__DIR__));
     global $xoopsDB;
 
-    $block           = array();
+    $block           = [];
     $time            = time();
     $moduleHandler   = xoops_getHandler('module');
     $wflModule       = $moduleHandler->getByDirname($moduleDirName);
@@ -80,7 +80,7 @@ function b_wflinks_top_show($options)
         if (0 == $myrow['cid'] || false === checkBlockgroups($myrow['cid'])) {
             continue;
         }
-        $linkload = array();
+        $linkload = [];
         $title    = $wfmyts->htmlSpecialChars($wfmyts->stripSlashesGPC($myrow['title']));
         if (!XOOPS_USE_MULTIBYTES) {
             if (strlen($myrow['title']) >= $options[2]) {

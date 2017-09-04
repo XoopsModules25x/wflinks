@@ -14,8 +14,8 @@ $moduleDirName = basename(__DIR__);
 // ------------------- Informations ------------------- //
 $modversion = [
     'version'                => '1.11',
-    'module_status'          => 'Beta 1',
-    'release_date'           => '2017/09/03',
+    'module_status'          => 'RC 1',
+    'release_date'           => '2017/09/04',
     'name'                   => _MI_WFL_NAME,
     'description'            => _MI_WFL_DESC,
     'help'                   => 'page=help',
@@ -67,6 +67,19 @@ $modversion = [
         $moduleDirName . '_' . 'indexpage',
         $moduleDirName . '_' . 'altcat'
     ],
+    // -------------------  PayPal ---------------------------
+    'paypal'                 => [
+        'business'      => 'foundation@xoops.org',
+        'item_name'     => 'Donation : ' . _MI_WFL_NAME,
+        'amount'        => 25,
+        'currency_code' => 'USD'
+    ],
+    // ------------------- Search ---------------------------
+    'hasSearch'              => 1,
+    'search'                 => [
+        'file' => 'include/search.inc.php',
+        'func' => 'pedigree_search'
+    ],
 ];
 
 // Launch additional install script to check
@@ -75,20 +88,20 @@ $modversion = [
 //$modversion['onUpdate'] = 'include/update.php';
 
 // ------------------- Help files ------------------- //
-$modversion['helpsection'] = array(
-    array('name' => _MI_WFL_HELP_OVERVIEW, 'link' => 'page=help'),
-    array('name' => _MI_WFL_HELP_INSTALL, 'link' => 'page=install'),
-    array('name' => _MI_WFL_HELP_UPDATE, 'link' => 'page=update'),
-    array('name' => _MI_WFL_HELP_CONVERT, 'link' => 'page=convert'),
-    array('name' => _MI_WFL_HELP_PREFERENCES, 'link' => 'page=preferences'),
-    array('name' => _MI_WFL_HELP_INDEXPAGE, 'link' => 'page=indexpage'),
-    array('name' => _MI_WFL_HELP_CATEGORY, 'link' => 'page=category'),
-    array('name' => _MI_WFL_HELP_PERMISSION, 'link' => 'page=permission'),
-    array('name' => _MI_WFL_HELP_LINKS, 'link' => 'page=links'),
-    array('name' => _MI_WFL_HELP_DISCLAIMER, 'link' => 'page=disclaimer'),
-    array('name' => _MI_WFL_HELP_LICENSE, 'link' => 'page=license'),
-    array('name' => _MI_WFL_HELP_SUPPORT, 'link' => 'page=support'),
-);
+$modversion['helpsection'] = [
+    ['name' => _MI_WFL_HELP_OVERVIEW, 'link' => 'page=help'],
+    ['name' => _MI_WFL_HELP_INSTALL, 'link' => 'page=install'],
+    ['name' => _MI_WFL_HELP_UPDATE, 'link' => 'page=update'],
+    ['name' => _MI_WFL_HELP_CONVERT, 'link' => 'page=convert'],
+    ['name' => _MI_WFL_HELP_PREFERENCES, 'link' => 'page=preferences'],
+    ['name' => _MI_WFL_HELP_INDEXPAGE, 'link' => 'page=indexpage'],
+    ['name' => _MI_WFL_HELP_CATEGORY, 'link' => 'page=category'],
+    ['name' => _MI_WFL_HELP_PERMISSION, 'link' => 'page=permission'],
+    ['name' => _MI_WFL_HELP_LINKS, 'link' => 'page=links'],
+    ['name' => _MI_WFL_HELP_DISCLAIMER, 'link' => 'page=disclaimer'],
+    ['name' => _MI_WFL_HELP_LICENSE, 'link' => 'page=license'],
+    ['name' => _MI_WFL_HELP_SUPPORT, 'link' => 'page=support'],
+];
 
 // ------------------- Blocks ------------------- //
 $modversion['blocks'][] = [
@@ -188,7 +201,7 @@ $modversion['search']['func'] = 'wflinks_search';
 $modversion['hasComments']             = 1;
 $modversion['comments']['itemName']    = 'lid';
 $modversion['comments']['pageName']    = 'singlelink.php';
-$modversion['comments']['extraParams'] = array('cid');
+$modversion['comments']['extraParams'] = ['cid'];
 
 // Comment callback functions
 $modversion['comments']['callbackFile']        = 'include/comment_functions.php';
@@ -266,7 +279,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => 10,
-    'options'     => array(
+    'options'     => [
         '5'   => 5,
         '10'  => 10,
         '15'  => 15,
@@ -277,7 +290,7 @@ $modversion['config'][] = [
         '75'  => 75,
         '100' => 100,
         '200' => 200
-    ),
+    ],
 ];
 $modversion['config'][] = [
     'name'        => 'admin_perpage',
@@ -286,7 +299,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => 10,
-    'options'     => array(
+    'options'     => [
         '5'   => 5,
         '10'  => 10,
         '15'  => 15,
@@ -297,7 +310,7 @@ $modversion['config'][] = [
         '75'  => 75,
         '100' => 100,
         '200' => 200
-    ),
+    ],
 ];
 $modversion['config'][] = [
     'name'        => 'linkxorder',
@@ -306,7 +319,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'title ASC',
-    'options'     => array(
+    'options'     => [
         '_MI_WFL_TITLE_A'      => 'title ASC',
         '_MI_WFL_TITLE_D'      => 'title DESC',
         '_MI_WFL_SUBMITTED_A'  => 'published ASC',
@@ -317,7 +330,7 @@ $modversion['config'][] = [
         '_MI_WFL_POPULARITY_D' => 'hits DESC',
         '_MI_WFL_COUNTRY_A'    => 'country ASC',
         '_MI_WFL_COUNTRY_D'    => 'country DESC'
-    ),
+    ],
 ];
 $modversion['config'][] = [
     'name'        => 'sortcats',
@@ -326,7 +339,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'default'     => 'title',
-    'options'     => array('_MI_WFL_TITLE' => 'title', '_MI_WFL_WEIGHT' => 'weight'),
+    'options'     => ['_MI_WFL_TITLE' => 'title', '_MI_WFL_WEIGHT' => 'weight'],
 ];
 
 $modversion['config'][] = [
@@ -376,7 +389,7 @@ xoops_load('XoopsEditorHandler');
 $editorHandler = XoopsEditorHandler::getInstance();
 $editorList    = array_flip($editorHandler->getList());
 
-$modversion['config'][] = array(
+$modversion['config'][] = [
     'name'        => 'form_options',
     'title'       => '_MI_WFL_EDITOR',
     'description' => '_MI_WFL_EDITORCHOICE',
@@ -384,9 +397,9 @@ $modversion['config'][] = array(
     'valuetype'   => 'text',
     'options'     => $editorList,
     'default'     => 'dhtmltextarea'
-);
+];
 
-$modversion['config'][] = array(
+$modversion['config'][] = [
     'name'        => 'form_optionsuser',
     'title'       => '_MI_WFL_EDITORUSER',
     'description' => '_MI_WFL_EDITORCHOICEUSER',
@@ -394,7 +407,7 @@ $modversion['config'][] = array(
     'valuetype'   => 'text',
     'options'     => $editorList,
     'default'     => 'dhtmltextarea'
-);
+];
 
 $modversion['config'][] = [
     'name'        => 'screenshot',
@@ -539,14 +552,14 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => 200,
-    'options'     => array(
+    'options'     => [
         '100' => 100,
         '200' => 200,
         '300' => 300,
         '400' => 400,
         '500' => 500,
         '750' => 750
-    ),
+    ],
 ];
 $modversion['config'][] = [
     'name'        => 'keywordlength',
@@ -674,12 +687,12 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'int',
     'default'     => 1,
-    'options'     => array(
+    'options'     => [
         '_MI_WFL_DISPLAYFORUM1' => 1,
         '_MI_WFL_DISPLAYFORUM2' => 2,
         '_MI_WFL_DISPLAYFORUM3' => 3,
         '_MI_WFL_DISPLAYFORUM4' => 4
-    )
+    ]
 ];
 
 // Notification
@@ -691,14 +704,14 @@ $modversion['notification']['category'][] = [
     'name'           => 'global',
     'title'          => _MI_WFL_GLOBAL_NOTIFY,
     'description'    => _MI_WFL_GLOBAL_NOTIFYDSC,
-    'subscribe_from' => array('index.php', 'viewcat.php', 'singlelink.php'),
+    'subscribe_from' => ['index.php', 'viewcat.php', 'singlelink.php'],
 ];
 
 $modversion['notification']['category'][] = [
     'name'           => 'category',
     'title'          => _MI_WFL_CATEGORY_NOTIFY,
     'description'    => _MI_WFL_CATEGORY_NOTIFYDSC,
-    'subscribe_from' => array('viewcat.php', 'singlelink.php'),
+    'subscribe_from' => ['viewcat.php', 'singlelink.php'],
     'item_name'      => 'cid',
     'allow_bookmark' => 1,
 ];

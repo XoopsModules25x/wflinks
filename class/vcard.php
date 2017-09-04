@@ -51,15 +51,15 @@ function vcard_escape($string)
  */
 function vcardemailcnvrt($email)
 {
-    $search = array(
+    $search = [
         "/\ AT /",
         "/\ DOT /",
-    );
+    ];
 
-    $replace = array(
+    $replace = [
         '@',
         '.',
-    );
+    ];
 
     $text = preg_replace($search, $replace, $email);
 
@@ -75,7 +75,7 @@ function vcardemailcnvrt($email)
  */
 function vcard_quoted_printable_encode($input, $line_max = 76)
 {
-    $hex       = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F');
+    $hex       = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
     $lines     = preg_split("/(?:\r\n|\r|\n)/", $input);
     $eol       = "\r\n";
     $linebreak = '=0D=0A';
@@ -330,7 +330,7 @@ class VCard
 
 require_once __DIR__ . '/header.php';
 
-$lid = WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid = (int)$lid;
 
 global $xoopsDB;
@@ -343,7 +343,7 @@ $street2 = $vcard_arr['street2'];
 $town    = $vcard_arr['town'];
 $zip     = $vcard_arr['zip'];
 $state   = $vcard_arr['state'];
-$country = WfLinksUtility::getCountryName($vcard_arr['country']);
+$country = WflinksUtility::getCountryName($vcard_arr['country']);
 $tel     = $vcard_arr['tel'];
 $mobile  = $vcard_arr['mobile'];
 $fax     = $vcard_arr['fax'];

@@ -38,7 +38,7 @@ function wflinks_tag_iteminfo(&$items)
     global $xoopsDB;
     $myts = MyTextSanitizer::getInstance();
 
-    $items_id = array();
+    $items_id = [];
 
     foreach (array_keys($items) as $cat_id) {
         // Some handling here to build the link upon catid
@@ -61,14 +61,14 @@ function wflinks_tag_iteminfo(&$items)
             $result                   = $xoopsDB->query($sql);
             $row                      = $xoopsDB->fetchArray($result);
             $lcid                     = $row['lcid'];
-            $items[$cat_id][$item_id] = array(
+            $items[$cat_id][$item_id] = [
                 'title'   => '<img src="' . XOOPS_URL . '/modules/' . $moduleDirName . '/assets/images/icon/wflinks.gif" alt="">&nbsp;' . $row['ltitle'],
                 'uid'     => $row['submitter'],
                 'link'    => "singlelink.php?cid=$lcid&amp;lid=$item_id",
                 'time'    => $row['date'],
                 'tags'    => $row['item_tag'],
                 'content' => $row['description']
-            );
+            ];
         }
     }
 

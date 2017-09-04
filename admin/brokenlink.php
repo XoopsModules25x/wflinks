@@ -11,15 +11,15 @@
 
 require_once __DIR__ . '/admin_header.php';
 
-global $imagearray, $xoopsModule;
+global $imageArray, $xoopsModule;
 
-$op  = WfLinksUtility::cleanRequestVars($_REQUEST, 'op', '');
-$lid = WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$op  = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'updatenotice':
-        $ack = WfLinksUtility::cleanRequestVars($_REQUEST, 'ack', 0);
-        $con = WfLinksUtility::cleanRequestVars($_REQUEST, 'con', 1);
+        $ack = WflinksUtility::cleanRequestVars($_REQUEST, 'ack', 0);
+        $con = WflinksUtility::cleanRequestVars($_REQUEST, 'con', 1);
 
         if ($ack && !$con) {
             $acknowledged = ($ack == 0) ? 1 : 0;
@@ -72,16 +72,16 @@ switch (strtolower($op)) {
         $totalbrokenlinks = $xoopsDB->getRowsNum($result);
 
         xoops_cp_header();
-        //WfLinksUtility::getAdminMenu( _AM_WFL_BROKEN_FILE );
+        //WflinksUtility::getAdminMenu( _AM_WFL_BROKEN_FILE );
         echo "
         <fieldset>
          <legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_BROKEN_REPORTINFO . "</legend>\n
           <div style='padding: 8px;'>" . _AM_WFL_BROKEN_REPORTSNO . "&nbsp;<b>$totalbrokenlinks</b><div>\n
           <div style='padding: 8px;'>\n
            <ul>
-            <li>" . $imagearray['ignore'] . ' ' . _AM_WFL_BROKEN_IGNOREDESC . "</li>\n
-            <li>" . $imagearray['editimg'] . ' ' . _AM_WFL_BROKEN_EDITDESC . '</li>
-            <li>' . $imagearray['deleteimg'] . ' ' . _AM_WFL_BROKEN_DELETEDESC . "</li>\n
+            <li>" . $imageArray['ignore'] . ' ' . _AM_WFL_BROKEN_IGNOREDESC . "</li>\n
+            <li>" . $imageArray['editimg'] . ' ' . _AM_WFL_BROKEN_EDITDESC . '</li>
+            <li>' . $imageArray['deleteimg'] . ' ' . _AM_WFL_BROKEN_DELETEDESC . "</li>\n
            </ul>
           </div>\n
          </fieldset>
@@ -112,8 +112,8 @@ switch (strtolower($op)) {
                 $result4 = $xoopsDB->query('SELECT uname, email FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . $sender . '');
                 list($ownername, $owneremail) = $xoopsDB->fetchRow($result4);
 
-                $ack_image = $acknowledged ? $imagearray['ack_yes'] : $imagearray['ack_no'];
-                $con_image = $confirmed ? $imagearray['con_yes'] : $imagearray['con_no'];
+                $ack_image = $acknowledged ? $imageArray['ack_yes'] : $imageArray['ack_no'];
+                $con_image = $confirmed ? $imageArray['con_yes'] : $imageArray['con_no'];
 
                 echo "<tr class='center;'>\n";
                 echo "<td class='head'>$reportid</td>\n";
@@ -134,9 +134,9 @@ switch (strtolower($op)) {
                 echo "<td class='even'><a href='brokenlink.php?op=updateNotice&amp;lid=" . $lid . '&ack=' . (int)$acknowledged . "'>" . $ack_image . " </a></td>\n";
                 echo "<td class='even'><a href='brokenlink.php?op=updateNotice&amp;lid=" . $lid . '&con=' . (int)$confirmed . "'>" . $con_image . "</a></td>\n";
                 echo "<td class='even' class='center;' nowrap>\n";
-                echo "<a href='brokenlink.php?op=ignoreBrokenlinks&amp;lid=" . $lid . "'>" . $imagearray['ignore'] . "</a>\n";
-                echo "<a href='main.php?op=edit&amp;lid=" . $lid . "'>" . $imagearray['editimg'] . "</a>\n";
-                echo "<a href='brokenlink.php?op=delBrokenlinks&amp;lid=" . $lid . "'>" . $imagearray['deleteimg'] . "</a>\n";
+                echo "<a href='brokenlink.php?op=ignoreBrokenlinks&amp;lid=" . $lid . "'>" . $imageArray['ignore'] . "</a>\n";
+                echo "<a href='main.php?op=edit&amp;lid=" . $lid . "'>" . $imageArray['editimg'] . "</a>\n";
+                echo "<a href='brokenlink.php?op=delBrokenlinks&amp;lid=" . $lid . "'>" . $imageArray['deleteimg'] . "</a>\n";
                 echo "</td></tr>\n";
             }
         }

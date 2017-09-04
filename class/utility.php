@@ -108,7 +108,7 @@ class WflinksUtility extends XoopsObject
      */
     public static function calculateVoteData($sel_id = 0)
     {
-        $ret                  = array();
+        $ret                  = [];
         $ret['useravgrating'] = 0;
 
         $sql = 'SELECT rating FROM ' . $xoopsDB->prefix('wflinks_votedata');
@@ -145,7 +145,7 @@ class WflinksUtility extends XoopsObject
         unset($array['usercookie'], $array['PHPSESSID']);
 
         if (is_array($array) && $name === null) {
-            $globals = array();
+            $globals = [];
             foreach (array_keys($array) as $k) {
                 $value = strip_tags(trim($array[$k]));
                 if ('' !== $value >= $lengthcheck) {
@@ -350,7 +350,7 @@ class WflinksUtility extends XoopsObject
         $count          = 0;
         $published_date = 0;
 
-        $items  = array();
+        $items  = [];
         $result = $xoopsDB->query($sql);
         while (list($lid, $cid, $published) = $xoopsDB->fetchRow($result)) {
             if (true === static::checkGroups()) {
@@ -462,7 +462,7 @@ class WflinksUtility extends XoopsObject
 
         $letterchoice = '<div>' . _MD_WFL_BROWSETOTOPIC . '</div>';
         $letterchoice .= '[  ';
-        $alphabet     = array(
+        $alphabet     = [
             '0',
             '1',
             '2',
@@ -499,7 +499,7 @@ class WflinksUtility extends XoopsObject
             'X',
             'Y',
             'Z'
-        );
+        ];
         $num          = count($alphabet) - 1;
         $counter      = 0;
         //    while (list(, $ltr) = each($alphabet)) {
@@ -610,7 +610,7 @@ class WflinksUtility extends XoopsObject
 
         if (empty($menu)) {
             // You can change this part to suit your own module. Defining this here will save you form having to do this each time.
-            $menu = array(
+            $menu = [
                 _AM_WFL_INDEXPAGE      => 'indexpage.php',
                 _AM_WFL_MCATEGORY      => 'category.php',
                 _AM_WFL_MLINKS         => 'main.php?op=edit',
@@ -618,7 +618,7 @@ class WflinksUtility extends XoopsObject
                 _AM_WFL_MVOTEDATA      => 'votedata.php',
                 _AM_WFL_MLISTPINGTIMES => 'main.php?op=pingtime',
                 _AM_WFL_MCOMMENTS      => '../../system/admin.php?module=' . $xoopsModule->getVar('mid') . '&status=0&limit=100&fct=comments&selsubmit=Go',
-            );
+            ];
         }
 
         if (!is_array($menu)) {
@@ -628,7 +628,7 @@ class WflinksUtility extends XoopsObject
             return false;
         }
 
-        $oddnum = array(1 => '1', 3 => '3', 5 => '5', 7 => '7', 9 => '9', 11 => '11', 13 => '13');
+        $oddnum = [1 => '1', 3 => '3', 5 => '5', 7 => '7', 9 => '9', 11 => '11', 13 => '13'];
         // number of rows per menu
         $menurows = count($menu) / $scount;
         // total amount of rows to complete menu
@@ -637,7 +637,7 @@ class WflinksUtility extends XoopsObject
         $rowcount = $menurow / ceil($menurows);
         $count    = 0;
         for ($i = count($menu); $i < $menurow; ++$i) {
-            $tempArray = array(1 => null);
+            $tempArray = [1 => null];
             $menu      = array_merge($menu, $tempArray);
             ++$count;
         }
@@ -816,7 +816,7 @@ class WflinksUtility extends XoopsObject
     {
         global $FILES, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
 
-        $down = array();
+        $down = [];
 //        require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/uploader.php';
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         if (empty($allowed_mimetypes)) {
@@ -909,7 +909,7 @@ class WflinksUtility extends XoopsObject
      */
     public static function getLinkListBody($published)
     {
-        global $wfmyts, $imagearray, $xoopsModuleConfig, $xoopsModule;
+        global $wfmyts, $imageArray, $xoopsModuleConfig, $xoopsModule;
         xoops_load('XoopsUserUtility');
         $lid = $published['lid'];
         $cid = $published['cid'];
@@ -923,22 +923,22 @@ class WflinksUtility extends XoopsObject
         $publish   = ($published['published'] > 0) ? formatTimestamp($published['published'], $xoopsModuleConfig['dateformatadmin']) : 'Not Published';
         $expires   = $published['expired'] ? formatTimestamp($published['expired'], $xoopsModuleConfig['dateformatadmin']) : _AM_WFL_MINDEX_NOTSET;
         //    if ( ( $published['published'] && $published['published'] < time() ) && $published['offline'] == 0 ) {
-        //        $published_status = $imagearray['online'];
+        //        $published_status = $imageArray['online'];
         //    } else {
-        //        $published_status = ( $published['published'] == 0 ) ? "<a href='newlinks.php'>" . $imagearray['offline'] . "</a>" : $imagearray['offline'];
+        //        $published_status = ( $published['published'] == 0 ) ? "<a href='newlinks.php'>" . $imageArray['offline'] . "</a>" : $imageArray['offline'];
         //    }
         if ($published['offline'] == 0
             && ($published['published'] && $published['published'] < time())
                            && (($published['expired'] && $published['expired'] > time()) || $published['expired'] == 0)) {
-            $published_status = $imagearray['online'];
+            $published_status = $imageArray['online'];
         } elseif ($published['offline'] == 0 && ($published['expired'] && $published['expired'] < time())) {
-            $published_status = $imagearray['expired'];
+            $published_status = $imageArray['expired'];
         } else {
-            $published_status = ($published['published'] == 0) ? "<a href='newlinks.php'>" . $imagearray['offline'] . '</a>' : $imagearray['offline'];
+            $published_status = ($published['published'] == 0) ? "<a href='newlinks.php'>" . $imageArray['offline'] . '</a>' : $imageArray['offline'];
         }
-        $icon = "<a href='main.php?op=edit&amp;lid=" . $lid . "' title='" . _AM_WFL_ICO_EDIT . "'>" . $imagearray['editimg'] . '</a>&nbsp;';
-        $icon .= "<a href='main.php?op=delete&amp;lid=" . $lid . "' title='" . _AM_WFL_ICO_DELETE . "'>" . $imagearray['deleteimg'] . '</a>&nbsp;';
-        $icon .= "<a href='altcat.php?op=main&amp;cid=" . $cid . '&amp;lid=' . $lid . '&amp;title=' . $wfmyts->htmlSpecialCharsStrip(trim($published['title'])) . "' title='" . _AM_WFL_ALTCAT_CREATEF . "'>" . $imagearray['altcat'] . '</a>&nbsp;';
+        $icon = "<a href='main.php?op=edit&amp;lid=" . $lid . "' title='" . _AM_WFL_ICO_EDIT . "'>" . $imageArray['editimg'] . '</a>&nbsp;';
+        $icon .= "<a href='main.php?op=delete&amp;lid=" . $lid . "' title='" . _AM_WFL_ICO_DELETE . "'>" . $imageArray['deleteimg'] . '</a>&nbsp;';
+        $icon .= "<a href='altcat.php?op=main&amp;cid=" . $cid . '&amp;lid=' . $lid . '&amp;title=' . $wfmyts->htmlSpecialCharsStrip(trim($published['title'])) . "' title='" . _AM_WFL_ALTCAT_CREATEF . "'>" . $imageArray['altcat'] . '</a>&nbsp;';
         $icon .= '<a href="http://whois.domaintools.com/' . $hwhoisurl . '" target="_blank"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/domaintools.png" alt="WHOIS" title="WHOIS" align="absmiddle"></a>';
 
         echo "
@@ -1043,7 +1043,7 @@ class WflinksUtility extends XoopsObject
         if (substr($xv, 2, 1) == '2') {
             $x22 = true;
         }
-        $editor_configs           = array();
+        $editor_configs           = [];
         $editor_configs['name']   = $name;
         $editor_configs['value']  = $value;
         $editor_configs['rows']   = 35;
@@ -1121,13 +1121,13 @@ class WflinksUtility extends XoopsObject
                 if (!$x22) {
                     if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php';
-                        $editor = new XoopsFormTinyeditorTextArea(array(
+                        $editor = new XoopsFormTinyeditorTextArea([
                                                                       'caption' => $caption,
                                                                       'name'    => $name,
                                                                       'value'   => $value,
                                                                       'width'   => '100%',
                                                                       'height'  => '400px'
-                                                                  ));
+                                                                  ]);
                     } else {
                         if ($dhtml) {
                             $editor = new XoopsFormDhtmlTextArea($caption, $name, $value, 50, 60);
@@ -1161,22 +1161,22 @@ class WflinksUtility extends XoopsObject
                 if (!$x22) {
                     if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php';
-                        $editor = new XoopsFormTinymce(array(
+                        $editor = new XoopsFormTinymce([
                                                            'caption' => $caption,
                                                            'name'    => $name,
                                                            'value'   => $value,
                                                            'width'   => '100%',
                                                            'height'  => '400px'
-                                                       ));
+                                                       ]);
                     } elseif (is_readable(XOOPS_ROOT_PATH . '/editors/tinymce/formtinymce.php')) {
                         require_once XOOPS_ROOT_PATH . '/editors/tinymce/formtinymce.php';
-                        $editor = new XoopsFormTinymce(array(
+                        $editor = new XoopsFormTinymce([
                                                            'caption' => $caption,
                                                            'name'    => $name,
                                                            'value'   => $value,
                                                            'width'   => '100%',
                                                            'height'  => '400px'
-                                                       ));
+                                                       ]);
                     } else {
                         if ($dhtml) {
                             $editor = new XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
@@ -1200,7 +1200,7 @@ class WflinksUtility extends XoopsObject
      */
     public static function getCountryName($countryn)
     {
-        $country_array = array(
+        $country_array = [
             ''   => 'Unknown',
             '-'  => 'Unknown',
             'AD' => 'Andorra',
@@ -1458,7 +1458,7 @@ class WflinksUtility extends XoopsObject
             'ZM' => 'Zambia',
             'ZR' => 'Zaire',             // Removed from iso list
             'ZW' => 'Zimbabwe'
-        );
+        ];
 
         return $country_array[$countryn];
     }
@@ -1470,7 +1470,7 @@ class WflinksUtility extends XoopsObject
      */
     public static function convertHtml2text($document)
     {
-        $search = array(
+        $search = [
             "'<script[^>]*?>.*?</script>'si", // Strip out javascript
             "'<img.*?>'si", // Strip out img tags
             "'<[\/\!]*?[^<>]*?>'si", // Strip out HTML tags
@@ -1484,9 +1484,9 @@ class WflinksUtility extends XoopsObject
             "'&(cent|#162);'i",
             "'&(pound|#163);'i",
             "'&(copy|#169);'i"
-        ); // evaluate as php
+        ]; // evaluate as php
 
-        $replace = array(
+        $replace = [
             '',
             '',
             '',
@@ -1500,7 +1500,7 @@ class WflinksUtility extends XoopsObject
             chr(162),
             chr(163),
             chr(169),
-        );
+        ];
 
         $text = preg_replace($search, $replace, $document);
 
@@ -1573,7 +1573,7 @@ class WflinksUtility extends XoopsObject
         $c -= $b;
         $c ^= static::fillZeroes($b, 15);
 
-        return array($a, $b, $c);
+        return [$a, $b, $c];
     }
 
     /**
@@ -1886,17 +1886,17 @@ class WflinksUtility extends XoopsObject
      */
     public function convertEmail($email)
     {
-        $search = array(
+        $search = [
             "/\@/",
             "/\./",
             "/\mailto:/",
-        );
+        ];
 
-        $replace = array(
+        $replace = [
             ' AT ',
             ' DOT ',
             '',
-        );
+        ];
 
         $text = preg_replace($search, $replace, $email);
 
@@ -1910,15 +1910,15 @@ class WflinksUtility extends XoopsObject
      */
     public function printemailcnvrt($email)
     {
-        $search = array(
+        $search = [
             "/\ AT /",
             "/\ DOT /",
-        );
+        ];
 
-        $replace = array(
+        $replace = [
             '@',
             '.',
-        );
+        ];
 
         $text = preg_replace($search, $replace, $email);
 
@@ -1940,7 +1940,7 @@ class WflinksUtility extends XoopsObject
 
         if ($im_multilanguageConfig['ml_enable']) {
             $tags  = explode(',', $im_multilanguageConfig['ml_tags']);
-            $strs  = array();
+            $strs  = [];
             $hasML = false;
             foreach ($tags as $tag) {
                 if (preg_match("/\[" . $tag . "](.*)\[\/" . $tag . "\]/sU", $str, $matches)) {
@@ -1955,7 +1955,7 @@ class WflinksUtility extends XoopsObject
         }
 
         if (!$hasML) {
-            $strs = array($str);
+            $strs = [$str];
         }
 
         for ($i = 0; $i <= count($strs) - 1; ++$i) {

@@ -340,7 +340,7 @@ if (!empty($_POST['submit'])) {
 
 include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/utility.php';
 xoops_cp_header();
-//WfLinksUtility::getAdminMenu();
+//WflinksUtility::getAdminMenu();
 
 if (file_exists('./mymenu.php')) {
     require_once __DIR__ . '/mymenu.php';

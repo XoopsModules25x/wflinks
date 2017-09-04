@@ -80,7 +80,7 @@ class WflLists
      */
     public function getDirListAsArray($dirname)
     {
-        $dirlist = array();
+        $dirlist = [];
         if (is_dir($dirname) && $handle = opendir($dirname)) {
             while (false !== ($file = readdir($handle))) {
                 if (!preg_match('/^[.]{1,2}$/', $file)) {
@@ -107,7 +107,7 @@ class WflLists
      */
     public static function getListTypeAsArray($dirname, $type = '', $prefix = '', $noselection = 1)
     {
-        $filelist = array();
+        $filelist = [];
         switch (trim($type)) {
             case 'images':
                 $types = '[.gif|.jpg|.png]';

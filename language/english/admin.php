@@ -501,11 +501,18 @@ define('_AM_WFL_ERROR_TAG_REMOVAL', 'Could not remove tags from Tag Module');
 
 // Checking folders
 define('_AM_WFL_CHECKINGFOLDER', 'Checking folders');
-define('_AM_WFL_CHECKINGFOLDER_FOLDER_CAT_YES', 'Folder \'/uploads/wflinks/category\' exist');
-define('_AM_WFL_CHECKINGFOLDER_FOLDER_CAT_NO', 'Folder \'/uploads/wflinks/category\' does not exist. Create the specified folder with CHMOD 777.');
-define('_AM_WFL_CHECKINGFOLDER_FOLDER_SCREEN_YES', 'Folder \'/uploads/wflinks/screenshots\' exist');
-define('_AM_WFL_CHECKINGFOLDER_FOLDER_SCREEN_NO', 'Folder \'/uploads/wflinks/screenshots\' does not exist. Create the specified folder with CHMOD 777.');
-define('_AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_YES', 'Folder \'/uploads/flags\' exist');
-define('_AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_NO', 'Folder \'/uploads/flags\' does not exist. Copy from folder \'EXTRA/htdocs/uploads\' the folder \'flags\' in the specified place.');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_CAT_YES', 'Folder "/uploads/wflinks/category" exist');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_CAT_NO', 'Folder "/uploads/wflinks/category" does not exist. Create the specified folder with CHMOD 777.');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_SCREEN_YES', 'Folder "/uploads/wflinks/screenshots" exist');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_SCREEN_NO', 'Folder "/uploads/wflinks/screenshots" does not exist. Create the specified folder with CHMOD 777.');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_YES', 'Folder "/uploads/flags" exist');
+define('_AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_NO', 'Folder "/uploads/flags" does not exist. Copy from folder "EXTRA/htdocs/uploads" the folder "flags" in the specified place.');
 
 define('_AM_WFL_LINK_EXPIREWARNING', 'Link Expired');
+// Error Msgs
+define('_AM_WFL_ERROR_BAD_DEL_PATH', 'Could not delete %s directory');
+define('_AM_WFL_ERROR_BAD_REMOVE', 'Could not delete %s');
+define('_AM_WFL_ERROR_NO_PLUGIN', 'Could not load plugin');
+
+define('_AM_WFL_FOLDERS_DELETE', "WARNING: Are you sure to delete the Upload Folders? <br>You'll lose the images/screenshots!");
+define('_AM_WFL_FOLDERS_DELETED_OK', 'Upload Folders have been deleted');

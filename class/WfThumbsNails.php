@@ -45,7 +45,7 @@ class WfThumbsNails
      *
      * @access private
      */
-    public $_img_info = array();
+    public $_img_info = [];
 
     /**
      * Constructor

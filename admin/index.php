@@ -8,12 +8,12 @@ $adminObject = \Xmf\Module\Admin::getInstance();
 
 global $xoopsDB;
 
-$start     = WfLinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
-$start1    = WfLinksUtility::cleanRequestVars($_REQUEST, 'start1', 0);
-$start2    = WfLinksUtility::cleanRequestVars($_REQUEST, 'start2', 0);
-$start3    = WfLinksUtility::cleanRequestVars($_REQUEST, 'start3', 0);
-$start4    = WfLinksUtility::cleanRequestVars($_REQUEST, 'start4', 0);
-$totalcats = WfLinksUtility::getTotalCategory();
+$start     = WflinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
+$start1    = WflinksUtility::cleanRequestVars($_REQUEST, 'start1', 0);
+$start2    = WflinksUtility::cleanRequestVars($_REQUEST, 'start2', 0);
+$start3    = WflinksUtility::cleanRequestVars($_REQUEST, 'start3', 0);
+$start4    = WflinksUtility::cleanRequestVars($_REQUEST, 'start4', 0);
+$totalcats = WflinksUtility::getTotalCategory();
 
 $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('wflinks_broken'));
 list($totalbrokenlinks) = $xoopsDB->fetchRow($result);

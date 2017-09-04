@@ -1,3 +1,13 @@
+<h5>1.11 RC 1       [2017-09-04]</h5>
+<hr>
++ added install/update/uninstall scripts (mamba)
++ added Russian translations (aerograf)
++ copy flags on install and update (mamba)
+x moved vCard to /classes (mamba)
+* Short syntax in array literals (mamba)
++ added "todo.txt" file (mamba)
+
+
 <h5>1.11 Beta 2       [2017-09-02]</h5>
 <hr>
 - fixed the possibility of publishing news (aerograf)
