@@ -1917,7 +1917,7 @@ function wfl_getbanner_from_id_banner($banner_id)
     $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner') . ' WHERE bid=' . $banner_id);
     list($numrows) = $db->fetchRow($bresult);
     if ($numrows > 1) {
-        $numrows -= 1;
+        --$numrows;
         mt_srand((double)microtime() * 1000000);
         $bannum = mt_rand(0, $numrows);
     } else {
@@ -1979,7 +1979,7 @@ function wfl_getbanner_from_id_client($client_id)
     $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner') . ' WHERE cid=' . $client_id);
     list($numrows) = $db->fetchRow($bresult);
     if ($numrows > 1) {
-        $numrows -= 1;
+        --$numrows;
         mt_srand((double)microtime() * 1000000);
         $bannum = mt_rand(0, $numrows);
     } else {
