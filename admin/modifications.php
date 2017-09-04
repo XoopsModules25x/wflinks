@@ -13,14 +13,14 @@ require_once __DIR__ . '/admin_header.php';
 
 global $mytree, $xoopsModuleConfig;
 xoops_load('XoopsUserUtility');
-$op        = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$requestid = wfl_cleanRequestVars($_REQUEST, 'requestid', 0);
+$op        = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$requestid = WflinksUtility::cleanRequestVars($_REQUEST, 'requestid', 0);
 
 switch (strtolower($op)) {
     case 'listmodreqshow':
 
         xoops_cp_header();
-        //wfl_adminmenu( _AM_WFL_MOD_MODREQUESTS );
+        //WflinksUtility::getAdminMenu( _AM_WFL_MOD_MODREQUESTS );
 
         $sql       = 'SELECT modifysubmitter, requestid, lid, cid, title, url, description, screenshot, forumid, country, keywords, item_tag, googlemap, yahoomap, multimap, street1, street2, town, state, zip, tel, fax, voip, mobile, email, vat FROM '
                      . $xoopsDB->prefix('wflinks_mod')
@@ -41,7 +41,7 @@ switch (strtolower($op)) {
         $submitteremail = $orig_user->getUnameFromId('email');
 
         echo '<div><b>' . _AM_WFL_MOD_MODPOSTER . "</b> $submittername</div>";
-        $not_allowed = array('lid', 'submitter', 'requestid', 'modifysubmitter');
+        $not_allowed = ['lid', 'submitter', 'requestid', 'modifysubmitter'];
         $sform       = new XoopsThemeForm(_AM_WFL_MOD_ORIGINAL, 'storyform', 'index.php');
         foreach ($orig_array as $key => $content) {
             if (in_array($key, $not_allowed)) {
@@ -70,7 +70,7 @@ switch (strtolower($op)) {
                 }
             }
             if ($key === 'country') {
-                $content = wfl_countryname($mod_array['country']);
+                $content = WflinksUtility::getCountryName($mod_array['country']);
             }
             $sform->addElement(new XoopsFormLabel($lang_def, $content));
         }
@@ -110,7 +110,7 @@ switch (strtolower($op)) {
                 }
             }
             if ($key === 'country') {
-                $content = wfl_countryname($mod_array['country']);
+                $content = WflinksUtility::getCountryName($mod_array['country']);
             }
             $sform->addElement(new XoopsFormLabel($lang_def, $content));
         }
@@ -188,7 +188,7 @@ switch (strtolower($op)) {
         $totalmodrequests = $xoopsDB->getRowsNum($xoopsDB->query($sql));
 
         xoops_cp_header();
-        //wfl_adminmenu( _AM_WFL_MOD_MODREQUESTS );
+        //WflinksUtility::getAdminMenu( _AM_WFL_MOD_MODREQUESTS );
         echo "<fieldset><legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_MOD_MODREQUESTSINFO . "</legend>\n";
         echo "<div style='padding: 8px;'>" . _AM_WFL_MOD_TOTMODREQUESTS . " <b>$totalmodrequests<></div>\n";
         echo "</fieldset><br>\n";
@@ -215,7 +215,7 @@ switch (strtolower($op)) {
                 echo "<td class='even' style='text-align: left;'>" . $title . "</td>\n";
                 echo "<td class='even'>" . $submitter . "</td>\n";
                 echo "<td class='even'>" . $requestdate . "</td>\n";
-                echo "<td class='even'> <a href='modifications.php?op=listmodreqshow&amp;requestid=" . $link_arr['requestid'] . "'>" . $imagearray['view'] . "</a></td>\n";
+                echo "<td class='even'> <a href='modifications.php?op=listmodreqshow&amp;requestid=" . $link_arr['requestid'] . "'>" . $imageArray['view'] . "</a></td>\n";
                 echo "</tr>\n";
             }
         } else {

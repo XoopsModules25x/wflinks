@@ -26,8 +26,8 @@ function wflinks_notify_iteminfo($category, $item_id)
         $configHandler = xoops_getHandler('config');
         $config        = $configHandler->getConfigsByCat(0, $module->getVar('mid'));
     } else {
-        $module =& $xoopsModule;
-        $config =& $xoopsModuleConfig;
+        $module = $xoopsModule;
+        $config = $xoopsModuleConfig;
     }
 
     if ($category === 'global') {

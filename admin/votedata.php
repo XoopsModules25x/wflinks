@@ -11,24 +11,24 @@
 
 require_once __DIR__ . '/admin_header.php';
 
-$op  = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$rid = wfl_cleanRequestVars($_REQUEST, 'rid', 0);
-$lid = wfl_cleanRequestVars($_REQUEST, 'lid', 0);
+$op  = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$rid = WflinksUtility::cleanRequestVars($_REQUEST, 'rid', 0);
+$lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'delvote':
         $sql    = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_votedata') . ' WHERE ratingid=' . $rid;
         $result = $xoopsDB->queryF($sql);
-        wfl_updaterating($lid);
+        WflinksUtility::updateRating($lid);
         redirect_header('votedata.php', 1, _AM_WFL_VOTEDELETED);
         break;
 
     case 'main':
     default:
-        $start = wfl_cleanRequestVars($_REQUEST, 'start', 0);
+        $start = WflinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
         xoops_cp_header();
-        //wfl_adminmenu( _AM_WFL_VOTE_RATINGINFOMATION );
-        $_vote_data = wfl_getVoteDetails($lid);
+        //WflinksUtility::getAdminMenu( _AM_WFL_VOTE_RATINGINFOMATION );
+        $_vote_data = WflinksUtility::getVoteDetails($lid);
 
         $text_info = "
         <table width='100%'>
@@ -51,7 +51,7 @@ switch (strtolower($op)) {
         echo "
         <fieldset><legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_VOTE_DISPLAYVOTES . "</legend>\n
         <div style='padding: 8px;'>$text_info</div>\n
-        <div style='padding: 8px;'><li>" . $imagearray['deleteimg'] . ' ' . _AM_WFL_VOTE_DELETEDSC . "</li></div>\n
+        <div style='padding: 8px;'><li>" . $imageArray['deleteimg'] . ' ' . _AM_WFL_VOTE_DELETEDSC . "</li></div>\n
         </fieldset>\n
         <br>\n
 
@@ -88,7 +88,7 @@ switch (strtolower($op)) {
                     <td class='even'>$title</td>\n
                     <td class='even'>$rating</td>\n
                     <td class='even'>$formatted_date</td>\n
-                    <td class='even'><a href='votedata.php?op=delvote&amp;lid=" . $lid . '&amp;rid=' . $ratingid . "'>" . $imagearray['deleteimg'] . "</a></td>\n
+                    <td class='even'><a href='votedata.php?op=delvote&amp;lid=" . $lid . '&amp;rid=' . $ratingid . "'>" . $imageArray['deleteimg'] . "</a></td>\n
                     </tr>\n";
             }
         }

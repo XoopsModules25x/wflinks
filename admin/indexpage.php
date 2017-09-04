@@ -13,8 +13,8 @@ require_once __DIR__ . '/admin_header.php';
 
 global $xoopsModuleConfig;
 
-$op  = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$cid = wfl_cleanRequestVars($_REQUEST, 'cid', 0);
+$op  = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$cid = WflinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
 
 switch (strtolower($op)) {
     case 'save':
@@ -61,7 +61,7 @@ switch (strtolower($op)) {
 
         $sform = new XoopsThemeForm(_AM_WFL_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $sform->addElement(new XoopsFormText(_AM_WFL_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading), false);
-        $graph_array       = &wflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'], $type = 'images');
+        $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'], $type = 'images');
         $indeximage_select = new XoopsFormSelect('', 'indeximage', $indeximage);
         $indeximage_select->addOptionArray($graph_array);
         $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"indeximage\", \"" . $xoopsModuleConfig['mainimagedir'] . '", "", "' . XOOPS_URL . "\")'");
@@ -74,23 +74,23 @@ switch (strtolower($op)) {
         }
         $sform->addElement($indeximage_tray);
 
-        $editor = wfl_getWysiwygForm(_AM_WFL_IPAGE_CHEADING, 'indexheader', $indexheader, 15, 60, '');
+        $editor = WflinksUtility::getWysiwygForm(_AM_WFL_IPAGE_CHEADING, 'indexheader', $indexheader, 15, 60, '');
         $sform->addElement($editor, false);
 
         $headeralign_select = new XoopsFormSelect(_AM_WFL_IPAGE_CHEADINGA, 'indexheaderalign', $indexheaderalign);
-        $headeralign_select->addOptionArray(array(
+        $headeralign_select->addOptionArray([
                                                 'left'   => _AM_WFL_IPAGE_CLEFT,
                                                 'right'  => _AM_WFL_IPAGE_CRIGHT,
                                                 'center' => _AM_WFL_IPAGE_CCENTER
-                                            ));
+                                            ]);
         $sform->addElement($headeralign_select);
         $sform->addElement(new XoopsFormTextArea(_AM_WFL_IPAGE_CFOOTER, 'indexfooter', $indexfooter, 10, 60));
         $footeralign_select = new XoopsFormSelect(_AM_WFL_IPAGE_CFOOTERA, 'indexfooteralign', $indexfooteralign);
-        $footeralign_select->addOptionArray(array(
+        $footeralign_select->addOptionArray([
                                                 'left'   => _AM_WFL_IPAGE_CLEFT,
                                                 'right'  => _AM_WFL_IPAGE_CRIGHT,
                                                 'center' => _AM_WFL_IPAGE_CCENTER
-                                            ));
+                                            ]);
         $sform->addElement($footeralign_select);
 
         $options_tray = new XoopsFormElementTray(_AM_WFL_TEXTOPTIONS, '<br>');

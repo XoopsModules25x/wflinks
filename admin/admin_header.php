@@ -19,7 +19,7 @@
 require_once __DIR__ . '/../../../include/cp_header.php';
 //require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
 
-//require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../class/utility.php';
 //require_once __DIR__ . '/../include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
@@ -47,17 +47,23 @@ if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl))
 }
 
 include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/config.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/functions.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfl_lists.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/myts_extended.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/utility.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfllists.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfltextsanitizer.php';
 
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-$wfmyts = new wflTextSanitizer(); // MyTextSanitizer object
+/** @var WflinksUtility $utilityClass */
+$utilityClass = ucfirst($moduleDirName) . 'Utility';
+if (!class_exists($utilityClass)) {
+    xoops_load('utility', $moduleDirName);
+}
 
-$imagearray = array(
+$wfmyts = new WflTextSanitizer(); // MyTextSanitizer object
+
+$imageArray = [
     'editimg'     => "<img src='$pathIcon16/edit.png' alt='" . _AM_WFL_ICO_EDIT . "' align='middle'>",
     'deleteimg'   => "<img src='$pathIcon16/delete.png' alt='" . _AM_WFL_ICO_DELETE . "' align='middle'>",
     'altcat'      => "<img src='$pathIcon16/folder_add.png' alt='" . _AM_WFL_ALTCAT_CREATEF . "' align='middle'>",
@@ -77,4 +83,4 @@ $imagearray = array(
     'con_yes'     => "<img src='$pathIcon16/1.png' alt='" . _AM_WFL_ICO_CONFIRM . "' align='middle'>",
     'con_no'      => "<img src='$pathIcon16/0.png' alt='" . _AM_WFL_ICO_CONBROKEN . "' align='middle'>",
     'view'        => "<img src='$pathIcon16/search.png' alt='" . _AM_WFL_ICO_VIEW . "' align='middle'>"
-);
+];

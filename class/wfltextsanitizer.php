@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class: wflTextSanitizer
+ * Class: WflTextSanitizer
  *
  * Module: WF-Links
  * Version: v1.0.3
@@ -10,7 +10,7 @@
  * Team: WF-Projects
  * Licence: GNU
  */
-class wflTextSanitizer extends MyTextSanitizer
+class WflTextSanitizer extends MyTextSanitizer
 {
     /**
      * @param $text

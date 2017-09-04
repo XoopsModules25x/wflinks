@@ -11,7 +11,7 @@
 
 require_once __DIR__ . '/header.php';
 
-$start = wfl_cleanRequestVars($_REQUEST, 'start', 0);
+$start = WflinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
 $start = (int)$start;
 
 $GLOBALS['xoopsOption']['template_main'] = 'wflinks_index.tpl';
@@ -24,7 +24,7 @@ $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 $sql      = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_indexpage');
 $head_arr = $xoopsDB->fetchArray($xoopsDB->query($sql));
 
-$catarray['imageheader']      = wfl_imageheader($head_arr['indeximage'], $head_arr['indexheading']);
+$catarray['imageheader']      = WflinksUtility::getImageHeader($head_arr['indeximage'], $head_arr['indexheading']);
 $catarray['indexheading']     = $wfmyts->displayTarea($head_arr['indexheading']);
 $catarray['indexheaderalign'] = $wfmyts->htmlSpecialCharsStrip($head_arr['indexheaderalign']);
 $catarray['indexfooteralign'] = $wfmyts->htmlSpecialCharsStrip($head_arr['indexfooteralign']);
@@ -37,8 +37,8 @@ $breaks = $head_arr['nobreak'] ? 1 : 0;
 
 $catarray['indexheader'] = $wfmyts->displayTarea($head_arr['indexheader'], $html, $smiley, $xcodes, $images, $breaks);
 $catarray['indexfooter'] = $wfmyts->displayTarea($head_arr['indexfooter'], $html, $smiley, $xcodes, $images, $breaks);
-$catarray['letters']     = wfl_letters();
-$catarray['toolbar']     = wfl_toolbar();
+$catarray['letters']     = WflinksUtility::getLetters();
+$catarray['toolbar']     = WflinksUtility::getToolbar();
 $xoopsTpl->assign('catarray', $catarray);
 
 // End main page Headers
@@ -47,17 +47,17 @@ $chcount = 0;
 $countin = 0;
 
 // Begin Main page linkload info
-$listings  = wfl_getTotalItems();
-$total_cat = wfl_totalcategory();  // get total amount of categories
+$listings  = WflinksUtility::getTotalItems();
+$total_cat = WflinksUtility::getTotalCategory();  // get total amount of categories
 $catsort   = $xoopsModuleConfig['sortcats'];
 $sql       = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE pid=0 ORDER BY ' . $catsort;
 $result    = $xoopsDB->query($sql);
 while ($myrow = $xoopsDB->fetchArray($result)) {
     ++$countin;
     $subtotallinkload = 0;
-    $totallinkload    = wfl_getTotalItems($myrow['cid'], 1);
-    $indicator        = wfl_isnewimage($totallinkload['published']);
-    if (wfl_checkgroups($myrow['cid'])) {
+    $totallinkload    = WflinksUtility::getTotalItems($myrow['cid'], 1);
+    $indicator        = WflinksUtility::isNewImage($totallinkload['published']);
+    if (WflinksUtility::checkGroups($myrow['cid'])) {
         $title = $wfmyts->htmlSpecialCharsStrip($myrow['title']);
 
         $arr = array();
@@ -67,7 +67,7 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
         $chcount       = 1;
         $subcategories = '';
         foreach ($arr as $ele) {
-            if (true === wfl_checkgroups($ele['cid'])) {
+            if (true === WflinksUtility::checkGroups($ele['cid'])) {
                 if ($xoopsModuleConfig['subcats'] == 1) {
                     $chtitle = $wfmyts->htmlSpecialCharsStrip($ele['title']);
                     if ($chcount > 5) {
@@ -87,17 +87,16 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
         // Using this code without our permission or removing this code voids the license agreement
         $_image = $myrow['imgurl'] ? urldecode($myrow['imgurl']) : '';
         if ($_image !== '' && $xoopsModuleConfig['usethumbs']) {
-            $_thumb_image = new wfThumbsNails($_image, $xoopsModuleConfig['catimage'], 'thumbs');
+            $_thumb_image = new WfThumbsNails($_image, $xoopsModuleConfig['catimage'], 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
-                $_image = $_thumb_image->do_thumb($xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
+                $_image = $_thumb_image->createThumb($xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
             }
         }
+        $imgurl = "{$xoopsModuleConfig['catimage']}/$_image";
         if (empty($_image) || $_image === '') {
             $imgurl = $indicator['image'];
-        } else {
-            $imgurl = "{$xoopsModuleConfig['catimage']}/$_image";
         }
         // End
 

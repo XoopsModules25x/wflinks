@@ -31,7 +31,7 @@ function b_sitemap_wflinks()
     $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $gpermHandler = xoops_getHandler('groupperm');
 
-    $sitemap = array();
+    $sitemap = [];
     $sql     = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE pid=0 ORDER BY weight';
     $result  = $xoopsDB->queryF($sql);
     while ($myrow = $xoopsDB->fetchArray($result)) {
@@ -40,8 +40,8 @@ function b_sitemap_wflinks()
             $sitemap['parent'][$i]['id']    = (int)$myrow['cid'];
             $sitemap['parent'][$i]['title'] = $myts->makeTboxData4Show($myrow['title']);
             $sitemap['parent'][$i]['url']   = 'viewcat.php?cid=' . (int)$myrow['cid'];
+            $arr = [];
             if ($sitemap_configs['show_subcategoris']) {
-                $arr = array();
                 $arr = $mytree->getFirstChild($myrow['cid'], 'title');
                 foreach ($arr as $key => $ele) {
                     if ($gpermHandler->checkRight('WFLinkCatPerm', $ele['cid'], $groups, $wflinkModule->getVar('mid'))) {
