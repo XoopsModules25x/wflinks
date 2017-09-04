@@ -84,6 +84,7 @@ return (object)[
         '/sql/wflinks.sql',
         '/class/wfl_lists.php',
         '/class/class_thumbnail.php',
+        '/vcard.php',
     ],
     'oldFolders'      => [
         '/images',

@@ -23,6 +23,6 @@ if (!file_exists(__DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php'
 }
 
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/myts_extended.php';
-$wfmyts = new wflTextSanitizer(); // MyTextSanitizer object
+$wfmyts = new WflTextSanitizer(); // MyTextSanitizer object
 
 global $xoopModuleConfig;

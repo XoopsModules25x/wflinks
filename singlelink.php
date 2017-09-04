@@ -120,7 +120,7 @@ if ($xoopsModuleConfig['useaddress'] == 1) {
 if ($link_arr['street1'] === true || $link_arr['tel'] === true || $link_arr['mobile'] === true || $link_arr['fax'] === true
     || $link_arr['email'] === true) {
     $xoopsTpl->assign('contactdetails', '<b>' . _MD_WFL_ADDRESS . '</b>');
-    $xoopsTpl->assign('vcard', '<br>' . '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/vcard.php?lid=' . $link_arr['lid'] . '"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/vcard.png" title="vCard" alt="vCard"></a>');
+    $xoopsTpl->assign('vcard', '<br>' . '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/class/vcard.php?lid=' . $link_arr['lid'] . '"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/vcard.png" title="vCard" alt="vCard"></a>');
 }
 
 // Maps

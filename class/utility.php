@@ -7,9 +7,9 @@ require_once __DIR__ . '/common/traitserverstats.php';
 require_once __DIR__ . '/common/traitfilesmgmt.php';
 
 /**
- * Class MyalbumUtil
+ * Class WflinksUtility
  */
-class WfLinksUtility extends XoopsObject
+class WflinksUtility extends XoopsObject
 {
     use VersionChecks; //checkVerXoops, checkVerPhp Traits
 
@@ -1583,7 +1583,7 @@ class WfLinksUtility extends XoopsObject
      *
      * @return mixed
      */
-    public static function GoogleCH($url, $length = null, $init = 0xE6359A60)
+    public static function googleCh($url, $length = null, $init = 0xE6359A60)
     {
         if (null === $length) {
             $length = count($url);
@@ -1671,7 +1671,7 @@ class WfLinksUtility extends XoopsObject
     public static function pagerank($url)
     {
         $pagerank = '';
-        $ch       = '6' . static::GoogleCH(static::strord('info:' . $url));
+        $ch       = '6' . static::googleCh(static::strord('info:' . $url));
         $fp       = fsockopen('www.google.com', 80, $errno, $errstr, 30);
         if (!$fp) {
             echo "$errstr ($errno)<br>\n";

@@ -173,7 +173,7 @@ class WfThumbsNails
         /**
          * Return false if the server does not have gd lib installed or activated
          */
-        if (!$this->gd_lib_check()) {
+        if (!$this->checkGdLibrary()) {
             return $this->_source_url . '/' . $this->_img_name;
         }
 
@@ -369,13 +369,13 @@ class WfThumbsNails
     }
 
     /**
-     * wfsThumbs::gd_lib_check()
+     * wfsThumbs::checkGdLibrary()
      *
      * Private function
      *
      * @return array|false if gd lib not found on the system
      */
-    public function gd_lib_check()
+    public function checkGdLibrary()
     {
         if (!extension_loaded('gd')) {
             return false;

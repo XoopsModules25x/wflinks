@@ -113,9 +113,9 @@ function vcard_quoted_printable_encode($input, $line_max = 76)
 }
 
 /**
- * Class vCard
+ * Class VCard
  */
-class vCard
+class VCard
 {
     public $properties;
     public $filename;
@@ -353,7 +353,7 @@ $email   = $vcard_arr['email'];
 $vat     = $vcard_arr['vat'];
 $charset = _CHARSET;
 
-$v = new vCard();
+$v = new VCard();
 
 // Set Xoops Character set
 $v->setADR($charset);

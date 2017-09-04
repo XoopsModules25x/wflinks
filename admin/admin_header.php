@@ -55,7 +55,7 @@ require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-$wfmyts = new wflTextSanitizer(); // MyTextSanitizer object
+$wfmyts = new WflTextSanitizer(); // MyTextSanitizer object
 
 $imagearray = array(
     'editimg'     => "<img src='$pathIcon16/edit.png' alt='" . _AM_WFL_ICO_EDIT . "' align='middle'>",

@@ -21,57 +21,58 @@ $modversion = [
     'help'                   => 'page=help',
     'license'                => 'GNU GPL 2.0',
     'license_url'            => 'www.gnu.org/licenses/gpl-2.0.html',
-    'image'                  => 'assets/images/logoModule.png',
-    'iconsmall'              => 'assets/images/logo_small.png',
-    'iconbig'                => 'assets/images/logo_large.png',
-    'dirname'                => basename(__DIR__),
-    'author'                 => 'Version developers: Catzwolf / McDonald',
+    'author'                 => 'Catzwolf, McDonald, Aerograf, Mamba',
     'credits'                => 'WF-Projects Team: Based on WF-Downloads, thanks to the dream-team for some code snippits.',
     'teammembers'            => 'amayer, bender, david, dqflyer, draven, frankblack, gladiac, hervet, jackj, mercibe, John N, phppp, predator, reliableSol, tom, xpider, xtheme, mcdonald (version 1.03B and higher)',
     'author_realname'        => 'WF-Project Team',
     'author_email'           => '',
     'support_site_url'       => 'www.xoops.org',
     'support_site_name'      => 'XOOPS Project',
-    'submit_bug'             => 'www.xoops.org/modules/newbb',
+    'submit_bug'             => 'https://github.com/XoopsModules25x/' . $moduleDirName . '/issues',
     'warning'                => _MI_WFL_WARNINGTEXT,
     'author_credits'         => _MI_WFL_AUTHOR_CREDITSTEXT,
     'developer_website_url'  => 'www.xoops.org/',
     'developer_website_name' => 'XOOPS Project',
+    'dirname'                => basename(__DIR__),
+    'image'                  => 'assets/images/logoModule.png',
+    'iconsmall'              => 'assets/images/logo_small.png',
+    'iconbig'                => 'assets/images/logo_large.png',
     'modicons16'             => 'assets/images/icons/16',
     'modicons32'             => 'assets/images/icons/32',
-    'release_file'           => XOOPS_URL . '/modules/' . 'dirname' . '/docs/changelog.txt',
+    'release_file'           => XOOPS_URL . '/modules/' . $moduleDirName . '/docs/changelog.txt',
     'module_website_url'     => 'www.xoops.org/',
     'module_website_name'    => 'XOOPS',
     'min_php'                => '5.5',
     'min_xoops'              => '2.5.9',
     'min_admin'              => '1.2',
-    'min_db'                 => array('mysql' => '5.5'),
+    'min_db'                 => ['mysql' => '5.5'],
+    // ------------------- Admin Menu -------------------
+    'system_menu'            => 1,
+    'hasAdmin'               => 1,
+    'adminindex'             => 'admin/index.php',
+    'adminmenu'              => 'admin/menu.php',
+    // ------------------- Install/Update -------------------
+    'onInstall'              => 'include/oninstall.php',
+    'onUpdate'               => 'include/onupdate.php',
+    'onUninstall'            => 'include/onuninstall.php',
+    // ------------------- Mysql -----------------------------
+    'sqlfile'                => ['mysql' => 'sql/mysql.sql'],
+    // ------------------- Tables ----------------------------
+    'tables'                 => [
+        $moduleDirName . '_' . 'broken',
+        $moduleDirName . '_' . 'cat',
+        $moduleDirName . '_' . 'links',
+        $moduleDirName . '_' . 'mod',
+        $moduleDirName . '_' . 'votedata',
+        $moduleDirName . '_' . 'indexpage',
+        $moduleDirName . '_' . 'altcat'
+    ],
 ];
-// ------------------- Mysql ------------------- //
-$modversion['sqlfile']['mysql'] = 'sql/mysql.sql';
-
-// Tables created by sql file (without prefix!)
-$modversion['tables'] = array(
-    $moduleDirName . '_' . 'broken',
-    $moduleDirName . '_' . 'cat',
-    $moduleDirName . '_' . 'links',
-    $moduleDirName . '_' . 'mod',
-    $moduleDirName . '_' . 'votedata',
-    $moduleDirName . '_' . 'indexpage',
-    $moduleDirName . '_' . 'altcat'
-);
 
 // Launch additional install script to check
 // the existence of tables 'wf_resources_types' and 'wf_resources'
-$modversion['onInstall'] = '';
 //$modversion['onUpdate'] = '';
-$modversion['onUpdate'] = 'include/update.php';
-
-// Admin things
-$modversion['hasAdmin']    = 1;
-$modversion['system_menu'] = 1;
-$modversion['adminindex']  = 'admin/index.php';
-$modversion['adminmenu']   = 'admin/menu.php';
+//$modversion['onUpdate'] = 'include/update.php';
 
 // ------------------- Help files ------------------- //
 $modversion['helpsection'] = array(
