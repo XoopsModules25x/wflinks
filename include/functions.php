@@ -1677,12 +1677,12 @@ function zeroFill($a, $b)
     $z = hexdec(80000000);
     //echo $z;
     if ($z & $a) {
-        $a = ($a >> 1);
+        $a >>= 1;
         $a &= (~$z);
         $a |= 0x40000000;
-        $a = ($a >> ($b - 1));
+        $a >>= ($b - 1);
     } else {
-        $a = ($a >> $b);
+        $a >>= $b;
     }
 
     return $a;
@@ -1917,7 +1917,7 @@ function wfl_getbanner_from_id_banner($banner_id)
     $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner') . ' WHERE bid=' . $banner_id);
     list($numrows) = $db->fetchRow($bresult);
     if ($numrows > 1) {
-        $numrows = $numrows - 1;
+        $numrows -= 1;
         mt_srand((double)microtime() * 1000000);
         $bannum = mt_rand(0, $numrows);
     } else {
@@ -1957,7 +1957,7 @@ function wfl_getbanner_from_id_banner($banner_id)
             } else {
                 $bannerobject = $bannerobject . '<img src="' . $imageurl . '" alt="">';
             }
-            $bannerobject = $bannerobject . '</a></div>';
+            $bannerobject .= '</a></div>';
         }
 
         return $bannerobject;
@@ -1979,7 +1979,7 @@ function wfl_getbanner_from_id_client($client_id)
     $bresult = $db->query('SELECT COUNT(*) FROM ' . $db->prefix('banner') . ' WHERE cid=' . $client_id);
     list($numrows) = $db->fetchRow($bresult);
     if ($numrows > 1) {
-        $numrows = $numrows - 1;
+        $numrows -= 1;
         mt_srand((double)microtime() * 1000000);
         $bannum = mt_rand(0, $numrows);
     } else {
@@ -2019,7 +2019,7 @@ function wfl_getbanner_from_id_client($client_id)
             } else {
                 $bannerobject = $bannerobject . '<img src="' . $imageurl . '" alt="">';
             }
-            $bannerobject = $bannerobject . '</a></div>';
+            $bannerobject .= '</a></div>';
         }
 
         return $bannerobject;

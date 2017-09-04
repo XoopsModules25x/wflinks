@@ -3,6 +3,14 @@
 - fixed the possibility of publishing news (aerograf)
 - fixed the possibility of publishing newbb (aerograf)
 - reworked help (aerograf)
+- added Server Stats via traits (mamba)
+- added common.php language file
+- moved version checks to a trait (mamba)
+- added automated folder creation (mamba)
+- added Configurator array (mamba)
+- Short syntax for applied operation (mamba)
+- code cosmetics for arrays in xoops_version.php (mamba)
+- update to __DIR__ (mamba)
 
 
 <h5>1.10 RC-1        [2017-09-01]</h5>
