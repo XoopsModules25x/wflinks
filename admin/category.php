@@ -30,7 +30,7 @@ if (isset($_GET)) {
 /**
  * @param int $cid
  */
-function createcat($cid = 0)
+function createCat($cid = 0)
 {
     require_once __DIR__ . '/../class/wfllists.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -218,7 +218,6 @@ switch ($op) {
             $cid = isset($_POST['cid']) ? $_POST['cid'] : $_GET['cid'];
 
             xoops_cp_header();
-            //WflinksUtility::getAdminMenu(_AM_WFL_MCATEGORY);
 
             require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
             $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
@@ -386,15 +385,15 @@ switch ($op) {
     case 'modCat':
         $cid = isset($_POST['cid']) ? $_POST['cid'] : 0;
         xoops_cp_header();
-        //WflinksUtility::getAdminMenu(_AM_WFL_MCATEGORY);
-        createcat($cid);
+
+        createCat($cid);
         xoops_cp_footer();
         break;
 
     case 'main':
     default:
         xoops_cp_header();
-        //WflinksUtility::getAdminMenu(_AM_WFL_MCATEGORY);
+
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         $adminObject->addItemButton(_MI_WFL_ADD_LINK, 'main.php?op=edit', 'add', '');
@@ -425,7 +424,7 @@ switch ($op) {
             $sform->addElement($dup_tray);
             $sform->display();
         }
-        createcat(0);
+        createCat(0);
         require_once __DIR__ . '/admin_footer.php';
         break;
 }

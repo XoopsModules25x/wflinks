@@ -27,7 +27,7 @@ switch (strtolower($op)) {
     default:
         $start = WflinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
         xoops_cp_header();
-        //WflinksUtility::getAdminMenu( _AM_WFL_VOTE_RATINGINFOMATION );
+
         $_vote_data = WflinksUtility::getVoteDetails($lid);
 
         $text_info = "

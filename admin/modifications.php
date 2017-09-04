@@ -20,7 +20,6 @@ switch (strtolower($op)) {
     case 'listmodreqshow':
 
         xoops_cp_header();
-        //WflinksUtility::getAdminMenu( _AM_WFL_MOD_MODREQUESTS );
 
         $sql       = 'SELECT modifysubmitter, requestid, lid, cid, title, url, description, screenshot, forumid, country, keywords, item_tag, googlemap, yahoomap, multimap, street1, street2, town, state, zip, tel, fax, voip, mobile, email, vat FROM '
                      . $xoopsDB->prefix('wflinks_mod')
@@ -188,7 +187,7 @@ switch (strtolower($op)) {
         $totalmodrequests = $xoopsDB->getRowsNum($xoopsDB->query($sql));
 
         xoops_cp_header();
-        //WflinksUtility::getAdminMenu( _AM_WFL_MOD_MODREQUESTS );
+
         echo "<fieldset><legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_MOD_MODREQUESTSINFO . "</legend>\n";
         echo "<div style='padding: 8px;'>" . _AM_WFL_MOD_TOTMODREQUESTS . " <b>$totalmodrequests<></div>\n";
         echo "</fieldset><br>\n";

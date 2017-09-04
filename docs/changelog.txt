@@ -6,6 +6,7 @@
 x moved vCard to /classes (mamba)
 * Short syntax in array literals (mamba)
 + added "todo.txt" file (mamba)
+- delete getAdminMenu() (mamba)
 
 
 <h5>1.11 Beta 2       [2017-09-02]</h5>

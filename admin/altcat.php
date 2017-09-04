@@ -100,7 +100,7 @@ switch (strtolower($op)) {
     case 'main':
     default:
         xoops_cp_header();
-        //WflinksUtility::getAdminMenu( _AM_WFL_MALTCAT );
+
         echo "
             <fieldset style='border: #e8e8e8 1px solid;'><legend style='display: inline; font-weight: bold; color: #0A3760;'>" . _AM_WFL_ALTCAT_MODIFYF . "</legend>\n
             <div style='padding: 8px;'>" . _AM_WFL_ALTCAT_INFOTEXT . "</div>\n
