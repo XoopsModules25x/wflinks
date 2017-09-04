@@ -817,7 +817,8 @@ class WfLinksUtility extends XoopsObject
         global $FILES, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
 
         $down = array();
-        require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/uploader.php';
+//        require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/uploader.php';
+        require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         if (empty($allowed_mimetypes)) {
             $allowed_mimetypes = wfl_getmime($FILES['userfile']['name'], $usertype);
         }
@@ -828,14 +829,14 @@ class WfLinksUtility extends XoopsObject
         $maxfileheight = $xoopsModuleConfig['maximgheight'];
 
         $uploader = new XoopsMediaUploader($upload_dir, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
-        $uploader->noAdminSizeCheck(1);
+//        $uploader->noAdminSizeCheck(1);
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             if (!$uploader->upload()) {
                 $errors = $uploader->getErrors();
                 redirect_header($redirecturl, 2, $errors);
             } else {
                 if ($redirect) {
-                    redirect_header($redirecturl, 1, _AM_PDD_UPLOADFILE);
+                    redirect_header($redirecturl, 1, _AM_WFL_UPLOADFILE);
                 } else {
                     if (is_file($uploader->savedDestination)) {
                         $down['url']  = XOOPS_URL . '/' . $uploaddir . '/' . strtolower($uploader->savedFileName);
@@ -1595,7 +1596,7 @@ class WfLinksUtility extends XoopsObject
             $a   += ($url[$k + 0] + ($url[$k + 1] << 8) + ($url[$k + 2] << 16) + ($url[$k + 3] << 24));
             $b   += ($url[$k + 4] + ($url[$k + 5] << 8) + ($url[$k + 6] << 16) + ($url[$k + 7] << 24));
             $c   += ($url[$k + 8] + ($url[$k + 9] << 8) + ($url[$k + 10] << 16) + ($url[$k + 11] << 24));
-            $mix = mix($a, $b, $c);
+            $mix = static::mix($a, $b, $c);
             $a   = $mix[0];
             $b   = $mix[1];
             $c   = $mix[2];
@@ -1639,7 +1640,7 @@ class WfLinksUtility extends XoopsObject
                 $a += $url[$k + 0];
             /* case 0: nothing left to add */
         }
-        $mix = mix($a, $b, $c);
+        $mix = static::mix($a, $b, $c);
         //echo $mix[0];
         /*-------------------------------------------- report the result */
 
@@ -1670,7 +1671,7 @@ class WfLinksUtility extends XoopsObject
     public static function pagerank($url)
     {
         $pagerank = '';
-        $ch       = '6' . GoogleCH(strord('info:' . $url));
+        $ch       = '6' . static::GoogleCH(static::strord('info:' . $url));
         $fp       = fsockopen('www.google.com', 80, $errno, $errstr, 30);
         if (!$fp) {
             echo "$errstr ($errno)<br>\n";

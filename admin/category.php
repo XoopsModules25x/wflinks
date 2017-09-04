@@ -32,7 +32,7 @@ if (isset($_GET)) {
  */
 function createcat($cid = 0)
 {
-    require_once __DIR__ . '/../class/wfl_lists.php';
+    require_once __DIR__ . '/../class/wfllists.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     global $xoopsDB, $wfmyts, $xoopsModuleConfig, $totalcats, $xoopsModule;

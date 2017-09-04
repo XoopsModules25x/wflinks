@@ -81,7 +81,7 @@ function edit($lid = 0)
                <div><b>' . _AM_WFL_MINDEX_SUBMITTED . ': </b>' . formatTimestamp($link_array['date'], $xoopsModuleConfig['dateformat']) . '</div>
                <div><b>' . _AM_WFL_LINK_SUBMITTER . ' </b>' . XoopsUserUtility::getUnameFromId($submitter) . '</div>
                <div><b>' . _AM_WFL_LINK_IP . ' </b>' . $ipaddress . '</div>
-               <div><b>' . _AM_WFL_PAGERANK . ' </b>' . pagerank($link_array['url']) . '</div>
+               <div><b>' . _AM_WFL_PAGERANK . ' </b>' . WfLinksUtility::pagerank($link_array['url']) . '</div>
                <div><b>' . _AM_WFL_HITS . ' </b>' . $link_array['hits'] . "</div>
 
               </td>
@@ -458,7 +458,7 @@ switch (strtolower($op)) {
                         <td class='even'><small>" . $submitter . "</small></td>\n
                         <td class='even'><small>" . $publish . "</small></td>\n
                         <td class='even'><small>" . $_ping_results . "</small></td>\n
-                        <td class='even'><small>" . pagerank($published['url']) . "</small></td>\n
+                        <td class='even'><small>" . WfLinksUtility::pagerank($published['url']) . "</small></td>\n
                         <td class='even'>$icon</td>\n
                         </tr>\n";
                 unset($published);

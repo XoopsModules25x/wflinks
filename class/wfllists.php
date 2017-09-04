@@ -54,9 +54,9 @@ class WflLists
      *
      * @return string
      */
-    public function getarray($this_array)
+    public function getArray($this_array)
     {
-        $ret = "<select size='" . $this->getSize() . "' name='$this->getValue()'>";
+        $ret = "<select size='" . $this->getSize() . "' name='". $this->getValue() ."'>";
         if ($this->emptyselect) {
             $ret .= "<option value='" . $this->getValue() . "'>----------------------</option>";
         }

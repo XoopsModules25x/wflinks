@@ -25,16 +25,6 @@ trait FilesManagement
      */
     public static function createFolder($folder)
     {
-        //        try {
-        //            if (!mkdir($folder) && !is_dir($folder)) {
-        //                throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-        //            } else {
-        //                file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-        //            }
-        //        }
-        //        catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
-        //        }
         try {
             if (!file_exists($folder)) {
                 if (!mkdir($folder) && !is_dir($folder)) {
@@ -57,16 +47,6 @@ trait FilesManagement
     public static function copyFile($file, $folder)
     {
         return copy($file, $folder);
-        //        try {
-        //            if (!is_dir($folder)) {
-        //                throw new \RuntimeException(sprintf('Unable to copy file as: %s ', $folder));
-        //            } else {
-        //                return copy($file, $folder);
-        //            }
-        //        } catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br>";
-        //        }
-        //        return false;
     }
 
     /**

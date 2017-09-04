@@ -74,11 +74,11 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         // Using this code without our permission or removing this code voids the license agreement
         $_image = $ele['imgurl'] ? urldecode($ele['imgurl']) : '';
         if ($_image !== '' && $xoopsModuleConfig['usethumbs']) {
-            $_thumb_image = new wfThumbsNails($_image, $xoopsModuleConfig['catimage'], 'thumbs');
+            $_thumb_image = new WfThumbsNails($_image, $xoopsModuleConfig['catimage'], 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
-                $_image = $_thumb_image->do_thumb($xoopsModuleConfig['shotwidth'], $xoopsModuleConfig['shotheight'], $xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
+                $_image = $_thumb_image->createThumb($xoopsModuleConfig['shotwidth'], $xoopsModuleConfig['shotheight'], $xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
             }
         }
         $imgurl = "{$xoopsModuleConfig['catimage']}/$_image";

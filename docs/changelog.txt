@@ -11,6 +11,9 @@
 - Short syntax for applied operation (mamba)
 - code cosmetics for arrays in xoops_version.php (mamba)
 - update to __DIR__ (mamba)
+- deleted uploader.php - use XoopsMediaUploader (mamba)
+- renamed files wfl_links.php and class_thumbnail.php (mamba)
+
 
 
 <h5>1.10 RC-1        [2017-09-01]</h5>

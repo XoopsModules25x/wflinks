@@ -34,7 +34,7 @@ $link['url']   = $link_arr['url'];
 
 // Get Google Pagerank
 if (isset($xoopsModuleConfig['showpagerank']) && $xoopsModuleConfig['showpagerank'] == 1) {
-    $link['pagerank'] = pagerank($link['url']);
+    $link['pagerank'] = WfLinksUtility::pagerank($link['url']);
 }
 
 if (isset($link_arr['screenshot'])) {
@@ -42,11 +42,11 @@ if (isset($link_arr['screenshot'])) {
     if (!empty($link_arr['screenshot'])
         && file_exists(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['screenshots'] . '/' . xoops_trim($link_arr['screenshot']))) {
         if (isset($xoopsModuleConfig['usethumbs']) && $xoopsModuleConfig['usethumbs'] == 1) {
-            $_thumb_image = new wfThumbsNails($link['screenshot_full'], $xoopsModuleConfig['screenshots'], 'thumbs');
+            $_thumb_image = new WfThumbsNails($link['screenshot_full'], $xoopsModuleConfig['screenshots'], 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
-                $_image = $_thumb_image->do_thumb($xoopsModuleConfig['shotwidth'], $xoopsModuleConfig['shotheight'], $xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
+                $_image = $_thumb_image->createThumb($xoopsModuleConfig['shotwidth'], $xoopsModuleConfig['shotheight'], $xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
             }
             $link['screenshot_thumb'] = XOOPS_URL . "/{$xoopsModuleConfig['screenshots']}/$_image";
         } else {

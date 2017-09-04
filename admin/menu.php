@@ -31,12 +31,6 @@ $adminmenu = array(
         'icon'  => $pathIcon32 . '/home.png'
     ),
     array(
-        'title' => _MI_WFL_INDEXPAGE,
-        'link'  => 'admin/indexpage.php',
-        'desc'  => _MI_WFL_INDEXPAGE_DESC,
-        'icon'  => $pathIcon32 . '/index.png'
-    ),
-    array(
         'title' => _MI_WFL_MCATEGORY,
         'link'  => 'admin/category.php',
         'desc'  => _MI_WFL_MCATEGORY_DESC,
@@ -73,16 +67,22 @@ $adminmenu = array(
         'icon'  => $pathIcon32 . '/photo.png'
     ),
     array(
-        'title' => _MI_WFL_PERMISSIONS,
-        'link'  => 'admin/permissions.php',
-        'desc'  => _MI_WFL_PERMISSIONS_DESC,
-        'icon'  => $pathIcon32 . '/permissions.png'
+        'title' => _MI_WFL_INDEXPAGE,
+        'link'  => 'admin/indexpage.php',
+        'desc'  => _MI_WFL_INDEXPAGE_DESC,
+        'icon'  => $pathIcon32 . '/index.png'
     ),
     array(
         'title' => _MI_WFL_MVOTEDATA,
         'link'  => 'admin/votedata.php',
         'desc'  => _MI_WFL_MVOTEDATA,
         'icon'  => $pathIcon32 . '/poll.png'
+    ),
+    array(
+        'title' => _MI_WFL_PERMISSIONS,
+        'link'  => 'admin/permissions.php',
+        'desc'  => _MI_WFL_PERMISSIONS_DESC,
+        'icon'  => $pathIcon32 . '/permissions.png'
     ),
     array(
         'title' => _AM_MODULEADMIN_ABOUT,

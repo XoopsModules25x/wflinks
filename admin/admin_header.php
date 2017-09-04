@@ -19,7 +19,7 @@
 require_once __DIR__ . '/../../../include/cp_header.php';
 //require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
 
-//require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../class/utility.php';
 //require_once __DIR__ . '/../include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
@@ -48,7 +48,7 @@ if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl))
 
 include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/config.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/utility.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfl_lists.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfllists.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/myts_extended.php';
 
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.php';
