@@ -100,7 +100,7 @@ function createcat($cid = 0)
         ob_end_clean();
     }
 
-    $graph_array       = &wflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'], $type = 'images');
+    $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'], $type = 'images');
     $indeximage_select = new XoopsFormSelect('', 'imgurl', $imgurl);
     $indeximage_select->addOptionArray($graph_array);
     $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"imgurl\", \"" . $xoopsModuleConfig['catimage'] . '", "", "' . XOOPS_URL . "\")'");

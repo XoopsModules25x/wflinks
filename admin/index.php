@@ -28,32 +28,32 @@ list($totallinks) = $xoopsDB->fetchRow($result4);
 
 $adminObject->addInfoBox(_AM_WFL_MINDEX_LINKSUMMARY);
 if ($totalcats > 0) {
-    $adminObject->addInfoBoxLine(sprintf( '<infolabel>' . '<a href="category.php">' . _AM_WFL_SCATEGORY . '</a><b>' . '</infolabel>', $totalcats),'', 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="category.php">' . _AM_WFL_SCATEGORY . '</a><b>' . '</infolabel>', $totalcats), '', 'Green');
 } else {
-    $adminObject->addInfoBoxLine(sprintf( '<infolabel>' . _AM_WFL_SCATEGORY . '</infolabel>', $totalcats),'', 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_WFL_SCATEGORY . '</infolabel>', $totalcats), '', 'Green');
 }
 
 if ($totallinks > 0) {
-    $adminObject->addInfoBoxLine(sprintf( '<infolabel>' . '<a href="main.php">' . _AM_WFL_SFILES . '</a><b>' . '</infolabel>', $totallinks),'', 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="main.php">' . _AM_WFL_SFILES . '</a><b>' . '</infolabel>', $totallinks), '', 'Green');
 } else {
-    $adminObject->addInfoBoxLine(sprintf( '<infolabel>' . _AM_WFL_SFILES . '</infolabel>', $totallinks),'', 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_WFL_SFILES . '</infolabel>', $totallinks), '', 'Green');
 }
 
 if ($totalnewlinks > 0) {
-    $adminObject->addInfoBoxLine(sprintf( '<infolabel>' . '<a href="newlinks.php">' . _AM_WFL_SNEWFILESVAL . '</a><b>' . '</infolabel>', $totalnewlinks),'', 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="newlinks.php">' . _AM_WFL_SNEWFILESVAL . '</a><b>' . '</infolabel>', $totalnewlinks), '', 'Red');
 } else {
-    $adminObject->addInfoBoxLine(sprintf( '<infolabel>' . _AM_WFL_SNEWFILESVAL . '</infolabel>', $totalnewlinks),'', 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_WFL_SNEWFILESVAL . '</infolabel>', $totalnewlinks), '', 'Red');
 }
 if ($totalmodrequests > 0) {
-    $adminObject->addInfoBoxLine(sprintf( '<infolabel>' . '<a href="modifications.php">' . _AM_WFL_SMODREQUEST . '</a><b>' . '</infolabel>', $totalmodrequests),'', 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="modifications.php">' . _AM_WFL_SMODREQUEST . '</a><b>' . '</infolabel>', $totalmodrequests), '', 'Red');
 } else {
-    $adminObject->addInfoBoxLine(sprintf( '<infolabel>' . _AM_WFL_SMODREQUEST . '</infolabel>', $totalmodrequests),'', 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_WFL_SMODREQUEST . '</infolabel>', $totalmodrequests), '', 'Red');
 }
 
 if ($totalbrokenlinks > 0) {
-    $adminObject->addInfoBoxLine(sprintf( '<infolabel>' . '<a href="brokenlink.php">' . _AM_WFL_SBROKENSUBMIT . '</a><b>' . '</infolabel><infotext>', $totalbrokenlinks . '</infotext>'),'', 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="brokenlink.php">' . _AM_WFL_SBROKENSUBMIT . '</a><b>' . '</infolabel><infotext>', $totalbrokenlinks . '</infotext>'), '', 'Red');
 } else {
-    $adminObject->addInfoBoxLine(sprintf( '<infolabel>' . _AM_WFL_SBROKENSUBMIT . '</infolabel><infotext>', $totalbrokenlinks . '</infotext>'),'', 'Red');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_WFL_SBROKENSUBMIT . '</infolabel><infotext>', $totalbrokenlinks . '</infotext>'), '', 'Red');
 }
 
 

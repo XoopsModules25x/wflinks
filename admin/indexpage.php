@@ -61,7 +61,7 @@ switch (strtolower($op)) {
 
         $sform = new XoopsThemeForm(_AM_WFL_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $sform->addElement(new XoopsFormText(_AM_WFL_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading), false);
-        $graph_array       = &wflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'], $type = 'images');
+        $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'], $type = 'images');
         $indeximage_select = new XoopsFormSelect('', 'indeximage', $indeximage);
         $indeximage_select->addOptionArray($graph_array);
         $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"indeximage\", \"" . $xoopsModuleConfig['mainimagedir'] . '", "", "' . XOOPS_URL . "\")'");

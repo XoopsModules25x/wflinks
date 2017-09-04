@@ -17,7 +17,7 @@
  *
  * @return bool
  */
-function &wfl_gethandler($name, $optional = false)
+function wfl_gethandler($name, $optional = false)
 {
     global $handlers, $xoopsModule;
 

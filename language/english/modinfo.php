@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  * Module: WF-links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -38,8 +38,8 @@ define('_MI_WFL_BLOCKADMIN', 'Block Settings');
 define('_MI_WFL_MVOTEDATA', 'Votes');
 
 // Title of config items
-define('_MI_WFL_POPULAR','link Popular Count');
-define('_MI_WFL_POPULARDSC','The number of hits before a link status will be considered as popular.');
+define('_MI_WFL_POPULAR', 'link Popular Count');
+define('_MI_WFL_POPULARDSC', 'The number of hits before a link status will be considered as popular.');
 
 //Display Icons
 define('_MI_WFL_ICONDISPLAY', 'links Popular and New:');
@@ -53,48 +53,48 @@ define('_MI_WFL_DAYSNEWDSC', 'The number of days a link status will be considere
 define('_MI_WFL_DAYSUPDATED', 'links Days Updated:');
 define('_MI_WFL_DAYSUPDATEDDSC', 'The amount of days a link status will be considered as updated.');
 
-define('_MI_WFL_PERPAGE','link Listing Count:');
-define('_MI_WFL_PERPAGEDSC','Number of links to display in each category listing.');
+define('_MI_WFL_PERPAGE', 'link Listing Count:');
+define('_MI_WFL_PERPAGEDSC', 'Number of links to display in each category listing.');
 
-define('_MI_WFL_USESHOTS','Display Screenshot Images?');
-define('_MI_WFL_USESHOTSDSC','Select yes to display screenshot images for each link item');
-define('_MI_WFL_SHOTWIDTH','Image Display Width');
-define('_MI_WFL_SHOTWIDTHDSC','Display width for screenshot image');
-define('_MI_WFL_SHOTHEIGHT','Image Display Height');
-define('_MI_WFL_SHOTHEIGHTDSC','Display height for screenshot image');
-define('_MI_WFL_CHECKHOST','Disallow direct link linking? (leeching)');
-define('_MI_WFL_REFERERS','These sites can directly link to your links <br />Separate with #');
+define('_MI_WFL_USESHOTS', 'Display Screenshot Images?');
+define('_MI_WFL_USESHOTSDSC', 'Select yes to display screenshot images for each link item');
+define('_MI_WFL_SHOTWIDTH', 'Image Display Width');
+define('_MI_WFL_SHOTWIDTHDSC', 'Display width for screenshot image');
+define('_MI_WFL_SHOTHEIGHT', 'Image Display Height');
+define('_MI_WFL_SHOTHEIGHTDSC', 'Display height for screenshot image');
+define('_MI_WFL_CHECKHOST', 'Disallow direct link linking? (leeching)');
+define('_MI_WFL_REFERERS', 'These sites can directly link to your links <br />Separate with #');
 define('_MI_WFL_ANONPOST', 'Anonymous User Submission:');
 define('_MI_WFL_ANONPOSTDSC', 'Allow Anonymous users to submit or upload to your website?');
-define('_MI_WFL_AUTOAPPROVE','Auto Approve Submitted links');
-define('_MI_WFL_AUTOAPPROVEDSC','Select to approve submitted links without moderation.');
+define('_MI_WFL_AUTOAPPROVE', 'Auto Approve Submitted links');
+define('_MI_WFL_AUTOAPPROVEDSC', 'Select to approve submitted links without moderation.');
 
-define('_MI_WFL_MAXFILESIZE','Upload Size (KB)');
-define('_MI_WFL_MAXFILESIZEDSC','Maximum link size permitted with link uploads.');
-define('_MI_WFL_IMGWIDTH','Upload Image width');
-define('_MI_WFL_IMGWIDTHDSC','Maximum image width permitted when uploading image links');
-define('_MI_WFL_IMGHEIGHT','Upload Image height');
-define('_MI_WFL_IMGHEIGHTDSC','Maximum image height permitted when uploading image links');
+define('_MI_WFL_MAXFILESIZE', 'Upload Size (KB)');
+define('_MI_WFL_MAXFILESIZEDSC', 'Maximum link size permitted with link uploads.');
+define('_MI_WFL_IMGWIDTH', 'Upload Image width');
+define('_MI_WFL_IMGWIDTHDSC', 'Maximum image width permitted when uploading image links');
+define('_MI_WFL_IMGHEIGHT', 'Upload Image height');
+define('_MI_WFL_IMGHEIGHTDSC', 'Maximum image height permitted when uploading image links');
 
-define('_MI_WFL_UPLOADDIR','Upload Directory (No trailing slash)');
-define('_MI_WFL_ALLOWSUBMISS','User Submissions:');
-define('_MI_WFL_ALLOWSUBMISSDSC','Allow Users to Submit new links');
-define('_MI_WFL_ALLOWUPLOADS','User Uploads:');
-define('_MI_WFL_ALLOWUPLOADSDSC','Allow Users to upload links directly to your website');
-define('_MI_WFL_SCREENSHOTS','Screenshots Upload Directory');
-define('_MI_WFL_CATEGORYIMG','Category Image Upload Directory');
-define('_MI_WFL_MAINIMGDIR','Main Image Directory');
-define('_MI_WFL_USETHUMBS','Use Thumb Nails:');
+define('_MI_WFL_UPLOADDIR', 'Upload Directory (No trailing slash)');
+define('_MI_WFL_ALLOWSUBMISS', 'User Submissions:');
+define('_MI_WFL_ALLOWSUBMISSDSC', 'Allow Users to Submit new links');
+define('_MI_WFL_ALLOWUPLOADS', 'User Uploads:');
+define('_MI_WFL_ALLOWUPLOADSDSC', 'Allow Users to upload links directly to your website');
+define('_MI_WFL_SCREENSHOTS', 'Screenshots Upload Directory');
+define('_MI_WFL_CATEGORYIMG', 'Category Image Upload Directory');
+define('_MI_WFL_MAINIMGDIR', 'Main Image Directory');
+define('_MI_WFL_USETHUMBS', 'Use Thumb Nails:');
 define('_MI_WFL_USETHUMBSDSC', "Supported link types: JPG, GIF, PNG.<div style='padding-top: 8px;'>WF-Links will use thumb nails for images. Set to 'No' to use orginal image if the server does not support this option.</div>");
-define('_MI_WFL_DATEFORMAT','Timestamp:');
-define('_MI_WFL_DATEFORMATDSC','Default Timestamp for WF-links.<br />See <a href="http://jp.php.net/manual/en/function.date.php" target="_blank">PHP manual</a>');
-define('_MI_WFL_SHOWDISCLAIMER','Show Disclaimer before User Submission?');
-define('_MI_WFL_SHOWDISCLAIMERDSC','Before a User can submit a Link show the Entry regulations?');
-define('_MI_WFL_SHOWLINKDISCL','Show Disclaimer before User link?');
-define('_MI_WFL_SHOWLINKDISCLDSC','Show link regulations before open a link?');
-define('_MI_WFL_DISCLAIMER','Enter Submission Disclaimer Text:');
-define('_MI_WFL_LINKDISCLAIMER','Enter link Disclaimer Text:');
-define('_MI_WFL_SUBCATS','Sub-Categories:');
+define('_MI_WFL_DATEFORMAT', 'Timestamp:');
+define('_MI_WFL_DATEFORMATDSC', 'Default Timestamp for WF-links.<br />See <a href="http://jp.php.net/manual/en/function.date.php" target="_blank">PHP manual</a>');
+define('_MI_WFL_SHOWDISCLAIMER', 'Show Disclaimer before User Submission?');
+define('_MI_WFL_SHOWDISCLAIMERDSC', 'Before a User can submit a Link show the Entry regulations?');
+define('_MI_WFL_SHOWLINKDISCL', 'Show Disclaimer before User link?');
+define('_MI_WFL_SHOWLINKDISCLDSC', 'Show link regulations before open a link?');
+define('_MI_WFL_DISCLAIMER', 'Enter Submission Disclaimer Text:');
+define('_MI_WFL_LINKDISCLAIMER', 'Enter link Disclaimer Text:');
+define('_MI_WFL_SUBCATS', 'Sub-Categories:');
 define('_MI_WFL_SUBMITART', 'link Submission:');
 define('_MI_WFL_SUBMITARTDSC', 'Select groups that can submit new links.');
 define('_MI_WFL_RATINGGROUPS', 'link Ratings:');
@@ -114,57 +114,57 @@ define('_MI_WFL_RATING', 'Rating');
 define('_MI_WFL_WEIGHT', 'Weight');
 define('_MI_WFL_POPULARITY', 'Popularity');
 define('_MI_WFL_SUBMITTED2', 'Submission Date');
-define('_MI_WFL_COPYRIGHT','Copyright Notice:');
-define('_MI_WFL_COPYRIGHTDSC','Select to display a copyright notice on link page.');
+define('_MI_WFL_COPYRIGHT', 'Copyright Notice:');
+define('_MI_WFL_COPYRIGHTDSC', 'Select to display a copyright notice on link page.');
 // Description of each config items
-define('_MI_WFL_SUBCATSDSC','Select Yes to display sub-categories. Selecting No will hide sub-categories from the listings');
+define('_MI_WFL_SUBCATSDSC', 'Select Yes to display sub-categories. Selecting No will hide sub-categories from the listings');
 
 // Text for notifications
-define('_MI_WFL_GLOBAL_NOTIFY','Global');
-define('_MI_WFL_GLOBAL_NOTIFYDSC','Global links notification options.');
-define('_MI_WFL_CATEGORY_NOTIFY','Category');
-define('_MI_WFL_CATEGORY_NOTIFYDSC','Notification options that apply to the current link category.');
-define('_MI_WFL_LINK_NOTIFY','Link');
-define('_MI_WFL_FILE_NOTIFYDSC','Notification options that apply to the current link.');
-define('_MI_WFL_GLOBAL_NEWCATEGORY_NOTIFY','New Category');
-define('_MI_WFL_GLOBAL_NEWCATEGORY_NOTIFYCAP','Notify me when a new link category is created.');
-define('_MI_WFL_GLOBAL_NEWCATEGORY_NOTIFYDSC','Receive notification when a new link category is created.');
-define('_MI_WFL_GLOBAL_NEWCATEGORY_NOTIFYSBJ','[{X_SITENAME}] {X_MODULE} auto-notify : New link category');
+define('_MI_WFL_GLOBAL_NOTIFY', 'Global');
+define('_MI_WFL_GLOBAL_NOTIFYDSC', 'Global links notification options.');
+define('_MI_WFL_CATEGORY_NOTIFY', 'Category');
+define('_MI_WFL_CATEGORY_NOTIFYDSC', 'Notification options that apply to the current link category.');
+define('_MI_WFL_LINK_NOTIFY', 'Link');
+define('_MI_WFL_FILE_NOTIFYDSC', 'Notification options that apply to the current link.');
+define('_MI_WFL_GLOBAL_NEWCATEGORY_NOTIFY', 'New Category');
+define('_MI_WFL_GLOBAL_NEWCATEGORY_NOTIFYCAP', 'Notify me when a new link category is created.');
+define('_MI_WFL_GLOBAL_NEWCATEGORY_NOTIFYDSC', 'Receive notification when a new link category is created.');
+define('_MI_WFL_GLOBAL_NEWCATEGORY_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New link category');
 
-define('_MI_WFL_GLOBAL_LINKMODIFY_NOTIFY','Modify Link Requested');
-define('_MI_WFL_GLOBAL_LINKMODIFY_NOTIFYCAP','Notify me of any link modification request.');
-define('_MI_WFL_GLOBAL_LINKMODIFY_NOTIFYDSC','Receive notification when any link modification request is submitted.');
-define('_MI_WFL_GLOBAL_LINKMODIFY_NOTIFYSBJ','[{X_SITENAME}] {X_MODULE} auto-notify : Link Modification Requested');
+define('_MI_WFL_GLOBAL_LINKMODIFY_NOTIFY', 'Modify Link Requested');
+define('_MI_WFL_GLOBAL_LINKMODIFY_NOTIFYCAP', 'Notify me of any link modification request.');
+define('_MI_WFL_GLOBAL_LINKMODIFY_NOTIFYDSC', 'Receive notification when any link modification request is submitted.');
+define('_MI_WFL_GLOBAL_LINKMODIFY_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Link Modification Requested');
 
-define('_MI_WFL_GLOBAL_LINKBROKEN_NOTIFY','Broken Link Submitted');
-define('_MI_WFL_GLOBAL_LINKBROKEN_NOTIFYCAP','Notify me of any broken link report.');
-define('_MI_WFL_GLOBAL_LINKBROKEN_NOTIFYDSC','Receive notification when any broken link report is submitted.');
-define('_MI_WFL_GLOBAL_LINKBROKEN_NOTIFYSBJ','[{X_SITENAME}] {X_MODULE} auto-notify : Broken Link Reported');
+define('_MI_WFL_GLOBAL_LINKBROKEN_NOTIFY', 'Broken Link Submitted');
+define('_MI_WFL_GLOBAL_LINKBROKEN_NOTIFYCAP', 'Notify me of any broken link report.');
+define('_MI_WFL_GLOBAL_LINKBROKEN_NOTIFYDSC', 'Receive notification when any broken link report is submitted.');
+define('_MI_WFL_GLOBAL_LINKBROKEN_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Broken Link Reported');
 
-define('_MI_WFL_GLOBAL_LINKSUBMIT_NOTIFY','Link Submitted');
-define('_MI_WFL_GLOBAL_LINKSUBMIT_NOTIFYCAP','Notify me when any new link is submitted (awaiting approval).');
-define('_MI_WFL_GLOBAL_LINKSUBMIT_NOTIFYDSC','Receive notification when any new link is submitted (awaiting approval).');
-define('_MI_WFL_GLOBAL_LINKSUBMIT_NOTIFYSBJ','[{X_SITENAME}] {X_MODULE} auto-notify : New link submitted');
+define('_MI_WFL_GLOBAL_LINKSUBMIT_NOTIFY', 'Link Submitted');
+define('_MI_WFL_GLOBAL_LINKSUBMIT_NOTIFYCAP', 'Notify me when any new link is submitted (awaiting approval).');
+define('_MI_WFL_GLOBAL_LINKSUBMIT_NOTIFYDSC', 'Receive notification when any new link is submitted (awaiting approval).');
+define('_MI_WFL_GLOBAL_LINKSUBMIT_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New link submitted');
 
-define('_MI_WFL_GLOBAL_NEWLINK_NOTIFY','New Link');
-define('_MI_WFL_GLOBAL_NEWLINK_NOTIFYCAP','Notify me when any new link is posted.');
-define('_MI_WFL_GLOBAL_NEWLINK_NOTIFYDSC','Receive notification when any new link is posted.');
-define('_MI_WFL_GLOBAL_NEWLINK_NOTIFYSBJ','[{X_SITENAME}] {X_MODULE} auto-notify : New link');
+define('_MI_WFL_GLOBAL_NEWLINK_NOTIFY', 'New Link');
+define('_MI_WFL_GLOBAL_NEWLINK_NOTIFYCAP', 'Notify me when any new link is posted.');
+define('_MI_WFL_GLOBAL_NEWLINK_NOTIFYDSC', 'Receive notification when any new link is posted.');
+define('_MI_WFL_GLOBAL_NEWLINK_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New link');
 
-define('_MI_WFL_CATEGORY_FILESUBMIT_NOTIFY','Link Submitted');
-define('_MI_WFL_CATEGORY_FILESUBMIT_NOTIFYCAP','Notify me when a new link is submitted (awaiting approval) to the current category.');
-define('_MI_WFL_CATEGORY_FILESUBMIT_NOTIFYDSC','Receive notification when a new link is submitted (awaiting approval) to the current category.');
-define('_MI_WFL_CATEGORY_FILESUBMIT_NOTIFYSBJ','[{X_SITENAME}] {X_MODULE} auto-notify : New link submitted in category');
+define('_MI_WFL_CATEGORY_FILESUBMIT_NOTIFY', 'Link Submitted');
+define('_MI_WFL_CATEGORY_FILESUBMIT_NOTIFYCAP', 'Notify me when a new link is submitted (awaiting approval) to the current category.');
+define('_MI_WFL_CATEGORY_FILESUBMIT_NOTIFYDSC', 'Receive notification when a new link is submitted (awaiting approval) to the current category.');
+define('_MI_WFL_CATEGORY_FILESUBMIT_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New link submitted in category');
 
-define('_MI_WFL_CATEGORY_NEWLINK_NOTIFY','New Link');
-define('_MI_WFL_CATEGORY_NEWLINK_NOTIFYCAP','Notify me when a new link is posted to the current category.');
-define('_MI_WFL_CATEGORY_NEWLINK_NOTIFYDSC','Receive notification when a new link is posted to the current category.');
-define('_MI_WFL_CATEGORY_NEWLINK_NOTIFYSBJ','[{X_SITENAME}] {X_MODULE} auto-notify : New link in category');
+define('_MI_WFL_CATEGORY_NEWLINK_NOTIFY', 'New Link');
+define('_MI_WFL_CATEGORY_NEWLINK_NOTIFYCAP', 'Notify me when a new link is posted to the current category.');
+define('_MI_WFL_CATEGORY_NEWLINK_NOTIFYDSC', 'Receive notification when a new link is posted to the current category.');
+define('_MI_WFL_CATEGORY_NEWLINK_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : New link in category');
 
-define('_MI_WFL_LINK_APPROVE_NOTIFY','Link Approved');
-define('_MI_WFL_LINK_APPROVE_NOTIFYCAP','Notify me when this link is approved.');
-define('_MI_WFL_LINK_APPROVE_NOTIFYDSC','Receive notification when this link is approved.');
-define('_MI_WFL_LINK_APPROVE_NOTIFYSBJ','[{X_SITENAME}] {X_MODULE} auto-notify : Link Approved');
+define('_MI_WFL_LINK_APPROVE_NOTIFY', 'Link Approved');
+define('_MI_WFL_LINK_APPROVE_NOTIFYCAP', 'Notify me when this link is approved.');
+define('_MI_WFL_LINK_APPROVE_NOTIFYDSC', 'Receive notification when this link is approved.');
+define('_MI_WFL_LINK_APPROVE_NOTIFYSBJ', '[{X_SITENAME}] {X_MODULE} auto-notify : Link Approved');
 
 define('_MI_WFL_AUTHOR_INFO', 'Developer Information');
 define('_MI_WFL_AUTHOR_NAME', 'Developer');
@@ -204,9 +204,11 @@ WF-PROJECT HAS BEEN PREVIOUSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES..');
 define('_MI_WFL_AUTHOR_CREDITSTEXT', 'The WF-Projects Team would like to thank the following people for their help and support during the development phase of this module.<br /></br />EdStacey, maumed, banned, krobi, Pnooka, MarcoFr, cosmodrum, placebo333, GibaPhp');
 define('_MI_WFL_AUTHOR_BUGFIXES', 'Bug Fix History');
 
-define('_MI_WFL_COPYRIGHT2','Copyright');
-define('_MI_WFL_COPYRIGHTIMAGE',
-       'Unless stated otherwise, this Module (WF-Links) and its images are copyright to the WF-Projects team.<br /><br />You have the permission to copy, edit and change WF-Links to suit your personal requirements. You agree not to modify, adapt and redistribute the source code of the Software without the express permission from the WF-Projects team.<br /><br />PageRank is a trademark of Google Inc.');
+define('_MI_WFL_COPYRIGHT2', 'Copyright');
+define(
+    '_MI_WFL_COPYRIGHTIMAGE',
+       'Unless stated otherwise, this Module (WF-Links) and its images are copyright to the WF-Projects team.<br /><br />You have the permission to copy, edit and change WF-Links to suit your personal requirements. You agree not to modify, adapt and redistribute the source code of the Software without the express permission from the WF-Projects team.<br /><br />PageRank is a trademark of Google Inc.'
+);
 
 define('_MI_WFL_SELECTFORUM', 'Select Forum:');
 define('_MI_WFL_SELECTFORUMDSC', 'Select the forum you have installed and will be used by WF-Links.');
@@ -218,9 +220,9 @@ define('_MI_WFL_DISPLAYFORUM3', 'PHPBB2 Module');
 // added by McDonald
 define('_MI_WFL_COUNTRY', 'Country:');
 define('_MI_WFL_EDITOR', 'Editor to use (admin):');
-define('_MI_WFL_EDITORCHOICE',"Select the editor to use for admin side. If you have a 'simple' install (e.g you use only XOOPS core editor class, provided in the standard xoops core package), then you can just select DHTML and Compact");
+define('_MI_WFL_EDITORCHOICE', "Select the editor to use for admin side. If you have a 'simple' install (e.g you use only XOOPS core editor class, provided in the standard xoops core package), then you can just select DHTML and Compact");
 define('_MI_WFL_EDITORUSER', 'Editor to use (user):');
-define('_MI_WFL_EDITORCHOICEUSER',"Select the editor to use for user side. If you have a 'simple' install (e.g you use only XOOPS core editor class, provided in the standard xoops core package), then you can just select DHTML and Compact");
+define('_MI_WFL_EDITORCHOICEUSER', "Select the editor to use for user side. If you have a 'simple' install (e.g you use only XOOPS core editor class, provided in the standard xoops core package), then you can just select DHTML and Compact");
 define('_MI_WFL_FORM_DHTML', 'DHTML');
 define('_MI_WFL_FORM_COMPACT', 'Compact');
 define('_MI_WFL_FORM_SPAW', 'Spaw Editor');
@@ -250,8 +252,8 @@ define('_MI_WFL_USERTAGDESCR', 'User can submit Tags:');
 define('_MI_WFL_USERTAGDSC', 'Select Yes if user is allowed to submit tags.');
 
 // Version 1.05 RC5
-define('_MI_WFL_DATEFORMATADMIN','Timestamp administration:');
-define('_MI_WFL_DATEFORMATADMINDSC','Default admininstration Timestamp for WF-Links<br />See <a href="http://jp.php.net/manual/en/function.date.php" target="_blank">PHP manual</a>');
+define('_MI_WFL_DATEFORMATADMIN', 'Timestamp administration:');
+define('_MI_WFL_DATEFORMATADMINDSC', 'Default admininstration Timestamp for WF-Links<br />See <a href="http://jp.php.net/manual/en/function.date.php" target="_blank">PHP manual</a>');
 define('_MI_WFL_USEADDRESSDESCR', 'Use address and map options?');
 define('_MI_WFL_USEADDRESSDSC', 'Select Yes to use the address and maps feature.');
 define('_MI_WFL_HEADERPRINT', '[PRINT OPTIONS] Print page header');
@@ -301,8 +303,8 @@ define('_MI_WFL_SMODREQUEST', 'Modified');
 define('_MI_WFL_SBROKENSUBMIT', 'Broken');
 define('_MI_WFL_DOCUMENTATION', 'Docs');
 
-define('_MI_WFL_ADD_LINK','Add Link');
-define('_MI_WFL_ADD_CATEGORY','Add Category');
+define('_MI_WFL_ADD_LINK', 'Add Link');
+define('_MI_WFL_ADD_CATEGORY', 'Add Category');
 
 //1.11 Beta 1
 define('_MI_WFL_HELP_OVERVIEW', 'Overview');

@@ -104,16 +104,16 @@ class fileList
      *
      * @return string
      */
-    public function &show_selection()
+    public function show_selection()
     {
-        $ret = "<select size='" . $this->size() . "' name='$this->value()'>";
+        $ret = "<select size='" . $this->getSize() . "' name='$this->getValue()'>";
         if ($this->emptyselect) {
-            $ret .= "<option value='" . $this->value() . "'>----------------------</option>";
+            $ret .= "<option value='" . $this->getValue() . "'>----------------------</option>";
         }
         foreach ($this->filelist as $content) {
             $opt_selected = '';
 
-            if ($content[0] == $this->selected()) {
+            if ($content[0] == $this->getSelected()) {
                 $opt_selected = 'selected';
             }
             $ret .= "<option value='" . $content . "' $opt_selected>" . $content . '</option>';
@@ -128,7 +128,7 @@ class fileList
      *
      * @return array
      */
-    public function &getListTypeAsArray()
+    public function getListTypeAsArray()
     {
         $filelist = array();
         switch (trim($this->type)) {
@@ -182,12 +182,12 @@ class fileList
     /**
      * @return null|unknown
      */
-    public function value()
+    public function getValue()
     {
         return $this->value;
     }
 
-    public function selected()
+    public function getSelected()
     {
         return $this->selected;
     }
@@ -195,7 +195,7 @@ class fileList
     /**
      * @return string
      */
-    public function paths()
+    public function getPath()
     {
         return $this->path;
     }
@@ -203,27 +203,27 @@ class fileList
     /**
      * @return int
      */
-    public function size()
+    public function getSize()
     {
         return $this->size;
     }
 
-    public function emptyselect()
+    public function getEmptySelect()
     {
         return $this->emptyselect;
     }
 
-    public function type()
+    public function getType()
     {
         return $this->type;
     }
 
-    public function prefix()
+    public function getPrefix()
     {
         return $this->prefix;
     }
 
-    public function suffix()
+    public function getSuffix()
     {
         return $this->suffix;
     }

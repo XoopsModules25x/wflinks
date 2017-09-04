@@ -202,4 +202,4 @@ define('_MD_WFL_EMAIL', 'Email');
 define('_MD_WFL_LINK_CREATEADDRESS', '<b>Подробное описание</b>');
 
 //Version 1.06 RC2
-define('_MD_WFL_STOPIT','STOP IT YOU FOOL!!');
+define('_MD_WFL_STOPIT', 'STOP IT YOU FOOL!!');

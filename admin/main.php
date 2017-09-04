@@ -175,7 +175,7 @@ function edit($lid = 0)
     }
 
     // Screenshot
-    $graph_array       = &wflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['screenshots'], $type = 'images');
+    $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['screenshots'], $type = 'images');
     $indeximage_select = new XoopsFormSelect('', 'screenshot', $screenshot);
     $indeximage_select->addOptionArray($graph_array);
     $indeximage_select->setExtra("onchange = 'showImgSelected(\"image\", \"screenshot\", \"" . $xoopsModuleConfig['screenshots'] . '", "", "' . XOOPS_URL . "\")'");
@@ -284,7 +284,7 @@ function edit($lid = 0)
 
     // Select forum
     ob_start();
-    wflLists:: getForum($xoopsModuleConfig['selectforum'], $forumid);
+    WflLists:: getForum($xoopsModuleConfig['selectforum'], $forumid);
     $sform->addElement(new XoopsFormLabel(_AM_WFL_LINK_DISCUSSINFORUM, ob_get_contents()));
     ob_end_clean();
 

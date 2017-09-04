@@ -92,7 +92,7 @@ switch (strtolower($op)) {
         ob_end_clean();
 
         if ($rootpath > 0) {
-            $graph_array       = &wflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'images');
+            $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'images');
             $indeximage_select = new XoopsFormSelect('', 'linkfile', '');
             $indeximage_select->addOptionArray($graph_array);
             $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"linkfile\", \"" . $dirarray[$rootpath] . '", "", "' . XOOPS_URL . "\")'");

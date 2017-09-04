@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  * Module: WF-links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -202,4 +202,4 @@ define('_MD_WFL_EMAIL', 'Email');
 define('_MD_WFL_LINK_CREATEADDRESS', '<b>Address form</b>');
 
 //Version 1.06 RC2
-define('_MD_WFL_STOPIT','STOP IT YOU FOOL!!');
+define('_MD_WFL_STOPIT', 'STOP IT YOU FOOL!!');
