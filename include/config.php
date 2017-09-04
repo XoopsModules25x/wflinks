@@ -52,7 +52,7 @@ if (!defined($capsDirName . '_DIRNAME')) {
 
 //Configurator
 return (object)[
-    'name'          => 'Module Configurator',
+    'name'          => strtoupper($moduleDirName) .' Module Configurator',
     'paths'         => [
         'dirname'    => $moduleDirName,
         'admin'      => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/admin',
@@ -65,13 +65,13 @@ return (object)[
         constant($capsDirName . '_UPLOAD_PATH'),
         constant($capsDirName . '_UPLOAD_PATH') . '/category',
         constant($capsDirName . '_UPLOAD_PATH') . '/screenshots',
-        //        XOOPS_UPLOAD_PATH . '/flags'
+        XOOPS_UPLOAD_PATH . '/flags'
     ],
     'blankFiles'    => [
         constant($capsDirName . '_UPLOAD_PATH'),
         constant($capsDirName . '_UPLOAD_PATH') . '/category',
         constant($capsDirName . '_UPLOAD_PATH') . '/screenshots',
-        //        XOOPS_UPLOAD_PATH . '/flags'
+        XOOPS_UPLOAD_PATH . '/flags'
     ],
 
     'templateFolders' => [
@@ -84,6 +84,7 @@ return (object)[
         '/sql/wflinks.sql',
         '/class/wfl_lists.php',
         '/class/class_thumbnail.php',
+        '/vcard.php',
     ],
     'oldFolders'      => [
         '/images',

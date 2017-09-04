@@ -13,8 +13,8 @@ require_once __DIR__ . '/admin_header.php';
 
 global $xoopsModuleConfig;
 
-$op  = WfLinksUtility::cleanRequestVars($_REQUEST, 'op', '');
-$lid = (int)WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$op  = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$lid = (int)WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
  * @param $xt WflinksXoopsTree
@@ -100,7 +100,7 @@ switch (strtolower($op)) {
     case 'main':
     default:
         xoops_cp_header();
-        //WfLinksUtility::getAdminMenu( _AM_WFL_MALTCAT );
+        //WflinksUtility::getAdminMenu( _AM_WFL_MALTCAT );
         echo "
             <fieldset style='border: #e8e8e8 1px solid;'><legend style='display: inline; font-weight: bold; color: #0A3760;'>" . _AM_WFL_ALTCAT_MODIFYF . "</legend>\n
             <div style='padding: 8px;'>" . _AM_WFL_ALTCAT_INFOTEXT . "</div>\n
@@ -110,7 +110,7 @@ switch (strtolower($op)) {
         echo "<div style='text-align: left; font-size: larger;'><h4>" . $wfmyts->htmlSpecialCharsStrip(trim($_GET['title'])) . '</h4></div>';
         // Get an array of all alternate categories for this topic
         $sql     = $xoopsDB->query('SELECT cid FROM ' . $xoopsDB->prefix('wflinks_altcat') . ' WHERE lid=' . $lid . ' ORDER BY lid');
-        $altcats = array();
+        $altcats = [];
         while ($altcat = $xoopsDB->fetchArray($sql)) {
             $altcats[$altcat['cid']] = true;
         }

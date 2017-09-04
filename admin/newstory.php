@@ -34,7 +34,7 @@ $story->setNosmiley($nosmiley);
 $story->store();
 $notificationHandler = xoops_getHandler('notification');
 
-$tags               = array();
+$tags               = [];
 $tags['STORY_NAME'] = $story->title();
 $moduleHandler      = xoops_getHandler('module');
 $newsModule         = $moduleHandler->getByDirname('news');

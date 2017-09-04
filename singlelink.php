@@ -13,8 +13,8 @@ require_once __DIR__ . '/header.php';
 
 global $xoopsTpl, $xoTheme;
 
-$lid = (int)WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
-$cid = (int)WfLinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
+$lid = (int)WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$cid = (int)WflinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
 
 $sql2 = 'SELECT count(*) FROM '
         . $xoopsDB->prefix('wflinks_links')
@@ -34,7 +34,7 @@ $sql2 = 'SELECT count(*) FROM '
         . '))';
 list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql2));
 
-if (0 == $count && false === WfLinksUtility::checkGroups($cid = 0)) {
+if (0 == $count && false === WflinksUtility::checkGroups($cid = 0)) {
     redirect_header('index.php', 1, _MD_WFL_MUSTREGFIRST);
 }
 
@@ -57,12 +57,12 @@ require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/address.php';
 
 // tags support
-if (WfLinksUtility::isTagModuleIncluded()) {
+if (WflinksUtility::isTagModuleIncluded()) {
     require_once XOOPS_ROOT_PATH . '/modules/tag/include/tagbar.php';
     $xoopsTpl->assign('tagbar', tagBar($link_arr['lid'], 0));
 }
 
-//$link['imageheader'] = WfLinksUtility::getImageHeader();
+//$link['imageheader'] = WflinksUtility::getImageHeader();
 $link['id']           = $link_arr['lid'];
 $link['cid']          = $link_arr['cid'];
 $link['description2'] = $wfmyts->displayTarea($link_arr['description'], 1, 1, 1, 1, 1);
@@ -80,7 +80,7 @@ $voip    = $link_arr['voip'];
 $fax     = $link_arr['fax'];
 $email   = $link_arr['email'];
 $vat     = $link_arr['vat'];
-$country = WfLinksUtility::getCountryName($link_arr['country']);
+$country = WflinksUtility::getCountryName($link_arr['country']);
 
 if ($street1 === '' || $town === '' || $xoopsModuleConfig['useaddress'] == 0) {
     $link['addryn'] = 0;
@@ -120,7 +120,7 @@ if ($xoopsModuleConfig['useaddress'] == 1) {
 if ($link_arr['street1'] === true || $link_arr['tel'] === true || $link_arr['mobile'] === true || $link_arr['fax'] === true
     || $link_arr['email'] === true) {
     $xoopsTpl->assign('contactdetails', '<b>' . _MD_WFL_ADDRESS . '</b>');
-    $xoopsTpl->assign('vcard', '<br>' . '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/vcard.php?lid=' . $link_arr['lid'] . '"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/vcard.png" title="vCard" alt="vCard"></a>');
+    $xoopsTpl->assign('vcard', '<br>' . '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/class/vcard.php?lid=' . $link_arr['lid'] . '"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/vcard.png" title="vCard" alt="vCard"></a>');
 }
 
 // Maps
@@ -150,7 +150,7 @@ $link['path'] = $pathstring;
 // Start of meta tags
 $maxWords = 100;
 $words    = array();
-$words    = explode(' ', WfLinksUtility::convertHtml2text($link_arr['description']));
+$words    = explode(' ', WflinksUtility::convertHtml2text($link_arr['description']));
 $newWords = array();
 $i        = 0;
 

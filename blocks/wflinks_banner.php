@@ -18,7 +18,7 @@ function b_wflinks_banner_show($options)
     $moduleDirName = basename(__DIR__);
     global $xoopsDB;
 
-    $block         = array();
+    $block         = [];
     $time          = time();
     $moduleHandler = xoops_getHandler('module');
     $wflModule     = $moduleHandler->getByDirname($moduleDirName);
@@ -33,7 +33,7 @@ function b_wflinks_banner_show($options)
         $impmade    = $myrow['impmade'];
         $clicks     = $myrow['clicks'];
         $imptotal   = $myrow['imptotal'];
-        $bannerload = array();
+        $bannerload = [];
         $result2    = $xoopsDB->query('SELECT name FROM ' . $xoopsDB->prefix('bannerclient') . ' WHERE cid=' . (int)$myrow['cid']);
         $myclient   = $xoopsDB->fetchArray($result2);
         if ($impmade == 0) {

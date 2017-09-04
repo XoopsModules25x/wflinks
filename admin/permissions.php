@@ -15,10 +15,10 @@ require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 xoops_cp_header();
-//WfLinksUtility::getAdminMenu( _AM_WFL_PERM_MANAGEMENT );
+//WflinksUtility::getAdminMenu( _AM_WFL_PERM_MANAGEMENT );
 
 $permtoset                = isset($_POST['permtoset']) ? (int)$_POST['permtoset'] : 1;
-$selected                 = array('', '', '', '', '');
+$selected                 = ['', '', '', '', ''];
 $selected[$permtoset - 1] = ' selected';
 echo "<form method='post' name='fselperm' action='permissions.php'><table border=0>
 <tr><td><select name='permtoset' onChange='document.fselperm.submit()'>
