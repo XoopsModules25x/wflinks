@@ -11,24 +11,24 @@
 
 require_once __DIR__ . '/admin_header.php';
 
-$op  = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$rid = wfl_cleanRequestVars($_REQUEST, 'rid', 0);
-$lid = wfl_cleanRequestVars($_REQUEST, 'lid', 0);
+$op  = WfLinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$rid = WfLinksUtility::cleanRequestVars($_REQUEST, 'rid', 0);
+$lid = WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'delvote':
         $sql    = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_votedata') . ' WHERE ratingid=' . $rid;
         $result = $xoopsDB->queryF($sql);
-        wfl_updaterating($lid);
+        WfLinksUtility::updateRating($lid);
         redirect_header('votedata.php', 1, _AM_WFL_VOTEDELETED);
         break;
 
     case 'main':
     default:
-        $start = wfl_cleanRequestVars($_REQUEST, 'start', 0);
+        $start = WfLinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
         xoops_cp_header();
-        //wfl_adminmenu( _AM_WFL_VOTE_RATINGINFOMATION );
-        $_vote_data = wfl_getVoteDetails($lid);
+        //WfLinksUtility::getAdminMenu( _AM_WFL_VOTE_RATINGINFOMATION );
+        $_vote_data = WfLinksUtility::getVoteDetails($lid);
 
         $text_info = "
         <table width='100%'>

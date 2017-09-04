@@ -13,8 +13,8 @@ $moduleDirName = basename(__DIR__);
 
 require_once __DIR__ . '/../../mainfile.php';
 include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/config.php';
-include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/functions.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/class_thumbnail.php';
+include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/utility.php';
+require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/WfThumbsNails.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.php';
 

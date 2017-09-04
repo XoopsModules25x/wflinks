@@ -13,8 +13,8 @@ require_once __DIR__ . '/admin_header.php';
 
 global $xoopsModuleConfig;
 
-$op  = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$cid = wfl_cleanRequestVars($_REQUEST, 'cid', 0);
+$op  = WfLinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$cid = WfLinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
 
 switch (strtolower($op)) {
     case 'save':
@@ -61,7 +61,7 @@ switch (strtolower($op)) {
 
         $sform = new XoopsThemeForm(_AM_WFL_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $sform->addElement(new XoopsFormText(_AM_WFL_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading), false);
-        $graph_array       = &wflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'], $type = 'images');
+        $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'], $type = 'images');
         $indeximage_select = new XoopsFormSelect('', 'indeximage', $indeximage);
         $indeximage_select->addOptionArray($graph_array);
         $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"indeximage\", \"" . $xoopsModuleConfig['mainimagedir'] . '", "", "' . XOOPS_URL . "\")'");
@@ -74,7 +74,7 @@ switch (strtolower($op)) {
         }
         $sform->addElement($indeximage_tray);
 
-        $editor = wfl_getWysiwygForm(_AM_WFL_IPAGE_CHEADING, 'indexheader', $indexheader, 15, 60, '');
+        $editor = WfLinksUtility::getWysiwygForm(_AM_WFL_IPAGE_CHEADING, 'indexheader', $indexheader, 15, 60, '');
         $sform->addElement($editor, false);
 
         $headeralign_select = new XoopsFormSelect(_AM_WFL_IPAGE_CHEADINGA, 'indexheaderalign', $indexheaderalign);

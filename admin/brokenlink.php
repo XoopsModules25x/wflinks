@@ -13,13 +13,13 @@ require_once __DIR__ . '/admin_header.php';
 
 global $imagearray, $xoopsModule;
 
-$op  = wfl_cleanRequestVars($_REQUEST, 'op', '');
-$lid = wfl_cleanRequestVars($_REQUEST, 'lid', 0);
+$op  = WfLinksUtility::cleanRequestVars($_REQUEST, 'op', '');
+$lid = WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'updatenotice':
-        $ack = wfl_cleanRequestVars($_REQUEST, 'ack', 0);
-        $con = wfl_cleanRequestVars($_REQUEST, 'con', 1);
+        $ack = WfLinksUtility::cleanRequestVars($_REQUEST, 'ack', 0);
+        $con = WfLinksUtility::cleanRequestVars($_REQUEST, 'con', 1);
 
         if ($ack && !$con) {
             $acknowledged = ($ack == 0) ? 1 : 0;
@@ -72,7 +72,7 @@ switch (strtolower($op)) {
         $totalbrokenlinks = $xoopsDB->getRowsNum($result);
 
         xoops_cp_header();
-        //wfl_adminmenu( _AM_WFL_BROKEN_FILE );
+        //WfLinksUtility::getAdminMenu( _AM_WFL_BROKEN_FILE );
         echo "
         <fieldset>
          <legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_BROKEN_REPORTINFO . "</legend>\n

@@ -14,7 +14,7 @@ require_once __DIR__ . '/header.php';
 global $wfmyts, $xoTheme;
 
 // Check if linkload POSTER is voting (UNLESS Anonymous users allowed to post)
-$lid = wfl_cleanRequestVars($_REQUEST, 'lid', 0);
+$lid = WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid = (int)$lid;
 
 $ip         = getenv('REMOTE_ADDR');
@@ -51,9 +51,9 @@ if (!empty($_POST['submit'])) {
     // Make sure only 1 anonymous from an IP in a single day.
     $anonwaitdays = 1;
     $ip           = getenv('REMOTE_ADDR');
-    $lid          = wfl_cleanRequestVars($_REQUEST, 'lid', 0);
-    $cid          = wfl_cleanRequestVars($_REQUEST, 'cid', 0);
-    $rating       = wfl_cleanRequestVars($_REQUEST, 'rating', 0);
+    $lid          = WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+    $cid          = WfLinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
+    $rating       = WfLinksUtility::cleanRequestVars($_REQUEST, 'rating', 0);
     $title        = $wfmyts->addSlashes(trim($_POST['title']));
     $lid          = (int)$lid;
     $cid          = (int)$cid;
@@ -70,7 +70,7 @@ if (!empty($_POST['submit'])) {
         $ratemessage = _MD_WFL_ERROR;
     } else {
         // All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
-        wfl_updaterating($lid);
+        WfLinksUtility::updateRating($lid);
         $ratemessage = _MD_WFL_VOTEAPPRE . '<br>' . sprintf(_MD_WFL_THANKYOU, $xoopsConfig['sitename']);
     }
     redirect_header('singlelink.php?cid=' . $cid . '&amp;lid=' . $lid, 4, $ratemessage);
@@ -78,13 +78,13 @@ if (!empty($_POST['submit'])) {
     $GLOBALS['xoopsOption']['template_main'] = 'wflinks_ratelink.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
 
-    $catarray['imageheader'] = wfl_imageheader();
-    $cid                     = wfl_cleanRequestVars($_REQUEST, 'cid', 0);
+    $catarray['imageheader'] = WfLinksUtility::getImageHeader();
+    $cid                     = WfLinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
     $cid                     = (int)$cid;
 
-    $catarray['imageheader'] = wfl_imageheader();
-    $catarray['letters']     = wfl_letters();
-    $catarray['toolbar']     = wfl_toolbar();
+    $catarray['imageheader'] = WfLinksUtility::getImageHeader();
+    $catarray['letters']     = WfLinksUtility::getLetters();
+    $catarray['toolbar']     = WfLinksUtility::getToolbar();
     $xoopsTpl->assign('catarray', $catarray);
 
     $result = $xoopsDB->query('SELECT title FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid);

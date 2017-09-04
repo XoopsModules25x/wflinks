@@ -82,7 +82,7 @@ function vcard_quoted_printable_encode($input, $line_max = 76)
     $escape    = '=';
     $output    = '';
 
-    for ($j = 0; $j < count($lines); ++$j) {
+    for ($j = 0, $jMax = count($lines); $j < $jMax; ++$j) {
         $line    = $lines[$j];
         $linlen  = strlen($line);
         $newline = '';
@@ -196,8 +196,8 @@ class vCard
         $region = '',
         $zip = '',
         $country = '',
-        $type = ''
-    ) {
+        $type = '')
+    {
         // $type may be DOM | INTL | POSTAL | PARCEL | HOME | WORK or any combination of these: e.g. "WORK;PARCEL;POSTAL"
         $key = 'ADR';
         if ($type !== '') {
@@ -229,8 +229,8 @@ class vCard
         $region = '',
         $zip = '',
         $country = '',
-        $type = 'HOME;POSTAL'
-    ) {
+        $type = 'HOME;POSTAL')
+    {
         $label = '';
         if ($postoffice !== '') {
             $label .= "$postoffice\r\n";
@@ -330,7 +330,7 @@ class vCard
 
 require_once __DIR__ . '/header.php';
 
-$lid = wfl_cleanRequestVars($_REQUEST, 'lid', 0);
+$lid = WfLinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid = (int)$lid;
 
 global $xoopsDB;
@@ -343,7 +343,7 @@ $street2 = $vcard_arr['street2'];
 $town    = $vcard_arr['town'];
 $zip     = $vcard_arr['zip'];
 $state   = $vcard_arr['state'];
-$country = wfl_countryname($vcard_arr['country']);
+$country = WfLinksUtility::getCountryName($vcard_arr['country']);
 $tel     = $vcard_arr['tel'];
 $mobile  = $vcard_arr['mobile'];
 $fax     = $vcard_arr['fax'];
@@ -371,10 +371,9 @@ $v->setName('', '', '', '');
 // $v -> setBirthday("1960-07-31");
 
 // Address
+$street = $street1;
 if ($street2) {
     $street = $street1 . ', ' . $street2;
-} else {
-    $street = $street1;
 }
 $v->setAddress('', '', $street, $town, $state, $zip, $country, 'WORK');
 

@@ -32,7 +32,7 @@ if (isset($_GET)) {
  */
 function createcat($cid = 0)
 {
-    require_once __DIR__ . '/../class/wfl_lists.php';
+    require_once __DIR__ . '/../class/wfllists.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     global $xoopsDB, $wfmyts, $xoopsModuleConfig, $totalcats, $xoopsModule;
@@ -53,7 +53,7 @@ function createcat($cid = 0)
     $client_id    = 0;
     $banner_id    = 0;
     $heading      = _AM_WFL_CCATEGORY_CREATENEW;
-    $totalcats    = wfl_totalcategory();
+    $totalcats    = WfLinksUtility::getTotalCategory();
 
     if ($cid) {
         $sql          = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . " WHERE cid=$cid";
@@ -100,7 +100,7 @@ function createcat($cid = 0)
         ob_end_clean();
     }
 
-    $graph_array       = &wflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'], $type = 'images');
+    $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'], $type = 'images');
     $indeximage_select = new XoopsFormSelect('', 'imgurl', $imgurl);
     $indeximage_select->addOptionArray($graph_array);
     $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"imgurl\", \"" . $xoopsModuleConfig['catimage'] . '", "", "' . XOOPS_URL . "\")'");
@@ -113,7 +113,7 @@ function createcat($cid = 0)
     }
     $sform->addElement($indeximage_tray);
 
-    $editor = wfl_getWysiwygForm(_AM_WFL_FCATEGORY_DESCRIPTION, 'description', $description, 15, 60, '');
+    $editor = WfLinksUtility::getWysiwygForm(_AM_WFL_FCATEGORY_DESCRIPTION, 'description', $description, 15, 60, '');
     $sform->addElement($editor, false);
 
     // Select Client/Sponsor
@@ -218,7 +218,7 @@ switch ($op) {
             $cid = isset($_POST['cid']) ? $_POST['cid'] : $_GET['cid'];
 
             xoops_cp_header();
-            //wfl_adminmenu(_AM_WFL_MCATEGORY);
+            //WfLinksUtility::getAdminMenu(_AM_WFL_MCATEGORY);
 
             require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
             $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
@@ -331,12 +331,10 @@ switch ($op) {
 
         if ($ok == 1) {
             // get all subcategories under the specified category
-            $arr    = $mytree->getAllChildId($cid);
-            $lcount = count($arr);
-
-            for ($i = 0; $i < $lcount; ++$i) {
+            $subcategories    = $mytree->getAllChildId($cid);
+            foreach ($subcategories as $subcategory) {
                 // get all links in each subcategory
-                $result = $xoopsDB->query('SELECT lid FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE cid=' . $arr[$i] . '');
+                $result = $xoopsDB->query('SELECT lid FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE cid=' . $subcategory . ' ');
                 // now for each linkload, delete the text data and vote ata associated with the linkload
                 while (list($lid) = $xoopsDB->fetchRow($result)) {
                     $sql = sprintf('DELETE FROM %s WHERE lid = %u', $xoopsDB->prefix('wflinks_votedata'), $lid);
@@ -348,10 +346,10 @@ switch ($op) {
                     xoops_comment_delete($xoopsModule->getVar('mid'), $lid);
                 }
                 // all links for each subcategory are deleted, now delete the subcategory data
-                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_cat'), $arr[$i]);
+                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_cat'), $subcategory);
                 $xoopsDB->query($sql);
                 // delete altcat entries
-                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_altcat'), $arr[$i]);
+                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_altcat'), $subcategory);
                 $xoopsDB->query($sql);
             }
             // all subcategory and associated data are deleted, now delete category data and its associated data
@@ -388,7 +386,7 @@ switch ($op) {
     case 'modCat':
         $cid = isset($_POST['cid']) ? $_POST['cid'] : 0;
         xoops_cp_header();
-        //wfl_adminmenu(_AM_WFL_MCATEGORY);
+        //WfLinksUtility::getAdminMenu(_AM_WFL_MCATEGORY);
         createcat($cid);
         xoops_cp_footer();
         break;
@@ -396,7 +394,7 @@ switch ($op) {
     case 'main':
     default:
         xoops_cp_header();
-        //wfl_adminmenu(_AM_WFL_MCATEGORY);
+        //WfLinksUtility::getAdminMenu(_AM_WFL_MCATEGORY);
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         $adminObject->addItemButton(_MI_WFL_ADD_LINK, 'main.php?op=edit', 'add', '');
@@ -406,7 +404,7 @@ switch ($op) {
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         $mytree    = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
         $sform     = new XoopsThemeForm(_AM_WFL_CCATEGORY_MODIFY, 'category', xoops_getenv('PHP_SELF'), 'post', true);
-        $totalcats = wfl_totalcategory();
+        $totalcats = WfLinksUtility::getTotalCategory();
 
         if ($totalcats > 0) {
             ob_start();

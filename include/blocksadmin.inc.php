@@ -282,9 +282,9 @@ if ($op === 'delete_ok') {
         redirect_header('myblocksadmin.php', 4, 'Invalid block');
     }
     $myblock->delete();
-    if ($myblock->getVar('template') !== '' && !defined('XOOPS_ORETEKI')) {
+    if (!defined('XOOPS_ORETEKI') && '' !== $myblock->getVar('template')) {
         $tplfileHandler = xoops_getHandler('tplfile');
-        $btemplate      =& $tplfileHandler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $bid);
+        $btemplate      = $tplfileHandler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $bid);
         if (count($btemplate) > 0) {
             $tplman->delete($btemplate[0]);
         }
@@ -418,7 +418,7 @@ if ($op === 'clone_ok') {
     }
 
     // for backward compatibility
-    // $cblock =& $block->clone(); or $cblock =& $block->xoopsClone();
+    // $cblock = $block->clone(); or $cblock = $block->xoopsClone();
     $cblock = new XoopsBlock();
     foreach ($block->vars as $k => $v) {
         $cblock->assignVar($k, $v['value']);
@@ -450,7 +450,7 @@ if ($op === 'clone_ok') {
             $tplfileHandler = xoops_getHandler('tplfile');
             $btemplate = $tplfileHandler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $bid);
             if (count($btemplate) > 0) {
-                $tplclone =& $btemplate[0]->clone();
+                $tplclone = $btemplate[0]->clone();
                 $tplclone->setVar('tpl_id', 0);
                 $tplclone->setVar('tpl_refid', $newid);
                 $tplman->insert($tplclone);
@@ -464,7 +464,7 @@ if ($op === 'clone_ok') {
     }
 
     /*  global $xoopsUser;
-        $groups =& $xoopsUser->getGroups();
+        $groups = $xoopsUser->getGroups();
         $count = count($groups);
         for ($i = 0; $i < $count; ++$i) {
             $sql = "INSERT INTO ".$db->prefix('group_permission')." (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (".$groups[$i].", ".$newid.", 1, 'block_read')";
@@ -507,8 +507,8 @@ function myblocksadmin_update_block(
     $bctype,
     $bcachetime,
     $bmodule,
-    $options = array()
-) {
+    $options = array())
+{
     global $xoopsConfig;
     /* if (empty($bmodule)) {
         xoops_cp_header();

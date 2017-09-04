@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class: wflLists
+ * Class: WflLists
  *
  * Module: WF-Links
  * Version: v1.0.3
@@ -10,7 +10,7 @@
  * Team: WF-Projects
  * Licence: GNU
  */
-class wflLists
+class WflLists
 {
     public $value;
     public $selected;
@@ -39,8 +39,8 @@ class wflLists
         $emptyselect = 0,
         $type = 0,
         $prefix = '',
-        $suffix = ''
-    ) {
+        $suffix = '')
+    {
         $this->value       = $value;
         $this->selection   = $selected;
         $this->path        = $path;
@@ -50,20 +50,20 @@ class wflLists
     }
 
     /**
-     * @param $this_array
+     * @param array $this_array
      *
      * @return string
      */
-    public function &getarray($this_array)
+    public function getArray($this_array)
     {
-        $ret = "<select size='" . $this->size() . "' name='$this->value()'>";
+        $ret = "<select size='" . $this->getSize() . "' name='". $this->getValue() ."'>";
         if ($this->emptyselect) {
-            $ret .= "<option value='" . $this->value() . "'>----------------------</option>";
+            $ret .= "<option value='" . $this->getValue() . "'>----------------------</option>";
         }
         foreach ($this_array as $content) {
             $opt_selected = '';
 
-            if ($content[0] == $this->selected()) {
+            if ($content[0] == $this->getSelected()) {
                 $opt_selected = 'selected';
             }
             $ret .= "<option value='" . $content . "' $opt_selected>" . $content . '</option>';
@@ -78,7 +78,7 @@ class wflLists
      * @param $dirname
      * @return array
      */
-    public function &getDirListAsArray($dirname)
+    public function getDirListAsArray($dirname)
     {
         $dirlist = array();
         if (is_dir($dirname) && $handle = opendir($dirname)) {
@@ -105,7 +105,7 @@ class wflLists
      *
      * @return array
      */
-    public static function &getListTypeAsArray($dirname, $type = '', $prefix = '', $noselection = 1)
+    public static function getListTypeAsArray($dirname, $type = '', $prefix = '', $noselection = 1)
     {
         $filelist = array();
         switch (trim($type)) {
@@ -158,7 +158,7 @@ class wflLists
      *
      * @return mixed
      */
-    public static function &getForum($type = 1, $selected)
+    public static function getForum($type = 1, $selected)
     {
         global $xoopsDB;
         switch (xoops_trim($type)) {
@@ -198,12 +198,12 @@ class wflLists
     /**
      * @return null
      */
-    public function value()
+    public function getValue()
     {
         return $this->value;
     }
 
-    public function selected()
+    public function getSelected()
     {
         return $this->selected;
     }
@@ -211,7 +211,7 @@ class wflLists
     /**
      * @return string
      */
-    public function paths()
+    public function getPath()
     {
         return $this->path;
     }
@@ -219,7 +219,7 @@ class wflLists
     /**
      * @return int
      */
-    public function size()
+    public function getSize()
     {
         return $this->size;
     }
@@ -227,7 +227,7 @@ class wflLists
     /**
      * @return int
      */
-    public function emptyselect()
+    public function getEmptySelect()
     {
         return $this->emptyselect;
     }
@@ -235,17 +235,17 @@ class wflLists
     /**
      * @return int
      */
-    public function type()
+    public function getType()
     {
         return $this->type;
     }
 
-    public function prefix()
+    public function getPrefix()
     {
         return $this->prefix;
     }
 
-    public function suffix()
+    public function getSuffix()
     {
         return $this->suffix;
     }

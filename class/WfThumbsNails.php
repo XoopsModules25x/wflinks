@@ -19,7 +19,7 @@ if (!defined('DEFAULT_PATH')) {
  * @copyright Using this class without our permission or removing this notice voids the license agreement.
  * @access    public
  */
-class wfThumbsNails
+class WfThumbsNails
 {
     public $_img_name     = 'blank.gif';
     public $_img_path     = 'uploads';
@@ -62,7 +62,7 @@ class wfThumbsNails
     public function __construct($img_name = null, $img_path = null, $img_savepath = null)
     {
         if (!preg_match("/\.(jpg|gif|png|jpeg)$/i", $img_name)) {
-            return false;
+//            return false;
         }
 
         /*
@@ -90,15 +90,15 @@ class wfThumbsNails
 
         if (!is_dir($path_to_check)) {
             if (false === mkdir("$path_to_check", 0777)) {
-                return false;
+//                return false;
             }
         }
 
-        return null;
+//        return null;
     }
 
     /**
-     * wfThumbsNails::setUseThumbs()
+     * WfThumbsNails::setUseThumbs()
      *
      * @param integer $value
      *
@@ -110,7 +110,7 @@ class wfThumbsNails
     }
 
     /**
-     * wfThumbsNails::setImageType()
+     * WfThumbsNails::setImageType()
      *
      * @param string $value
      *
@@ -122,7 +122,7 @@ class wfThumbsNails
     }
 
     /**
-     * ThumbsNails::do_thumb()
+     * ThumbsNails::createThumb()
      *
      * @param int $img_width
      * @param int $img_height
@@ -132,42 +132,42 @@ class wfThumbsNails
      *
      * @return bool|string
      */
-    public function do_thumb(
+    public function createThumb(
         $img_width = null,
         $img_height = null,
         $img_quality = null,
         $img_update = null,
-        $img_aspect = null
-    ) {
+        $img_aspect = null)
+    {
         $this->_source_path  = XOOPS_ROOT_PATH . "/{$this->_img_path}";
         $this->_save_path    = XOOPS_ROOT_PATH . "/{$this->_img_path}/{$this->_img_savepath}";
         $this->_source_url   = XOOPS_URL . "/{$this->_img_path}";
         $this->_source_image = "{$this->_source_path}/{$this->_img_name}";
 
-        if (isset($img_width) && null !== $img_width) {
+        if (null !== $img_width && isset($img_width)) {
             $this->img_width = (int)$img_width;
         }
 
-        if (isset($img_height) && null !== $img_height) {
+        if (null !== $img_height && isset($img_height)) {
             $this->img_height = (int)$img_height;
         }
 
-        if (isset($img_quality) && null !== $img_quality) {
+        if (null !== $img_quality && isset($img_quality)) {
             $this->img_quality = (int)$img_quality;
         }
 
-        if (isset($img_update) && null !== $img_update) {
+        if (null !== $img_update && isset($img_update)) {
             $this->img_update = (int)$img_update;
         }
 
-        if (isset($img_aspect) && null !== $img_aspect) {
+        if (null !== $img_aspect && isset($img_aspect)) {
             $this->img_aspect = (int)$img_aspect;
         }
 
         /**
          * Return false if we are not using thumb nails
          */
-        if (!$this->use_thumbs()) {
+        if (!$this->isUsingThumbs()) {
             return $this->_source_url . '/' . $this->_img_name;
         }
         /**
@@ -180,15 +180,15 @@ class wfThumbsNails
         /**
          * Return false if the paths to the file are wrong
          */
-        if (!$this->check_paths()) {
+        if (!$this->checkPaths()) {
             return DEFAULT_PATH;
         }
 
-        if (!$this->image_check()) {
+        if (!$this->checkImage()) {
             return DEFAULT_PATH;
         }
 
-        $image = $this->do_resize();
+        $image = $this->resizeImage();
         if ($image === false) {
             return DEFAULT_PATH;
         } else {
@@ -221,11 +221,11 @@ class wfThumbsNails
     }
 
     /**
-     * ThumbsNails::do_resize()
+     * ThumbsNails::resizeImage()
      *
      * @return bool|string
      */
-    public function do_resize()
+    public function resizeImage()
     {
         global $xoopsModuleConfig;
         // $this->_img_info = info array to the image being resized
@@ -341,11 +341,11 @@ class wfThumbsNails
     }
 
     /**
-     * ThumbsNails::check_paths()
+     * ThumbsNails::checkPaths()
      *
      * @return bool
      */
-    public function check_paths()
+    public function checkPaths()
     {
         if (file_exists($this->_source_image) || is_readable($this->_source_image)) {
             return true;
@@ -360,15 +360,12 @@ class wfThumbsNails
     /**
      * @return bool
      */
-    public function image_check()
+    public function checkImage()
     {
         $this->_img_info = getimagesize($this->_source_image, $imageinfo);
-        if (null === $this->_img_info) {
-            return false;
-        }
         // if ( $this->_img_info[0] < $this->img_width && $this->_img_info[1] < $this->img_height )
         // return false;
-        return true;
+        return !(null === $this->_img_info);
     }
 
     /**
@@ -376,7 +373,7 @@ class wfThumbsNails
      *
      * Private function
      *
-     * @return false if gd lib not found on the system
+     * @return array|false if gd lib not found on the system
      */
     public function gd_lib_check()
     {
@@ -392,11 +389,11 @@ class wfThumbsNails
     }
 
     /**
-     * ThumbsNails::use_thumbs()
+     * ThumbsNails::isUsingThumbs()
      *
      * @return bool
      */
-    public function use_thumbs()
+    public function isUsingThumbs()
     {
         if ($this->_usethumbs) {
             return true;

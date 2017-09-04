@@ -34,7 +34,7 @@ $link['url']   = $link_arr['url'];
 
 // Get Google Pagerank
 if (isset($xoopsModuleConfig['showpagerank']) && $xoopsModuleConfig['showpagerank'] == 1) {
-    $link['pagerank'] = pagerank($link['url']);
+    $link['pagerank'] = WfLinksUtility::pagerank($link['url']);
 }
 
 if (isset($link_arr['screenshot'])) {
@@ -42,11 +42,11 @@ if (isset($link_arr['screenshot'])) {
     if (!empty($link_arr['screenshot'])
         && file_exists(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['screenshots'] . '/' . xoops_trim($link_arr['screenshot']))) {
         if (isset($xoopsModuleConfig['usethumbs']) && $xoopsModuleConfig['usethumbs'] == 1) {
-            $_thumb_image = new wfThumbsNails($link['screenshot_full'], $xoopsModuleConfig['screenshots'], 'thumbs');
+            $_thumb_image = new WfThumbsNails($link['screenshot_full'], $xoopsModuleConfig['screenshots'], 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
-                $_image = $_thumb_image->do_thumb($xoopsModuleConfig['shotwidth'], $xoopsModuleConfig['shotheight'], $xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
+                $_image = $_thumb_image->createThumb($xoopsModuleConfig['shotwidth'], $xoopsModuleConfig['shotheight'], $xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
             }
             $link['screenshot_thumb'] = XOOPS_URL . "/{$xoopsModuleConfig['screenshots']}/$_image";
         } else {
@@ -76,7 +76,7 @@ $link['publisher'] = (isset($link_arr['publisher'])
 
 $country             = $link_arr['country'];
 $link['country']     = XOOPS_URL . '/' . $xoopsModuleConfig['flagimage'] . '/' . $country . '.gif';
-$link['countryname'] = wfl_countryname($link_arr['country']);
+$link['countryname'] = WfLinksUtility::getCountryName($link_arr['country']);
 
 $mail_subject     = rawurlencode(sprintf(_MD_WFL_INTFILEFOUND, $xoopsConfig['sitename']));
 $mail_body        = rawurlencode(sprintf(_MD_WFL_INTFILEFOUND, $xoopsConfig['sitename']) . ':  ' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlelink.php?cid=' . $link_arr['cid'] . '&amp;lid=' . $link_arr['lid']);
@@ -86,7 +86,7 @@ $link['comments'] = $link_arr['comments'];
 $whoisurl         = str_replace('http://', '', $link['url']);
 
 $link['adminlink'] = '';
-if ($link['isadmin'] === true && $moderate == 0) {
+if (0 == $moderate && $link['isadmin'] === true) {
     $link['adminlink'] = '<a href="'
                          . XOOPS_URL
                          . '/modules/'
@@ -137,7 +137,7 @@ $votestring = ($link_arr['votes'] == 1) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMV
 $link['useradminlink'] = 0;
 if (is_object($xoopsUser) && !empty($xoopsUser)) {
     $_user_submitter = $xoopsUser->getvar('uid') == $link_arr['submitter'];
-    if (true === wfl_checkgroups($cid)) {
+    if (true === WfLinksUtility::checkGroups($cid)) {
         $link['useradminlink'] = 1;
         if ($xoopsUser->getVar('uid') == $link_arr['submitter']) {
             $link['usermodify'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $link_arr['lid'] . '"> ' . _MD_WFL_MODIFY . '</a> |';
@@ -179,8 +179,8 @@ $xoopsTpl->assign('commentz', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModu
 
 $xoopsTpl->assign('print', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/print.php?lid=' . $link_arr['lid'] . '"  target="_blank">' . _MD_WFL_PRINT . '</a>');
 
-$link['icons']         = wfl_displayicons($link_arr['published'], $link_arr['status'], $link_arr['hits']);
-$link['allow_rating']  = wfl_checkgroups($cid, 'WFLinkRatePerms') ? true : false;
+$link['icons']         = WfLinksUtility::displayIcons($link_arr['published'], $link_arr['status'], $link_arr['hits']);
+$link['allow_rating']  = WfLinksUtility::checkGroups($cid, 'WFLinkRatePerms') ? true : false;
 $link['total_chars']   = $xoopsModuleConfig['totalchars'];
 $link['module_dir']    = $xoopsModule->getVar('dirname');
 $link['otherlinx']     = $xoopsModuleConfig['otherlinks'];
