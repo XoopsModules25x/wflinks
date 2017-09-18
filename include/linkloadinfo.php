@@ -136,7 +136,7 @@ $votestring = ($link_arr['votes'] == 1) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMV
 
 $link['useradminlink'] = 0;
 if (is_object($xoopsUser) && !empty($xoopsUser)) {
-    $_user_submitter = $xoopsUser->getvar('uid') == $link_arr['submitter'];
+    $_user_submitter = $xoopsUser->getVar('uid') == $link_arr['submitter'];
     if (true === WflinksUtility::checkGroups($cid)) {
         $link['useradminlink'] = 1;
         if ($xoopsUser->getVar('uid') == $link_arr['submitter']) {
