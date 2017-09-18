@@ -44,7 +44,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         if (WflinksUtility::checkGroups($ele['cid']) === false) {
             continue;
         }
-        $sub_arr         = array();
+        $sub_arr         = [];
         $sub_arr         = $mytree->getFirstChild($ele['cid'], 'title');
         $space           = 1;
         $chcount         = 1;
@@ -86,7 +86,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
             $imgurl = $indicator['image'];
         }
         // End
-        $xoopsTpl->append('subcategories', array(
+        $xoopsTpl->append('subcategories', [
             'title'           => $wfmyts->htmlSpecialCharsStrip($ele['title']),
             'id'              => $ele['cid'],
             'image'           => XOOPS_URL . "/$imgurl",
@@ -94,7 +94,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
             'totallinks'      => $totallinks['count'],
             'count'           => $scount,
             'alttext'         => $ele['description']
-        ));
+        ]);
         ++$scount;
     }
 }

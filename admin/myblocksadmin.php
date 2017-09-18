@@ -66,7 +66,7 @@ if (!$syspermHandler->checkRight('system_admin', XOOPS_SYSTEM_BLOCK, $xoopsUser-
 $db        = xoopsDatabaseFactory:: getDatabaseConnection();
 $sql       = 'SELECT * FROM ' . $db->prefix('newblocks') . " WHERE mid='$target_mid' ORDER BY visible DESC,side,weight";
 $result    = $db->query($sql);
-$block_arr = array();
+$block_arr = [];
 while ($myrow = $db->fetchArray($result)) {
     $block_arr[] = new XoopsBlock($myrow);
 }
@@ -75,7 +75,7 @@ function list_blocks()
 {
     global $query4redirect, $block_arr;
     // cachetime options
-    $cachetimes = array(
+    $cachetimes = [
         '0'       => _NOCACHE,
         '30'      => sprintf(_SECONDS, 30),
         '60'      => _MINUTE,
@@ -87,7 +87,7 @@ function list_blocks()
         '259200'  => sprintf(_DAYS, 3),
         '604800'  => _WEEK,
         '2592000' => _MONTH
-    );
+    ];
     // displaying TH
     echo "
     <form action='admin.php' name='blockadmin' method='post'>
@@ -166,7 +166,7 @@ function list_blocks()
         // target modules
         $db            = xoopsDatabaseFactory:: getDatabaseConnection();
         $result        = $db->query('SELECT module_id FROM ' . $db->prefix('block_module_link') . " WHERE block_id='$bid'");
-        $selected_mids = array();
+        $selected_mids = [];
         while (list($selected_mid) = $db->fetchRow($result)) {
             $selected_mids[] = (int)$selected_mid;
         }
@@ -303,7 +303,7 @@ function get_block_configs()
     require_once __DIR__ . '/../xoops_version.php';
     error_reporting($error_reporting_level);
     if (empty($modversion['blocks'])) {
-        return array();
+        return [];
     }
 
     return $modversion['blocks'];
@@ -313,7 +313,7 @@ function list_groups()
 {
     global $target_mid, $target_mname, $block_arr;
 
-    $item_list = array();
+    $item_list = [];
     foreach (array_keys($block_arr) as $i) {
         $item_list[$block_arr[$i]->getVar('bid')] = $block_arr[$i]->getVar('title');
     }

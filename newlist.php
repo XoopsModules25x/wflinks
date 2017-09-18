@@ -50,7 +50,7 @@ if (isset($_GET['newlinkshowdays'])) {
     $newlinkshowdays = (!isset($_GET['newlinkshowdays'])) ? 7 : $_GET['newlinkshowdays'];
     $xoopsTpl->assign('newlinkshowdays', (int)$newlinkshowdays);
 
-    $dailylinks = array();
+    $dailylinks = [];
     for ($i = 0; $i < $newlinkshowdays; ++$i) {
         $key                               = $newlinkshowdays - $i - 1;
         $time                              = $time_cur - (86400 * $key);

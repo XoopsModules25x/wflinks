@@ -105,7 +105,7 @@ if (true === WflinksUtility::checkGroups($cid, 'WFLinkSubPerm')) {
             // Notify of new link (anywhere) and new link in category
             $notificationHandler = xoops_getHandler('notification');
 
-            $tags              = array();
+            $tags              = [];
             $tags['LINK_NAME'] = $title;
             $tags['LINK_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlelink.php?cid=' . $cid . '&amp;lid=' . (int)$newid;
 
@@ -142,7 +142,7 @@ if (true === WflinksUtility::checkGroups($cid, 'WFLinkSubPerm')) {
                 }
 
                 $notificationHandler   = xoops_getHandler('notification');
-                $tags                  = array();
+                $tags                  = [];
                 $tags['LINK_NAME']     = $title;
                 $tags['LINK_URL']      = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlelink.php?cid=' . $cid . '&amp;lid=' . $lid;
                 $sql                   = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE cid=' . $cid;
@@ -168,7 +168,7 @@ if (true === WflinksUtility::checkGroups($cid, 'WFLinkSubPerm')) {
                     XoopsErrorHandler_HandleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
                 }
 
-                $tags                      = array();
+                $tags                      = [];
                 $tags['MODIFYREPORTS_URL'] = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=listModReq';
                 $notificationHandler       = xoops_getHandler('notification');
                 $notificationHandler->triggerEvent('global', 0, 'link_modify', $tags);
@@ -263,7 +263,7 @@ if (true === WflinksUtility::checkGroups($cid, 'WFLinkSubPerm')) {
 
         // Category selection menu
         $mytree     = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
-        $submitcats = array();
+        $submitcats = [];
         $sql        = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . ' ORDER BY title';
         $result     = $xoopsDB->query($sql);
         while ($myrow = $xoopsDB->fetchArray($result)) {

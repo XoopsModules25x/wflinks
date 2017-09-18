@@ -16,10 +16,10 @@ include XOOPS_ROOT_PATH . '/header.php';
 
 $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 
-$action_array = array('hit' => 0, 'rate' => 1);
-$list_array   = array('hits', 'rating');
-$lang_array   = array(_MD_WFL_HITS, _MD_WFL_RATING);
-$rankings     = array();
+$action_array = ['hit' => 0, 'rate' => 1];
+$list_array   = ['hits', 'rating'];
+$lang_array   = [_MD_WFL_HITS, _MD_WFL_RATING];
+$rankings     = [];
 
 $sort     = (isset($_GET['list']) && in_array($_GET['list'], $action_array)) ? $_GET['list'] : 'rate';
 $sort_arr = $action_array[$sort];
@@ -30,7 +30,7 @@ $catarray['letters']     = WflinksUtility::getLetters();
 $catarray['toolbar']     = WflinksUtility::getToolbar();
 $xoopsTpl->assign('catarray', $catarray);
 
-$links    = array();
+$links    = [];
 $result = $xoopsDB->query('SELECT cid, title, pid FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE pid=0 ORDER BY ' . $xoopsModuleConfig['sortcats']);
 
 $e = 0;
@@ -51,7 +51,7 @@ while (list($cid, $ctitle) = $xoopsDB->fetchRow($result)) {
             while (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $xoopsDB->fetchRow($result2)) {
                 $catpath                = basename($mytree->getPathFromId($dcid, 'title'));
                 $dtitle                 = $wfmyts->htmlSpecialCharsStrip($dtitle);
-                $rankings[$e]['file'][] = array(
+                $rankings[$e]['file'][] = [
                     'id'       => $did,
                     'cid'      => $dcid,
                     'rank'     => $rank,
@@ -60,7 +60,7 @@ while (list($cid, $ctitle) = $xoopsDB->fetchRow($result)) {
                     'hits'     => $hits,
                     'rating'   => number_format($rating, 2),
                     'votes'    => $votes
-                );
+                ];
                 ++$rank;
             }
             ++$e;

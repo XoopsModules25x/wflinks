@@ -60,7 +60,7 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
     if (WflinksUtility::checkGroups($myrow['cid'])) {
         $title = $wfmyts->htmlSpecialCharsStrip($myrow['title']);
 
-        $arr = array();
+        $arr = [];
         $arr = $mytree->getFirstChild($myrow['cid'], 'title');
 
         $space         = 1;
@@ -100,7 +100,7 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
         }
         // End
 
-        $xoopsTpl->append('categories', array(
+        $xoopsTpl->append('categories', [
             'image'         => XOOPS_URL . "/$imgurl",
             'id'            => $myrow['cid'],
             'title'         => $title,
@@ -108,7 +108,7 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
             'totallinks'    => $totallinkload['count'],
             'count'         => $count,
             'alttext'       => $myrow['description']
-        ));
+        ]);
         ++$count;
     }
 }
