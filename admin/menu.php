@@ -13,7 +13,7 @@
 
 $moduleDirName = basename(dirname(__DIR__));
 
-if (($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName)) !== false) {
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
 } else {
     $moduleHelper = Xmf\Module\Helper::getHelper('system');
 }

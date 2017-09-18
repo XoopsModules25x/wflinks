@@ -38,7 +38,7 @@ function checkBlockgroups($cid = 0, $permType = 'WFLinkCatPerm', $redirect = fal
     $module        = $moduleHandler->getByDirname($moduleDirName);
 
     if (!$gpermHandler->checkRight($permType, $cid, $groups, $module->getVar('mid'))) {
-        if ($redirect === false) {
+        if (false === $redirect) {
             return false;
         }
 
@@ -77,7 +77,7 @@ function b_wflinks_top_show($options)
 
     $result = $xoopsDB->query('SELECT lid, cid, title, published, hits FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0 AND published <= ' . $time . ' AND (expired = 0 OR expired > ' . $time . ') AND offline = 0 ORDER BY ' . $options[0] . ' DESC', $options[1], 0);
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        if ($myrow['cid'] == 0 || checkBlockgroups($myrow['cid']) === false) {
+        if (0 == $myrow['cid'] || false === checkBlockgroups($myrow['cid'])) {
             continue;
         }
         $linkload = [];
@@ -90,9 +90,9 @@ function b_wflinks_top_show($options)
         $linkload['id']    = (int)$myrow['lid'];
         $linkload['cid']   = (int)$myrow['cid'];
         $linkload['title'] = $title;
-        if ($options[0] === 'published') {
+        if ('published' === $options[0]) {
             $linkload['date'] = formatTimestamp($myrow['published'], $options[3]);
-        } elseif ($options[0] === 'hits') {
+        } elseif ('hits' === $options[0]) {
             $linkload['hits'] = $myrow['hits'];
         }
         $linkload['dirname'] = $wflModule->getVar('dirname');
@@ -116,7 +116,7 @@ function b_wflinks_top_edit($options)
 {
     $form = '' . _MB_WFL_DISP . '&nbsp;';
     $form .= "<input type='hidden' name='options[]' value='";
-    if ($options[0] === 'published') {
+    if ('published' === $options[0]) {
         $form .= "published'";
     } else {
         $form .= "hits'";

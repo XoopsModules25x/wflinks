@@ -26,7 +26,7 @@ function checkSearchgroups($cid = 0, $permType = 'WFLinkCatPerm', $redirect = fa
     $module        = $moduleHandler->getByDirname($moduleDirName);
 
     if (!$gpermHandler->checkRight($permType, $cid, $groups, $module->getVar('mid'))) {
-        if ($redirect === false) {
+        if (false === $redirect) {
             return false;
         }
 
@@ -59,7 +59,7 @@ function wflinks_search($queryarray, $andor, $limit, $offset, $userid)
     $sql = 'SELECT lid, cid, title, submitter, published, description FROM ' . $xoopsDB->prefix('wflinks_links');
     $sql .= ' WHERE published > 0 AND published <= ' . time() . ' AND ( expired = 0 OR expired > ' . time() . ') AND offline = 0 AND cid > 0';
 
-    if ($userid != 0) {
+    if (0 != $userid) {
         $sql .= ' AND submitter=' . $userid . ' ';
     }
 

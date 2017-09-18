@@ -25,7 +25,7 @@ $rating          = round(number_format($link_arr['rating'], 0) / 2);
 $link['rateimg'] = 'rate' . $rating . '.gif';
 unset($rating);
 
-$link['votes'] = ($link_arr['votes'] == 1) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMVOTES, $link_arr['votes']);
+$link['votes'] = (1 == $link_arr['votes']) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMVOTES, $link_arr['votes']);
 $link['hits']  = sprintf(_MD_WFL_LINKHITS, (int)$link_arr['hits']);
 $xoopsTpl->assign('lang_dltimes', $link['hits']);
 
@@ -33,7 +33,7 @@ $link['title'] = $link_arr['title'];
 $link['url']   = $link_arr['url'];
 
 // Get Google Pagerank
-if (isset($xoopsModuleConfig['showpagerank']) && $xoopsModuleConfig['showpagerank'] == 1) {
+if (isset($xoopsModuleConfig['showpagerank']) && 1 == $xoopsModuleConfig['showpagerank']) {
     $link['pagerank'] = WflinksUtility::pagerank($link['url']);
 }
 
@@ -41,7 +41,7 @@ if (isset($link_arr['screenshot'])) {
     $link['screenshot_full'] = $wfmyts->htmlSpecialCharsStrip($link_arr['screenshot']);
     if (!empty($link_arr['screenshot'])
         && file_exists(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['screenshots'] . '/' . xoops_trim($link_arr['screenshot']))) {
-        if (isset($xoopsModuleConfig['usethumbs']) && $xoopsModuleConfig['usethumbs'] == 1) {
+        if (isset($xoopsModuleConfig['usethumbs']) && 1 == $xoopsModuleConfig['usethumbs']) {
             $_thumb_image = new WfThumbsNails($link['screenshot_full'], $xoopsModuleConfig['screenshots'], 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
@@ -55,9 +55,9 @@ if (isset($link_arr['screenshot'])) {
     }
 }
 
-if ($moderate == 0) {
-    $time       = ($link_arr['updated'] != 0) ? $link_arr['updated'] : $link_arr['published'];
-    $is_updated = ($link_arr['updated'] != 0) ? _MD_WFL_UPDATEDON : _MD_WFL_PUBLISHDATE;
+if (0 == $moderate) {
+    $time       = (0 != $link_arr['updated']) ? $link_arr['updated'] : $link_arr['published'];
+    $is_updated = (0 != $link_arr['updated']) ? _MD_WFL_UPDATEDON : _MD_WFL_PUBLISHDATE;
     $xoopsTpl->assign('lang_subdate', $is_updated);
 } else {
     $time       = $link_arr['date'];
@@ -86,7 +86,7 @@ $link['comments'] = $link_arr['comments'];
 $whoisurl         = str_replace('http://', '', $link['url']);
 
 $link['adminlink'] = '';
-if ($moderate == 0 && $link['isadmin'] === true) {
+if (0 == $moderate && true === $link['isadmin']) {
     $link['adminlink'] = '<a href="'
                          . XOOPS_URL
                          . '/modules/'
@@ -132,12 +132,12 @@ if ($moderate == 0 && $link['isadmin'] === true) {
     $link['adminlink'] .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?op=delete&amp;lid=' . $link_arr['lid'] . '">' . _MD_WFL_DELETE . '</a> ]';
 }
 
-$votestring = ($link_arr['votes'] == 1) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMVOTES, $link_arr['votes']);
+$votestring = (1 == $link_arr['votes']) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMVOTES, $link_arr['votes']);
 
 $link['useradminlink'] = 0;
 if (is_object($xoopsUser) && !empty($xoopsUser)) {
     $_user_submitter = $xoopsUser->getVar('uid') == $link_arr['submitter'];
-    if (WflinksUtility::checkGroups($cid) === true) {
+    if (true === WflinksUtility::checkGroups($cid)) {
         $link['useradminlink'] = 1;
         if ($xoopsUser->getVar('uid') == $link_arr['submitter']) {
             $link['usermodify'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $link_arr['lid'] . '"> ' . _MD_WFL_MODIFY . '</a> |';

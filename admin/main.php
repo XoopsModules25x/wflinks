@@ -110,7 +110,7 @@ function edit($lid = 0)
     $sform   = new XoopsThemeForm($caption, 'storyform', xoops_getenv('PHP_SELF'), 'post', true);
     $sform->setExtra('enctype="multipart / form - data"');
 
-    if ($submitter === '') {
+    if ('' === $submitter) {
         $sform->addElement(new XoopsFormHidden('submitter', $submitter));
     }
 
@@ -270,7 +270,7 @@ function edit($lid = 0)
     $sform->addElement($linkstatus_radio);
 
     // Set Link updated
-    $up_dated           = ($updated == 0) ? 0 : 1;
+    $up_dated           = (0 == $updated) ? 0 : 1;
     $link_updated_radio = new XoopsFormRadioYN(_AM_WFL_LINK_SETASUPDATED, 'up_dated', $up_dated, ' ' . _YES . '', ' ' . _NO . '');
     $sform->addElement($link_updated_radio);
 
@@ -302,8 +302,8 @@ function edit($lid = 0)
         $sform->addElement(new XoopsFormText(_AM_WFL_LINK_NEWSTITLE, 'topic_id', 70, 255, ''), false);
     }
 
-    if ($lid && $published == 0) {
-        $approved         = ($published == 0) ? 0 : 1;
+    if ($lid && 0 == $published) {
+        $approved         = (0 == $published) ? 0 : 1;
         $approve_checkbox = new XoopsFormCheckBox(_AM_WFL_LINK_EDITAPPROVE, 'approved', 1);
         $approve_checkbox->addOption(1, ' ');
         $sform->addElement($approve_checkbox);
@@ -394,7 +394,7 @@ switch (strtolower($op)) {
     case 'pingtime':
     case 'is_broken':
 
-        $_type = ($op === 'pingtime') ? 'is_broken' : 'pingtime';
+        $_type = ('pingtime' === $op) ? 'is_broken' : 'pingtime';
 
         $start = WflinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
         $ping  = WflinksUtility::cleanRequestVars($_REQUEST, 'ping', 0);
@@ -413,7 +413,7 @@ switch (strtolower($op)) {
         $broken_array       = $xoopsDB->query($sql, $xoopsModuleConfig['admin_perpage'], $start);
         $broken_array_count = $xoopsDB->getRowsNum($result);
 
-        $heading = ($op === 'pingtime') ? _AM_WFL_PINGTIMES : _AM_WFL_LISTBROKEN;
+        $heading = ('pingtime' === $op) ? _AM_WFL_PINGTIMES : _AM_WFL_LISTBROKEN;
 
         require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
@@ -479,20 +479,20 @@ switch (strtolower($op)) {
         $cid       = (!empty($_POST['cid'])) ? $_POST['cid'] : 0;
         $urlrating = (!empty($_POST['urlrating'])) ? $_POST['urlrating'] : 6;
         $status    = (!empty($_POST['status'])) ? $_POST['status'] : 2;
-        $url       = ($_POST['url'] !== 'http://') ? $wfmyts->addSlashes($_POST['url']) : '';
+        $url       = ('http://' !== $_POST['url']) ? $wfmyts->addSlashes($_POST['url']) : '';
         $title     = $wfmyts->addSlashes(trim($_POST['title']));
 
         // Get data from form
-        $screenshot   = ($_POST['screenshot'] !== 'blank.gif') ? $wfmyts->addSlashes($_POST['screenshot']) : '';
+        $screenshot   = ('blank.gif' !== $_POST['screenshot']) ? $wfmyts->addSlashes($_POST['screenshot']) : '';
         $descriptionb = $wfmyts->addSlashes(trim($_POST['descriptionb']));
         $country      = $wfmyts->addSlashes(trim($_POST['country']));
         $keywords     = $wfmyts->addSlashes(trim(substr($_POST['keywords'], 0, $xoopsModuleConfig['keywordlength'])));
         $item_tag     = $wfmyts->addSlashes(trim($_POST['item_tag']));
         $forumid      = (isset($_POST['forumid']) && $_POST['forumid'] > 0) ? (int)$_POST['forumid'] : 0;
         if ($xoopsModuleConfig['useaddress']) {
-            $googlemap = ($_POST['googlemap'] !== 'http://maps.google.com') ? $wfmyts->addSlashes($_POST['googlemap']) : '';
-            $yahoomap  = ($_POST['yahoomap'] !== 'http://maps.yahoo.com') ? $wfmyts->addSlashes($_POST['yahoomap']) : '';
-            $multimap  = ($_POST['multimap'] !== 'http://www.multimap.com') ? $wfmyts->addSlashes($_POST['multimap']) : '';
+            $googlemap = ('http://maps.google.com' !== $_POST['googlemap']) ? $wfmyts->addSlashes($_POST['googlemap']) : '';
+            $yahoomap  = ('http://maps.yahoo.com' !== $_POST['yahoomap']) ? $wfmyts->addSlashes($_POST['yahoomap']) : '';
+            $multimap  = ('http://www.multimap.com' !== $_POST['multimap']) ? $wfmyts->addSlashes($_POST['multimap']) : '';
             $street1   = $wfmyts->addSlashes(trim($_POST['street1']));
             $street2   = $wfmyts->addSlashes(trim($_POST['street2']));
             $town      = $wfmyts->addSlashes(trim($_POST['town']));
@@ -512,14 +512,14 @@ switch (strtolower($op)) {
         $publisher = $wfmyts->addSlashes(trim($_POST['publisher']));
 
         $published = strtotime($_POST['published']['date']) + $_POST['published']['time'];
-        $updated   = (isset($_POST['was_published']) && $_POST['was_published'] == 0) ? 0 : time();
-        if ($_POST['up_dated'] == 0) {
+        $updated   = (isset($_POST['was_published']) && 0 == $_POST['was_published']) ? 0 : time();
+        if (0 == $_POST['up_dated']) {
             $updated = 0;
             $status  = 1;
         }
-        $offline   = ($_POST['offline'] == 1) ? 1 : 0;
-        $approved  = (isset($_POST['approved']) && $_POST['approved'] == 1) ? 1 : 0;
-        $notifypub = (isset($_POST['notifypub']) && $_POST['notifypub'] == 1);
+        $offline   = (1 == $_POST['offline']) ? 1 : 0;
+        $approved  = (isset($_POST['approved']) && 1 == $_POST['approved']) ? 1 : 0;
+        $notifypub = (isset($_POST['notifypub']) && 1 == $_POST['notifypub']);
         if (!$lid) {
             $date        = time();
             $publishdate = time();
@@ -528,7 +528,7 @@ switch (strtolower($op)) {
             $publishdate = $_POST['was_published'];
             $expiredate  = $_POST['was_expired'];
         }
-        if ($approved == 1 && empty($publishdate)) {
+        if (1 == $approved && empty($publishdate)) {
             $publishdate = time();
         }
         if (isset($_POST['expiredateactivate'])) {

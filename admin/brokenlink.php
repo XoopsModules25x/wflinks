@@ -22,9 +22,9 @@ switch (strtolower($op)) {
         $con = WflinksUtility::cleanRequestVars($_REQUEST, 'con', 1);
 
         if ($ack && !$con) {
-            $acknowledged = ($ack == 0) ? 1 : 0;
+            $acknowledged = (0 == $ack) ? 1 : 0;
             $sql          = 'UPDATE ' . $xoopsDB->prefix('wflinks_broken') . ' SET acknowledged=' . $acknowledged;
-            if ($acknowledged == 0) {
+            if (0 == $acknowledged) {
                 $sql .= ', confirmed=0 ';
             }
             $sql .= ' WHERE lid=' . $lid;
@@ -38,9 +38,9 @@ switch (strtolower($op)) {
         }
 
         if ($con) {
-            $confirmed = ($con == 0) ? 1 : 0;
+            $confirmed = (0 == $con) ? 1 : 0;
             $sql       = 'UPDATE ' . $xoopsDB->prefix('wflinks_broken') . ' SET confirmed=' . $confirmed;
-            if ($confirmed == 1) {
+            if (1 == $confirmed) {
                 $sql .= ', acknowledged=' . $confirmed;
             }
             $sql .= ' WHERE lid=' . $lid;
@@ -99,13 +99,13 @@ switch (strtolower($op)) {
         <th style='text-align: center; width: 6%; white-space: nowrap;'>" . _AM_WFL_BROKEN_ACTION . "</th>\n
         </tr>\n";
 
-        if ($totalbrokenlinks == 0) {
+        if (0 == $totalbrokenlinks) {
             echo "<tr class='center;'><td class='center;' class='head' colspan='8'>" . _AM_WFL_BROKEN_NOFILEMATCH . '</td></tr>';
         } else {
             while (list($reportid, $lid, $sender, $ip, $date, $confirmed, $acknowledged) = $xoopsDB->fetchRow($result)) {
                 $result2 = $xoopsDB->query('SELECT cid, title, url, submitter FROM ' . $xoopsDB->prefix('wflinks_links') . " WHERE lid=$lid");
                 list($cid, $linkshowname, $url, $submitter) = $xoopsDB->fetchRow($result2);
-                if ($sender != 0) {
+                if (0 != $sender) {
                     $result3 = $xoopsDB->query('SELECT uname, email FROM ' . $xoopsDB->prefix('users') . ' WHERE uid=' . $sender . '');
                     list($sendername, $email) = $xoopsDB->fetchRow($result3);
                 }
@@ -119,12 +119,12 @@ switch (strtolower($op)) {
                 echo "<td class='head'>$reportid</td>\n";
                 echo "<td class='even' style='text-align: left;'><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlelink.php?cid=' . $cid . '&amp;lid=' . $lid . "' target='_blank'>" . $linkshowname . "</a></td>\n";
 
-                if ($email === '') {
+                if ('' === $email) {
                     echo "<td class='even'>$sendername ($ip)";
                 } else {
                     echo "<td class='even'><a href='mailto:$email'>$sendername</a> ($ip)";
                 }
-                if ($owneremail === '') {
+                if ('' === $owneremail) {
                     echo "<td class='even'>$ownername";
                 } else {
                     echo "<td class='even'><a href='mailto:$owneremail'>$ownername</a>";

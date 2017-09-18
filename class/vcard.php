@@ -89,9 +89,9 @@ function vcard_quoted_printable_encode($input, $line_max = 76)
         for ($i = 0; $i < $linlen; ++$i) {
             $c   = substr($line, $i, 1);
             $dec = ord($c);
-            if (($dec == 32) && ($i == ($linlen - 1))) { // convert space at eol only
+            if ((32 == $dec) && ($i == ($linlen - 1))) { // convert space at eol only
                 $c = '=20';
-            } elseif (($dec == 61) || ($dec < 32)
+            } elseif ((61 == $dec) || ($dec < 32)
                       || ($dec > 126)) { // always vcard_encode "\t", which is *not* required
                 $h2 = floor($dec / 16);
                 $h1 = floor($dec % 16);
@@ -128,7 +128,7 @@ class VCard
     {
         // type may be PREF | WORK | HOME | VOICE | FAX | MSG | CELL | PAGER | BBS | CAR | MODEM | ISDN | VIDEO or any senseful combination, e.g. "PREF;WORK;VOICE"
         $key = 'TEL';
-        if ($type !== '') {
+        if ('' !== $type) {
             $key .= ';' . $type;
         }
         $key                    .= ';ENCODING=QUOTED-PRINTABLE';
@@ -165,7 +165,7 @@ class VCard
     {
         $this->properties['N'] = "$family;$first;$additional;$prefix;$suffix";
         //  $this -> filename = "$first%20$family.vcf";
-        if ($this->properties['FN'] === '') {
+        if ('' === $this->properties['FN']) {
             $this->setFormattedName(trim("$prefix $first $additional $family $suffix"));
         }
     }
@@ -200,13 +200,13 @@ class VCard
     {
         // $type may be DOM | INTL | POSTAL | PARCEL | HOME | WORK or any combination of these: e.g. "WORK;PARCEL;POSTAL"
         $key = 'ADR';
-        if ($type !== '') {
+        if ('' !== $type) {
             $key .= ";$type";
         }
         $key                    .= ';ENCODING=QUOTED-PRINTABLE';
         $this->properties[$key] = vcard_encode($postoffice) . ';' . vcard_encode($extended) . ';' . vcard_encode($street) . ';' . vcard_encode($city) . ';' . vcard_encode($region) . ';' . vcard_encode($zip) . ';' . vcard_encode($country);
 
-        if ($this->properties["LABEL;$type;ENCODING=QUOTED-PRINTABLE"] === '') {
+        if ('' === $this->properties["LABEL;$type;ENCODING=QUOTED-PRINTABLE"]) {
             //$this->setLabel($postoffice, $extended, $street, $city, $region, $zip, $country, $type);
         }
     }
@@ -232,25 +232,25 @@ class VCard
         $type = 'HOME;POSTAL')
     {
         $label = '';
-        if ($postoffice !== '') {
+        if ('' !== $postoffice) {
             $label .= "$postoffice\r\n";
         }
-        if ($extended !== '') {
+        if ('' !== $extended) {
             $label .= "$extended\r\n";
         }
-        if ($street !== '') {
+        if ('' !== $street) {
             $label .= "$street\r\n";
         }
-        if ($zip !== '') {
+        if ('' !== $zip) {
             $label .= "$zip ";
         }
-        if ($city !== '') {
+        if ('' !== $city) {
             $label .= "$city\r\n";
         }
-        if ($region !== '') {
+        if ('' !== $region) {
             $label .= "$region\r\n";
         }
-        if ($country !== '') {
+        if ('' !== $country) {
             $country .= "$country\r\n";
         }
 
@@ -281,7 +281,7 @@ class VCard
     {
         // $type may be WORK | HOME
         $key = 'URL';
-        if ($type !== '') {
+        if ('' !== $type) {
             $key .= ";$type";
         }
         $this->properties[$key] = $url;

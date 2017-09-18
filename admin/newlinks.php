@@ -46,7 +46,7 @@ switch (strtolower($op)) {
             $notificationHandler   = xoops_getHandler('notification');
             $notificationHandler->triggerEvent('global', 0, 'new_link', $tags);
             $notificationHandler->triggerEvent('category', $cid, 'new_link', $tags);
-            if ((int)$notifypub == 1) {
+            if (1 == (int)$notifypub) {
                 $notificationHandler->triggerEvent('link', $lid, 'approve', $tags);
             }
         }

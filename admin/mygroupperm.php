@@ -49,19 +49,19 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
             // echo "<pre>" ;
             // var_dump( $_POST['perms'] ) ;
             // exit ;
-            if (myDeleteByModule($gpermHandler->db, $modid, $perm_name, $item_id) !== false) {
+            if (false !== myDeleteByModule($gpermHandler->db, $modid, $perm_name, $item_id)) {
                 if (empty($perm_data['groups'])) {
                     continue;
                 }
                 foreach ($perm_data['groups'] as $group_id => $item_ids) {
                     //              foreach ($item_ids as $item_id => $selected) {
                     $selected = isset($item_ids[$item_id]) ? $item_ids[$item_id] : 0;
-                    if ($selected == 1) {
+                    if (1 == $selected) {
                         // make sure that all parent ids are selected as well
-                        if ($perm_data['parents'][$item_id] !== '') {
+                        if ('' !== $perm_data['parents'][$item_id]) {
                             $parent_ids = explode(':', $perm_data['parents'][$item_id]);
                             foreach ($parent_ids as $pid) {
-                                if ($pid != 0 && !array_key_exists($pid, $item_ids)) {
+                                if (0 != $pid && !array_key_exists($pid, $item_ids)) {
                                     // one of the parent items were not selected, so skip this item
                                     $msg[] = sprintf(_MD_AM_PERMADDNG, '<b>' . $perm_name . '</b>', '<b>' . $perm_data['itemname'][$item_id] . '</b>', '<b>' . $group_list[$group_id] . '</b>') . ' (' . _MD_AM_PERMADDNGP . ')';
                                     continue 2;

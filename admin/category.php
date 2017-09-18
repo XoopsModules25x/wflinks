@@ -267,10 +267,10 @@ switch ($op) {
         $pid          = Request::getInt('pid', 0, 'POST');
         $weight       = (isset($_REQUEST['weight']) && $_REQUEST['weight'] > 0) ? $_REQUEST['weight'] : 0;
         $spotlighthis = Request::getInt('lid', 0, 'POST');
-        $spotlighttop = ($_REQUEST['spotlighttop'] == 1) ? 1 : 0;
+        $spotlighttop = (1 == $_REQUEST['spotlighttop']) ? 1 : 0;
         $title        = Request::getText('title', '', 'POST');
         $descriptionb = Request::getText('description', '', 'POST');
-        $imgurl       = ($_REQUEST['imgurl'] && $_REQUEST['imgurl'] !== 'blank.gif') ? Request::getUrl('imgurl', '', 'POST') : '';
+        $imgurl       = ($_REQUEST['imgurl'] && 'blank.gif' !== $_REQUEST['imgurl']) ? Request::getUrl('imgurl', '', 'POST') : '';
         $client_id    = Request::getInt('client_id', 0, 'POST');
         if ($client_id > 0) {
             $banner_id = 0;
@@ -289,7 +289,7 @@ switch ($op) {
             $sql = 'INSERT INTO '
                    . $xoopsDB->prefix('wflinks_cat')
                    . " (cid, pid, title, imgurl, description, nohtml, nosmiley, noxcodes, noimages, nobreak, weight, spotlighttop, spotlighthis, client_id, banner_id ) VALUES (0, $pid, '$title', '$imgurl', '$descriptionb', '$nohtml', '$nosmiley', '$noxcodes', '$noimages', '$nobreak', '$weight',  '$spotlighttop', '$spotlighthis', '$client_id', '$banner_id' )";
-            if ($cid == 0) {
+            if (0 == $cid) {
                 $newid = $xoopsDB->getInsertId();
             }
 
@@ -325,10 +325,10 @@ switch ($op) {
         global $xoopsDB, $xoopsModule;
 
         $cid    = (isset($_POST['cid']) && is_numeric($_POST['cid'])) ? (int)$_POST['cid'] : (int)$_GET['cid'];
-        $ok     = (isset($_POST['ok']) && $_POST['ok'] == 1) ? (int)$_POST['ok'] : 0;
+        $ok     = (isset($_POST['ok']) && 1 == $_POST['ok']) ? (int)$_POST['ok'] : 0;
         $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 
-        if ($ok == 1) {
+        if (1 == $ok) {
             // get all subcategories under the specified category
             $subcategories    = $mytree->getAllChildId($cid);
             foreach ($subcategories as $subcategory) {

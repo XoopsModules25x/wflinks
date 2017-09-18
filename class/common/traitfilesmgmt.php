@@ -57,8 +57,8 @@ trait FilesManagement
     {
         $dir = opendir($src);
         @mkdir($dst);
-        while (($file = readdir($dir)) !== false) {
-            if (($file !== '.') && ($file !== '..')) {
+        while (false !== ($file = readdir($dir))) {
+            if (('.' !== $file) && ('..' !== $file)) {
                 if (is_dir($src . '/' . $file)) {
                     self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
                 } else {

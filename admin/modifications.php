@@ -48,12 +48,12 @@ switch (strtolower($op)) {
             }
             $lang_def = constant('_AM_WFL_MOD_' . strtoupper($key));
 
-            if ($key === 'cid') {
+            if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE cid=' . $content;
                 $row     = $xoopsDB->fetchArray($xoopsDB->query($sql));
                 $content = $row['title'];
             }
-            if ($key === 'forumid') {
+            if ('forumid' === $key) {
                 $content          = '';
                 $moduleHandler    = xoops_getHandler('module');
                 $xoopsforumModule = $moduleHandler->getByDirname('newbb');
@@ -62,13 +62,13 @@ switch (strtolower($op)) {
                     $content = "<a href='" . XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $content . "'>Forumid</a>";
                 }
             }
-            if ($key === 'screenshot') {
+            if ('screenshot' === $key) {
                 $content = '';
                 if ($content > 0) {
                     $content = "<img src='" . XOOPS_URL . '/' . $xoopsModuleConfig['screenshots'] . '/' . $logourl . "' width='" . $xoopsModuleConfig['shotwidth'] . "' alt=''>";
                 }
             }
-            if ($key === 'country') {
+            if ('country' === $key) {
                 $content = WflinksUtility::getCountryName($mod_array['country']);
             }
             $sform->addElement(new XoopsFormLabel($lang_def, $content));
@@ -87,12 +87,12 @@ switch (strtolower($op)) {
             }
             $lang_def = constant('_AM_WFL_MOD_' . strtoupper($key));
 
-            if ($key === 'cid') {
+            if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE cid=' . $content;
                 $row     = $xoopsDB->fetchArray($xoopsDB->query($sql));
                 $content = $row['title'];
             }
-            if ($key === 'forumid') {
+            if ('forumid' === $key) {
                 $content          = '';
                 $moduleHandler    = xoops_getHandler('module');
                 $xoopsforumModule = $moduleHandler->getByDirname('newbb');
@@ -102,13 +102,13 @@ switch (strtolower($op)) {
                     $content = "<a href='" . XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $content . "'>Forumid</a>";
                 }
             }
-            if ($key === 'screenshot') {
+            if ('screenshot' === $key) {
                 $content = '';
                 if ($content > 0) {
                     $content = "<img src='" . XOOPS_URL . '/' . $xoopsModuleConfig['screenshots'] . '/' . $logourl . "' width='" . $xoopsModuleConfig['shotwidth'] . "' alt=''>";
                 }
             }
-            if ($key === 'country') {
+            if ('country' === $key) {
                 $content = WflinksUtility::getCountryName($mod_array['country']);
             }
             $sform->addElement(new XoopsFormLabel($lang_def, $content));

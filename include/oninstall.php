@@ -37,7 +37,7 @@ function xoops_module_pre_install_wflinks(XoopsModule $module)
     $xoopsSuccess = $utilityClass::checkVerXoops($module);
     $phpSuccess   = $utilityClass::checkVerPhp($module);
 
-    if ($xoopsSuccess !== false && $phpSuccess !== false) {
+    if (false !== $xoopsSuccess && false !== $phpSuccess) {
         $mod_tables =& $module->getInfo('tables');
         foreach ($mod_tables as $table) {
             $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
@@ -61,7 +61,7 @@ function xoops_module_install_wflinks(XoopsModule $module)
 
     $moduleDirName = basename(dirname(__DIR__));
 
-    if (($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName)) !== false) {
+    if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
     } else {
         $moduleHelper = Xmf\Module\Helper::getHelper('system');
     }

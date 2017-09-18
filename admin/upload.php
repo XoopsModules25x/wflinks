@@ -18,7 +18,7 @@ $rootpath = isset($_GET['rootpath']) ? (int)$_GET['rootpath'] : 0;
 
 switch (strtolower($op)) {
     case 'upload':
-        if ($_FILES['uploadfile']['name'] !== '') {
+        if ('' !== $_FILES['uploadfile']['name']) {
             if (file_exists(XOOPS_ROOT_PATH . '/' . $_POST['uploadpath'] . '/' . $_FILES['uploadfile']['name'])) {
                 redirect_header('upload.php', 2, _AM_WFL_LINK_IMAGEEXIST);
             }
@@ -32,7 +32,7 @@ switch (strtolower($op)) {
 
     case 'delfile':
 
-        if (isset($_POST['confirm']) && $_POST['confirm'] == 1) {
+        if (isset($_POST['confirm']) && 1 == $_POST['confirm']) {
             $filetodelete = XOOPS_ROOT_PATH . '/' . $_POST['uploadpath'] . '/' . $_POST['linkfile'];
             if (file_exists($filetodelete)) {
                 chmod($filetodelete, 0666);

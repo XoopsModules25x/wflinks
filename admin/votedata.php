@@ -74,7 +74,7 @@ switch (strtolower($op)) {
         $results = $xoopsDB->query($sql, $xoopsModuleConfig['admin_perpage'], $start);
         $votes   = $xoopsDB->getRowsNum($xoopsDB->query($sql));
 
-        if ($votes == 0) {
+        if (0 == $votes) {
             echo "<tr><td class='txtcenter;' colspan='7' class='head'>" . _AM_WFL_VOTE_NOVOTES . '</td></tr>';
         } else {
             while (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $xoopsDB->fetchRow($results)) {

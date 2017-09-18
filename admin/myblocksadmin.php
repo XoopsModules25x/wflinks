@@ -24,7 +24,7 @@ error_reporting($error_reporting_level);
 
 $group_defs = file("$xoops_system_path/language/$language/admin/groups.php");
 foreach ($group_defs as $def) {
-    if (strpos($def, '_AM_ACCESSRIGHTS') !== false || strpos($def, '_AM_ACTIVERIGHTS') !== false) {
+    if (false !== strpos($def, '_AM_ACCESSRIGHTS') || false !== strpos($def, '_AM_ACTIVERIGHTS')) {
         eval($def);
     }
 }
@@ -47,7 +47,7 @@ if (!empty($target_module) && is_object($target_module)) {
     $target_mid     = $target_module->getVar('mid');
     $target_mname   = $target_module->getVar('name');
     $query4redirect = '?dirname=' . urlencode(strip_tags($_GET['dirname']));
-} elseif (isset($_GET['mid']) && $_GET['mid'] == 0 || $xoopsModule->getVar('dirname') === 'blocksadmin') {
+} elseif (isset($_GET['mid']) && 0 == $_GET['mid'] || 'blocksadmin' === $xoopsModule->getVar('dirname')) {
     $target_mid     = 0;
     $target_mname   = '';
     $query4redirect = '?mid=0';
@@ -63,7 +63,7 @@ if (!$syspermHandler->checkRight('system_admin', XOOPS_SYSTEM_BLOCK, $xoopsUser-
 }
 // get blocks owned by the module (Imported from xoopsblock.php then modified)
 // $block_arr = XoopsBlock::getByModule( $target_mid ) ;
-$db        = xoopsDatabaseFactory:: getDatabaseConnection();
+$db        = XoopsDatabaseFactory:: getDatabaseConnection();
 $sql       = 'SELECT * FROM ' . $db->prefix('newblocks') . " WHERE mid='$target_mid' ORDER BY visible DESC,side,weight";
 $result    = $db->query($sql);
 $block_arr = [];
@@ -114,7 +114,7 @@ function list_blocks()
 
         $bid = $block_arr[$i]->getVar('bid');
         // visible and side
-        if ($block_arr[$i]->getVar('visible') != 1) {
+        if (1 != $block_arr[$i]->getVar('visible')) {
             $sseln = ' checked';
             $scoln = '#FF0000';
         } else {
@@ -164,7 +164,7 @@ function list_blocks()
             }
         }
         // target modules
-        $db            = xoopsDatabaseFactory:: getDatabaseConnection();
+        $db            = XoopsDatabaseFactory:: getDatabaseConnection();
         $result        = $db->query('SELECT module_id FROM ' . $db->prefix('block_module_link') . " WHERE block_id='$bid'");
         $selected_mids = [];
         while (list($selected_mid) = $db->fetchRow($result)) {
@@ -188,12 +188,12 @@ function list_blocks()
         }
         // delete link if it is cloned block
         $delete_link = '';
-        if ($block_arr[$i]->getVar('block_type') === 'D' || $block_arr[$i]->getVar('block_type') === 'C') {
+        if ('D' === $block_arr[$i]->getVar('block_type') || 'C' === $block_arr[$i]->getVar('block_type')) {
             $delete_link = "<br><a href='admin.php?fct=blocksadmin&amp;op=delete&amp;bid=$bid'>" . _DELETE . '</a>';
         }
         // clone link if it is marked as cloneable block
         // $modversion['blocks'][n]['can_clone']
-        if ($block_arr[$i]->getVar('block_type') === 'D' || $block_arr[$i]->getVar('block_type') === 'C') {
+        if ('D' === $block_arr[$i]->getVar('block_type') || 'C' === $block_arr[$i]->getVar('block_type')) {
             $can_clone = true;
         } else {
             $can_clone = false;
@@ -277,7 +277,7 @@ function list_blocks()
             </td>
         </tr>\n";
 
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
     }
 
     echo "

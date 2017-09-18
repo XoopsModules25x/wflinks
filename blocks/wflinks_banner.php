@@ -36,12 +36,12 @@ function b_wflinks_banner_show($options)
         $bannerload = [];
         $result2    = $xoopsDB->query('SELECT name FROM ' . $xoopsDB->prefix('bannerclient') . ' WHERE cid=' . (int)$myrow['cid']);
         $myclient   = $xoopsDB->fetchArray($result2);
-        if ($impmade == 0) {
+        if (0 == $impmade) {
             $percent = 0;
         } else {
             $percent = substr(100 * $clicks / $impmade, 0, 5);
         }
-        if ($imptotal == 0) {
+        if (0 == $imptotal) {
             $left = 'Unlimited';
         } else {
             $left = (int)($imptotal - $impmade);

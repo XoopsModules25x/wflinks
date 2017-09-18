@@ -28,14 +28,14 @@ trait VersionChecks
     public static function checkVerXoops(XoopsModule $module = null, $requiredVer = null)
     {
         $moduleDirName = basename(dirname(__DIR__));
-        if ($module === null) {
+        if (null === $module) {
             $module = XoopsModule::getByDirname($moduleDirName);
         }
         xoops_loadLanguage('admin', $moduleDirName);
         //check for minimum XOOPS version
         $currentVer = substr(XOOPS_VERSION, 6); // get the numeric part of string
         $currArray  = explode('.', $currentVer);
-        if ($requiredVer === null) {
+        if (null === $requiredVer) {
             $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
         }
         $reqArray = explode('.', $requiredVer);
@@ -58,7 +58,7 @@ trait VersionChecks
             }
         }
 
-        if ($success === false) {
+        if (false === $success) {
             $module->setErrors(sprintf(_AM_WFL_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
         }
 
@@ -80,7 +80,7 @@ trait VersionChecks
         $success = true;
         $verNum  = PHP_VERSION;
         $reqVer  = $module->getInfo('min_php');
-        if ($reqVer !== false && $reqVer !== '') {
+        if (false !== $reqVer && '' !== $reqVer) {
             if (version_compare($verNum, $reqVer, '<')) {
                 $module->setErrors(sprintf(_AM_WFL_ERROR_BAD_PHP, $reqVer, $verNum));
                 $success = false;

@@ -36,7 +36,7 @@ require_once XOOPS_ROOT_PATH . '/kernel/module.php';
 $admintest = 0;
 
 if (is_object($xoopsUser)) {
-    $xoopsModule = xoopsModule:: getByDirname('system');
+    $xoopsModule = XoopsModule:: getByDirname('system');
     if (!$xoopsUser->isAdmin($xoopsModule->mid())) {
         redirect_header(XOOPS_URL . '/user.php', 3, _NOPERM);
     }
@@ -47,8 +47,8 @@ if (is_object($xoopsUser)) {
 // include system category definitions
 require_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
 $error = false;
-if ($admintest != 0) {
-    if (isset($fct) && $fct !== '') {
+if (0 != $admintest) {
+    if (isset($fct) && '' !== $fct) {
         if (file_exists(XOOPS_ROOT_PATH . '/modules/system/admin/' . $fct . '/xoops_version.php')) {
             if (file_exists(XOOPS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/admin.php')) {
                 include XOOPS_ROOT_PATH . '/modules/system/language/' . $xoopsConfig['language'] . '/admin.php';
@@ -68,7 +68,7 @@ if ($admintest != 0) {
             if ($category > 0) {
                 $groups = $xoopsUser->getGroups();
                 if (in_array(XOOPS_GROUP_ADMIN, $groups)
-                    || $syspermHandler->checkRight('system_admin', $category, $groups, $xoopsModule->getVar('mid')) !== false) {
+                    || false !== $syspermHandler->checkRight('system_admin', $category, $groups, $xoopsModule->getVar('mid'))) {
                     if (file_exists("../include/{$fct}.inc.php")) {
                         require_once "../include/{$fct}.inc.php";
                     } else {
@@ -77,7 +77,7 @@ if ($admintest != 0) {
                 } else {
                     $error = true;
                 }
-            } elseif ($fct === 'version') {
+            } elseif ('version' === $fct) {
                 if (file_exists(XOOPS_ROOT_PATH . '/modules/system/admin/version/main.php')) {
                     require_once XOOPS_ROOT_PATH . '/modules/system/admin/version/main.php';
                 } else {
@@ -94,7 +94,7 @@ if ($admintest != 0) {
     }
 }
 
-if ($error !== false) {
+if (false !== $error) {
     xoops_cp_header();
     echo '<h4>System Configuration</h4>';
     echo '<table class="outer" cellpadding="4" cellspacing="1">';
@@ -112,16 +112,16 @@ if ($error !== false) {
     $counter   = 0;
     $class     = 'even';
     while ($file = readdir($handle)) {
-        if (strtolower($file) !== 'cvs' && !preg_match('/[.]/', $file) && is_dir($admin_dir . '/' . $file)) {
+        if ('cvs' !== strtolower($file) && !preg_match('/[.]/', $file) && is_dir($admin_dir . '/' . $file)) {
             include $admin_dir . '/' . $file . '/xoops_version.php';
             if ($modversion['hasAdmin']) {
                 $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
-                if ($all_ok !== false || in_array($modversion['category'], $ok_syscats)) {
+                if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
                     echo "<td class='$class' class='txtcenter;' valign='bottom' width='19%'>";
                     echo "<a href='" . XOOPS_URL . '/modules/system/admin.php?fct=' . $file . "'><b>" . trim($modversion['name']) . "</b></a>\n";
                     echo '</td>';
                     ++$counter;
-                    $class = ($class === 'even') ? 'odd' : 'even';
+                    $class = ('even' === $class) ? 'odd' : 'even';
                 }
                 if ($counter > 4) {
                     $counter = 0;
@@ -134,7 +134,7 @@ if ($error !== false) {
     }
     while ($counter < 5) {
         echo '<td class="' . $class . '">&nbsp;</td>';
-        $class = ($class === 'even') ? 'odd' : 'even';
+        $class = ('even' === $class) ? 'odd' : 'even';
         ++$counter;
     }
     echo '</tr></table>';

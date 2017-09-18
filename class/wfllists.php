@@ -82,9 +82,9 @@ class WflLists
     {
         $dirlist = [];
         if (is_dir($dirname) && $handle = opendir($dirname)) {
-            while (($file = readdir($handle)) !== false) {
+            while (false !== ($file = readdir($handle))) {
                 if (!preg_match('/^[.]{1,2}$/', $file)) {
-                    if (strtolower($file) !== 'cvs' && is_dir($dirname . $file)) {
+                    if ('cvs' !== strtolower($file) && is_dir($dirname . $file)) {
                         $dirlist[$file] = $file;
                     }
                 }
@@ -129,15 +129,15 @@ class WflLists
                 break;
         }
 
-        if (substr($dirname, -1) === '/') {
+        if ('/' === substr($dirname, -1)) {
             $dirname = substr($dirname, 0, -1);
         }
 
         if (is_dir($dirname) && $handle = opendir($dirname)) {
-            while (($file = readdir($handle)) !== false) {
+            while (false !== ($file = readdir($handle))) {
                 if (!preg_match('/^[.]{1,2}$/', $file) && preg_match("/$types$/i", $file)
                     && is_file($dirname . '/' . $file)) {
-                    if (strtolower($file) === 'blank.gif') {
+                    if ('blank.gif' === strtolower($file)) {
                         continue;
                     }
                     $file            = $prefix . $file;
