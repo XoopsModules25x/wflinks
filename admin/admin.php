@@ -68,7 +68,7 @@ if ($admintest != 0) {
             if ($category > 0) {
                 $groups = $xoopsUser->getGroups();
                 if (in_array(XOOPS_GROUP_ADMIN, $groups)
-                    || false !== $syspermHandler->checkRight('system_admin', $category, $groups, $xoopsModule->getVar('mid'))) {
+                    || $syspermHandler->checkRight('system_admin', $category, $groups, $xoopsModule->getVar('mid')) !== false) {
                     if (file_exists("../include/{$fct}.inc.php")) {
                         require_once "../include/{$fct}.inc.php";
                     } else {
@@ -94,7 +94,7 @@ if ($admintest != 0) {
     }
 }
 
-if (false !== $error) {
+if ($error !== false) {
     xoops_cp_header();
     echo '<h4>System Configuration</h4>';
     echo '<table class="outer" cellpadding="4" cellspacing="1">';
@@ -116,7 +116,7 @@ if (false !== $error) {
             include $admin_dir . '/' . $file . '/xoops_version.php';
             if ($modversion['hasAdmin']) {
                 $category = isset($modversion['category']) ? (int)$modversion['category'] : 0;
-                if (false !== $all_ok || in_array($modversion['category'], $ok_syscats)) {
+                if ($all_ok !== false || in_array($modversion['category'], $ok_syscats)) {
                     echo "<td class='$class' class='txtcenter;' valign='bottom' width='19%'>";
                     echo "<a href='" . XOOPS_URL . '/modules/system/admin.php?fct=' . $file . "'><b>" . trim($modversion['name']) . "</b></a>\n";
                     echo '</td>';

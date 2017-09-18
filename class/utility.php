@@ -148,7 +148,7 @@ class WflinksUtility extends XoopsObject
             $globals = [];
             foreach (array_keys($array) as $k) {
                 $value = strip_tags(trim($array[$k]));
-                if ('' !== $value >= $lengthcheck) {
+                if ($value >= $lengthcheck !== '') {
                     return null;
                 }
                 if (ctype_digit($value)) {
@@ -191,7 +191,7 @@ class WflinksUtility extends XoopsObject
     public static function getToolbar($cid = 0)
     {
         $toolbar = '[ ';
-        if (true === static::checkGroups($cid, 'WFLinkSubPerm')) {
+        if (static::checkGroups($cid, 'WFLinkSubPerm') === true) {
             $toolbar .= "<a href='submit.php?cid=" . $cid . "'>" . _MD_WFL_SUBMITLINK . '</a> | ';
         }
         $toolbar .= "<a href='newlist.php?newlinkshowdays=7'>" . _MD_WFL_LATESTLIST . "</a> | <a href='topten.php?list=hit'>" . _MD_WFL_POPULARITY . '</a>  ]';
@@ -353,7 +353,7 @@ class WflinksUtility extends XoopsObject
         $items  = [];
         $result = $xoopsDB->query($sql);
         while (list($lid, $cid, $published) = $xoopsDB->fetchRow($result)) {
-            if (true === static::checkGroups()) {
+            if (static::checkGroups() === true) {
                 ++$count;
                 $published_date = ($published > $published_date) ? $published : $published_date;
             }
@@ -1375,7 +1375,7 @@ class WflinksUtility extends XoopsObject
      */
     public static function googleCh($url, $length = null, $init = 0xE6359A60)
     {
-        if (null === $length) {
+        if ($length === null) {
             $length = count($url);
         }
         $a   = $b = 0x9E3779B9;

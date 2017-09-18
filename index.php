@@ -67,7 +67,7 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
         $chcount       = 1;
         $subcategories = '';
         foreach ($arr as $ele) {
-            if (true === WflinksUtility::checkGroups($ele['cid'])) {
+            if (WflinksUtility::checkGroups($ele['cid']) === true) {
                 if ($xoopsModuleConfig['subcats'] == 1) {
                     $chtitle = $wfmyts->htmlSpecialCharsStrip($ele['title']);
                     if ($chcount > 5) {

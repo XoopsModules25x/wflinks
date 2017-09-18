@@ -38,11 +38,11 @@ $sql2 = 'SELECT count(*) FROM '
         . '))';
 list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql2));
 
-if (0 == $count && false === WflinksUtility::checkGroups($cid)) {
+if ($count == 0 && WflinksUtility::checkGroups($cid) === false) {
     redirect_header('index.php', 1, _MD_WFL_MUSTREGFIRST);
 }
 
-if (0 == $agreed && $xoopsModuleConfig['showlinkdisclaimer']) {
+if ($agreed == 0 && $xoopsModuleConfig['showlinkdisclaimer']) {
     $GLOBALS['xoopsOption']['template_main'] = 'wflinks_disclaimer.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
 

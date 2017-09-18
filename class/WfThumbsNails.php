@@ -68,28 +68,28 @@ class WfThumbsNails
         /*
         * The actual image we will be processing
         */
-        if (null !== $img_name) {
+        if ($img_name !== null) {
             $this->_img_name = trim($img_name);
         }
 
         /*
         * The image path
         */
-        if (null !== $img_path) {
+        if ($img_path !== null) {
             $this->_img_path = trim($img_path);
         }
 
         /*
         * The image save path
         */
-        if (null !== $img_savepath) {
+        if ($img_savepath !== null) {
             $this->_img_savepath = trim($img_savepath);
         }
 
         $path_to_check = XOOPS_ROOT_PATH . "/$img_path/$img_savepath";
 
         if (!is_dir($path_to_check)) {
-            if (false === mkdir("$path_to_check", 0777)) {
+            if (mkdir("$path_to_check", 0777) === false) {
 //                return false;
             }
         }
@@ -144,23 +144,23 @@ class WfThumbsNails
         $this->_source_url   = XOOPS_URL . "/{$this->_img_path}";
         $this->_source_image = "{$this->_source_path}/{$this->_img_name}";
 
-        if (null !== $img_width && isset($img_width)) {
+        if ($img_width !== null && isset($img_width)) {
             $this->img_width = (int)$img_width;
         }
 
-        if (null !== $img_height && isset($img_height)) {
+        if ($img_height !== null && isset($img_height)) {
             $this->img_height = (int)$img_height;
         }
 
-        if (null !== $img_quality && isset($img_quality)) {
+        if ($img_quality !== null && isset($img_quality)) {
             $this->img_quality = (int)$img_quality;
         }
 
-        if (null !== $img_update && isset($img_update)) {
+        if ($img_update !== null && isset($img_update)) {
             $this->img_update = (int)$img_update;
         }
 
-        if (null !== $img_aspect && isset($img_aspect)) {
+        if ($img_aspect !== null && isset($img_aspect)) {
             $this->img_aspect = (int)$img_aspect;
         }
 
@@ -365,7 +365,7 @@ class WfThumbsNails
         $this->_img_info = getimagesize($this->_source_image, $imageinfo);
         // if ( $this->_img_info[0] < $this->img_width && $this->_img_info[1] < $this->img_height )
         // return false;
-        return !(null === $this->_img_info);
+        return !($this->_img_info === null);
     }
 
     /**
@@ -381,7 +381,7 @@ class WfThumbsNails
             return false;
         }
         $gdlib = function_exists('gd_info');
-        if (false === $gdlib = gd_info()) {
+        if ($gdlib = gd_info() === false) {
             return false;
         }
 

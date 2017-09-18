@@ -77,7 +77,7 @@ function b_wflinks_top_show($options)
 
     $result = $xoopsDB->query('SELECT lid, cid, title, published, hits FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0 AND published <= ' . $time . ' AND (expired = 0 OR expired > ' . $time . ') AND offline = 0 ORDER BY ' . $options[0] . ' DESC', $options[1], 0);
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        if (0 == $myrow['cid'] || false === checkBlockgroups($myrow['cid'])) {
+        if ($myrow['cid'] == 0 || checkBlockgroups($myrow['cid']) === false) {
             continue;
         }
         $linkload = [];

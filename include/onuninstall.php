@@ -35,7 +35,7 @@ function xoops_module_uninstall_wflinks(XoopsModule $module)
 //    return true;
 
     $moduleDirName = basename(dirname(__DIR__));
-    if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+    if (($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName)) !== false) {
     } else {
         $moduleHelper = Xmf\Module\Helper::getHelper('system');
     }
@@ -61,7 +61,7 @@ function xoops_module_uninstall_wflinks(XoopsModule $module)
             $dirInfo = new SplFileInfo($old_dir);
             if ($dirInfo->isDir()) {
                 // The directory exists so delete it
-                if (false === $utilityClass::rrmdir($old_dir)) {
+                if ($utilityClass::rrmdir($old_dir) === false) {
                     $module->setErrors(sprintf(_AM_WFL_ERROR_BAD_DEL_PATH, $old_dir));
                     $success = false;
                 }

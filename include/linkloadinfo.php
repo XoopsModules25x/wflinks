@@ -86,7 +86,7 @@ $link['comments'] = $link_arr['comments'];
 $whoisurl         = str_replace('http://', '', $link['url']);
 
 $link['adminlink'] = '';
-if (0 == $moderate && $link['isadmin'] === true) {
+if ($moderate == 0 && $link['isadmin'] === true) {
     $link['adminlink'] = '<a href="'
                          . XOOPS_URL
                          . '/modules/'
@@ -137,7 +137,7 @@ $votestring = ($link_arr['votes'] == 1) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMV
 $link['useradminlink'] = 0;
 if (is_object($xoopsUser) && !empty($xoopsUser)) {
     $_user_submitter = $xoopsUser->getVar('uid') == $link_arr['submitter'];
-    if (true === WflinksUtility::checkGroups($cid)) {
+    if (WflinksUtility::checkGroups($cid) === true) {
         $link['useradminlink'] = 1;
         if ($xoopsUser->getVar('uid') == $link_arr['submitter']) {
             $link['usermodify'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $link_arr['lid'] . '"> ' . _MD_WFL_MODIFY . '</a> |';

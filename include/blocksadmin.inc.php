@@ -282,7 +282,7 @@ if ($op === 'delete_ok') {
         redirect_header('myblocksadmin.php', 4, 'Invalid block');
     }
     $myblock->delete();
-    if (!defined('XOOPS_ORETEKI') && '' !== $myblock->getVar('template')) {
+    if (!defined('XOOPS_ORETEKI') && $myblock->getVar('template') !== '') {
         $tplfileHandler = xoops_getHandler('tplfile');
         $btemplate      = $tplfileHandler->find($GLOBALS['xoopsConfig']['template_set'], 'block', $bid);
         if (count($btemplate) > 0) {

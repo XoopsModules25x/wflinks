@@ -20,7 +20,7 @@ $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 $arr    = $mytree->getFirstChild($cid, $catsort);
 
 if (is_array($arr) > 0 && !$list && !$selectdate) {
-    if (false === WflinksUtility::checkGroups($cid)) {
+    if (WflinksUtility::checkGroups($cid) === false) {
         redirect_header('index.php', 1, _MD_WFL_MUSTREGFIRST);
     }
 }
@@ -53,7 +53,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
             // Subitem file count
             $hassubitems = WflinksUtility::getTotalItems($sub_ele['cid']);
             // Filter group permissions
-            if (true === WflinksUtility::checkGroups($sub_ele['cid'])) {
+            if (WflinksUtility::checkGroups($sub_ele['cid']) === true) {
                 // If subcategory count > 5 then finish adding subcats to $infercategories and end
                 if ($chcount > 5) {
                     $infercategories .= '...';

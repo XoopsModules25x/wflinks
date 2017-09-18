@@ -49,7 +49,7 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
             // echo "<pre>" ;
             // var_dump( $_POST['perms'] ) ;
             // exit ;
-            if (false !== myDeleteByModule($gpermHandler->db, $modid, $perm_name, $item_id)) {
+            if (myDeleteByModule($gpermHandler->db, $modid, $perm_name, $item_id) !== false) {
                 if (empty($perm_data['groups'])) {
                     continue;
                 }

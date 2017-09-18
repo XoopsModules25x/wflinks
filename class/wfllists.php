@@ -82,7 +82,7 @@ class WflLists
     {
         $dirlist = [];
         if (is_dir($dirname) && $handle = opendir($dirname)) {
-            while (false !== ($file = readdir($handle))) {
+            while (($file = readdir($handle)) !== false) {
                 if (!preg_match('/^[.]{1,2}$/', $file)) {
                     if (strtolower($file) !== 'cvs' && is_dir($dirname . $file)) {
                         $dirlist[$file] = $file;
@@ -134,7 +134,7 @@ class WflLists
         }
 
         if (is_dir($dirname) && $handle = opendir($dirname)) {
-            while (false !== ($file = readdir($handle))) {
+            while (($file = readdir($handle)) !== false) {
                 if (!preg_match('/^[.]{1,2}$/', $file) && preg_match("/$types$/i", $file)
                     && is_file($dirname . '/' . $file)) {
                     if (strtolower($file) === 'blank.gif') {
