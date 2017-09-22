@@ -535,7 +535,7 @@ $modversion['config'][] = [
     'description' => '_MI_WFL_DATEFORMATDSC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => 'D, d-M-Y',
+    'default'     => 'd-M-Y',
 ];
 $modversion['config'][] = [
     'name'        => 'dateformatadmin',
@@ -543,7 +543,7 @@ $modversion['config'][] = [
     'description' => '_MI_WFL_DATEFORMATADMINDSC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => 'D, d-M-Y - G:i',
+    'default'     => 'd-M-Y - G:i',
 ];
 $modversion['config'][] = [
     'name'        => 'totalchars',
