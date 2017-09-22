@@ -27,7 +27,7 @@ class Wflinks extends \Xmf\Module\Helper {
      */
     public function init()
     {
-        $this->dirname = (basename(dirname(__DIR__)));
+        $this->dirname = basename(dirname(__DIR__));
     }
 
 }

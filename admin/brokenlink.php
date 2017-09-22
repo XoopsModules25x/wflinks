@@ -72,7 +72,7 @@ switch (strtolower($op)) {
         $totalbrokenlinks = $xoopsDB->getRowsNum($result);
 
         xoops_cp_header();
-        //WflinksUtility::getAdminMenu( _AM_WFL_BROKEN_FILE );
+
         echo "
         <fieldset>
          <legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_BROKEN_REPORTINFO . "</legend>\n

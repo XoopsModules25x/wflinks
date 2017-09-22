@@ -74,7 +74,6 @@ switch (strtolower($op)) {
             3 => _AM_WFL_LINK_FMAINIMAGEDIR
         ];
 
-        //WflinksUtility::getAdminMenu( _AM_WFL_MUPLOADS );
         WflinksUtility::getServerStats();
         if ($rootpath > 0) {
             echo '<div><b>' . _AM_WFL_LINK_FUPLOADPATH . '</b> ' . XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath] . "</div>\n";

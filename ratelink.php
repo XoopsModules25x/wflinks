@@ -89,7 +89,7 @@ if (!empty($_POST['submit'])) {
 
     $result = $xoopsDB->query('SELECT title FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid);
     list($title) = $xoopsDB->fetchRow($result);
-    $xoopsTpl->assign('link', array('id' => $lid, 'cid' => $cid, 'title' => $wfmyts->htmlSpecialCharsStrip($title)));
+    $xoopsTpl->assign('link', ['id' => $lid, 'cid' => $cid, 'title' => $wfmyts->htmlSpecialCharsStrip($title)]);
 
     if (is_object($xoTheme)) {
         $xoTheme->addMeta('meta', 'robots', 'noindex,nofollow');

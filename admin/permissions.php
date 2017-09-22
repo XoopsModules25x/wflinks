@@ -15,7 +15,6 @@ require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 xoops_cp_header();
-//WflinksUtility::getAdminMenu( _AM_WFL_PERM_MANAGEMENT );
 
 $permtoset                = isset($_POST['permtoset']) ? (int)$_POST['permtoset'] : 1;
 $selected                 = ['', '', '', '', ''];

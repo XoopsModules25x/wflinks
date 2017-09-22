@@ -69,7 +69,6 @@ switch (strtolower($op)) {
         $new_array_count = $xoopsDB->getRowsNum($xoopsDB->query($sql));
 
         xoops_cp_header();
-        //WflinksUtility::getAdminMenu( _AM_WFL_SUB_SUBMITTEDFILES );
 
         echo "<fieldset><legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_SUB_FILESWAITINGINFO . "</legend>\n";
         echo "<div style='padding: 8px;'>" . _AM_WFL_SUB_FILESWAITINGVALIDATION . "&nbsp;<b>$new_array_count</b><div>\n";

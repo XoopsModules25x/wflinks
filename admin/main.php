@@ -70,7 +70,6 @@ function edit($lid = 0)
     require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     xoops_load('XoopsUserUtility');
-    //WflinksUtility::getAdminMenu( _AM_WFL_MLINKS );
 
     if ($lid > 0) {
         $_vote_data = WflinksUtility::getVoteDetails($lid);
@@ -418,8 +417,8 @@ switch (strtolower($op)) {
 
         require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
-        //        WflinksUtility::getAdminMenu( _AM_WFL_BINDEX, '', $heading );
-        echo "
+
+            echo "
             <table width='100%' cellspacing='1' cellpadding='2' border='0' class='outer'>\n
             <tr>\n
             <th class='txtcenter;'>" . _AM_WFL_MINDEX_ID . "</th>\n
@@ -656,7 +655,7 @@ switch (strtolower($op)) {
             $item_tag = $result->fetchArray['item_tag'];
             require_once __DIR__ . '/admin_header.php';
             xoops_cp_header();
-            //WflinksUtility::getAdminMenu( _AM_WFL_BINDEX );
+
             xoops_confirm(['op' => 'delete', 'lid' => $lid, 'confirm' => 1, 'title' => $title], 'main.php', _AM_WFL_LINK_REALLYDELETEDTHIS . '<br><br>' . $title, _DELETE);
 
             // Remove item_tag from Tag-module
@@ -704,7 +703,6 @@ switch (strtolower($op)) {
         $adminObject->addItemButton(_MI_WFL_ADD_CATEGORY, 'category.php', 'add', '');
         $adminObject->displayButton('left', '');
 
-        //WflinksUtility::getAdminMenu( _AM_WFL_BINDEX );
         //        echo "
         //          <fieldset style='border: #e8e8e8 1px solid;'><legend style='display: inline; font-weight: bold; color: #0A3760;'>" . _AM_WFL_MINDEX_LINKSUMMARY . "</legend>\n
         //          <div style='padding: 8px;'><small>\n

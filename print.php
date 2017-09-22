@@ -106,9 +106,9 @@ $xoopsTpl->assign('worldwideweb', '<br>' . '<img src="' . XOOPS_URL . '/modules/
 global $xoopsTpl, $xoTheme;
 
 $maxWords = 100;
-$words    = array();
+$words    = [];
 $words    = explode(' ', WflinksUtility::convertHtml2text($myrow['description']));
-$newWords = array();
+$newWords = [];
 $i        = 0;
 
 while ($i < $maxWords - 1 && $i < count($words)) {

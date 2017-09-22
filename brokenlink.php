@@ -41,7 +41,7 @@ switch (strtolower($op)) {
             $newid = $xoopsDB->getInsertId();
 
             // Send notifications
-            $tags                      = array();
+            $tags                      = [];
             $tags['BROKENREPORTS_URL'] = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/main.php?op=listBrokenlinks';
             $notificationHandler       = xoops_getHandler('notification');
             $notificationHandler->triggerEvent('global', 0, 'link_broken', $tags);

@@ -28,6 +28,7 @@ if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
 } else {
     $moduleHelper = Xmf\Module\Helper::getHelper('system');
 }
+/** @var Xmf\Module\Admin $adminObject */
 $adminObject = \Xmf\Module\Admin::getInstance();
 
 $pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
