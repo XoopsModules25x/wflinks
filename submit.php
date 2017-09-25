@@ -22,13 +22,13 @@ $lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 $cid = (int)$cid;
 $lid = (int)$lid;
 
-if (WflinksUtility::checkGroups($cid, 'WFLinkSubPerm') === false) {
+if (false === WflinksUtility::checkGroups($cid, 'WFLinkSubPerm')) {
     redirect_header('index.php', 1, _MD_WFL_NOPERMISSIONTOPOST);
 }
 
-if (WflinksUtility::checkGroups($cid, 'WFLinkSubPerm') === true) {
+if (true === WflinksUtility::checkGroups($cid, 'WFLinkSubPerm')) {
     if (WflinksUtility::cleanRequestVars($_REQUEST, 'submit', 0)) {
-        if (WflinksUtility::checkGroups($cid, 'WFLinkSubPerm') === false) {
+        if (false === WflinksUtility::checkGroups($cid, 'WFLinkSubPerm')) {
             redirect_header('index.php', 1, _MD_WFL_NOPERMISSIONTOPOST);
         }
 
@@ -48,9 +48,9 @@ if (WflinksUtility::checkGroups($cid, 'WFLinkSubPerm') === true) {
         }
 
         if ($xoopsModuleConfig['useaddress']) {
-            $googlemap = ($_POST['googlemap'] !== 'http://maps.google.com') ? $wfmyts->addSlashes($_POST['googlemap']) : '';
-            $yahoomap  = ($_POST['yahoomap'] !== 'http://maps.yahoo.com') ? $wfmyts->addSlashes($_POST['yahoomap']) : '';
-            $multimap  = ($_POST['multimap'] !== 'http://www.multimap.com') ? $wfmyts->addSlashes($_POST['multimap']) : '';
+            $googlemap = ('http://maps.google.com' !== $_POST['googlemap']) ? $wfmyts->addSlashes($_POST['googlemap']) : '';
+            $yahoomap  = ('http://maps.yahoo.com' !== $_POST['yahoomap']) ? $wfmyts->addSlashes($_POST['yahoomap']) : '';
+            $multimap  = ('http://www.multimap.com' !== $_POST['multimap']) ? $wfmyts->addSlashes($_POST['multimap']) : '';
             $street1   = $wfmyts->addSlashes(ltrim($_REQUEST['street1']));
             $street2   = $wfmyts->addSlashes(ltrim($_REQUEST['street2']));
             $town      = $wfmyts->addSlashes(ltrim($_REQUEST['town']));
@@ -72,11 +72,11 @@ if (WflinksUtility::checkGroups($cid, 'WFLinkSubPerm') === true) {
         $publishdate = 0;
         $ipaddress   = $_SERVER['REMOTE_ADDR'];
 
-        if ($lid == 0) {
+        if (0 == $lid) {
             $status      = 0;
             $publishdate = 0;
             $message     = _MD_WFL_THANKSFORINFO;
-            if (WflinksUtility::checkGroups($cid, 'WFLinkAutoApp') === true) {
+            if (true === WflinksUtility::checkGroups($cid, 'WFLinkAutoApp')) {
                 $publishdate = time();
                 $status      = 1;
                 $message     = _MD_WFL_ISAPPROVED;
@@ -96,7 +96,7 @@ if (WflinksUtility::checkGroups($cid, 'WFLinkSubPerm') === true) {
             $newid = $GLOBALS['xoopsDB']->getInsertId();
 
             // Add item_tag to Tag-module
-            if ($lid == 0) {
+            if (0 == $lid) {
                 $tagupdate = WflinksUtility::updateTag($newid, $item_tag);
             } else {
                 $tagupdate = WflinksUtility::updateTag($lid, $item_tag);
@@ -115,7 +115,7 @@ if (WflinksUtility::checkGroups($cid, 'WFLinkSubPerm') === true) {
 
             $tags['CATEGORY_NAME'] = $row['title'];
             $tags['CATEGORY_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $cid;
-            if (WflinksUtility::checkGroups($cid, 'WFLinkAutoApp') === true) {
+            if (true === WflinksUtility::checkGroups($cid, 'WFLinkAutoApp')) {
                 $notificationHandler->triggerEvent('global', 0, 'new_link', $tags);
                 $notificationHandler->triggerEvent('category', $cid, 'new_link', $tags);
                 redirect_header('index.php', 2, _MD_WFL_ISAPPROVED);
@@ -130,7 +130,7 @@ if (WflinksUtility::checkGroups($cid, 'WFLinkSubPerm') === true) {
                 redirect_header('index.php', 2, _MD_WFL_THANKSFORINFO);
             }
         } else {
-            if ($approve == 1 || WflinksUtility::checkGroups($cid, 'WFLinkAutoApp') === true) {
+            if (1 == $approve || true === WflinksUtility::checkGroups($cid, 'WFLinkAutoApp')) {
                 $updated = time();
                 $sql     = 'UPDATE '
                            . $xoopsDB->prefix('wflinks_links')
@@ -190,7 +190,7 @@ if (WflinksUtility::checkGroups($cid, 'WFLinkSubPerm') === true) {
         $approve = WflinksUtility::cleanRequestVars($_REQUEST, 'approve', 0);
 
         //Show disclaimer
-        if (!isset($_GET['agree']) && $xoopsModuleConfig['showdisclaimer'] && $approve == 0) {
+        if (!isset($_GET['agree']) && $xoopsModuleConfig['showdisclaimer'] && 0 == $approve) {
             $GLOBALS['xoopsOption']['template_main'] = 'wflinks_disclaimer.tpl';
             include XOOPS_ROOT_PATH . '/header.php';
 
@@ -267,7 +267,7 @@ if (WflinksUtility::checkGroups($cid, 'WFLinkSubPerm') === true) {
         $sql        = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . ' ORDER BY title';
         $result     = $xoopsDB->query($sql);
         while ($myrow = $xoopsDB->fetchArray($result)) {
-            if (WflinksUtility::checkGroups($myrow['cid'], 'WFLinkSubPerm') === true) {
+            if (true === WflinksUtility::checkGroups($myrow['cid'], 'WFLinkSubPerm')) {
                 $submitcats[$myrow['cid']] = $myrow['title'];
             }
         }
@@ -374,11 +374,11 @@ if (WflinksUtility::checkGroups($cid, 'WFLinkSubPerm') === true) {
         } else {
             $sform->addElement(new XoopsFormHidden('notifypub', 0));
         }
-        if ($lid > 0 && WflinksUtility::checkGroups($cid, 'WFLinkAppPerm') === true) {
+        if ($lid > 0 && true === WflinksUtility::checkGroups($cid, 'WFLinkAppPerm')) {
             $approve_checkbox = new XoopsFormCheckBox('', 'approve', $approve);
             $approve_checkbox->addOption(1, _MD_WFL_APPROVE);
             $option_tray->addElement($approve_checkbox);
-        } elseif (WflinksUtility::checkGroups($cid, 'WFLinkAutoApp') === true) {
+        } elseif (true === WflinksUtility::checkGroups($cid, 'WFLinkAutoApp')) {
             $sform->addElement(new XoopsFormHidden('approve', 1));
         } else {
             $sform->addElement(new XoopsFormHidden('approve', 0));

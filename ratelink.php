@@ -20,7 +20,7 @@ $lid = (int)$lid;
 $ip         = getenv('REMOTE_ADDR');
 $ratinguser = (!is_object($xoopsUser)) ? 0 : $xoopsUser->getVar('uid');
 
-if ($ratinguser != 0) {
+if (0 != $ratinguser) {
     $result = $xoopsDB->query('SELECT cid, submitter FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid);
     while (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result)) {
         if ($ratinguserDB == $ratinguser) {
@@ -59,7 +59,7 @@ if (!empty($_POST['submit'])) {
     $cid          = (int)$cid;
     $rating       = (int)$rating;
     // Check if Rating is Null
-    if ($rating == '--') {
+    if ('--' == $rating) {
         redirect_header('ratelink.php?cid=' . $cid . '&amp;lid=' . $lid, 4, _MD_WFL_NORATING);
     }
     // All is well.  Add to Line Item Rate to DB.

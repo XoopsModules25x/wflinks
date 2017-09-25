@@ -175,7 +175,7 @@ if (is_object($module)) {
         $cansubmit = 1;
     }
 }
-if ($cansubmit == 1) {
+if (1 == $cansubmit) {
     $modversion['sub'][0]['name'] = _MI_WFL_SMNAME1;
     $modversion['sub'][0]['url']  = 'submit.php';
 }
@@ -810,8 +810,8 @@ $modversion['notification']['event'][] = [
     'mail_subject'  => _MI_WFL_LINK_APPROVE_NOTIFYSBJ,
 ];
 // On Update
-if (!empty($_POST['fct']) && !empty($_POST['op']) && !empty($_POST['diranme']) && $_POST['fct'] === 'modulesadmin'
-    && $_POST['op'] === 'update_ok'
+if (!empty($_POST['fct']) && !empty($_POST['op']) && !empty($_POST['diranme']) && 'modulesadmin' === $_POST['fct']
+    && 'update_ok' === $_POST['op']
     && $_POST['dirname'] == $modversion['dirname']) {
     include __DIR__ . '/include/onupdate.inc.php';
 }

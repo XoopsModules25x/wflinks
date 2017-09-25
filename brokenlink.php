@@ -107,8 +107,8 @@ switch (strtolower($op)) {
             $broken['id']           = $broke_arr['reportid'];
             $broken['reporter']     = XoopsUserUtility::getUnameFromId($broke_arr['sender']);
             $broken['date']         = formatTimestamp($broke_arr['date'], $xoopsModuleConfig['dateformat']);
-            $broken['acknowledged'] = ($broke_arr['acknowledged'] == 1) ? _YES : _NO;
-            $broken['confirmed']    = ($broke_arr['confirmed'] == 1) ? _YES : _NO;
+            $broken['acknowledged'] = (1 == $broke_arr['acknowledged']) ? _YES : _NO;
+            $broken['confirmed']    = (1 == $broke_arr['confirmed']) ? _YES : _NO;
             $xoopsTpl->assign('broken', $broken);
             $xoopsTpl->assign('brokenreport', true);
         } else {
@@ -120,7 +120,7 @@ switch (strtolower($op)) {
             $link['title']     = $wfmyts->htmlSpecialCharsStrip($link_arr['title']);
             $time              = ($link_arr['published'] > 0) ? $link_arr['published'] : $link_arr['updated'];
             $link['updated']   = formatTimestamp($time, $xoopsModuleConfig['dateformat']);
-            $is_updated        = ($link_arr['updated'] != 0) ? _MD_WFL_UPDATEDON : _MD_WFL_SUBMITDATE;
+            $is_updated        = (0 != $link_arr['updated']) ? _MD_WFL_UPDATEDON : _MD_WFL_SUBMITDATE;
             $link['publisher'] = XoopsUserUtility::getUnameFromId($link_arr['submitter']);
 
             $xoopsTpl->assign('link_id', $lid);

@@ -15,7 +15,7 @@ $lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid = (int)$lid;
 
 $error_message = _MD_WFL_NOITEMSELECTED;
-if ($lid == 0) {
+if (0 == $lid) {
     redirect_header('javascript:history.go(-1)', 1, $error_message);
 }
 
@@ -66,33 +66,33 @@ $url     = $myrow['url'];
 $email   = printemailcnvrt($myrow['email']);
 $country = WflinksUtility::getCountryName($myrow['country']);
 
-if ($street1 === '' || $town === '' || $xoopsModuleConfig['useaddress'] == 0) {
+if ('' === $street1 || '' === $town || 0 == $xoopsModuleConfig['useaddress']) {
     $print['addryn'] = 0;
 } else {
     $print['addryn']  = 1;
     $address          = wfl_address($street1, $town, $state, $zip, $country);
     $print['address'] = '<b>' . _MD_WFL_ADDRESS . '</b><br>' . wfl_address($street1, $street2, $town, $state, $zip, $country) . '<br>' . $country;
-    if ($tel === '') {
+    if ('' === $tel) {
         $print['tel'] = '';
     } else {
         $print['tel'] = '<br>' . '<img src="' . XOOPS_URL . '/modules/' . $moduleDirName . '/assets/images/icon/telephone.png" title="" alt="" align="absmiddle">&nbsp;' . $tel;
     }
-    if ($mobile === '') {
+    if ('' === $mobile) {
         $print['mobile'] = '';
     } else {
         $print['mobile'] = '<br>' . '<img src="' . XOOPS_URL . '/modules/' . $moduleDirName . '/assets/images/icon/phone.png" title="" alt="" align="absmiddle">&nbsp;' . $mobile;
     }
-    if ($voip === '') {
+    if ('' === $voip) {
         $print['voip'] = '';
     } else {
         $print['voip'] = '<br>' . '<img src="' . XOOPS_URL . '/modules/' . $moduleDirName . '/assets/images/icon/voip.png" title="" alt="" align="absmiddle">&nbsp;' . $voip;
     }
-    if ($fax === '') {
+    if ('' === $fax) {
         $print['fax'] = '';
     } else {
         $print['fax'] = '<br>' . '<img src="' . XOOPS_URL . '/modules/' . $moduleDirName . '/assets/images/icon/fax.png" title="" alt="" align="absmiddle">&nbsp;' . $fax;
     }
-    if ($email === '') {
+    if ('' === $email) {
         $print['email'] = '';
     } else {
         $print['email'] = '<br>' . '<img src="' . XOOPS_URL . '/modules/' . $moduleDirName . '/assets/images/icon/email.png" title="" alt="" align="absmiddle">&nbsp;' . $email;

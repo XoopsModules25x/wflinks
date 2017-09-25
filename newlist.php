@@ -23,9 +23,9 @@ $xoopsTpl->assign('catarray', $catarray);
 
 if (isset($_GET['newlinkshowdays'])) {
     $newlinkshowdays = (int)$_GET['newlinkshowdays'] ?: 7;
-    if ($newlinkshowdays != 7) {
-        if ($newlinkshowdays != 14) {
-            if ($newlinkshowdays != 30) {
+    if (7 != $newlinkshowdays) {
+        if (14 != $newlinkshowdays) {
+            if (30 != $newlinkshowdays) {
                 redirect_header('newlist.php?newlinkshowdays=7', 5, _MD_WFL_STOPIT . '<br><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/security.png">');
             }
         }

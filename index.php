@@ -67,8 +67,8 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
         $chcount       = 1;
         $subcategories = '';
         foreach ($arr as $ele) {
-            if (WflinksUtility::checkGroups($ele['cid']) === true) {
-                if ($xoopsModuleConfig['subcats'] == 1) {
+            if (true === WflinksUtility::checkGroups($ele['cid'])) {
+                if (1 == $xoopsModuleConfig['subcats']) {
                     $chtitle = $wfmyts->htmlSpecialCharsStrip($ele['title']);
                     if ($chcount > 5) {
                         $subcategories .= '...';
@@ -86,7 +86,7 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
         // This code is copyright WF-Projects
         // Using this code without our permission or removing this code voids the license agreement
         $_image = $myrow['imgurl'] ? urldecode($myrow['imgurl']) : '';
-        if ($_image !== '' && $xoopsModuleConfig['usethumbs']) {
+        if ('' !== $_image && $xoopsModuleConfig['usethumbs']) {
             $_thumb_image = new WfThumbsNails($_image, $xoopsModuleConfig['catimage'], 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
@@ -95,7 +95,7 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
             }
         }
         $imgurl = "{$xoopsModuleConfig['catimage']}/$_image";
-        if (empty($_image) || $_image === '') {
+        if (empty($_image) || '' === $_image) {
             $imgurl = $indicator['image'];
         }
         // End
@@ -124,7 +124,7 @@ $xoopsTpl->assign('lang_thereare', sprintf($lang_thereare, $total_cat, $listings
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 
 // Screenshots display
-if (isset($xoopsModuleConfig['screenshot']) && $xoopsModuleConfig['screenshot'] == 1) {
+if (isset($xoopsModuleConfig['screenshot']) && 1 == $xoopsModuleConfig['screenshot']) {
     $xoopsTpl->assign('shots_dir', $xoopsModuleConfig['screenshots']);
     $xoopsTpl->assign('shotwidth', $xoopsModuleConfig['shotwidth']);
     $xoopsTpl->assign('shotheight', $xoopsModuleConfig['shotheight']);
@@ -137,7 +137,7 @@ $time = time();
 $sql       = $xoopsDB->query('SELECT lastlinksyn, lastlinkstotal FROM ' . $xoopsDB->prefix('wflinks_indexpage'));
 $lastlinks = $xoopsDB->fetchArray($sql);
 
-if ($lastlinks['lastlinksyn'] == 1 && $lastlinks['lastlinkstotal'] > 0) {
+if (1 == $lastlinks['lastlinksyn'] && $lastlinks['lastlinkstotal'] > 0) {
     $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0
                                 AND published <= ' . $time . '
                                 AND (expired = 0 OR expired > ' . $time . ')
@@ -146,7 +146,7 @@ if ($lastlinks['lastlinksyn'] == 1 && $lastlinks['lastlinkstotal'] > 0) {
     list($count) = $xoopsDB->fetchRow($result);
 
     $count = (($count > $lastlinks['lastlinkstotal'])
-              && ($lastlinks['lastlinkstotal'] != 0)) ? $lastlinks['lastlinkstotal'] : $count;
+              && (0 != $lastlinks['lastlinkstotal'])) ? $lastlinks['lastlinkstotal'] : $count;
     $limit = (($start + $xoopsModuleConfig['perpage']) > $count) ? ($count - $start) : $xoopsModuleConfig['perpage'];
 
     $result = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0

@@ -34,7 +34,7 @@ $sql2 = 'SELECT count(*) FROM '
         . '))';
 list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql2));
 
-if ($count == 0 && WflinksUtility::checkGroups($cid = 0) === false) {
+if (0 == $count && false === WflinksUtility::checkGroups($cid = 0)) {
     redirect_header('index.php', 1, _MD_WFL_MUSTREGFIRST);
 }
 
@@ -82,62 +82,62 @@ $email   = $link_arr['email'];
 $vat     = $link_arr['vat'];
 $country = WflinksUtility::getCountryName($link_arr['country']);
 
-if ($street1 === '' || $town === '' || $xoopsModuleConfig['useaddress'] == 0) {
+if ('' === $street1 || '' === $town || 0 == $xoopsModuleConfig['useaddress']) {
     $link['addryn'] = 0;
 } else {
     $link['addryn']  = 1;
     $link['address'] = '<br>' . wfl_address($street1, $street2, $town, $state, $zip, $country) . '<br>' . $country;
 }
 
-if ($xoopsModuleConfig['useaddress'] == 1) {
+if (1 == $xoopsModuleConfig['useaddress']) {
     $link['addryn'] = 1;
 
-    if ($link_arr['tel'] === true) {
+    if (true === $link_arr['tel']) {
         $link['tel'] = '<br>' . '<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/telephone.png" title="' . _MD_WFL_TELEPHONE . '" alt="' . _MD_WFL_TELEPHONE . '" align="absmiddle">&nbsp;' . $tel;
     }
 
-    if ($link_arr['mobile'] === true) {
+    if (true === $link_arr['mobile']) {
         $link['mobile'] = '<br>' . '<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/phone.png" title="' . _MD_WFL_MOBILE . '" alt="' . _MD_WFL_MOBILE . '" align="absmiddle">&nbsp;' . $mobile;
     }
 
-    if ($link_arr['voip'] === true) {
+    if (true === $link_arr['voip']) {
         $link['voip'] = '<br>' . '<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/voip.png" title="' . _MD_WFL_VOIP . '" alt="' . _MD_WFL_VOIP . '" align="absmiddle">&nbsp;' . $voip;
     }
 
-    if ($link_arr['fax'] === true) {
+    if (true === $link_arr['fax']) {
         $link['fax'] = '<br>' . '<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/fax.png" title="' . _MD_WFL_FAX . '" alt="' . _MD_WFL_FAX . '" align="absmiddle">&nbsp;' . $fax;
     }
 
-    if ($link_arr['email'] === true) {
+    if (true === $link_arr['email']) {
         $link['email'] = '<br>' . '<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/email.png" title="' . _MD_WFL_EMAIL . '" alt="' . _MD_WFL_EMAIL . '" align="absmiddle">&nbsp;' . $email;
     }
 
-    if ($link_arr['vat'] === true) {
+    if (true === $link_arr['vat']) {
         $link['vat'] = '<br>' . _MD_WFL_VAT . ':&nbsp;' . $vat;
     }
 }
 
-if ($link_arr['street1'] === true || $link_arr['tel'] === true || $link_arr['mobile'] === true || $link_arr['fax'] === true
-    || $link_arr['email'] === true) {
+if (true === $link_arr['street1'] || true === $link_arr['tel'] || true === $link_arr['mobile'] || true === $link_arr['fax']
+    || true === $link_arr['email']) {
     $xoopsTpl->assign('contactdetails', '<b>' . _MD_WFL_ADDRESS . '</b>');
     $xoopsTpl->assign('vcard', '<br>' . '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/class/vcard.php?lid=' . $link_arr['lid'] . '"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/vcard.png" title="vCard" alt="vCard"></a>');
 }
 
 // Maps
-if ($xoopsModuleConfig['useaddress'] == 1) {
+if (1 == $xoopsModuleConfig['useaddress']) {
     $googlemap = $link_arr['googlemap'];
     $yahoomap  = $link_arr['yahoomap'];
     $mslivemap = $link_arr['multimap'];
 
-    if ($link_arr['googlemap'] === true) {
+    if (true === $link_arr['googlemap']) {
         $link['googlemap'] = '<a href="' . $googlemap . '" target="_blank"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/google_map.png" alt="' . _MD_WFL_GETMAP . '" title="' . _MD_WFL_GETMAP . '" align="absmiddle"></a>&nbsp;';
     }
 
-    if ($link_arr['yahoomap'] === true) {
+    if (true === $link_arr['yahoomap']) {
         $link['yahoomap'] = '<a href="' . $yahoomap . '" target="_blank"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/yahoo_map.png" alt="' . _MD_WFL_GETMAP . '" title="' . _MD_WFL_GETMAP . '" align="absmiddle"></a>&nbsp;';
     }
 
-    if ($link_arr['multimap'] === true) {
+    if (true === $link_arr['multimap']) {
         $link['multimap'] = '<a href="' . $multimap . '" target="_blank"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/multimap.png" alt="' . _MD_WFL_GETMAP . '" title="' . _MD_WFL_GETMAP . '" align="absmiddle"></a>';
     }
 }
@@ -178,7 +178,7 @@ $res_type = 1;
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/linkloadinfo.php';
 
 $xoopsTpl->assign('show_screenshot', false);
-if (isset($xoopsModuleConfig['screenshot']) && $xoopsModuleConfig['screenshot'] == 1) {
+if (isset($xoopsModuleConfig['screenshot']) && 1 == $xoopsModuleConfig['screenshot']) {
     $xoopsTpl->assign('shots_dir', $xoopsModuleConfig['screenshots']);
     $xoopsTpl->assign('shotwidth', $xoopsModuleConfig['shotwidth']);
     $xoopsTpl->assign('shotheight', $xoopsModuleConfig['shotheight']);
@@ -201,11 +201,11 @@ while ($arr = $xoopsDB->fetchArray($result)) {
 }
 
 // Copyright notice
-if (isset($xoopsModuleConfig['copyright']) && $xoopsModuleConfig['copyright'] == 1) {
+if (isset($xoopsModuleConfig['copyright']) && 1 == $xoopsModuleConfig['copyright']) {
     $xoopsTpl->assign('lang_copyright', '' . $link['title'] . ' &copy; ' . _MD_WFL_COPYRIGHT . ' ' . formatTimestamp(time(), 'Y') . " - <a href='" . XOOPS_URL . "'>" . $xoopsConfig['sitename'] . '</a>');
 }
 
-if (isset($xoopsModuleConfig['otherlinks']) && $xoopsModuleConfig['otherlinks'] == 1) {
+if (isset($xoopsModuleConfig['otherlinks']) && 1 == $xoopsModuleConfig['otherlinks']) {
     $xoopsTpl->assign('other_links', '' . '<b>' . _MD_WFL_OTHERBYUID . '</b>' . $link['submitter'] . '<br>');
 }
 

@@ -20,7 +20,7 @@ $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 $arr    = $mytree->getFirstChild($cid, $catsort);
 
 if (is_array($arr) > 0 && !$list && !$selectdate) {
-    if (WflinksUtility::checkGroups($cid) === false) {
+    if (false === WflinksUtility::checkGroups($cid)) {
         redirect_header('index.php', 1, _MD_WFL_MUSTREGFIRST);
     }
 }
@@ -41,7 +41,7 @@ $time = time();
 if (is_array($arr) > 0 && !$list && !$selectdate) {
     $scount = 1;
     foreach ($arr as $ele) {
-        if (WflinksUtility::checkGroups($ele['cid']) === false) {
+        if (false === WflinksUtility::checkGroups($ele['cid'])) {
             continue;
         }
         $sub_arr         = [];
@@ -53,7 +53,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
             // Subitem file count
             $hassubitems = WflinksUtility::getTotalItems($sub_ele['cid']);
             // Filter group permissions
-            if (WflinksUtility::checkGroups($sub_ele['cid']) === true) {
+            if (true === WflinksUtility::checkGroups($sub_ele['cid'])) {
                 // If subcategory count > 5 then finish adding subcats to $infercategories and end
                 if ($chcount > 5) {
                     $infercategories .= '...';
@@ -73,7 +73,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         // This code is copyright WF-Projects
         // Using this code without our permission or removing this code voids the license agreement
         $_image = $ele['imgurl'] ? urldecode($ele['imgurl']) : '';
-        if ($_image !== '' && $xoopsModuleConfig['usethumbs']) {
+        if ('' !== $_image && $xoopsModuleConfig['usethumbs']) {
             $_thumb_image = new WfThumbsNails($_image, $xoopsModuleConfig['catimage'], 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
@@ -82,7 +82,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
             }
         }
         $imgurl = "{$xoopsModuleConfig['catimage']}/$_image";
-        if (empty($_image) || $_image === '') {
+        if (empty($_image) || '' === $_image) {
             $imgurl = $indicator['image'];
         }
         // End
@@ -221,7 +221,7 @@ if ($count > 0) {
 
     // Show order box
     $xoopsTpl->assign('show_links', false);
-    if ($count > 1 && $cid != 0) {
+    if ($count > 1 && 0 != $cid) {
         $xoopsTpl->assign('show_links', true);
         $orderbyTrans = WflinksUtility::convertOrderByTrans($orderby);
         $xoopsTpl->assign('lang_cursortedby', sprintf(_MD_WFL_CURSORTBY, WflinksUtility::convertOrderByTrans($orderby)));
@@ -230,7 +230,7 @@ if ($count > 0) {
 
     // Screenshots display
     $xoopsTpl->assign('show_screenshot', false);
-    if (isset($xoopsModuleConfig['screenshot']) && $xoopsModuleConfig['screenshot'] == 1) {
+    if (isset($xoopsModuleConfig['screenshot']) && 1 == $xoopsModuleConfig['screenshot']) {
         $xoopsTpl->assign('shots_dir', $xoopsModuleConfig['screenshots']);
         $xoopsTpl->assign('shotwidth', $xoopsModuleConfig['shotwidth']);
         $xoopsTpl->assign('shotheight', $xoopsModuleConfig['shotheight']);
