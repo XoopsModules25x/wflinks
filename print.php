@@ -63,7 +63,7 @@ $mobile  = $myrow['mobile'];
 $voip    = $myrow['voip'];
 $fax     = $myrow['fax'];
 $url     = $myrow['url'];
-$email   = printemailcnvrt($myrow['email']);
+$email   = WflinksUtility::printemailcnvrt($myrow['email']);
 $country = WflinksUtility::getCountryName($myrow['country']);
 
 if ('' === $street1 || '' === $town || 0 == $xoopsModuleConfig['useaddress']) {
