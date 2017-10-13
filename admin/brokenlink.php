@@ -17,7 +17,7 @@ $op  = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
 $lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
-    case 'updatenotice':
+    case 'updateNotice':
         $ack = WflinksUtility::cleanRequestVars($_REQUEST, 'ack', 0);
         $con = WflinksUtility::cleanRequestVars($_REQUEST, 'con', 1);
 
