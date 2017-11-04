@@ -117,7 +117,7 @@ define('_MI_WFL_SUBMITTED2', 'Submission Date');
 define('_MI_WFL_COPYRIGHT', 'Copyright Notice:');
 define('_MI_WFL_COPYRIGHTDSC', 'Select to display a copyright notice on link page.');
 // Description of each config items
-define('_MI_WFL_SUBCATSDSC', 'SELECT Yes TO display sub-categories. Selecting NO will hide sub-categories FROM the listings');
+define('_MI_WFL_SUBCATSDSC', 'Select YES to display sub-categories. Selecting NO will hide sub-categories from the listings');
 
 // Text for notifications
 define('_MI_WFL_GLOBAL_NOTIFY', 'Global');
@@ -244,8 +244,8 @@ define('_MI_WFL_QUICKVIEWDSC', 'This turns on/off the Quick View option.');
 define('_MI_WFL_ICONS_CREDITS', 'Icons by');
 define('_MI_WFL_SHOWSBOOKMARKS', 'Show Social Bookmarks?');
 define('_MI_WFL_SHOWSBOOKMARKSDSC', 'Select Yes if you want Social Bookmark icons to be displayed under article.');
-define('_MI_WFL_SHOWPAGERANK', 'Show Google PageRankâ„¢?');
-define('_MI_WFL_SHOWPAGERANKSDSC', 'Select Yes if you want Google PageRankâ„¢ to be displayed.');
+define('_MI_WFL_SHOWPAGERANK', 'Show Google PageRank?');
+define('_MI_WFL_SHOWPAGERANKSDSC', 'Select Yes if you want Google PageRank to be displayed.');
 define('_MI_WFL_USERTAGDESCR', 'User can submit Tags:');
 define('_MI_WFL_USERTAGDSC', 'Select Yes if user is allowed to submit tags.');
 
@@ -481,7 +481,7 @@ define('_MI_WFL_HELP_PERMISSION_DESCRIPTION', '
 define('_MI_WFL_CONVERT_DESC', '');
 define('_MI_WFL_HELP_CONVERT_DESCRIPTION', '
     <span style="background-color: #ffff99;">Instructions for converting from myLinks to WF-Links.</span><br/><span style="background-color: #ffff99;">If you want to do a fresh install of WF-Links please select \'Install\'.</span><br/><br/><b><span style="color: #ff0000;">Remember: It is always a good idea to make a database backup before installing any modules.</span></b><br/>
-    <h4>Conversion from Xoops myLinks/webLinks ==&gt; WF-Links</h4>
+    <h4>Conversion from Xoops myLinks/webLinks ==> WF-Links</h4>
     <p><br/>Note: When you do the conversion the update script will convert the myLinks/webLinks tables in the database into WF-Links tables. After the conversion you can\'t use myLinks/webLinks
         anymore because it is missing tables then. If you want to keep your myLinks/webLinks working you would have to backup the myLinks/webLinks tables before you start updating and restore them
         afterwards. It is possible to have WF-Links and myLinks/webLinks running at the same time (though we don\'t know why you would won\'t that). <br/><br/><b>1) Make a backup</b></p>
@@ -490,16 +490,16 @@ define('_MI_WFL_HELP_CONVERT_DESCRIPTION', '
     <p><b>3) Change and verify folder permissions</b><br/><br/>CHMOD the following folders to 777:</p>
     <p><br/><em>{xoops-rootdirectory}/uploads/images</em><br/><em>{xoops-rootdirectory}/uploads/images/category</em><br/><em>{xoops-rootdirectory}/uploads/images/category/thumbs</em><br/><em>{xoops-rootdirectory}/uploads/images/flags</em><br/><em>{xoops-rootdirectory}/uploads/images/flags/flags_small</em><br/><em>{xoops-rootdirectory}/uploads/images/screenshots</em><br/><em>{xoops-rootdirectory}/uploads/images/screenshots/thumbs</em><br/><em>{xoops-rootdirectory}/uploads/images/thumbs</em><br/><br/><b>4)
         Install the module</b></p>
-    <p>&nbsp; &nbsp; &nbsp;Login as administrator and enter Xoops Administration page. Select System --&gt; modules and install WF-Links<br/><br/><b>5) Start the conversion script</b></p>
+    <p>&nbsp; &nbsp; &nbsp;Login as administrator and enter Xoops Administration page. Select System --> modules and install WF-Links<br/><br/><b>5) Start the conversion script</b></p>
     <ul>
         <li>Point your browser to {xoops-rootdirectory}/modules/wflinks/update.php and execute the update script.</li>
         <li>Follow the instructions provided during the install procedure.</li>
         <li>The script will try to determine which version or versions of myLinks or webLinks you have installed and will try to update it.</li>
     </ul><br />
     <p><b>6) Update the module</b></p>
-    <p>&nbsp; &nbsp;Return to System --&gt; Modules and update WF-Links, otherwise the templates will be for the previous version and the pages will display correctly.<br/><br /></p>
+    <p>&nbsp; &nbsp;Return to System --> Modules and update WF-Links, otherwise the templates will be for the previous version and the pages will display correctly.<br/><br /></p>
     <p><b>7) Configure the module</b></p>
-    <p>&nbsp; &nbsp; Most importent steps now will be to setup the group permissions for the module and its blocks via System --&gt; Groups<br/><br/><b>8) Restore or remove myLinks/webLinks</b></p>
+    <p>&nbsp; &nbsp; Most importent steps now will be to setup the group permissions for the module and its blocks via System --> Groups<br/><br/><b>8) Restore or remove myLinks/webLinks</b></p>
     <p>If you want to continue using myLinks or webLinks in addition to WF-Links then restore your myLinks/webLinks tables<br/>now from the backup you did in step 1. If you don\'t want to use those
         anymore deactivate the old module and uninstall it.<br/><br/></p>
 ');
@@ -556,9 +556,9 @@ define('_MI_WFL_HELP_INSTALL_DESCRIPTION', '
     <em>{xoops-rootdirectory}/uploads/images/screenshots/thumbs</em><br/>
     <em>{xoops-rootdirectory}/uploads/images/thumbs</em><br/><br/>
     <b>3) Install the module</b><br/><br/>
-    Login as administrator and enter Xoops Administration page. Select <em>System --&gt; modules</em> and install WF-Links<br/><br/>
+    Login as administrator and enter Xoops Administration page. Select <em>System --> modules</em> and install WF-Links<br/><br/>
     <b>4) Configure the
-    module</b><br/><br/>Most important step now will be to setup the group permissions for the module and its blocks via <em>System --&gt; groups</em>
+    module</b><br/><br/>Most important step now will be to setup the group permissions for the module and its blocks via <em>System --> groups</em>
 ');
 // Preferences
 define('_MI_WFL_PREFERENCES_DESC', '');
@@ -618,7 +618,7 @@ define('_MI_WFL_HELP_PREFERENCES_DESCRIPTION', '
     under article.<br/>Default: Yes<br/><br/><b>Show Google PageRank&trade;</b><br/>Select Yes if you want Google PageRank&trade; to be displayed.<br/>Default: Yes<br/><br/><b>User can
     submit Tags</b><br/>Select Yes if user is allowed to submit tags.<br/>Note: The Tag module needs to be installed otherwise the form doesn\'t show in the submit form.<br/>Default:
     No<br/><br/><b>Use address and map options</b><br/>Select Yes to use the address and maps feature in submit forms.<br/>Default: Yes<br/><br/><b>Print page footer</b><br/>Footer
-    that will be printed for each link.<br/>Default: &lt;website_url&gt;<br/><br/><b>Logo print url</b><br/>Url of the logo that will be printed at the top of the page.<br/>Default: &lt;website_url&gt;/modules/wflinks/assets/images/logo-en.gif<br/><br/><b>Show
+    that will be printed for each link.<br/>Default: <website_url><br/><br/><b>Logo print url</b><br/>Url of the logo that will be printed at the top of the page.<br/>Default: <website_url>/modules/wflinks/assets/images/logo-en.gif<br/><br/><b>Show
     disclaimer before user submission</b><br/>Before a user can submit a link show the entry regulations.<br/>Default: No<br/><br/><b>Enter submission disclaimer text</b><br/>Default:
     We have the right, but not the obligation to monitor and review submissions submitted by users, in the forums. We shall not be responsible for any of the content of these messages. We further
     reserve the right, to delete, move or edit submissions that the we, in its exclusive discretion, deems abusive, defamatory, obscene or in violation of any Copyright or Trademark laws or otherwise

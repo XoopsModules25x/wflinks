@@ -457,7 +457,7 @@ define('_AM_WFL_ERRORSRETURNUPLOAD', '<h4>Errors Returned While Uploading</h4>')
 define('_AM_WFL_DOESNOTEXIST', ' does not exist!');
 define('_AM_WFL_INFORMATION', 'Link Information');
 define('_AM_WFL_HITS', 'Hits: ');
-define('_AM_WFL_PAGERANK', 'PageRankâ„¢: ');
+define('_AM_WFL_PAGERANK', 'PageRank: ');
 define('_AM_WFL_ERROR_CATISCAT', 'You can NOT set a category as a sub-category of itself!');
 define('_AM_WFL_MOD_COUNTRY', 'Country:');
 define('_AM_WFL_MOD_KEYWORDS', 'Keywords:');

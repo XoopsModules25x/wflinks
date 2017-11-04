@@ -74,7 +74,7 @@
                             </div>
                             <div>
                                 <small><{$smarty.const._MD_WFL_COUNTRYB}>&nbsp;</small>
-                                <img src="<{$wfllink.country}>" alt="&lt;{$wfllink.countryname}&gt;"
+                                <img src="<{$wfllink.country}>" alt="<{$wfllink.countryname}>"
                                      title="<{$wfllink.countryname}>" align="absmiddle"></div>
                         </div>
                         <br>
@@ -92,7 +92,7 @@
                                     <small><b><{$smarty.const._MD_WFL_PAGERANK}></b></small>
                                     &nbsp;<img
                                             src="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/assets/images/icon/pr<{$wfllink.pagerank}>.png"
-                                            alt="&lt;{$smarty.const._MD_WFL_PAGERANKALT}&gt;&lt;{$wfllink.pagerank}&gt;"
+                                            alt="<{$smarty.const._MD_WFL_PAGERANKALT}><{$wfllink.pagerank}>"
                                             title="<{$smarty.const._MD_WFL_PAGERANKALT}><{$wfllink.pagerank}>"
                                             align="absmiddle">&nbsp;
                                     <small>(<{$wfllink.pagerank}>/10)</small>
