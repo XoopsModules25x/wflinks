@@ -17,7 +17,9 @@
 
 use Xmf\Request;
 
-
+/**
+ * Class Wflinks
+ */
 class Wflinks extends \Xmf\Module\Helper {
 
     /**

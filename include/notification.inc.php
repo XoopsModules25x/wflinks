@@ -12,7 +12,7 @@
  * @param $category
  * @param $item_id
  *
- * @return null
+ * @return bool|null
  */
 function wflinks_notify_iteminfo($category, $item_id)
 {

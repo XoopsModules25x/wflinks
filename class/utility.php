@@ -772,7 +772,7 @@ class WflinksUtility extends XoopsObject
      * @param string $art
      * @param string $_this
      *
-     * @return null
+     * @return bool|null
      */
     public static function getLinkListPageNav($pubrowamount, $start, $art = 'art', $_this = '')
     {
@@ -796,7 +796,7 @@ class WflinksUtility extends XoopsObject
      * @param string $art
      * @param string $_this
      *
-     * @return null
+     * @return bool|null
      */
     public static function getLinkListPageNavLeft($pubrowamount, $start, $art = 'art', $_this = '')
     {
