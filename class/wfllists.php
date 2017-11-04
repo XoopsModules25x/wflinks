@@ -192,7 +192,7 @@ class WflLists
         }
         echo '</select>';
 
-        return $forum_array;
+        return $noforum;
     }
 
     /**

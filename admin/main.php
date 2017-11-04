@@ -73,7 +73,7 @@ function edit($lid = 0)
 
     if ($lid > 0) {
         $_vote_data = WflinksUtility::getVoteDetails($lid);
-        $text_info  = "<table width='100%'>
+        $text_info  = "<table style='width:100%;'>
              <tr>
               <td width='33%' valign='top'>
                <div><b>" . _AM_WFL_LINK_ID . ' </b>' . $lid . '</div>
@@ -278,7 +278,7 @@ function edit($lid = 0)
     list($broken_count) = $xoopsDB->fetchRow($result);
     if ($broken_count > 0) {
         $link_updated_radio = new XoopsFormRadioYN(_AM_WFL_LINK_DELEDITMESS, 'delbroken', 1, ' ' . _YES . '', ' ' . _NO . '');
-        $sform->addElement($editmess_radio);
+        $sform->addElement($link_updated_radio);
     }
 
     // Select forum
@@ -422,7 +422,7 @@ switch (strtolower($op)) {
             <table width='100%' cellspacing='1' cellpadding='2' border='0' class='outer'>\n
             <tr>\n
             <th class='txtcenter;'>" . _AM_WFL_MINDEX_ID . "</th>\n
-            <th style='text-align: left;'><b>" . _AM_WFL_MINDEX_TITLE . "</th>\n
+            <th style='text-align: left;'>" . _AM_WFL_MINDEX_TITLE . "</th>\n
             <th class='txtcenter;'>" . _AM_WFL_MINDEX_POSTER . "</th>\n
             <th class='txtcenter;'>" . _AM_WFL_MINDEX_PUBLISHED . "</th>\n
                     <th class='txtcenter;'>" . _AM_WFL_MINDEX_RESPONSE . "</th>\n

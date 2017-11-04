@@ -79,8 +79,8 @@ switch (strtolower($op)) {
         echo "</fieldset><br>\n";
 
         echo "<table width='100%' cellspacing='1' class='outer'>\n";
-        echo "<tr class='center;'>\n";
-        echo "<th width='3%'>" . _AM_WFL_MINDEX_ID . "</th>\n";
+        echo "<tr style='text-align:center;'>\n";
+        echo "<th style='text-align:center; width:3%;'>" . _AM_WFL_MINDEX_ID . "</th>\n";
         echo "<th style='text-align: left;' width='30%'>" . _AM_WFL_MINDEX_TITLE . "</th>\n";
         echo "<th width='15%'>" . _AM_WFL_MINDEX_POSTER . "</th>\n";
         echo "<th width='15%'>" . _AM_WFL_MINDEX_SUBMITTED . "</th>\n";
@@ -101,15 +101,15 @@ switch (strtolower($op)) {
                 $icon .= "<a href='main.php?op=delete&amp;lid=" . $lid . "'>" . $imageArray['deleteimg'] . '</a>';
 
                 echo "<tr>\n";
-                echo "<td class='head' class='center;'>$lid</td>\n";
+                echo "<td class='head' style='text-align:center;'>$lid</td>\n";
                 echo "<td class='even' nowrap><a href='newlinks.php?op=edit&amp;lid=" . $lid . "'>$title</a></td>\n";
-                echo "<td class='even' class='center;' nowrap>$submitter</td>\n";
-                echo "<td class='even' class='center;'>$datetime</td>\n";
-                echo "<td class='even' class='center;' nowrap>$icon</td>\n";
+                echo "<td class='even' style='text-align:center;' nowrap>$submitter</td>\n";
+                echo "<td class='even' style='text-align:center;'>$datetime</td>\n";
+                echo "<td class='even' style='text-align:center;' nowrap>$icon</td>\n";
                 echo "</tr>\n";
             }
         } else {
-            echo "<tr><td class='center;' class='head' colspan='6'>" . _AM_WFL_SUB_NOFILESWAITING . '</td></tr>';
+            echo "<tr><td class='head' colspan='6'>" . _AM_WFL_SUB_NOFILESWAITING . '</td></tr>';
         }
         echo "</table>\n";
 
