@@ -1583,7 +1583,7 @@ class WflinksUtility extends XoopsObject
                 $bannerobject = $htmlcode;
             } else {
                 $bannerobject = '<div align="center"><a href="' . XOOPS_URL . '/banners.php?op=click&bid=' . $bid . '" target="_blank">';
-                if (stristr($imageurl, '.swf')) {
+                if (false !== stripos($imageurl, '.swf')) {
                     $bannerobject = $bannerobject
                                     . '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
                                     . '<param name="movie" value="'
@@ -1645,7 +1645,7 @@ class WflinksUtility extends XoopsObject
                 $bannerobject = $htmlcode;
             } else {
                 $bannerobject = '<div align="center"><a href="' . XOOPS_URL . '/banners.php?op=click&bid=' . $bid . '" target="_blank">';
-                if (stristr($imageurl, '.swf')) {
+                if (false !== stripos($imageurl, '.swf')) {
                     $bannerobject = $bannerobject
                                     . '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
                                     . '<param name="movie" value="'
