@@ -7,12 +7,14 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/header.php';
 
 // Begin Main page Heading etc
-$cid        = WflinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
-$selectdate = WflinksUtility::cleanRequestVars($_REQUEST, 'selectdate', '');
-$list       = WflinksUtility::cleanRequestVars($_REQUEST, 'list', '');
+$cid        = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
+$selectdate = Wflinks\Utility::cleanRequestVars($_REQUEST, 'selectdate', '');
+$list       = Wflinks\Utility::cleanRequestVars($_REQUEST, 'list', '');
 $cid        = (int)$cid;
 $catsort    = $xoopsModuleConfig['sortcats'];
 
@@ -20,7 +22,7 @@ $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 $arr    = $mytree->getFirstChild($cid, $catsort);
 
 if (is_array($arr) > 0 && !$list && !$selectdate) {
-    if (false === WflinksUtility::checkGroups($cid)) {
+    if (false === Wflinks\Utility::checkGroups($cid)) {
         redirect_header('index.php', 1, _MD_WFL_MUSTREGFIRST);
     }
 }
@@ -41,7 +43,7 @@ $time = time();
 if (is_array($arr) > 0 && !$list && !$selectdate) {
     $scount = 1;
     foreach ($arr as $ele) {
-        if (false === WflinksUtility::checkGroups($ele['cid'])) {
+        if (false === Wflinks\Utility::checkGroups($ele['cid'])) {
             continue;
         }
         $sub_arr         = [];
@@ -51,9 +53,9 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         $infercategories = '';
         foreach ($sub_arr as $sub_ele) {
             // Subitem file count
-            $hassubitems = WflinksUtility::getTotalItems($sub_ele['cid']);
+            $hassubitems = Wflinks\Utility::getTotalItems($sub_ele['cid']);
             // Filter group permissions
-            if (true === WflinksUtility::checkGroups($sub_ele['cid'])) {
+            if (true === Wflinks\Utility::checkGroups($sub_ele['cid'])) {
                 // If subcategory count > 5 then finish adding subcats to $infercategories and end
                 if ($chcount > 5) {
                     $infercategories .= '...';
@@ -67,8 +69,8 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
                 ++$chcount;
             }
         }
-        $totallinks = WflinksUtility::getTotalItems($ele['cid']);
-        $indicator  = WflinksUtility::isNewImage($totallinks['published']);
+        $totallinks = Wflinks\Utility::getTotalItems($ele['cid']);
+        $indicator  = Wflinks\Utility::isNewImage($totallinks['published']);
 
         // This code is copyright WF-Projects
         // Using this code without our permission or removing this code voids the license agreement
@@ -111,25 +113,25 @@ $breaks   = $head_arr['nobreak'] ? 1 : 0;
 $description = $wfmyts->displayTarea($head_arr['description'], $html, $smiley, $xcodes, $images, $breaks);
 $xoopsTpl->assign('description', $description);
 $xoopsTpl->assign('xoops_pagetitle', $head_arr['title']);
-//$xoopsTpl -> assign( 'client_banner', WflinksUtility::getBannerFromIdClient($head_arr['client_id']) );
+//$xoopsTpl -> assign( 'client_banner', Wflinks\Utility::getBannerFromIdClient($head_arr['client_id']) );
 
 if ($head_arr['client_id'] > 0) {
-    $catarray['imageheader'] = WflinksUtility::getBannerFromIdClient($head_arr['client_id']);
+    $catarray['imageheader'] = Wflinks\Utility::getBannerFromIdClient($head_arr['client_id']);
 } elseif ($head_arr['banner_id'] > 0) {
-    $catarray['imageheader'] = WflinksUtility::getBannerFromIdBanner($head_arr['banner_id']);
+    $catarray['imageheader'] = Wflinks\Utility::getBannerFromIdBanner($head_arr['banner_id']);
 } else {
-    $catarray['imageheader'] = WflinksUtility::getImageHeader();
+    $catarray['imageheader'] = Wflinks\Utility::getImageHeader();
 }
-$catarray['letters'] = WflinksUtility::getLetters();
-$catarray['toolbar'] = WflinksUtility::getToolbar();
+$catarray['letters'] = Wflinks\Utility::getLetters();
+$catarray['toolbar'] = Wflinks\Utility::getToolbar();
 $xoopsTpl->assign('catarray', $catarray);
 
 // Extract linkload information from database
 $xoopsTpl->assign('show_categort_title', true);
 
-$start   = WflinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
+$start   = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start', 0);
 $orderby = (isset($_REQUEST['orderby'])
-            && !empty($_REQUEST['orderby'])) ? WflinksUtility::convertOrderByIn(htmlspecialchars($_REQUEST['orderby'])) : WflinksUtility::convertOrderByIn($xoopsModuleConfig['linkxorder']);
+            && !empty($_REQUEST['orderby'])) ? Wflinks\Utility::convertOrderByIn(htmlspecialchars($_REQUEST['orderby'])) : Wflinks\Utility::convertOrderByIn($xoopsModuleConfig['linkxorder']);
 
 if ($selectdate) {
     $d = date('j', $selectdate);
@@ -199,11 +201,11 @@ if ($selectdate) {
             . $cid
             . '))';
     list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql2));
-    $order   = WflinksUtility::convertOrderByOut($orderby);
+    $order   = Wflinks\Utility::convertOrderByOut($orderby);
     $cid     = $cid;
     $list_by = 'cid=' . $cid . '&orderby=' . $order;
 }
-$pagenav  = new XoopsPageNav($count, $xoopsModuleConfig['perpage'], $start, 'start', $list_by);
+$pagenav  = new \XoopsPageNav($count, $xoopsModuleConfig['perpage'], $start, 'start', $list_by);
 $page_nav = $pagenav->renderNav();
 $istrue   = (isset($page_nav) && !empty($page_nav));
 $xoopsTpl->assign('page_nav', $istrue);
@@ -223,9 +225,9 @@ if ($count > 0) {
     $xoopsTpl->assign('show_links', false);
     if ($count > 1 && 0 != $cid) {
         $xoopsTpl->assign('show_links', true);
-        $orderbyTrans = WflinksUtility::convertOrderByTrans($orderby);
-        $xoopsTpl->assign('lang_cursortedby', sprintf(_MD_WFL_CURSORTBY, WflinksUtility::convertOrderByTrans($orderby)));
-        $orderby = WflinksUtility::convertOrderByOut($orderby);
+        $orderbyTrans = Wflinks\Utility::convertOrderByTrans($orderby);
+        $xoopsTpl->assign('lang_cursortedby', sprintf(_MD_WFL_CURSORTBY, Wflinks\Utility::convertOrderByTrans($orderby)));
+        $orderby = Wflinks\Utility::convertOrderByOut($orderby);
     }
 
     // Screenshots display

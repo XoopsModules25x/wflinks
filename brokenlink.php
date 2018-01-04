@@ -9,10 +9,12 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/header.php';
 
-$op      = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
-$lid     = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$op      = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
+$lid     = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid     = (int)$lid;
 $buttonn = _MD_WFL_SUBMITBROKEN;
 $buttonn = strtolower($buttonn);
@@ -23,7 +25,7 @@ switch (strtolower($op)) {
 
         $sender = (is_object($xoopsUser) && !empty($xoopsUser)) ? $xoopsUser->getVar('uid') : 0;
         $ip     = getenv('REMOTE_ADDR');
-        $title  = WflinksUtility::cleanRequestVars($_REQUEST, 'title', '');
+        $title  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'title', '');
         $title  = $wfmyts->addSlashes($title);
         $time   = time();
 
@@ -90,9 +92,9 @@ switch (strtolower($op)) {
         include XOOPS_ROOT_PATH . '/header.php';
         xoops_load('XoopsUserUtility');
 
-        $catarray['imageheader'] = WflinksUtility::getImageHeader();
-        $catarray['letters']     = WflinksUtility::getLetters();
-        $catarray['toolbar']     = WflinksUtility::getToolbar();
+        $catarray['imageheader'] = Wflinks\Utility::getImageHeader();
+        $catarray['letters']     = Wflinks\Utility::getLetters();
+        $catarray['toolbar']     = Wflinks\Utility::getToolbar();
         $xoopsTpl->assign('catarray', $catarray);
 
         $sql      = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid;
@@ -105,7 +107,7 @@ switch (strtolower($op)) {
         if (is_array($broke_arr)) {
             $broken['title']        = $wfmyts->htmlSpecialCharsStrip($link_arr['title']);
             $broken['id']           = $broke_arr['reportid'];
-            $broken['reporter']     = XoopsUserUtility::getUnameFromId($broke_arr['sender']);
+            $broken['reporter']     = \XoopsUserUtility::getUnameFromId($broke_arr['sender']);
             $broken['date']         = formatTimestamp($broke_arr['date'], $xoopsModuleConfig['dateformat']);
             $broken['acknowledged'] = (1 == $broke_arr['acknowledged']) ? _YES : _NO;
             $broken['confirmed']    = (1 == $broke_arr['confirmed']) ? _YES : _NO;
@@ -121,7 +123,7 @@ switch (strtolower($op)) {
             $time              = ($link_arr['published'] > 0) ? $link_arr['published'] : $link_arr['updated'];
             $link['updated']   = formatTimestamp($time, $xoopsModuleConfig['dateformat']);
             $is_updated        = (0 != $link_arr['updated']) ? _MD_WFL_UPDATEDON : _MD_WFL_SUBMITDATE;
-            $link['publisher'] = XoopsUserUtility::getUnameFromId($link_arr['submitter']);
+            $link['publisher'] = \XoopsUserUtility::getUnameFromId($link_arr['submitter']);
 
             $xoopsTpl->assign('link_id', $lid);
             $xoopsTpl->assign('lang_subdate', $is_updated);

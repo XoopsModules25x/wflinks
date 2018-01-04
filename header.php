@@ -9,11 +9,12 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 $moduleDirName = basename(__DIR__);
 
 require_once __DIR__ . '/../../mainfile.php';
-include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/config.php';
-include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/utility.php';
+include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/common.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/WfThumbsNails.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.php';

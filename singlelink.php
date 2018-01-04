@@ -9,12 +9,14 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/header.php';
 
 global $xoopsTpl, $xoTheme;
 
-$lid = (int)WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
-$cid = (int)WflinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
+$lid = (int)Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
+$cid = (int)Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
 
 $sql2 = 'SELECT count(*) FROM '
         . $xoopsDB->prefix('wflinks_links')
@@ -34,7 +36,7 @@ $sql2 = 'SELECT count(*) FROM '
         . '))';
 list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql2));
 
-if (0 == $count && false === WflinksUtility::checkGroups($cid = 0)) {
+if (0 == $count && false === Wflinks\Utility::checkGroups($cid = 0)) {
     redirect_header('index.php', 1, _MD_WFL_MUSTREGFIRST);
 }
 
@@ -57,12 +59,12 @@ require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/address.php';
 
 // tags support
-if (WflinksUtility::isTagModuleIncluded()) {
+if (Wflinks\Utility::isTagModuleIncluded()) {
     require_once XOOPS_ROOT_PATH . '/modules/tag/include/tagbar.php';
     $xoopsTpl->assign('tagbar', tagBar($link_arr['lid'], 0));
 }
 
-//$link['imageheader'] = WflinksUtility::getImageHeader();
+//$link['imageheader'] = Wflinks\Utility::getImageHeader();
 $link['id']           = $link_arr['lid'];
 $link['cid']          = $link_arr['cid'];
 $link['description2'] = $wfmyts->displayTarea($link_arr['description'], 1, 1, 1, 1, 1);
@@ -80,7 +82,7 @@ $voip    = $link_arr['voip'];
 $fax     = $link_arr['fax'];
 $email   = $link_arr['email'];
 $vat     = $link_arr['vat'];
-$country = WflinksUtility::getCountryName($link_arr['country']);
+$country = Wflinks\Utility::getCountryName($link_arr['country']);
 
 if ('' === $street1 || '' === $town || 0 == $xoopsModuleConfig['useaddress']) {
     $link['addryn'] = 0;
@@ -150,7 +152,7 @@ $link['path'] = $pathstring;
 // Start of meta tags
 $maxWords = 100;
 $words    = [];
-$words    = explode(' ', WflinksUtility::convertHtml2text($link_arr['description']));
+$words    = explode(' ', Wflinks\Utility::convertHtml2text($link_arr['description']));
 $newWords = [];
 $i        = 0;
 

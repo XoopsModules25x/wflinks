@@ -10,6 +10,7 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Wflinks;
 
 require_once __DIR__ . '/admin_header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
@@ -53,7 +54,7 @@ function createCat($cid = 0)
     $client_id    = 0;
     $banner_id    = 0;
     $heading      = _AM_WFL_CCATEGORY_CREATENEW;
-    $totalcats    = WflinksUtility::getTotalCategory();
+    $totalcats    = Wflinks\Utility::getTotalCategory();
 
     if ($cid) {
         $sql          = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . " WHERE cid=$cid";
@@ -80,44 +81,44 @@ function createCat($cid = 0)
         $groups = true;
     }
 
-    $sform = new XoopsThemeForm($heading, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+    $sform = new \XoopsThemeForm($heading, 'op', xoops_getenv('PHP_SELF'), 'post', true);
     $sform->setExtra('enctype="multipart/form-data"');
 
-    $sform->addElement(new XoopsFormText(_AM_WFL_FCATEGORY_TITLE, 'title', 50, 80, $title), true);
-    $sform->addElement(new XoopsFormText(_AM_WFL_FCATEGORY_WEIGHT, 'weight', 10, 80, $weight), false);
+    $sform->addElement(new \XoopsFormText(_AM_WFL_FCATEGORY_TITLE, 'title', 50, 80, $title), true);
+    $sform->addElement(new \XoopsFormText(_AM_WFL_FCATEGORY_WEIGHT, 'weight', 10, 80, $weight), false);
 
     if ($totalcats > 0 && $cid) {
         $mytreechose = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
         ob_start();
         $mytreechose->makeMySelBox('title', 'title', $cat_arr['pid'], 1, 'pid');
-        $sform->addElement(new XoopsFormLabel(_AM_WFL_FCATEGORY_SUBCATEGORY, ob_get_contents()));
+        $sform->addElement(new \XoopsFormLabel(_AM_WFL_FCATEGORY_SUBCATEGORY, ob_get_contents()));
         ob_end_clean();
     } else {
         $mytreechose = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
         ob_start();
         $mytreechose->makeMySelBox('title', 'title', $cid, 1, 'pid');
-        $sform->addElement(new XoopsFormLabel(_AM_WFL_FCATEGORY_SUBCATEGORY, ob_get_contents()));
+        $sform->addElement(new \XoopsFormLabel(_AM_WFL_FCATEGORY_SUBCATEGORY, ob_get_contents()));
         ob_end_clean();
     }
 
     $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'], $type = 'images');
-    $indeximage_select = new XoopsFormSelect('', 'imgurl', $imgurl);
+    $indeximage_select = new \XoopsFormSelect('', 'imgurl', $imgurl);
     $indeximage_select->addOptionArray($graph_array);
     $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"imgurl\", \"" . $xoopsModuleConfig['catimage'] . '", "", "' . XOOPS_URL . "\")'");
-    $indeximage_tray = new XoopsFormElementTray(_AM_WFL_FCATEGORY_CIMAGE, '&nbsp;');
+    $indeximage_tray = new \XoopsFormElementTray(_AM_WFL_FCATEGORY_CIMAGE, '&nbsp;');
     $indeximage_tray->addElement($indeximage_select);
     if (!empty($imgurl)) {
-        $indeximage_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . '/' . $xoopsModuleConfig['catimage'] . '/' . $imgurl . "' name='image' id='image' alt=''>"));
+        $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . '/' . $xoopsModuleConfig['catimage'] . '/' . $imgurl . "' name='image' id='image' alt=''>"));
     } else {
-        $indeximage_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . "/uploads/blank.gif' name='image' id='image' alt=''>"));
+        $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . "/uploads/blank.gif' name='image' id='image' alt=''>"));
     }
     $sform->addElement($indeximage_tray);
 
-    $editor = WflinksUtility::getWysiwygForm(_AM_WFL_FCATEGORY_DESCRIPTION, 'description', $description, 15, 60, '');
+    $editor = Wflinks\Utility::getWysiwygForm(_AM_WFL_FCATEGORY_DESCRIPTION, 'description', $description, 15, 60, '');
     $sform->addElement($editor, false);
 
     // Select Client/Sponsor
-    $client_select   = new XoopsFormSelect(_AM_WFL_CATSPONSOR, 'client_id', $client_id, false);
+    $client_select   = new \XoopsFormSelect(_AM_WFL_CATSPONSOR, 'client_id', $client_id, false);
     $sql             = 'SELECT cid, name FROM ' . $xoopsDB->prefix('bannerclient') . ' ORDER BY name ASC';
     $result          = $xoopsDB->query($sql);
     $client_array    = [];
@@ -130,7 +131,7 @@ function createCat($cid = 0)
     $sform->addElement($client_select);
 
     // Select Banner
-    $banner_select   = new XoopsFormSelect(_AM_WFL_BANNERID, 'banner_id', $banner_id, false);
+    $banner_select   = new \XoopsFormSelect(_AM_WFL_BANNERID, 'banner_id', $banner_id, false);
     $sql             = 'SELECT bid, cid FROM ' . $xoopsDB->prefix('banner') . ' ORDER BY bid ASC';
     $result          = $xoopsDB->query($sql);
     $banner_array    = [];
@@ -142,60 +143,60 @@ function createCat($cid = 0)
     $banner_select->setDescription(_AM_WFL_BANNERIDDSC);
     $sform->addElement($banner_select);
 
-    $options_tray = new XoopsFormElementTray(_AM_WFL_TEXTOPTIONS, '<br>');
+    $options_tray = new \XoopsFormElementTray(_AM_WFL_TEXTOPTIONS, '<br>');
 
-    $html_checkbox = new XoopsFormCheckBox('', 'nohtml', $nohtml);
+    $html_checkbox = new \XoopsFormCheckBox('', 'nohtml', $nohtml);
     $html_checkbox->addOption(1, _AM_WFL_DISABLEHTML);
     $options_tray->addElement($html_checkbox);
 
-    $smiley_checkbox = new XoopsFormCheckBox('', 'nosmiley', $nosmiley);
+    $smiley_checkbox = new \XoopsFormCheckBox('', 'nosmiley', $nosmiley);
     $smiley_checkbox->addOption(1, _AM_WFL_DISABLESMILEY);
     $options_tray->addElement($smiley_checkbox);
 
-    $xcodes_checkbox = new XoopsFormCheckBox('', 'noxcodes', $noxcodes);
+    $xcodes_checkbox = new \XoopsFormCheckBox('', 'noxcodes', $noxcodes);
     $xcodes_checkbox->addOption(1, _AM_WFL_DISABLEXCODE);
     $options_tray->addElement($xcodes_checkbox);
 
-    $noimages_checkbox = new XoopsFormCheckBox('', 'noimages', $noimages);
+    $noimages_checkbox = new \XoopsFormCheckBox('', 'noimages', $noimages);
     $noimages_checkbox->addOption(1, _AM_WFL_DISABLEIMAGES);
     $options_tray->addElement($noimages_checkbox);
 
-    $breaks_checkbox = new XoopsFormCheckBox('', 'nobreak', $nobreak);
+    $breaks_checkbox = new \XoopsFormCheckBox('', 'nobreak', $nobreak);
     $breaks_checkbox->addOption(1, _AM_WFL_DISABLEBREAK);
     $options_tray->addElement($breaks_checkbox);
     $sform->addElement($options_tray);
 
-    //    $sform -> addElement(new XoopsFormSelectGroup(_AM_WFL_FCATEGORY_GROUPPROMPT, "groups", true, $groups, 5, true));
+    //    $sform -> addElement(new \XoopsFormSelectGroup(_AM_WFL_FCATEGORY_GROUPPROMPT, "groups", true, $groups, 5, true));
 
-    $sform->addElement(new XoopsFormHidden('cid', $cid));
+    $sform->addElement(new \XoopsFormHidden('cid', $cid));
 
-    $sform->addElement(new XoopsFormHidden('spotlighttop', $cid));
+    $sform->addElement(new \XoopsFormHidden('spotlighttop', $cid));
 
-    $button_tray = new XoopsFormElementTray('', '');
-    $hidden      = new XoopsFormHidden('op', 'save');
+    $button_tray = new \XoopsFormElementTray('', '');
+    $hidden      = new \XoopsFormHidden('op', 'save');
     $button_tray->addElement($hidden);
 
     if (!$cid) {
-        $butt_create = new XoopsFormButton('', '', _AM_WFL_BSAVE, 'submit');
+        $butt_create = new \XoopsFormButton('', '', _AM_WFL_BSAVE, 'submit');
         $butt_create->setExtra('onclick="this.form.elements.op.value=\'addCat\'"');
         $button_tray->addElement($butt_create);
 
-        $butt_clear = new XoopsFormButton('', '', _AM_WFL_BRESET, 'reset');
+        $butt_clear = new \XoopsFormButton('', '', _AM_WFL_BRESET, 'reset');
         $button_tray->addElement($butt_clear);
 
-        $butt_cancel = new XoopsFormButton('', '', _AM_WFL_BCANCEL, 'button');
+        $butt_cancel = new \XoopsFormButton('', '', _AM_WFL_BCANCEL, 'button');
         $butt_cancel->setExtra('onclick="history.go(-1)"');
         $button_tray->addElement($butt_cancel);
     } else {
-        $butt_create = new XoopsFormButton('', '', _AM_WFL_BMODIFY, 'submit');
+        $butt_create = new \XoopsFormButton('', '', _AM_WFL_BMODIFY, 'submit');
         $butt_create->setExtra('onclick="this.form.elements.op.value=\'addCat\'"');
         $button_tray->addElement($butt_create);
 
-        $butt_delete = new XoopsFormButton('', '', _AM_WFL_BDELETE, 'submit');
+        $butt_delete = new \XoopsFormButton('', '', _AM_WFL_BDELETE, 'submit');
         $butt_delete->setExtra('onclick="this.form.elements.op.value=\'del\'"');
         $button_tray->addElement($butt_delete);
 
-        $butt_cancel = new XoopsFormButton('', '', _AM_WFL_BCANCEL, 'button');
+        $butt_cancel = new \XoopsFormButton('', '', _AM_WFL_BCANCEL, 'button');
         $butt_cancel->setExtra('onclick="history.go(-1)"');
         $button_tray->addElement($butt_cancel);
     }
@@ -221,19 +222,19 @@ switch ($op) {
 
             require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
             $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
-            $sform  = new XoopsThemeForm(_AM_WFL_CCATEGORY_MOVE, 'move', xoops_getenv('PHP_SELF'), 'post', true);
+            $sform  = new \XoopsThemeForm(_AM_WFL_CCATEGORY_MOVE, 'move', xoops_getenv('PHP_SELF'), 'post', true);
             ob_start();
             $mytree->makeMySelBox('title', 'title', 0, 0, 'target');
-            $sform->addElement(new XoopsFormLabel(_AM_WFL_BMODIFY, ob_get_contents()));
+            $sform->addElement(new \XoopsFormLabel(_AM_WFL_BMODIFY, ob_get_contents()));
             ob_end_clean();
-            $create_tray = new XoopsFormElementTray('', '');
-            $create_tray->addElement(new XoopsFormHidden('source', $cid));
-            $create_tray->addElement(new XoopsFormHidden('ok', 1));
-            $create_tray->addElement(new XoopsFormHidden('op', 'move'));
-            $butt_save = new XoopsFormButton('', '', _AM_WFL_BMOVE, 'submit');
+            $create_tray = new \XoopsFormElementTray('', '');
+            $create_tray->addElement(new \XoopsFormHidden('source', $cid));
+            $create_tray->addElement(new \XoopsFormHidden('ok', 1));
+            $create_tray->addElement(new \XoopsFormHidden('op', 'move'));
+            $butt_save = new \XoopsFormButton('', '', _AM_WFL_BMOVE, 'submit');
             $butt_save->setExtra('onclick="this.form.elements.op.value=\'move\'"');
             $create_tray->addElement($butt_save);
-            $butt_cancel = new XoopsFormButton('', '', _AM_WFL_BCANCEL, 'submit');
+            $butt_cancel = new \XoopsFormButton('', '', _AM_WFL_BCANCEL, 'submit');
             $butt_cancel->setExtra('onclick="this.form.elements.op.value=\'cancel\'"');
             $create_tray->addElement($butt_cancel);
             $sform->addElement($create_tray);
@@ -402,23 +403,23 @@ switch ($op) {
 
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         $mytree    = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
-        $sform     = new XoopsThemeForm(_AM_WFL_CCATEGORY_MODIFY, 'category', xoops_getenv('PHP_SELF'), 'post', true);
-        $totalcats = WflinksUtility::getTotalCategory();
+        $sform     = new \XoopsThemeForm(_AM_WFL_CCATEGORY_MODIFY, 'category', xoops_getenv('PHP_SELF'), 'post', true);
+        $totalcats = Wflinks\Utility::getTotalCategory();
 
         if ($totalcats > 0) {
             ob_start();
             $mytree->makeMySelBox('title', 'title');
-            $sform->addElement(new XoopsFormLabel(_AM_WFL_CCATEGORY_MODIFY_TITLE, ob_get_contents()));
+            $sform->addElement(new \XoopsFormLabel(_AM_WFL_CCATEGORY_MODIFY_TITLE, ob_get_contents()));
             ob_end_clean();
-            $dup_tray = new XoopsFormElementTray('', '');
-            $dup_tray->addElement(new XoopsFormHidden('op', 'modCat'));
-            $butt_dup = new XoopsFormButton('', '', _AM_WFL_BMODIFY, 'submit');
+            $dup_tray = new \XoopsFormElementTray('', '');
+            $dup_tray->addElement(new \XoopsFormHidden('op', 'modCat'));
+            $butt_dup = new \XoopsFormButton('', '', _AM_WFL_BMODIFY, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'modCat\'"');
             $dup_tray->addElement($butt_dup);
-            $butt_move = new XoopsFormButton('', '', _AM_WFL_BMOVE, 'submit');
+            $butt_move = new \XoopsFormButton('', '', _AM_WFL_BMOVE, 'submit');
             $butt_move->setExtra('onclick="this.form.elements.op.value=\'move\'"');
             $dup_tray->addElement($butt_move);
-            $butt_dupct = new XoopsFormButton('', '', _AM_WFL_BDELETE, 'submit');
+            $butt_dupct = new \XoopsFormButton('', '', _AM_WFL_BDELETE, 'submit');
             $butt_dupct->setExtra('onclick="this.form.elements.op.value=\'del\'"');
             $dup_tray->addElement($butt_dupct);
             $sform->addElement($dup_tray);

@@ -35,19 +35,16 @@ function xoops_module_uninstall_wflinks(XoopsModule $module)
 //    return true;
 
     $moduleDirName = basename(dirname(__DIR__));
-    if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-    } else {
-        $moduleHelper = Xmf\Module\Helper::getHelper('system');
-    }
+    $helper = \Xmf\Module\Helper::getHelper($moduleDirName);
 
-    /** @var WflinksUtility $utilityClass */
+    /** @var Wflinks\Utility $utilityClass */
     $utilityClass     = ucfirst($moduleDirName) . 'Utility';
     if (!class_exists($utilityClass)) {
         xoops_load('utility', $moduleDirName);
     }
 
     $success = true;
-    xoops_loadLanguage('admin',$moduleDirName);
+    xoops_loadLanguage('admin', $moduleDirName);
 
 
     //------------------------------------------------------------------
@@ -56,18 +53,18 @@ function xoops_module_uninstall_wflinks(XoopsModule $module)
 
 //    $ok     = Request::getInt('ok', 0, 'POST');
 //    if ($ok == 1) {
-        $old_directories = [$GLOBALS['xoops']->path("uploads/{$moduleDirName}")];
-        foreach ($old_directories as $old_dir) {
-            $dirInfo = new SplFileInfo($old_dir);
-            if ($dirInfo->isDir()) {
-                // The directory exists so delete it
-                if (false === $utilityClass::rrmdir($old_dir)) {
-                    $module->setErrors(sprintf(_AM_WFL_ERROR_BAD_DEL_PATH, $old_dir));
-                    $success = false;
-                }
+    $old_directories = [$GLOBALS['xoops']->path("uploads/{$moduleDirName}")];
+    foreach ($old_directories as $old_dir) {
+        $dirInfo = new SplFileInfo($old_dir);
+        if ($dirInfo->isDir()) {
+            // The directory exists so delete it
+            if (false === $utilityClass::rrmdir($old_dir)) {
+                $module->setErrors(sprintf(_AM_WFL_ERROR_BAD_DEL_PATH, $old_dir));
+                $success = false;
             }
-            unset($dirInfo);
         }
+        unset($dirInfo);
+    }
 //    } else {
 //        xoops_confirm(['op' => 'del', '', 'ok' => 1, ''], $_SERVER['REQUEST_URI'], _AM_WFL_FOLDERS_DELETE, _DELETE, true);
 //    }
@@ -88,6 +85,4 @@ function xoops_module_uninstall_wflinks(XoopsModule $module)
 
     return $success;
     //------------ END  ----------------
-
 }
-

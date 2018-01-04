@@ -44,14 +44,14 @@ function tableExists($tablename)
  */
 function xoops_module_pre_update_wflinks(XoopsModule $module)
 {
+    /** @var Wflinks\Helper $helper */
+    /** @var Wflinks\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    /** @var WflinksUtility $utilityClass */
-    $utilityClass     = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($utilityClass)) {
-        xoops_load('utility', $moduleDirName);
-    }
-    $xoopsSuccess = $utilityClass::checkVerXoops($module);
-    $phpSuccess   = $utilityClass::checkVerPhp($module);
+    $helper       = Wflinks\Helper::getInstance();
+    $utility      = new Wflinks\Utility();
+
+    $xoopsSuccess = $utility::checkVerXoops($module);
+    $phpSuccess   = $utility::checkVerPhp($module);
     return $xoopsSuccess && $phpSuccess;
 }
 
@@ -69,16 +69,14 @@ function xoops_module_update_wflinks(XoopsModule $module, $previousVersion = nul
     $moduleDirName = basename(dirname(__DIR__));
     $capsDirName   = strtoupper($moduleDirName);
 
+    /** @var Wflinks\Helper $helper */
+    /** @var Wflinks\Utility $utility */
+    /** @var Wflinks\Configurator $configurator */
+    $helper  = Wflinks\Helper::getInstance();
+    $utility = new Wflinks\Utility();
+    $configurator = new Wflinks\Configurator();
+
     if ($previousVersion < 112) {
-
-        $configurator = include __DIR__ . '/config.php';
-
-
-        /** @var WflinksUtility $utilityClass */
-        $utilityClass    = ucfirst($moduleDirName) . 'Utility';
-        if (!class_exists($utilityClass)) {
-            xoops_load('utility', $moduleDirName);
-        }
 
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
@@ -116,7 +114,7 @@ function xoops_module_update_wflinks(XoopsModule $module, $previousVersion = nul
             foreach (array_keys($configurator->oldFolders) as $i) {
                 $tempFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $configurator->oldFolders[$i]);
                 /* @var $folderHandler XoopsObjectHandler */
-                $folderHandler = XoopsFile::getHandler('folder', $tempFolder);
+                $folderHandler = \XoopsFile::getHandler('folder', $tempFolder);
                 $folderHandler->delete($tempFolder);
             }
         }
@@ -150,8 +148,6 @@ function xoops_module_update_wflinks(XoopsModule $module, $previousVersion = nul
         /** @var XoopsGroupPermHandler $gpermHandler */
         $gpermHandler = xoops_getHandler('groupperm');
         return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
-
     }
     return true;
 }
-

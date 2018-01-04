@@ -9,6 +9,8 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/admin_header.php';
 
 global $xoopsModuleConfig;
@@ -23,7 +25,7 @@ switch (strtolower($op)) {
                 redirect_header('upload.php', 2, _AM_WFL_LINK_IMAGEEXIST);
             }
             $allowed_mimetypes = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'];
-            WflinksUtility::uploadFiles($_FILES, $_POST['uploadpath'], $allowed_mimetypes, 'upload.php', 1, 0);
+            Wflinks\Utility::uploadFiles($_FILES, $_POST['uploadpath'], $allowed_mimetypes, 'upload.php', 1, 0);
             redirect_header('upload.php', 2, _AM_WFL_LINK_IMAGEUPLOAD);
         } else {
             redirect_header('upload.php', 2, _AM_WFL_LINK_NOIMAGEEXIST);
@@ -74,7 +76,7 @@ switch (strtolower($op)) {
             3 => _AM_WFL_LINK_FMAINIMAGEDIR
         ];
 
-        WflinksUtility::getServerStats();
+        Wflinks\Utility::getServerStats();
         if ($rootpath > 0) {
             echo '<div><b>' . _AM_WFL_LINK_FUPLOADPATH . '</b> ' . XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath] . "</div>\n";
             echo '<div><b>' . _AM_WFL_LINK_FUPLOADURL . '</b> ' . XOOPS_URL . '/' . $dirarray[$rootpath] . "</div><br>\n";
@@ -82,38 +84,38 @@ switch (strtolower($op)) {
         $pathlist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
         $namelist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
 
-        $iform = new XoopsThemeForm(_AM_WFL_LINK_FUPLOADIMAGETO . $pathlist, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $iform = new \XoopsThemeForm(_AM_WFL_LINK_FUPLOADIMAGETO . $pathlist, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
-        $iform->addElement(new XoopsFormHidden('dir', $rootpath));
-        WflinksUtility::getDirSelectOption($namelist, $dirarray, $namearray);
-        $iform->addElement(new XoopsFormLabel(_AM_WFL_LINK_FOLDERSELECTION, ob_get_contents()));
+        $iform->addElement(new \XoopsFormHidden('dir', $rootpath));
+        Wflinks\Utility::getDirSelectOption($namelist, $dirarray, $namearray);
+        $iform->addElement(new \XoopsFormLabel(_AM_WFL_LINK_FOLDERSELECTION, ob_get_contents()));
         ob_end_clean();
 
         if ($rootpath > 0) {
             $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'images');
-            $indeximage_select = new XoopsFormSelect('', 'linkfile', '');
+            $indeximage_select = new \XoopsFormSelect('', 'linkfile', '');
             $indeximage_select->addOptionArray($graph_array);
             $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"linkfile\", \"" . $dirarray[$rootpath] . '", "", "' . XOOPS_URL . "\")'");
-            $indeximage_tray = new XoopsFormElementTray(_AM_WFL_LINK_FSHOWSELECTEDIMAGE, '&nbsp;');
+            $indeximage_tray = new \XoopsFormElementTray(_AM_WFL_LINK_FSHOWSELECTEDIMAGE, '&nbsp;');
             $indeximage_tray->addElement($indeximage_select);
             if (!empty($imgurl)) {
-                $indeximage_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . '/' . $dirarray[$rootpath] . '/' . $linkfile . "' name='image' id='image' alt=''>"));
+                $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . '/' . $dirarray[$rootpath] . '/' . $linkfile . "' name='image' id='image' alt=''>"));
             } else {
-                $indeximage_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . "/uploads/blank.gif' name='image' id='image' alt=''>"));
+                $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . "/uploads/blank.gif' name='image' id='image' alt=''>"));
             }
             $iform->addElement($indeximage_tray);
-            $iform->addElement(new XoopsFormFile(_AM_WFL_LINK_FUPLOADIMAGE, 'uploadfile', 0));
-            $iform->addElement(new XoopsFormHidden('uploadpath', $dirarray[$rootpath]));
-            $iform->addElement(new XoopsFormHidden('rootnumber', $rootpath));
+            $iform->addElement(new \XoopsFormFile(_AM_WFL_LINK_FUPLOADIMAGE, 'uploadfile', 0));
+            $iform->addElement(new \XoopsFormHidden('uploadpath', $dirarray[$rootpath]));
+            $iform->addElement(new \XoopsFormHidden('rootnumber', $rootpath));
 
-            $dup_tray = new XoopsFormElementTray('', '');
-            $dup_tray->addElement(new XoopsFormHidden('op', 'upload'));
-            $butt_dup = new XoopsFormButton('', '', _AM_WFL_BUPLOAD, 'submit');
+            $dup_tray = new \XoopsFormElementTray('', '');
+            $dup_tray->addElement(new \XoopsFormHidden('op', 'upload'));
+            $butt_dup = new \XoopsFormButton('', '', _AM_WFL_BUPLOAD, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'upload\'"');
             $dup_tray->addElement($butt_dup);
 
-            $butt_dupct = new XoopsFormButton('', '', _AM_WFL_BDELETEIMAGE, 'submit');
+            $butt_dupct = new \XoopsFormButton('', '', _AM_WFL_BDELETEIMAGE, 'submit');
             $butt_dupct->setExtra('onclick="this.form.elements.op.value=\'delfile\'"');
             $dup_tray->addElement($butt_dupct);
             $iform->addElement($dup_tray);

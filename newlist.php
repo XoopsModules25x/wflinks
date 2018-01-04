@@ -9,6 +9,8 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/header.php';
 
 $GLOBALS['xoopsOption']['template_main'] = 'wflinks_newlistindex.tpl';
@@ -16,9 +18,9 @@ include XOOPS_ROOT_PATH . '/header.php';
 
 global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
 
-$catarray['imageheader'] = WflinksUtility::getImageHeader();
-//$catarray['letters'] = WflinksUtility::getLetters();
-//$catarray['toolbar'] = WflinksUtility::getToolbar();
+$catarray['imageheader'] = Wflinks\Utility::getImageHeader();
+//$catarray['letters'] = Wflinks\Utility::getLetters();
+//$catarray['toolbar'] = Wflinks\Utility::getToolbar();
 $xoopsTpl->assign('catarray', $catarray);
 
 if (isset($_GET['newlinkshowdays'])) {

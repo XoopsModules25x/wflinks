@@ -107,8 +107,10 @@ define('_AM_WFL_IPAGE_CRIGHT', 'Align Right');
  * Permissions defines
  */
 define('_AM_WFL_PERM_MANAGEMENT', 'Permissions Management');
-define('_AM_WFL_PERM_PERMSNOTE',
-       "<div><b>NOTE:</b> Please be aware that even if you've set correct viewing permissions here, a group might not see the articles or blocks if you don't also grant that group permissions to access the module. To do that, go to <b>System admin > Groups</b>, choose the appropriate group and click the checkboxes to grant its members the access.</div>");
+define(
+    '_AM_WFL_PERM_PERMSNOTE',
+       "<div><b>NOTE:</b> Please be aware that even if you've set correct viewing permissions here, a group might not see the articles or blocks if you don't also grant that group permissions to access the module. To do that, go to <b>System admin > Groups</b>, choose the appropriate group and click the checkboxes to grant its members the access.</div>"
+);
 define('_AM_WFL_PERM_CPERMISSIONS', 'Category Permissions');
 define('_AM_WFL_PERM_CSELECTPERMISSIONS', 'Select categories that each group is allowed to view');
 define('_AM_WFL_PERM_CNOCATEGORY', "Cannot set permission's: No Categories's have been created yet!");

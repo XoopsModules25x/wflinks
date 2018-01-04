@@ -25,7 +25,7 @@
  */
 function wflinks_com_update($linkload_id, $total_num)
 {
-    $db  = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = \XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'UPDATE ' . $db->prefix('wflinks_links') . ' SET comments=' . $total_num . ' WHERE lid=' . $linkload_id;
     $db->query($sql);
 }

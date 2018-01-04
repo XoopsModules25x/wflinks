@@ -9,9 +9,11 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/header.php';
 
-$start = WflinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
+$start = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start', 0);
 $start = (int)$start;
 
 $GLOBALS['xoopsOption']['template_main'] = 'wflinks_index.tpl';
@@ -24,7 +26,7 @@ $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 $sql      = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_indexpage');
 $head_arr = $xoopsDB->fetchArray($xoopsDB->query($sql));
 
-$catarray['imageheader']      = WflinksUtility::getImageHeader($head_arr['indeximage'], $head_arr['indexheading']);
+$catarray['imageheader']      = Wflinks\Utility::getImageHeader($head_arr['indeximage'], $head_arr['indexheading']);
 $catarray['indexheading']     = $wfmyts->displayTarea($head_arr['indexheading']);
 $catarray['indexheaderalign'] = $wfmyts->htmlSpecialCharsStrip($head_arr['indexheaderalign']);
 $catarray['indexfooteralign'] = $wfmyts->htmlSpecialCharsStrip($head_arr['indexfooteralign']);
@@ -37,8 +39,8 @@ $breaks = $head_arr['nobreak'] ? 1 : 0;
 
 $catarray['indexheader'] = $wfmyts->displayTarea($head_arr['indexheader'], $html, $smiley, $xcodes, $images, $breaks);
 $catarray['indexfooter'] = $wfmyts->displayTarea($head_arr['indexfooter'], $html, $smiley, $xcodes, $images, $breaks);
-$catarray['letters']     = WflinksUtility::getLetters();
-$catarray['toolbar']     = WflinksUtility::getToolbar();
+$catarray['letters']     = Wflinks\Utility::getLetters();
+$catarray['toolbar']     = Wflinks\Utility::getToolbar();
 $xoopsTpl->assign('catarray', $catarray);
 
 // End main page Headers
@@ -47,17 +49,17 @@ $chcount = 0;
 $countin = 0;
 
 // Begin Main page linkload info
-$listings  = WflinksUtility::getTotalItems();
-$total_cat = WflinksUtility::getTotalCategory();  // get total amount of categories
+$listings  = Wflinks\Utility::getTotalItems();
+$total_cat = Wflinks\Utility::getTotalCategory();  // get total amount of categories
 $catsort   = $xoopsModuleConfig['sortcats'];
 $sql       = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE pid=0 ORDER BY ' . $catsort;
 $result    = $xoopsDB->query($sql);
 while ($myrow = $xoopsDB->fetchArray($result)) {
     ++$countin;
     $subtotallinkload = 0;
-    $totallinkload    = WflinksUtility::getTotalItems($myrow['cid'], 1);
-    $indicator        = WflinksUtility::isNewImage($totallinkload['published']);
-    if (WflinksUtility::checkGroups($myrow['cid'])) {
+    $totallinkload    = Wflinks\Utility::getTotalItems($myrow['cid'], 1);
+    $indicator        = Wflinks\Utility::isNewImage($totallinkload['published']);
+    if (Wflinks\Utility::checkGroups($myrow['cid'])) {
         $title = $wfmyts->htmlSpecialCharsStrip($myrow['title']);
 
         $arr = [];
@@ -67,7 +69,7 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
         $chcount       = 1;
         $subcategories = '';
         foreach ($arr as $ele) {
-            if (true === WflinksUtility::checkGroups($ele['cid'])) {
+            if (true === Wflinks\Utility::checkGroups($ele['cid'])) {
                 if (1 == $xoopsModuleConfig['subcats']) {
                     $chtitle = $wfmyts->htmlSpecialCharsStrip($ele['title']);
                     if ($chcount > 5) {
@@ -162,7 +164,7 @@ if (1 == $lastlinks['lastlinksyn'] && $lastlinks['lastlinkstotal'] > 0) {
         $xoopsTpl->append('link', $link);
     }
 
-    $pagenav = new XoopsPageNav($count, $xoopsModuleConfig['perpage'], $start, 'start');
+    $pagenav = new \XoopsPageNav($count, $xoopsModuleConfig['perpage'], $start, 'start');
     $xoopsTpl->assign('pagenav', $pagenav->renderNav());
 
     $xoopsTpl->assign('showlatest', $lastlinks['lastlinksyn']);

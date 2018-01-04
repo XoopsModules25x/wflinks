@@ -9,11 +9,13 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/admin_header.php';
 
-$op        = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
-$lid       = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', '');
-$requestid = WflinksUtility::cleanRequestVars($_REQUEST, 'requestid', 0);
+$op        = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
+$lid       = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', '');
+$requestid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'requestid', 0);
 
 switch (strtolower($op)) {
     case 'approve':
@@ -58,7 +60,7 @@ switch (strtolower($op)) {
 
         global $xoopsModuleConfig;
         xoops_load('XoopsUserUtility');
-        $start = WflinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
+        $start = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start', 0);
         $sql   = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published = 0 ORDER BY lid DESC';
         if (!$result = $xoopsDB->query($sql)) {
             XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
@@ -93,7 +95,7 @@ switch (strtolower($op)) {
                 $title     = $wfmyts->htmlSpecialCharsStrip($new['title']);
                 $url       = urldecode($wfmyts->htmlSpecialCharsStrip($new['url']));
                 $logourl   = $wfmyts->htmlSpecialCharsStrip($new['screenshot']);
-                $submitter = XoopsUserUtility::getUnameFromId($new['submitter']);
+                $submitter = \XoopsUserUtility::getUnameFromId($new['submitter']);
                 $datetime  = formatTimestamp($new['date'], $xoopsModuleConfig['dateformatadmin']);
 
                 $icon = $new['published'] ? $approved : "<a href='newlinks.php?op=approve&amp;lid=" . $lid . "'>" . $imageArray['approve'] . '</a>&nbsp;';
@@ -115,7 +117,7 @@ switch (strtolower($op)) {
 
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
         //        $page = ( $new_array_count > $xoopsModuleConfig['admin_perpage'] ) ? _AM_WFL_MINDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($new_array_count, $xoopsModuleConfig['admin_perpage'], $start, 'start');
+        $pagenav = new \XoopsPageNav($new_array_count, $xoopsModuleConfig['admin_perpage'], $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $pagenav->renderNav() . '</div>';
         require_once __DIR__ . '/admin_footer.php';
         break;

@@ -9,12 +9,14 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/admin_header.php';
 
 global $xoopsModuleConfig;
 
-$op  = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
-$lid = (int)WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$op  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
+$lid = (int)Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
  * @param $xt WflinksXoopsTree

@@ -13,7 +13,7 @@
  */
 function b_waiting_wflinks()
 {
-    $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
+    $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
     $ret     = [];
 
     // wflinks waiting

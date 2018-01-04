@@ -9,26 +9,28 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/admin_header.php';
 
-$op  = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
-$rid = WflinksUtility::cleanRequestVars($_REQUEST, 'rid', 0);
-$lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$op  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
+$rid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'rid', 0);
+$lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'delvote':
         $sql    = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_votedata') . ' WHERE ratingid=' . $rid;
         $result = $xoopsDB->queryF($sql);
-        WflinksUtility::updateRating($lid);
+        Wflinks\Utility::updateRating($lid);
         redirect_header('votedata.php', 1, _AM_WFL_VOTEDELETED);
         break;
 
     case 'main':
     default:
-        $start = WflinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
+        $start = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start', 0);
         xoops_cp_header();
 
-        $_vote_data = WflinksUtility::getVoteDetails($lid);
+        $_vote_data = Wflinks\Utility::getVoteDetails($lid);
 
         $text_info = "
         <table width='100%'>
@@ -79,7 +81,7 @@ switch (strtolower($op)) {
         } else {
             while (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $xoopsDB->fetchRow($results)) {
                 $formatted_date = formatTimestamp($ratingtimestamp, $xoopsModuleConfig['dateformatadmin']);
-                $ratinguname    = XoopsUser:: getUnameFromId($ratinguser);
+                $ratinguname    = \XoopsUser:: getUnameFromId($ratinguser);
                 echo "
                     <tr class='txtcenter;'>\n
                     <td class='head'>$ratingid</td>\n
@@ -96,7 +98,7 @@ switch (strtolower($op)) {
         // Include page navigation
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
         $page    = ($votes > $xoopsModuleConfig['admin_perpage']) ? _AM_WFL_MINDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($page, $xoopsModuleConfig['admin_perpage'], $start, 'start');
+        $pagenav = new \XoopsPageNav($page, $xoopsModuleConfig['admin_perpage'], $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $pagenav->renderNav() . '</div>';
         break;
 }

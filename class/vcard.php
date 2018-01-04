@@ -29,6 +29,9 @@
  * @return mixed
  */
 
+
+use XoopsModules\Wflinks;
+
 function vcard_encode($string)
 {
     return vcard_escape(vcard_quoted_printable_encode($string));
@@ -196,8 +199,8 @@ class VCard
         $region = '',
         $zip = '',
         $country = '',
-        $type = '')
-    {
+        $type = ''
+    ) {
         // $type may be DOM | INTL | POSTAL | PARCEL | HOME | WORK or any combination of these: e.g. "WORK;PARCEL;POSTAL"
         $key = 'ADR';
         if ('' !== $type) {
@@ -229,8 +232,8 @@ class VCard
         $region = '',
         $zip = '',
         $country = '',
-        $type = 'HOME;POSTAL')
-    {
+        $type = 'HOME;POSTAL'
+    ) {
         $label = '';
         if ('' !== $postoffice) {
             $label .= "$postoffice\r\n";
@@ -330,7 +333,7 @@ class VCard
 
 require_once __DIR__ . '/header.php';
 
-$lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid = (int)$lid;
 
 global $xoopsDB;
@@ -343,7 +346,7 @@ $street2 = $vcard_arr['street2'];
 $town    = $vcard_arr['town'];
 $zip     = $vcard_arr['zip'];
 $state   = $vcard_arr['state'];
-$country = WflinksUtility::getCountryName($vcard_arr['country']);
+$country = Wflinks\Utility::getCountryName($vcard_arr['country']);
 $tel     = $vcard_arr['tel'];
 $mobile  = $vcard_arr['mobile'];
 $fax     = $vcard_arr['fax'];

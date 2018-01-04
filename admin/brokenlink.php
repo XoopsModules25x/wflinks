@@ -9,17 +9,19 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/admin_header.php';
 
 global $imageArray, $xoopsModule;
 
-$op  = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
-$lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$op  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
+$lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 switch (strtolower($op)) {
     case 'updateNotice':
-        $ack = WflinksUtility::cleanRequestVars($_REQUEST, 'ack', 0);
-        $con = WflinksUtility::cleanRequestVars($_REQUEST, 'con', 1);
+        $ack = Wflinks\Utility::cleanRequestVars($_REQUEST, 'ack', 0);
+        $con = Wflinks\Utility::cleanRequestVars($_REQUEST, 'con', 1);
 
         if ($ack && !$con) {
             $acknowledged = (0 == $ack) ? 1 : 0;

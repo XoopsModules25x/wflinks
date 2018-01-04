@@ -8,6 +8,7 @@
  * Team: WF-Projects
  * Licence: GNU
  */
+include __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
@@ -386,7 +387,7 @@ $modversion['config'][] = [
 //--------------------------------------------------------------------
 
 xoops_load('XoopsEditorHandler');
-$editorHandler = XoopsEditorHandler::getInstance();
+$editorHandler = \XoopsEditorHandler::getInstance();
 $editorList    = array_flip($editorHandler->getList());
 
 $modversion['config'][] = [

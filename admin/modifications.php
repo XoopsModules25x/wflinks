@@ -9,12 +9,14 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/admin_header.php';
 
 global $mytree, $xoopsModuleConfig;
 xoops_load('XoopsUserUtility');
-$op        = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
-$requestid = WflinksUtility::cleanRequestVars($_REQUEST, 'requestid', 0);
+$op        = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
+$requestid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'requestid', 0);
 
 switch (strtolower($op)) {
     case 'listmodreqshow':
@@ -35,13 +37,13 @@ switch (strtolower($op)) {
         $orig_array = $xoopsDB->fetchArray($xoopsDB->query($sql));
         unset($sql);
 
-        $orig_user      = new XoopsUser($orig_array['submitter']);
-        $submittername  = XoopsUserUtility::getUnameFromId($orig_array['submitter']);
+        $orig_user      = new \XoopsUser($orig_array['submitter']);
+        $submittername  = \XoopsUserUtility::getUnameFromId($orig_array['submitter']);
         $submitteremail = $orig_user->getUnameFromId('email');
 
         echo '<div><b>' . _AM_WFL_MOD_MODPOSTER . "</b> $submittername</div>";
         $not_allowed = ['lid', 'submitter', 'requestid', 'modifysubmitter'];
-        $sform       = new XoopsThemeForm(_AM_WFL_MOD_ORIGINAL, 'storyform', 'index.php');
+        $sform       = new \XoopsThemeForm(_AM_WFL_MOD_ORIGINAL, 'storyform', 'index.php');
         foreach ($orig_array as $key => $content) {
             if (in_array($key, $not_allowed)) {
                 continue;
@@ -69,18 +71,18 @@ switch (strtolower($op)) {
                 }
             }
             if ('country' === $key) {
-                $content = WflinksUtility::getCountryName($mod_array['country']);
+                $content = Wflinks\Utility::getCountryName($mod_array['country']);
             }
-            $sform->addElement(new XoopsFormLabel($lang_def, $content));
+            $sform->addElement(new \XoopsFormLabel($lang_def, $content));
         }
         $sform->display();
 
-        $orig_user      = new XoopsUser($mod_array['modifysubmitter']);
-        $submittername  = XoopsUserUtility::getUnameFromId($mod_array['modifysubmitter']);
+        $orig_user      = new \XoopsUser($mod_array['modifysubmitter']);
+        $submittername  = \XoopsUserUtility::getUnameFromId($mod_array['modifysubmitter']);
         $submitteremail = $orig_user->getUnameFromId('email');
 
         echo '<div><b>' . _AM_WFL_MOD_MODIFYSUBMITTER . "</b> $submittername</div>";
-        $sform = new XoopsThemeForm(_AM_WFL_MOD_PROPOSED, 'storyform', 'modifications.php');
+        $sform = new \XoopsThemeForm(_AM_WFL_MOD_PROPOSED, 'storyform', 'modifications.php');
         foreach ($mod_array as $key => $content) {
             if (in_array($key, $not_allowed)) {
                 continue;
@@ -109,21 +111,21 @@ switch (strtolower($op)) {
                 }
             }
             if ('country' === $key) {
-                $content = WflinksUtility::getCountryName($mod_array['country']);
+                $content = Wflinks\Utility::getCountryName($mod_array['country']);
             }
-            $sform->addElement(new XoopsFormLabel($lang_def, $content));
+            $sform->addElement(new \XoopsFormLabel($lang_def, $content));
         }
-        $button_tray = new XoopsFormElementTray('', '');
-        $button_tray->addElement(new XoopsFormHidden('requestid', $requestid));
-        $button_tray->addElement(new XoopsFormHidden('lid', $mod_array['requestid']));
-        $hidden = new XoopsFormHidden('op', 'changemodreq');
+        $button_tray = new \XoopsFormElementTray('', '');
+        $button_tray->addElement(new \XoopsFormHidden('requestid', $requestid));
+        $button_tray->addElement(new \XoopsFormHidden('lid', $mod_array['requestid']));
+        $hidden = new \XoopsFormHidden('op', 'changemodreq');
         $button_tray->addElement($hidden);
         if ($mod_array) {
-            $butt_dup = new XoopsFormButton('', '', _AM_WFL_BAPPROVE, 'submit');
+            $butt_dup = new \XoopsFormButton('', '', _AM_WFL_BAPPROVE, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'changemodreq\'"');
             $button_tray->addElement($butt_dup);
         }
-        $butt_dupct2 = new XoopsFormButton('', '', _AM_WFL_BIGNORE, 'submit');
+        $butt_dupct2 = new \XoopsFormButton('', '', _AM_WFL_BIGNORE, 'submit');
         $butt_dupct2->setExtra('onclick="this.form.elements.op.value=\'ignoremodreq\'"');
         $button_tray->addElement($butt_dupct2);
         $sform->addElement($button_tray);
@@ -206,7 +208,7 @@ switch (strtolower($op)) {
                 $path        = str_replace('/', '', $path);
                 $path        = str_replace(':', '', trim($path));
                 $title       = trim($path);
-                $submitter   = XoopsUserUtility::getUnameFromId($link_arr['modifysubmitter']);
+                $submitter   = \XoopsUserUtility::getUnameFromId($link_arr['modifysubmitter']);
                 $requestdate = formatTimestamp($link_arr['requestdate'], $xoopsModuleConfig['dateformatadmin']);
 
                 echo "<tr class='center;'>\n";
@@ -224,7 +226,7 @@ switch (strtolower($op)) {
 
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
         //        $page = ( $totalmodrequests > $xoopsModuleConfig['admin_perpage'] ) ? _AM_WFL_MINDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($totalmodrequests, $xoopsModuleConfig['admin_perpage'], $start, 'start');
+        $pagenav = new \XoopsPageNav($totalmodrequests, $xoopsModuleConfig['admin_perpage'], $start, 'start');
         echo "<div style='text-align: right; padding: 8px;'>" . $pagenav->renderNav() . '</div>';
         require_once __DIR__ . '/admin_footer.php';
 }

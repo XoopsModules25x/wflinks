@@ -5,11 +5,14 @@
  *
  * @return array|null
  */
+
+use XoopsModules\Wflinks;
+
 function wflinks_tag_block_cloud_show($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/utility.php';
-    if (WflinksUtility::isTagModuleIncluded()) {
+    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
+    if (Wflinks\Utility::isTagModuleIncluded()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';
 
         return tag_block_cloud_show($options, $moduleDirName);
@@ -26,8 +29,8 @@ function wflinks_tag_block_cloud_show($options)
 function wflinks_tag_block_cloud_edit($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/utility.php';
-    if (WflinksUtility::isTagModuleIncluded()) {
+    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
+    if (Wflinks\Utility::isTagModuleIncluded()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';
 
         return tag_block_cloud_edit($options);
@@ -44,8 +47,8 @@ function wflinks_tag_block_cloud_edit($options)
 function wflinks_tag_block_top_show($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/utility.php';
-    if (WflinksUtility::isTagModuleIncluded()) {
+    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
+    if (Wflinks\Utility::isTagModuleIncluded()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';
 
         return tag_block_top_show($options, $moduleDirName);
@@ -62,8 +65,8 @@ function wflinks_tag_block_top_show($options)
 function wflinks_tag_block_top_edit($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/utility.php';
-    if (WflinksUtility::isTagModuleIncluded()) {
+    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
+    if (Wflinks\Utility::isTagModuleIncluded()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';
 
         return tag_block_top_edit($options);

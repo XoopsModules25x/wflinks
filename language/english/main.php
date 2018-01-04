@@ -13,8 +13,8 @@
 define('_MD_WFL_NOLINK', 'This link does not exist!');
 define('_MD_WFL_SUBCATLISTING', 'Category Listing');
 define('_MD_WFL_ISADMINNOTICE', 'Webmaster: There is a problem with this image.');
-define('_MD_WFL_THANKSFORINFO', 'Thank-you for your submission.<br />You will be notified once your request has be approved by the webmaster.');
-define('_MD_WFL_ISAPPROVED', 'Thank-you for your submission.<br />Your request has been approved and will now appear in our listing.');
+define('_MD_WFL_THANKSFORINFO', 'Thank-you for your submission.<br>You will be notified once your request has be approved by the webmaster.');
+define('_MD_WFL_ISAPPROVED', 'Thank-you for your submission.<br>Your request has been approved and will now appear in our listing.');
 define('_MD_WFL_THANKSFORHELP', "Thank-you for helping to maintain this directory's integrity.");
 define('_MD_WFL_FORSECURITY', 'For security reasons your user name and IP address will also be temporarily recorded.');
 define('_MD_WFL_DESCRIPTION', 'Description');
@@ -86,10 +86,10 @@ define('_MD_WFL_TOPRATED', 'Rating');
 define('_MD_WFL_CURSORTBY', 'Links currently sorted by: %s');
 define('_MD_WFL_CANCEL', 'Cancel');
 define('_MD_WFL_ALREADYREPORTED', 'You have already submitted a broken report for this resource.');
-define('_MD_WFL_MUSTREGFIRST', "Sorry, you don't have the permission to perform this action.<br />Please register or login first!");
+define('_MD_WFL_MUSTREGFIRST', "Sorry, you don't have the permission to perform this action.<br>Please register or login first!");
 define('_MD_WFL_NORATING', 'No rating selected.');
 define('_MD_WFL_VOTEFORTITLE', 'Rate This Link: ');
-define('_MD_WFL_CANTVOTEOWN', 'You cannot vote on the resource you submitted.<br />All votes are logged and reviewed.');
+define('_MD_WFL_CANTVOTEOWN', 'You cannot vote on the resource you submitted.<br>All votes are logged and reviewed.');
 define('_MD_WFL_SUBMITLINK', 'Submit link');
 define('_MD_WFL_SUB_SNEWMNAMEDESC', "<ul><li>All new links's are subject to validation and may take up to 24 hours before they appear in our listing.</li><li>We reserve the rights to refuse any submitted link or change the content without approval.</li></ul>");
 define('_MD_WFL_MAINLISTING', 'Main Category Listings');
@@ -127,8 +127,8 @@ define('_MD_WFL_THISFILEDOESNOTEXIST', 'Error: This link does not exist!');
 define('_MD_WFL_BROKENREPORTED', 'Broken link Reported');
 
 define('_MD_WFL_REV_SNEWMNAMEDESC', "
-Please completely fill out the form below, and we'll add your review as soon as possible.<br /><br />
-Thank you for taking the time to submit your opinion. We want to give our users a possibility to find quality software faster.<br /><br />All reviews will be reviewed by one of our webmasters before they are put up on the web site.
+Please completely fill out the form below, and we'll add your review as soon as possible.<br><br>
+Thank you for taking the time to submit your opinion. We want to give our users a possibility to find quality software faster.<br><br>All reviews will be reviewed by one of our webmasters before they are put up on the web site.
 ");
 define('_MD_WFL_ISNOTAPPROVED', 'Your submission has to be approved by a moderator first.');
 define('_MD_WFL_HOMEPAGETITLEC', 'Home Page Title: ');
@@ -146,7 +146,7 @@ define('_MD_WFL_COPYRIGHT', 'copyright');
 define('_MD_WFL_INFORUM', 'Discuss In Forum');
 // added frankblack
 define('_MD_WFL_NOTALLOWESTOSUBMIT', 'You are not allowed to submit links');
-define('_MD_WFL_INFONOSAVEDB', 'Information not saved to database: <br /><br />');
+define('_MD_WFL_INFONOSAVEDB', 'Information not saved to database: <br><br>');
 
 define('_MD_WFL_NEWLAST', 'New Submitted Before Last Week');
 define('_MD_WFL_NEWTHIS', 'New Submitted Within This week');

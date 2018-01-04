@@ -62,13 +62,13 @@ if (!$syspermHandler->checkRight('system_admin', XOOPS_SYSTEM_BLOCK, $xoopsUser-
     redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
 }
 // get blocks owned by the module (Imported from xoopsblock.php then modified)
-// $block_arr = XoopsBlock::getByModule( $target_mid ) ;
-$db        = XoopsDatabaseFactory:: getDatabaseConnection();
+// $block_arr = \XoopsBlock::getByModule( $target_mid ) ;
+$db        = \XoopsDatabaseFactory:: getDatabaseConnection();
 $sql       = 'SELECT * FROM ' . $db->prefix('newblocks') . " WHERE mid='$target_mid' ORDER BY visible DESC,side,weight";
 $result    = $db->query($sql);
 $block_arr = [];
 while ($myrow = $db->fetchArray($result)) {
-    $block_arr[] = new XoopsBlock($myrow);
+    $block_arr[] = new \XoopsBlock($myrow);
 }
 
 function list_blocks()
@@ -164,7 +164,7 @@ function list_blocks()
             }
         }
         // target modules
-        $db            = XoopsDatabaseFactory:: getDatabaseConnection();
+        $db            = \XoopsDatabaseFactory:: getDatabaseConnection();
         $result        = $db->query('SELECT module_id FROM ' . $db->prefix('block_module_link') . " WHERE block_id='$bid'");
         $selected_mids = [];
         while (list($selected_mid) = $db->fetchRow($result)) {
@@ -172,8 +172,8 @@ function list_blocks()
         }
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $criteria      = new CriteriaCompo(new Criteria('hasmain', 1));
-        $criteria->add(new Criteria('isactive', 1));
+        $criteria      = new \CriteriaCompo(new \Criteria('hasmain', 1));
+        $criteria->add(new \Criteria('isactive', 1));
         $module_list     = $moduleHandler->getList($criteria);
         $module_list[-1] = _AM_TOPPAGE;
         $module_list[0]  = _AM_ALLPAGES;
@@ -338,7 +338,7 @@ if (!empty($_POST['submit'])) {
     redirect_header(XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/admin/myblocksadmin.php$query4redirect", 1, _AM_SYSTEM_DBUPDATED);
 }
 
-include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/utility.php';
+include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/Utility.php';
 xoops_cp_header();
 
 if (file_exists('./mymenu.php')) {

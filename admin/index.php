@@ -1,5 +1,7 @@
 <?php
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/admin_header.php';
 // Display Admin header
 xoops_cp_header();
@@ -8,12 +10,12 @@ $adminObject = \Xmf\Module\Admin::getInstance();
 
 global $xoopsDB;
 
-$start     = WflinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
-$start1    = WflinksUtility::cleanRequestVars($_REQUEST, 'start1', 0);
-$start2    = WflinksUtility::cleanRequestVars($_REQUEST, 'start2', 0);
-$start3    = WflinksUtility::cleanRequestVars($_REQUEST, 'start3', 0);
-$start4    = WflinksUtility::cleanRequestVars($_REQUEST, 'start4', 0);
-$totalcats = WflinksUtility::getTotalCategory();
+$start     = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start', 0);
+$start1    = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start1', 0);
+$start2    = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start2', 0);
+$start3    = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start3', 0);
+$start4    = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start4', 0);
+$totalcats = Wflinks\Utility::getTotalCategory();
 
 $result = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('wflinks_broken'));
 list($totalbrokenlinks) = $xoopsDB->fetchRow($result);
@@ -73,15 +75,12 @@ if (is_dir('../../../uploads/flags')) {
     $adminObject->addConfigBoxLine('<label><img src="../../../Frameworks/moduleclasses/icons/16/0.png"><span class="Red">' . _AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_NO . '</span></label>', '', '');
 }
 
-/** @var WflinksUtility $utilityClass */
-$utilityClass = ucfirst($moduleDirName) . 'Utility';
-if (!class_exists($utilityClass)) {
-    xoops_load('utility', $moduleDirName);
-}
 
+//check or upload folders
 $configurator = include __DIR__ . '/../include/config.php';
 foreach (array_keys($configurator->uploadFolders) as $i) {
-    $utilityClass::createFolder($configurator->uploadFolders[$i]);
+    $utility::createFolder($configurator->uploadFolders[$i]);
+    $adminObject->addConfigBoxLine($configurator->uploadFolders[$i], 'folder');
 }
 
 $adminObject->displayNavigation(basename(__FILE__));
@@ -89,6 +88,6 @@ $adminObject->displayIndex();
 
 //$moduleDirName = basename(dirname(__DIR__));
 
-echo $utilityClass::getServerStats();
+echo $utility::getServerStats();
 
 require_once __DIR__ . '/admin_footer.php';

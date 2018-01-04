@@ -16,39 +16,33 @@
  * @author         XOOPS Development Team
  **/
 
-require_once __DIR__ . '/../../../include/cp_header.php';
-//require_once $GLOBALS['xoops']->path('www/class/xoopsformloader.php');
+use XoopsModules\Wflinks;
 
-require_once __DIR__ . '/../class/utility.php';
-//require_once __DIR__ . '/../include/common.php';
+require_once __DIR__ . '/../../../include/cp_header.php';
+
+//require_once __DIR__ . '/../../../class/xoopsformloader.php';
+require_once __DIR__ . '/../include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
-if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-} else {
-    $moduleHelper = Xmf\Module\Helper::getHelper('system');
-}
 /** @var Xmf\Module\Admin $adminObject */
 $adminObject = \Xmf\Module\Admin::getInstance();
 
-$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
-$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
-
 // Load language files
-$moduleHelper->loadLanguage('admin');
-$moduleHelper->loadLanguage('modinfo');
-$moduleHelper->loadLanguage('main');
+$helper->loadLanguage('admin');
+$helper->loadLanguage('modinfo');
+$helper->loadLanguage('main');
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
     require_once $GLOBALS['xoops']->path('class/template.php');
-    $xoopsTpl = new XoopsTpl();
+    $xoopsTpl = new \XoopsTpl();
 }
 
 include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/config.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/utility.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfllists.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfltextsanitizer.php';
 
@@ -56,11 +50,6 @@ require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-/** @var WflinksUtility $utilityClass */
-$utilityClass = ucfirst($moduleDirName) . 'Utility';
-if (!class_exists($utilityClass)) {
-    xoops_load('utility', $moduleDirName);
-}
 
 $wfmyts = new WflTextSanitizer(); // MyTextSanitizer object
 

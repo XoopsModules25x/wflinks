@@ -37,6 +37,9 @@ define('_MI_WFL_PERMISSIONS', 'Permission Settings');
 define('_MI_WFL_BLOCKADMIN', 'Block Settings');
 define('_MI_WFL_MVOTEDATA', 'Votes');
 
+define('_MI_WFL_HOME', 'Home');
+define('_MI_WFL_ABOUT', 'About');
+
 // Title of config items
 define('_MI_WFL_POPULAR', 'link Popular Count');
 define('_MI_WFL_POPULARDSC', 'The number of hits before a link status will be considered as popular.');
@@ -63,7 +66,7 @@ define('_MI_WFL_SHOTWIDTHDSC', 'Display width for screenshot image');
 define('_MI_WFL_SHOTHEIGHT', 'Image Display Height');
 define('_MI_WFL_SHOTHEIGHTDSC', 'Display height for screenshot image');
 define('_MI_WFL_CHECKHOST', 'Disallow direct link linking? (leeching)');
-define('_MI_WFL_REFERERS', 'These sites can directly link to your links <br />Separate with #');
+define('_MI_WFL_REFERERS', 'These sites can directly link to your links <br>Separate with #');
 define('_MI_WFL_ANONPOST', 'Anonymous User Submission:');
 define('_MI_WFL_ANONPOSTDSC', 'Allow Anonymous users to submit or upload to your website?');
 define('_MI_WFL_AUTOAPPROVE', 'Auto Approve Submitted links');
@@ -87,7 +90,7 @@ define('_MI_WFL_MAINIMGDIR', 'Main Image Directory');
 define('_MI_WFL_USETHUMBS', 'Use Thumb Nails:');
 define('_MI_WFL_USETHUMBSDSC', "Supported link types: JPG, GIF, PNG.<div style='padding-top: 8px;'>WF-Links will use thumb nails for images. Set to 'No' to use orginal image if the server does not support this option.</div>");
 define('_MI_WFL_DATEFORMAT', 'Timestamp:');
-define('_MI_WFL_DATEFORMATDSC', 'Default Timestamp for WF-links.<br />See <a href="http://jp.php.net/manual/en/function.date.php" target="_blank">PHP manual</a>');
+define('_MI_WFL_DATEFORMATDSC', 'Default Timestamp for WF-links.<br>See <a href="http://jp.php.net/manual/en/function.date.php" target="_blank">PHP manual</a>');
 define('_MI_WFL_SHOWDISCLAIMER', 'Show Disclaimer before User Submission?');
 define('_MI_WFL_SHOWDISCLAIMERDSC', 'Before a User can submit a Link show the Entry regulations?');
 define('_MI_WFL_SHOWLINKDISCL', 'Show Disclaimer before User link?');
@@ -100,7 +103,7 @@ define('_MI_WFL_SUBMITARTDSC', 'Select groups that can submit new links.');
 define('_MI_WFL_RATINGGROUPS', 'link Ratings:');
 define('_MI_WFL_RATINGGROUPSDSC', 'Select groups that can rate a link.');
 define('_MI_WFL_IMGUPDATE', 'Update Thumbnails?');
-define('_MI_WFL_IMGUPDATEDSC', 'If selected Thumbnail images will be updated at each page render, otherwise the first thumbnail image will be used regardless. <br /><br />');
+define('_MI_WFL_IMGUPDATEDSC', 'If selected Thumbnail images will be updated at each page render, otherwise the first thumbnail image will be used regardless. <br><br>');
 define('_MI_WFL_QUALITY', 'Thumb Nail Quality:');
 define('_MI_WFL_QUALITYDSC', 'Quality Lowest: 0 Highest: 100');
 define('_MI_WFL_KEEPASPECT', 'Keep Image Aspect Ratio?');
@@ -201,12 +204,14 @@ EVENT WILL WF-PROJECTS BE LIABLE FOR ANY INDIRECT, PUNITIVE, SPECIAL,
 INCIDENTAL OR CONSEQUENTIAL DAMAGES HOWEVER THEY MAY ARISE AND EVEN IF
 WF-PROJECT HAS BEEN PREVIOUSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES..');
 
-define('_MI_WFL_AUTHOR_CREDITSTEXT', 'The WF-Projects Team would like to thank the following people for their help and support during the development phase of this module.<br /></br />EdStacey, maumed, banned, krobi, Pnooka, MarcoFr, cosmodrum, placebo333, GibaPhp');
+define('_MI_WFL_AUTHOR_CREDITSTEXT', 'The WF-Projects Team would like to thank the following people for their help and support during the development phase of this module.<br></br />EdStacey, maumed, banned, krobi, Pnooka, MarcoFr, cosmodrum, placebo333, GibaPhp');
 define('_MI_WFL_AUTHOR_BUGFIXES', 'Bug Fix History');
 
 define('_MI_WFL_COPYRIGHT2', 'Copyright');
-define('_MI_WFL_COPYRIGHTIMAGE',
-       'Unless stated otherwise, this Module (WF-Links) and its images are copyright to the WF-Projects team.<br /><br />You have the permission to copy, edit and change WF-Links to suit your personal requirements. You agree not to modify, adapt and redistribute the source code of the Software without the express permission from the WF-Projects team.<br /><br />PageRank is a trademark of Google Inc.');
+define(
+    '_MI_WFL_COPYRIGHTIMAGE',
+       'Unless stated otherwise, this Module (WF-Links) and its images are copyright to the WF-Projects team.<br><br>You have the permission to copy, edit and change WF-Links to suit your personal requirements. You agree not to modify, adapt and redistribute the source code of the Software without the express permission from the WF-Projects team.<br><br>PageRank is a trademark of Google Inc.'
+);
 
 define('_MI_WFL_SELECTFORUM', 'Select Forum:');
 define('_MI_WFL_SELECTFORUMDSC', 'Select the forum you have installed and will be used by WF-Links.');
@@ -251,7 +256,7 @@ define('_MI_WFL_USERTAGDSC', 'Select Yes if user is allowed to submit tags.');
 
 // Version 1.05 RC5
 define('_MI_WFL_DATEFORMATADMIN', 'Timestamp administration:');
-define('_MI_WFL_DATEFORMATADMINDSC', 'Default admininstration Timestamp for WF-Links<br />See <a href="http://jp.php.net/manual/en/function.date.php" target="_blank">PHP manual</a>');
+define('_MI_WFL_DATEFORMATADMINDSC', 'Default admininstration Timestamp for WF-Links<br>See <a href="http://jp.php.net/manual/en/function.date.php" target="_blank">PHP manual</a>');
 define('_MI_WFL_USEADDRESSDESCR', 'Use address and map options?');
 define('_MI_WFL_USEADDRESSDSC', 'Select Yes to use the address and maps feature.');
 define('_MI_WFL_HEADERPRINT', '[PRINT OPTIONS] Print page header');
@@ -333,123 +338,123 @@ define('_MI_WFL_HELP_SUPPORT', 'Support');
 // Links
 define('_MI_WFL_MLINKS_DESC', 'Use the Link Management to call the submit form for creating a new link.');
 define('_MI_WFL_HELP_LINKS_DESCRIPTION', '
-    This form has the following fields/options:<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Link title</b></span><br />
-    Enter here the title for the new link.<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Link url</b></span><br />
-    Enter the url of the new link.<br />
-    Click the globe icon to open a browser tab/window with the entered url. You can use this icon or button to check the url.<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Link main category</b></span><br />
-    Select the main category for the link.<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Link description</b></span><br />
-    Here you can enter a description of the new link.<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Keywords</b></span><br />
-    In this field you can enter the meta keywords. Enter the keywords as: keyword1, keyword2, keyword3, ...<br />
-    The maximum amount of characters can be set in the Preferences.<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Link screenshot image</b></span><br />
-    Screenshot image must be a valid image link under uploads/images/screenshots directory (ex. shot.gif).<br />
-    Choose Show no image if you don\'t want to display a screenshot.<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Google Maps, Yahoo Maps and Multimap</b></span><br />
-    These three fields can be used to enter an url to an online map.<br />
-    Click the appropriate icon behind the field to open a new tab/window in the browser. <br />
-    The url used for this action is the url entered in the field. <br />
-    You can use this icons or buttons to check or modify the map-url entered.<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Address fields</b></span><br />
-    Use these fields for add Contact Details to the link. The way the address is formatted is based on the selected country.<br />
-    If you want another address format you have to modify the file ../include/address.php<br />
-    For address formats see the Universal Postal Union website.<br />
-    Email addresses can be entered in 2 ways:<br />
-    <br />
+    This form has the following fields/options:<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Link title</b></span><br>
+    Enter here the title for the new link.<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Link url</b></span><br>
+    Enter the url of the new link.<br>
+    Click the globe icon to open a browser tab/window with the entered url. You can use this icon or button to check the url.<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Link main category</b></span><br>
+    Select the main category for the link.<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Link description</b></span><br>
+    Here you can enter a description of the new link.<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Keywords</b></span><br>
+    In this field you can enter the meta keywords. Enter the keywords as: keyword1, keyword2, keyword3, ...<br>
+    The maximum amount of characters can be set in the Preferences.<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Link screenshot image</b></span><br>
+    Screenshot image must be a valid image link under uploads/images/screenshots directory (ex. shot.gif).<br>
+    Choose Show no image if you don\'t want to display a screenshot.<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Google Maps, Yahoo Maps and Multimap</b></span><br>
+    These three fields can be used to enter an url to an online map.<br>
+    Click the appropriate icon behind the field to open a new tab/window in the browser. <br>
+    The url used for this action is the url entered in the field. <br>
+    You can use this icons or buttons to check or modify the map-url entered.<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Address fields</b></span><br>
+    Use these fields for add Contact Details to the link. The way the address is formatted is based on the selected country.<br>
+    If you want another address format you have to modify the file ../include/address.php<br>
+    For address formats see the Universal Postal Union website.<br>
+    Email addresses can be entered in 2 ways:<br>
+    <br>
     <ul>
      <li>name@address.com</li>
      <li>mailto:name@address.com</li>
     </ul>
-    <br />
-    Both email formats are automatic converted to: name AT address DOT com<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Set publish date</b></span><br />
-    Enter the date and time when the link will be published.<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Link expire date</b></span><br />
-    Use the options here to set an expiration date for the link. The link will no longer be visible for visitors.<br />
-    This option can be used for removing the expiration date also.<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Set link offline</b></span><br />
-    Select Yes to set the link offline. The link will no longer be viewable for visitors.<br />
-    Default: No<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Set link status as updated</b></span><br />
-    Select Yes to set the link as updated. An icon will appear behind the title of the link to notify visitors that the content of that link has been changed.<br />
-    Default: No<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Add Discuss in this Forum</b></span><br />
-    Selecting the forum in use will result in an icon for discussing the link in that forum.<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Submit New link as News item*</b></span><br />
-    Select Yes to submit the new link as an article in the News module.<br />
-    Default: No<br />
-    <br />
-    <span style="text-decoration: underline;"><b>Select News Category to submit News*</b></span><br />
-    Select the News category for submitting the article.<br />
-    <br />
-    <span style="text-decoration: underline;"><b>News Title*</b></span><br />
-    Give a title for the article or leave blank to use the link title.<br />
-    <br />
-    <br />
+    <br>
+    Both email formats are automatic converted to: name AT address DOT com<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Set publish date</b></span><br>
+    Enter the date and time when the link will be published.<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Link expire date</b></span><br>
+    Use the options here to set an expiration date for the link. The link will no longer be visible for visitors.<br>
+    This option can be used for removing the expiration date also.<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Set link offline</b></span><br>
+    Select Yes to set the link offline. The link will no longer be viewable for visitors.<br>
+    Default: No<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Set link status as updated</b></span><br>
+    Select Yes to set the link as updated. An icon will appear behind the title of the link to notify visitors that the content of that link has been changed.<br>
+    Default: No<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Add Discuss in this Forum</b></span><br>
+    Selecting the forum in use will result in an icon for discussing the link in that forum.<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Submit New link as News item*</b></span><br>
+    Select Yes to submit the new link as an article in the News module.<br>
+    Default: No<br>
+    <br>
+    <span style="text-decoration: underline;"><b>Select News Category to submit News*</b></span><br>
+    Select the News category for submitting the article.<br>
+    <br>
+    <span style="text-decoration: underline;"><b>News Title*</b></span><br>
+    Give a title for the article or leave blank to use the link title.<br>
+    <br>
+    <br>
     * These fields appear when the News module is installed only.
 ');
 // Category
 define('_MI_WFL_MCATEGORY_DESC', 'The Category Management consists of 2 sections, one for modifying an existing category and one for creating a new category.');
 define('_MI_WFL_HELP_CATEGORY_DESCRIPTION', '
     <h4>Modify category</h4>
-    Select a category from the selection menu and click one of the three buttons: Modify, Move Links or Delete.<br />
-    <br />
-    <b>Modify</b><br />
-    This will open the page with all settings of the selected category so you can make modification to it.<br />
-    <br />
-    <b>Move Links</b><br />
-    With the button Move Links you can move all links from a category to another category.<br />
-    Select a category and this button. In the page that follows select the destination category and click Move Links to move all the links.<br />
-    If you decide not to continue with this operation click the Cancel button.<br />
-    <em><i><b>Note</b>: Moving links from one category to another category can not be undone!!</i></em><br />
-    <br />
-    <b>Delete</b><br />
-    If you want to delete a category use the Delete button.<br />
-    <em><i><b>Note</b>: This will delete the category and ALL links and comments too. This operation can not be undone!!</i></em><br />
+    Select a category from the selection menu and click one of the three buttons: Modify, Move Links or Delete.<br>
+    <br>
+    <b>Modify</b><br>
+    This will open the page with all settings of the selected category so you can make modification to it.<br>
+    <br>
+    <b>Move Links</b><br>
+    With the button Move Links you can move all links from a category to another category.<br>
+    Select a category and this button. In the page that follows select the destination category and click Move Links to move all the links.<br>
+    If you decide not to continue with this operation click the Cancel button.<br>
+    <em><i><b>Note</b>: Moving links from one category to another category can not be undone!!</i></em><br>
+    <br>
+    <b>Delete</b><br>
+    If you want to delete a category use the Delete button.<br>
+    <em><i><b>Note</b>: This will delete the category and ALL links and comments too. This operation can not be undone!!</i></em><br>
     <h4>Create new category</h4>
-    Go here for creating a new category.<br />
-    <br />
-    <b>Category title</b><br />
-    Enter the title for the new category.<br />
-    You have to enter a title here otherwise it can\'t be saved to the database.<br />
-    <br />
-    <b>Category weight</b><br />
-    Enter a weight for sorting multiple categories. You can skip this (leave it 0) if you\'ve set to have the categories to be sorted by title in Preferences.<br />
-    <br />
-    <b>Set as sub-category</b><br />
-    Select a category which will act as main category for the new category.<br />
-    <br />
-    <b>Select category image</b><br />
-    Select an image for the category. Selecting Show no image to use the default category image.<br />
-    <br />
-    <b>Set category description</b><br />
-    Enter a description for the category.<br />
-    <br />
-    <b>Select category sponsor</b><br />
-    Select a client for sponsoring the category. You can create clients in the section Banners of the Control Panel.<br />
-    If you select a client than the banner ID (next setting) will not be saved.<br />
-    <br />
-    <b>Select banner ID</b><br />
-    Select the ID of a specific banner to display above the category.<br />
-    <br />
+    Go here for creating a new category.<br>
+    <br>
+    <b>Category title</b><br>
+    Enter the title for the new category.<br>
+    You have to enter a title here otherwise it can\'t be saved to the database.<br>
+    <br>
+    <b>Category weight</b><br>
+    Enter a weight for sorting multiple categories. You can skip this (leave it 0) if you\'ve set to have the categories to be sorted by title in Preferences.<br>
+    <br>
+    <b>Set as sub-category</b><br>
+    Select a category which will act as main category for the new category.<br>
+    <br>
+    <b>Select category image</b><br>
+    Select an image for the category. Selecting Show no image to use the default category image.<br>
+    <br>
+    <b>Set category description</b><br>
+    Enter a description for the category.<br>
+    <br>
+    <b>Select category sponsor</b><br>
+    Select a client for sponsoring the category. You can create clients in the section Banners of the Control Panel.<br>
+    If you select a client than the banner ID (next setting) will not be saved.<br>
+    <br>
+    <b>Select banner ID</b><br>
+    Select the ID of a specific banner to display above the category.<br>
+    <br>
 ');
 // Index Page
 define('_MI_WFL_INDEXPAGE_DESC', 'Here you can setup the \'look\' of the main page of WF-Links.');
@@ -462,19 +467,19 @@ define('_MI_WFL_HELP_INDEXPAGE_DESCRIPTION', '
 // Permission
 define('_MI_WFL_PERMISSIONS_DESC', 'Here you can set the following permissions for the categories per user group');
 define('_MI_WFL_HELP_PERMISSION_DESCRIPTION', '
-    <b>Categories permissions</b><br />
-    Select here the categories that each group is allowed to view.<br />
-    <br />
-    <b>Submitter permissions</b><br />
-    Select the groups who can submit new links to selected categories.<br />
-    <br />
-    <b>Moderator groups</b><br />
-    Select the groups who have moderator privligages for the selected categories.<br />
-    <br />
-    <b>Auto approve links</b><br />
-    Select the groups that will have new links auto approved without admin intervention.<br />
-    <br />
-    <b>Rate permissions</b><br />
+    <b>Categories permissions</b><br>
+    Select here the categories that each group is allowed to view.<br>
+    <br>
+    <b>Submitter permissions</b><br>
+    Select the groups who can submit new links to selected categories.<br>
+    <br>
+    <b>Moderator groups</b><br>
+    Select the groups who have moderator privligages for the selected categories.<br>
+    <br>
+    <b>Auto approve links</b><br>
+    Select the groups that will have new links auto approved without admin intervention.<br>
+    <br>
+    <b>Rate permissions</b><br>
     Select the groups that can rate a link in the selected categories.
 ');
 // Convert
@@ -486,7 +491,7 @@ define('_MI_WFL_HELP_CONVERT_DESCRIPTION', '
         anymore because it is missing tables then. If you want to keep your myLinks/webLinks working you would have to backup the myLinks/webLinks tables before you start updating and restore them
         afterwards. It is possible to have WF-Links and myLinks/webLinks running at the same time (though we don\'t know why you would won\'t that). <br/><br/><b>1) Make a backup</b></p>
     <p><span style="color: #000000; ">&nbsp; &nbsp; Backup the myLinks/webLinks tables from your database<br/><br/></span><b>2) Upload the module to your website</b></p>
-    <p>&nbsp; &nbsp; &nbsp;Upload the \'modules\' and \'uploads\' folder to your {xoops-rootdirectory}<br/><br /></p>
+    <p>&nbsp; &nbsp; &nbsp;Upload the \'modules\' and \'uploads\' folder to your {xoops-rootdirectory}<br/><br></p>
     <p><b>3) Change and verify folder permissions</b><br/><br/>CHMOD the following folders to 777:</p>
     <p><br/><em>{xoops-rootdirectory}/uploads/images</em><br/><em>{xoops-rootdirectory}/uploads/images/category</em><br/><em>{xoops-rootdirectory}/uploads/images/category/thumbs</em><br/><em>{xoops-rootdirectory}/uploads/images/flags</em><br/><em>{xoops-rootdirectory}/uploads/images/flags/flags_small</em><br/><em>{xoops-rootdirectory}/uploads/images/screenshots</em><br/><em>{xoops-rootdirectory}/uploads/images/screenshots/thumbs</em><br/><em>{xoops-rootdirectory}/uploads/images/thumbs</em><br/><br/><b>4)
         Install the module</b></p>
@@ -495,9 +500,9 @@ define('_MI_WFL_HELP_CONVERT_DESCRIPTION', '
         <li>Point your browser to {xoops-rootdirectory}/modules/wflinks/update.php and execute the update script.</li>
         <li>Follow the instructions provided during the install procedure.</li>
         <li>The script will try to determine which version or versions of myLinks or webLinks you have installed and will try to update it.</li>
-    </ul><br />
+    </ul><br>
     <p><b>6) Update the module</b></p>
-    <p>&nbsp; &nbsp;Return to System --> Modules and update WF-Links, otherwise the templates will be for the previous version and the pages will display correctly.<br/><br /></p>
+    <p>&nbsp; &nbsp;Return to System --> Modules and update WF-Links, otherwise the templates will be for the previous version and the pages will display correctly.<br/><br></p>
     <p><b>7) Configure the module</b></p>
     <p>&nbsp; &nbsp; Most importent steps now will be to setup the group permissions for the module and its blocks via System --> Groups<br/><br/><b>8) Restore or remove myLinks/webLinks</b></p>
     <p>If you want to continue using myLinks or webLinks in addition to WF-Links then restore your myLinks/webLinks tables<br/>now from the backup you did in step 1. If you don\'t want to use those
@@ -542,9 +547,9 @@ define('_MI_WFL_HELP_INSTALL_DESCRIPTION', '
     <span style="background-color: #ffff99;">These instructions are for a fresh install.</span><br/><span style="background-color: #ffff99;">If you want to convert from myLinks/webLinks please select \'Convert\' from the menu.</span><br/><br/><span style="color: #ff0000;">Remember: It is always a good idea to make a database backup before installing any modules.</span><br/><br/>
     <b>Fresh installation of WF-Links</b><br/><br/>
     <b>1) Upload the module to your website</b><br/><br/>
-    Upload the \'modules/wflinks\' and \'uploads/images\' folder to your
+    Upload the \'modules/Wflinks\' and \'uploads/images\' folder to your
     {xoops-rootdirectory}.<br/><br/>
-    If you want to rename the folder \'modules/wflinks\' in for example \'modules/weblinks\' you have to do so before you continue with the installation.<br/><br/>
+    If you want to rename the folder \'modules/Wflinks\' in for example \'modules/weblinks\' you have to do so before you continue with the installation.<br/><br/>
     <b>2) Change and verify folder permissions</b><br/><br/>
     If it is not done yet, CHMOD the following folders to 777:<br/><br/>
     <em>{xoops-rootdirectory}/uploads/images</em><br/>
@@ -669,7 +674,7 @@ define('_MI_WFL_HELP_PREFERENCES_DESCRIPTION', '
 // Update
 define('_MI_WFL_UPDATE_DESC', '');
 define('_MI_WFL_HELP_UPDATE_DESCRIPTION', '
-    <h4>Upgrade from WF-Links prior to version 1.05 RC5</h4><br /><br /><ol>
+    <h4>Upgrade from WF-Links prior to version 1.05 RC5</h4><br><br><ol>
     <li>Make a backup of the WF-Links database tables and a backup from the folder ../modules/wflinks on your server.</li>
     <li>Uninstall WF-Links.</li>
     <li>Overwrite the files on your server with the new ones.</li>
@@ -685,3 +690,6 @@ define('_MI_WFL_HELP_SUPPORT_DESCRIPTION', '
     <p><span style="font-family: Arial, sans-serif; font-size: 172%; "><a href="https://xoops.org/modules/newbb/viewforum.php?forum=28/" target="_blank">https://xoops.org/modules/newbb/</a><br></span>
     </p>
 ');
+
+define('_MI_WFL_MVOTEDATA_DESC', '');
+

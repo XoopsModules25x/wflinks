@@ -17,10 +17,10 @@ function b_sitemap_wflinks()
 {
     global $sitemap_configs;
     global $xoopsDB, $xoopsUser, $xoopsModule;
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
-    $mytree = new XoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
+    $mytree = new \XoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 
     $MyModule     = xoops_getHandler('module');
     $wflinkModule = $MyModule->getByDirname('wflinks');
@@ -38,7 +38,7 @@ function b_sitemap_wflinks()
         if ($gpermHandler->checkRight('WFLinkCatPerm', $myrow['cid'], $groups, $wflinkModule->getVar('mid'))) {
             $i                              = (int)$myrow['cid'];
             $sitemap['parent'][$i]['id']    = (int)$myrow['cid'];
-            $sitemap['parent'][$i]['title'] = $myts->makeTboxData4Show($myrow['title']);
+            $sitemap['parent'][$i]['title'] = $myts->htmlSpecialChars($myrow['title']);
             $sitemap['parent'][$i]['url']   = 'viewcat.php?cid=' . (int)$myrow['cid'];
             $arr = [];
             if ($sitemap_configs['show_subcategoris']) {
@@ -47,7 +47,7 @@ function b_sitemap_wflinks()
                     if ($gpermHandler->checkRight('WFLinkCatPerm', $ele['cid'], $groups, $wflinkModule->getVar('mid'))) {
                         $j                                           = $key;
                         $sitemap['parent'][$i]['child'][$j]['id']    = (int)$ele['cid'];
-                        $sitemap['parent'][$i]['child'][$j]['title'] = $myts->makeTboxData4Show($ele['title']);
+                        $sitemap['parent'][$i]['child'][$j]['title'] = $myts->htmlSpecialChars($ele['title']);
                         $sitemap['parent'][$i]['child'][$j]['image'] = 2;
                         $sitemap['parent'][$i]['child'][$j]['url']   = 'viewcat.php?cid=' . (int)$ele['cid'];
                     }

@@ -29,7 +29,7 @@
 function xoops_module_pre_install_wflinks(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    /** @var WflinksUtility $utilityClass */
+    /** @var Wflinks\Utility $utilityClass */
     $utilityClass = ucfirst($moduleDirName) . 'Utility';
     if (!class_exists($utilityClass)) {
         xoops_load('utility', $moduleDirName);
@@ -57,20 +57,16 @@ function xoops_module_install_wflinks(XoopsModule $module)
 {
     require_once __DIR__ . '/../../../mainfile.php';
     require_once __DIR__ . '/../include/config.php';
-    require_once __DIR__ . '/../class/utility.php';
+    require_once __DIR__ . '/../class/Utility.php';
 
     $moduleDirName = basename(dirname(__DIR__));
-
-    if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-    } else {
-        $moduleHelper = Xmf\Module\Helper::getHelper('system');
-    }
+    $helper = \Xmf\Module\Helper::getHelper($moduleDirName);
 
     // Load language files
-    $moduleHelper->loadLanguage('admin');
-    $moduleHelper->loadLanguage('modinfo');
+    $helper->loadLanguage('admin');
+    $helper->loadLanguage('modinfo');
 
-    /** @var WflinksUtility $utilityClass */
+    /** @var Wflinks\Utility $utilityClass */
     $utilityClass = ucfirst($moduleDirName) . 'Utility';
     if (!class_exists($utilityClass)) {
         xoops_load('utility', $moduleDirName);
@@ -81,7 +77,7 @@ function xoops_module_install_wflinks(XoopsModule $module)
     // default Permission Settings ----------------------
     global $xoopsModule;
     $moduleId     = $xoopsModule->getVar('mid');
-    $moduleId2    = $moduleHelper->getModule()->mid();
+    $moduleId2    = $helper->getModule()->mid();
     $gpermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
     $gpermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);
@@ -108,9 +104,9 @@ function xoops_module_install_wflinks(XoopsModule $module)
     }
 
     //  ---  COPY FLAGS FILES ---------------
-        $source = XOOPS_ROOT_PATH . '/modules/' . $moduleDirName .'/EXTRA/htdocs/uploads/flags';
-        $dest   = XOOPS_UPLOAD_PATH .'/flags';
-        $utilityClass::rcopy($source, $dest);
+    $source = XOOPS_ROOT_PATH . '/modules/' . $moduleDirName .'/EXTRA/htdocs/uploads/flags';
+    $dest   = XOOPS_UPLOAD_PATH .'/flags';
+    $utilityClass::rcopy($source, $dest);
 
 
     //delete .html entries from the tpl table
@@ -119,4 +115,3 @@ function xoops_module_install_wflinks(XoopsModule $module)
 
     return true;
 }
-

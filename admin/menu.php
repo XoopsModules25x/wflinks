@@ -11,23 +11,20 @@
 
 //
 
-$moduleDirName = basename(dirname(__DIR__));
+use XoopsModules\Wflinks;
 
-if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-} else {
-    $moduleHelper = Xmf\Module\Helper::getHelper('system');
-}
+//require_once __DIR__ . '/../class/Helper.php';
+//require_once __DIR__ . '/../include/common.php';
+$helper = Wflinks\Helper::getInstance();
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
-//$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
-
-$moduleHelper->loadLanguage('modinfo');
+$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 $adminmenu = [
     [
-        'title' => _AM_MODULEADMIN_HOME,
+        'title' => _MI_WFL_HOME,
         'link'  => 'admin/index.php',
-        'desc'  => _AM_MODULEADMIN_HOME,
+//        'desc'  => _MI_WFL_HOME_DESC,
         'icon'  => $pathIcon32 . '/home.png'
     ],
     [
@@ -75,7 +72,7 @@ $adminmenu = [
     [
         'title' => _MI_WFL_MVOTEDATA,
         'link'  => 'admin/votedata.php',
-        'desc'  => _MI_WFL_MVOTEDATA,
+        'desc'  => _MI_WFL_MVOTEDATA_DESC,
         'icon'  => $pathIcon32 . '/poll.png'
     ],
     [
@@ -85,9 +82,9 @@ $adminmenu = [
         'icon'  => $pathIcon32 . '/permissions.png'
     ],
     [
-        'title' => _AM_MODULEADMIN_ABOUT,
+        'title' => _MI_WFL_ABOUT,
         'link'  => 'admin/about.php',
-        'desc'  => _AM_MODULEADMIN_ABOUT,
+//        'desc'  => _MI_WFL_ABOUTS_DESC,
         'icon'  => $pathIcon32 . '/about.png'
     ],
 ];

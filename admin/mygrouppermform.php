@@ -82,8 +82,8 @@ class MyXoopsGroupPermForm extends XoopsForm
         $this->_modid    = (int)$modid;
         $this->_permName = $permname;
         $this->_permDesc = $permdesc;
-        $this->addElement(new XoopsFormHidden('modid', $this->_modid));
-        $this->addElement(new XoopsFormHiddenToken($permname));
+        $this->addElement(new \XoopsFormHidden('modid', $this->_modid));
+        $this->addElement(new \XoopsFormHiddenToken($permname));
     }
 
     /**
@@ -178,19 +178,19 @@ class MyXoopsGroupPermForm extends XoopsForm
         }
 
         // GIJ start
-        $jstray          = new XoopsFormElementTray(' &nbsp; ');
-        $jsuncheckbutton = new XoopsFormButton('', 'none', _NONE, 'button');
+        $jstray          = new \XoopsFormElementTray(' &nbsp; ');
+        $jsuncheckbutton = new \XoopsFormButton('', 'none', _NONE, 'button');
         $jsuncheckbutton->setExtra("onclick=\"with(document.groupperm_form){for (i=0;i<length;i++) {if (elements[i].type=='checkbox') {elements[i].checked=false;}}}\"");
-        $jscheckbutton = new XoopsFormButton('', 'all', _ALL, 'button');
+        $jscheckbutton = new \XoopsFormButton('', 'all', _ALL, 'button');
         $jscheckbutton->setExtra("onclick=\"with(document.groupperm_form){for (i=0;i<length;i++) {if(elements[i].type=='checkbox' && (elements[i].name.indexOf('module_admin')<0 || elements[i].name.indexOf('[groups][1]')>=0)) {elements[i].checked=true;}}}\"");
         $jstray->addElement($jsuncheckbutton);
         $jstray->addElement($jscheckbutton);
         $this->addElement($jstray);
         // GIJ end
 
-        $tray = new XoopsFormElementTray('');
-        $tray->addElement(new XoopsFormButton('', 'reset', _CANCEL, 'reset'));
-        $tray->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+        $tray = new \XoopsFormElementTray('');
+        $tray->addElement(new \XoopsFormButton('', 'reset', _CANCEL, 'reset'));
+        $tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
         $this->addElement($tray);
 
         $ret      = '<h4>' . $this->getTitle() . '</h4>' . $this->_permDesc . '<br>';

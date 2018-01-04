@@ -36,7 +36,7 @@ require_once XOOPS_ROOT_PATH . '/kernel/module.php';
 $admintest = 0;
 
 if (is_object($xoopsUser)) {
-    $xoopsModule = XoopsModule:: getByDirname('system');
+    $xoopsModule = \XoopsModule:: getByDirname('system');
     if (!$xoopsUser->isAdmin($xoopsModule->mid())) {
         redirect_header(XOOPS_URL . '/user.php', 3, _NOPERM);
     }

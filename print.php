@@ -6,12 +6,14 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 $moduleDirName = basename(__DIR__);
 
 require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
 
-$lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid = (int)$lid;
 
 $error_message = _MD_WFL_NOITEMSELECTED;
@@ -27,8 +29,8 @@ $myrow  = $xoopsDB->fetchArray($result);
 $result2 = $xoopsDB->query('SELECT title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE cid=' . $myrow['cid']);
 $mycat   = $xoopsDB->fetchArray($result2);
 
-$xoopsTpl = new XoopsTpl();
-$myts     = MyTextSanitizer::getInstance();
+$xoopsTpl = new \XoopsTpl();
+$myts     = \MyTextSanitizer::getInstance();
 
 $xoopsTpl->assign('printsitename', XOOPS_URL);
 $xoopsTpl->assign('printcategoryname', $mycat['title']);
@@ -63,8 +65,8 @@ $mobile  = $myrow['mobile'];
 $voip    = $myrow['voip'];
 $fax     = $myrow['fax'];
 $url     = $myrow['url'];
-$email   = WflinksUtility::printemailcnvrt($myrow['email']);
-$country = WflinksUtility::getCountryName($myrow['country']);
+$email   = Wflinks\Utility::printemailcnvrt($myrow['email']);
+$country = Wflinks\Utility::getCountryName($myrow['country']);
 
 if ('' === $street1 || '' === $town || 0 == $xoopsModuleConfig['useaddress']) {
     $print['addryn'] = 0;
@@ -107,7 +109,7 @@ global $xoopsTpl, $xoTheme;
 
 $maxWords = 100;
 $words    = [];
-$words    = explode(' ', WflinksUtility::convertHtml2text($myrow['description']));
+$words    = explode(' ', Wflinks\Utility::convertHtml2text($myrow['description']));
 $newWords = [];
 $i        = 0;
 
