@@ -17,6 +17,8 @@
  * @author       XOOPS Development Team
  */
 
+use XoopsModules\Wflinks;
+
 //require_once __DIR__ . '/setup.php';
 
 /**
@@ -26,7 +28,7 @@
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_install_wflinks(XoopsModule $module)
+function xoops_module_pre_install_wflinks(\XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
     /** @var Wflinks\Utility $utilityClass */
@@ -53,14 +55,14 @@ function xoops_module_pre_install_wflinks(XoopsModule $module)
  *
  * @return bool true if installation successful, false if not
  */
-function xoops_module_install_wflinks(XoopsModule $module)
+function xoops_module_install_wflinks(\XoopsModule $module)
 {
     require_once __DIR__ . '/../../../mainfile.php';
     require_once __DIR__ . '/../include/config.php';
-    require_once __DIR__ . '/../class/Utility.php';
+    // require_once __DIR__ . '/../class/Utility.php';
 
     $moduleDirName = basename(dirname(__DIR__));
-    $helper = \Xmf\Module\Helper::getHelper($moduleDirName);
+    $helper = Wflinks\Helper::getInstance();
 
     // Load language files
     $helper->loadLanguage('admin');
@@ -95,10 +97,10 @@ function xoops_module_install_wflinks(XoopsModule $module)
     }
 
     //  ---  COPY blank.png FILES ---------------
-    if (count($configurator->blankFiles) > 0) {
+    if (count($configurator->copyBlankFiles) > 0) {
         $file = __DIR__ . '/../assets/images/blank.png';
-        foreach (array_keys($configurator->blankFiles) as $i) {
-            $dest = $configurator->blankFiles[$i] . '/blank.png';
+        foreach (array_keys($configurator->copyBlankFiles) as $i) {
+            $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
             $utilityClass::copyFile($file, $dest);
         }
     }

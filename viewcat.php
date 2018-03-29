@@ -8,6 +8,8 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
 
@@ -16,7 +18,7 @@ $cid        = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
 $selectdate = Wflinks\Utility::cleanRequestVars($_REQUEST, 'selectdate', '');
 $list       = Wflinks\Utility::cleanRequestVars($_REQUEST, 'list', '');
 $cid        = (int)$cid;
-$catsort    = $xoopsModuleConfig['sortcats'];
+$catsort    = $helper->getConfig('sortcats');
 
 $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 $arr    = $mytree->getFirstChild($cid, $catsort);
@@ -28,8 +30,6 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
 }
 $GLOBALS['xoopsOption']['template_main'] = 'wflinks_viewcat.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
-
-global $xoopsModuleConfig;
 
 // Breadcrumb
 $pathstring = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php">' . _MD_WFL_MAIN . '</a>&nbsp;:&nbsp;';
@@ -75,15 +75,15 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         // This code is copyright WF-Projects
         // Using this code without our permission or removing this code voids the license agreement
         $_image = $ele['imgurl'] ? urldecode($ele['imgurl']) : '';
-        if ('' !== $_image && $xoopsModuleConfig['usethumbs']) {
-            $_thumb_image = new WfThumbsNails($_image, $xoopsModuleConfig['catimage'], 'thumbs');
+        if ('' !== $_image && $helper->getConfig('usethumbs')) {
+            $_thumb_image = new WfThumbsNails($_image, $helper->getConfig('catimage'), 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
-                $_image = $_thumb_image->createThumb($xoopsModuleConfig['shotwidth'], $xoopsModuleConfig['shotheight'], $xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
+                $_image = $_thumb_image->createThumb($helper->getConfig('shotwidth'), $helper->getConfig('shotheight'), $helper->getConfig('imagequality'), $helper->getConfig('updatethumbs'), $helper->getConfig('keepaspect'));
             }
         }
-        $imgurl = "{$xoopsModuleConfig['catimage']}/$_image";
+        $imgurl = "{$helper->getConfig('catimage')}/$_image";
         if (empty($_image) || '' === $_image) {
             $imgurl = $indicator['image'];
         }
@@ -131,7 +131,7 @@ $xoopsTpl->assign('show_categort_title', true);
 
 $start   = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start', 0);
 $orderby = (isset($_REQUEST['orderby'])
-            && !empty($_REQUEST['orderby'])) ? Wflinks\Utility::convertOrderByIn(htmlspecialchars($_REQUEST['orderby'])) : Wflinks\Utility::convertOrderByIn($xoopsModuleConfig['linkxorder']);
+            && !empty($_REQUEST['orderby'])) ? Wflinks\Utility::convertOrderByIn(htmlspecialchars($_REQUEST['orderby'], ENT_QUOTES | ENT_HTML5)) : Wflinks\Utility::convertOrderByIn($helper->getConfig('linkxorder'));
 
 if ($selectdate) {
     $d = date('j', $selectdate);
@@ -147,7 +147,7 @@ if ($selectdate) {
         AND cid > 0';
 
     $sql    = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . $query . ' ORDER BY ' . $orderby;
-    $result = $xoopsDB->query($sql, $xoopsModuleConfig['perpage'], $start);
+    $result = $xoopsDB->query($sql, $helper->getConfig('perpage'), $start);
 
     $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('wflinks_links') . $query;
     list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql));
@@ -157,7 +157,7 @@ if ($selectdate) {
     $query = " WHERE title LIKE '$list%' AND (published > 0 AND published <= " . $time . ') AND (expired = 0 OR expired > ' . $time . ') AND offline = 0 AND cid > 0';
 
     $sql    = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . $query . ' ORDER BY ' . $orderby;
-    $result = $xoopsDB->query($sql, $xoopsModuleConfig['perpage'], $start);
+    $result = $xoopsDB->query($sql, $helper->getConfig('perpage'), $start);
 
     $sql = 'SELECT COUNT(*) FROM ' . $xoopsDB->prefix('wflinks_links') . $query;
     list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql));
@@ -181,7 +181,7 @@ if ($selectdate) {
               . '))'
               . ' ORDER BY '
               . $orderby;
-    $result = $xoopsDB->query($sql, $xoopsModuleConfig['perpage'], $start);
+    $result = $xoopsDB->query($sql, $helper->getConfig('perpage'), $start);
     $xoopsTpl->assign('show_categort_title', false);
 
     $sql2 = 'SELECT COUNT(*) FROM '
@@ -205,7 +205,7 @@ if ($selectdate) {
     $cid     = $cid;
     $list_by = 'cid=' . $cid . '&orderby=' . $order;
 }
-$pagenav  = new \XoopsPageNav($count, $xoopsModuleConfig['perpage'], $start, 'start', $list_by);
+$pagenav  = new \XoopsPageNav($count, $helper->getConfig('perpage'), $start, 'start', $list_by);
 $page_nav = $pagenav->renderNav();
 $istrue   = (isset($page_nav) && !empty($page_nav));
 $xoopsTpl->assign('page_nav', $istrue);
@@ -215,7 +215,7 @@ $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 // Show links
 if ($count > 0) {
     $moderate = 0;
-    while ($link_arr = $xoopsDB->fetchArray($result)) {
+    while (false !== ($link_arr = $xoopsDB->fetchArray($result))) {
         $res_type = 0;
         require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/linkloadinfo.php';
         $xoopsTpl->append('wfllink', $link);
@@ -232,10 +232,10 @@ if ($count > 0) {
 
     // Screenshots display
     $xoopsTpl->assign('show_screenshot', false);
-    if (isset($xoopsModuleConfig['screenshot']) && 1 == $xoopsModuleConfig['screenshot']) {
-        $xoopsTpl->assign('shots_dir', $xoopsModuleConfig['screenshots']);
-        $xoopsTpl->assign('shotwidth', $xoopsModuleConfig['shotwidth']);
-        $xoopsTpl->assign('shotheight', $xoopsModuleConfig['shotheight']);
+    if  (null !== ($helper->getConfig('screenshot')) && 1 == $helper->getConfig('screenshot')) {
+        $xoopsTpl->assign('shots_dir', $helper->getConfig('screenshots'));
+        $xoopsTpl->assign('shotwidth', $helper->getConfig('shotwidth'));
+        $xoopsTpl->assign('shotheight', $helper->getConfig('shotheight'));
         $xoopsTpl->assign('show_screenshot', true);
     }
 }

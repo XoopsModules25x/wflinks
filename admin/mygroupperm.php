@@ -1,6 +1,6 @@
 <?php
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * @param      $db
@@ -10,7 +10,7 @@
  *
  * @return bool
  */
-function myDeleteByModule(XoopsDatabase $db, $gperm_modid, $gperm_name = null, $gperm_itemid = null)
+function myDeleteByModule(\XoopsDatabase $db, $gperm_modid, $gperm_name = null, $gperm_itemid = null)
 {
     $criteria = new \CriteriaCompo(new \Criteria('gperm_modid', (int)$gperm_modid));
     if (isset($gperm_name)) {

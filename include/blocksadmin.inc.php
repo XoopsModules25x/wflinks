@@ -321,7 +321,7 @@ if ('edit' === $op) {
     $sql     = 'SELECT module_id FROM ' . $db->prefix('block_module_link') . ' WHERE block_id=' . (int)$bid;
     $result  = $db->query($sql);
     $modules = [];
-    while ($row = $db->fetchArray($result)) {
+    while (false !== ($row = $db->fetchArray($result))) {
         $modules[] = (int)$row['module_id'];
     }
     $is_custom = ('C' === $myblock->getVar('block_type') || 'E' === $myblock->getVar('block_type'));
@@ -362,7 +362,7 @@ if ('clone' === $op) {
     $sql     = 'SELECT module_id FROM ' . $db->prefix('block_module_link') . ' WHERE block_id=' . (int)$bid;
     $result  = $db->query($sql);
     $modules = [];
-    while ($row = $db->fetchArray($result)) {
+    while (false !== ($row = $db->fetchArray($result))) {
         $modules[] = (int)$row['module_id'];
     }
     $is_custom = ('C' === $myblock->getVar('block_type') || 'E' === $myblock->getVar('block_type'));
@@ -474,7 +474,7 @@ if ('clone_ok' === $op) {
 
     $sql    = 'SELECT gperm_groupid FROM ' . $db->prefix('group_permission') . " WHERE gperm_name='block_read' AND gperm_modid='1' AND gperm_itemid='$bid'";
     $result = $db->query($sql);
-    while (list($gid) = $db->fetchRow($result)) {
+    while (false !== (list($gid) = $db->fetchRow($result))) {
         $sql = 'INSERT INTO ' . $db->prefix('group_permission') . " (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ($gid, $newid, 1, 'block_read')";
         $db->query($sql);
     }

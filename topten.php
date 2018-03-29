@@ -10,6 +10,8 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
 
@@ -33,10 +35,10 @@ $catarray['toolbar']     = Wflinks\Utility::getToolbar();
 $xoopsTpl->assign('catarray', $catarray);
 
 $links    = [];
-$result = $xoopsDB->query('SELECT cid, title, pid FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE pid=0 ORDER BY ' . $xoopsModuleConfig['sortcats']);
+$result = $xoopsDB->query('SELECT cid, title, pid FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE pid=0 ORDER BY ' . $helper->getConfig('sortcats'));
 
 $e = 0;
-while (list($cid, $ctitle) = $xoopsDB->fetchRow($result)) {
+while (false !== (list($cid, $ctitle) = $xoopsDB->fetchRow($result))) {
     if (true === Wflinks\Utility::checkGroups($cid)) {
         $query = 'SELECT lid, cid, title, hits, rating, votes FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time() . ') AND offline = 0 AND (cid=' . (int)$cid;
         $links   = $mytree->getAllChildId($cid);
@@ -50,7 +52,7 @@ while (list($cid, $ctitle) = $xoopsDB->fetchRow($result)) {
         if ($filecount > 0) {
             $rankings[$e]['title'] = $wfmyts->htmlSpecialCharsStrip($ctitle);
             $rank                  = 1;
-            while (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $xoopsDB->fetchRow($result2)) {
+            while (false !== (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $xoopsDB->fetchRow($result2))) {
                 $catpath                = basename($mytree->getPathFromId($dcid, 'title'));
                 $dtitle                 = $wfmyts->htmlSpecialCharsStrip($dtitle);
                 $rankings[$e]['file'][] = [

@@ -10,10 +10,12 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/admin_header.php';
 
-global $mytree, $xoopsModuleConfig;
+global $mytree;
 xoops_load('XoopsUserUtility');
 $op        = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
 $requestid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'requestid', 0);
@@ -67,7 +69,7 @@ switch (strtolower($op)) {
             if ('screenshot' === $key) {
                 $content = '';
                 if ($content > 0) {
-                    $content = "<img src='" . XOOPS_URL . '/' . $xoopsModuleConfig['screenshots'] . '/' . $logourl . "' width='" . $xoopsModuleConfig['shotwidth'] . "' alt=''>";
+                    $content = "<img src='" . XOOPS_URL . '/' . $helper->getConfig('screenshots') . '/' . $logourl . "' width='" . $helper->getConfig('shotwidth') . "' alt=''>";
                 }
             }
             if ('country' === $key) {
@@ -107,7 +109,7 @@ switch (strtolower($op)) {
             if ('screenshot' === $key) {
                 $content = '';
                 if ($content > 0) {
-                    $content = "<img src='" . XOOPS_URL . '/' . $xoopsModuleConfig['screenshots'] . '/' . $logourl . "' width='" . $xoopsModuleConfig['shotwidth'] . "' alt=''>";
+                    $content = "<img src='" . XOOPS_URL . '/' . $helper->getConfig('screenshots') . '/' . $logourl . "' width='" . $helper->getConfig('shotwidth') . "' alt=''>";
                 }
             }
             if ('country' === $key) {
@@ -185,7 +187,7 @@ switch (strtolower($op)) {
         $start            = isset($_GET['start']) ? (int)$_GET['start'] : 0;
         $mytree           = new WflinksXoopsTree($xoopsDB->prefix('wflinks_mod'), 'requestid', 0);
         $sql              = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_mod') . ' ORDER BY requestdate DESC';
-        $result           = $xoopsDB->query($sql, $xoopsModuleConfig['admin_perpage'], $start);
+        $result           = $xoopsDB->query($sql, $helper->getConfig('admin_perpage'), $start);
         $totalmodrequests = $xoopsDB->getRowsNum($xoopsDB->query($sql));
 
         xoops_cp_header();
@@ -203,13 +205,13 @@ switch (strtolower($op)) {
         echo '<th>' . _AM_WFL_MINDEX_ACTION . "</th>\n";
         echo "</tr>\n";
         if ($totalmodrequests > 0) {
-            while ($link_arr = $xoopsDB->fetchArray($result)) {
+            while (false !== ($link_arr = $xoopsDB->fetchArray($result))) {
                 $path        = $mytree->getNicePathFromId($link_arr['requestid'], 'title', 'modifications.php?op=listmodreqshow&requestid');
                 $path        = str_replace('/', '', $path);
                 $path        = str_replace(':', '', trim($path));
                 $title       = trim($path);
                 $submitter   = \XoopsUserUtility::getUnameFromId($link_arr['modifysubmitter']);
-                $requestdate = formatTimestamp($link_arr['requestdate'], $xoopsModuleConfig['dateformatadmin']);
+                $requestdate = formatTimestamp($link_arr['requestdate'], $helper->getConfig('dateformatadmin'));
 
                 echo "<tr class='center;'>\n";
                 echo "<td class='head'>" . $link_arr['requestid'] . "</td>\n";
@@ -225,8 +227,8 @@ switch (strtolower($op)) {
         echo "</table>\n";
 
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        //        $page = ( $totalmodrequests > $xoopsModuleConfig['admin_perpage'] ) ? _AM_WFL_MINDEX_PAGE : '';
-        $pagenav = new \XoopsPageNav($totalmodrequests, $xoopsModuleConfig['admin_perpage'], $start, 'start');
+        //        $page = ( $totalmodrequests > $helper->getConfig('admin_perpage') ) ? _AM_WFL_MINDEX_PAGE : '';
+        $pagenav = new \XoopsPageNav($totalmodrequests, $helper->getConfig('admin_perpage'), $start, 'start');
         echo "<div style='text-align: right; padding: 8px;'>" . $pagenav->renderNav() . '</div>';
         require_once __DIR__ . '/admin_footer.php';
 }

@@ -6,7 +6,7 @@
  * Licence: GNU
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * @param $options
@@ -29,7 +29,7 @@ function b_wflinks_banner_show($options)
                               . $xoopsDB->prefix('banner')
                               . ' b WHERE (b.cid = a.client_id) OR (b.bid = a.banner_id) ORDER BY b.cid, b.bid, a.title ASC');
 
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $impmade    = $myrow['impmade'];
         $clicks     = $myrow['clicks'];
         $imptotal   = $myrow['imptotal'];

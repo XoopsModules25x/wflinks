@@ -8,6 +8,10 @@
 
 use XoopsModules\Wflinks;
 
+/**
+ * @param $options
+ * @return array|null
+ */
 function wflinks_tag_block_cloud_show($options)
 {
     $moduleDirName = basename(dirname(__DIR__));

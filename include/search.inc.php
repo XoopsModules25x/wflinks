@@ -52,7 +52,7 @@ function wflinks_search($queryarray, $andor, $limit, $offset, $userid)
 
     $sql    = 'SELECT cid, pid FROM ' . $xoopsDB->prefix('wflinks_cat');
     $result = $xoopsDB->query($sql);
-    while ($_search_group_check = $xoopsDB->fetchArray($result)) {
+    while (false !== ($_search_group_check = $xoopsDB->fetchArray($result))) {
         $_search_check_array[$_search_group_check['cid']] = $_search_group_check;
     }
 
@@ -78,7 +78,7 @@ function wflinks_search($queryarray, $andor, $limit, $offset, $userid)
     $ret    = [];
     $i      = 0;
 
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         //        if ( false === checkSearchgroups( $myrow['cid'] ) ) {
         //            continue;
         //        }

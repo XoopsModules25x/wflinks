@@ -10,10 +10,10 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
-
-global $xoopsModuleConfig;
 
 $agreed = Wflinks\Utility::cleanRequestVars($_REQUEST, 'agree', 0);
 $cid    = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
@@ -44,12 +44,12 @@ if (0 == $count && false === Wflinks\Utility::checkGroups($cid)) {
     redirect_header('index.php', 1, _MD_WFL_MUSTREGFIRST);
 }
 
-if (0 == $agreed && $xoopsModuleConfig['showlinkdisclaimer']) {
+if (0 == $agreed && $helper->getConfig('showlinkdisclaimer')) {
     $GLOBALS['xoopsOption']['template_main'] = 'wflinks_disclaimer.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
 
     $xoopsTpl->assign('image_header', Wflinks\Utility::getImageHeader());
-    $xoopsTpl->assign('linkdisclaimer', $wfmyts->displayTarea($xoopsModuleConfig['linkdisclaimer'], 1, 1, 1, 1, 1));
+    $xoopsTpl->assign('linkdisclaimer', $wfmyts->displayTarea($helper->getConfig('linkdisclaimer'), 1, 1, 1, 1, 1));
     $xoopsTpl->assign('cancel_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php');
     $xoopsTpl->assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/visit.php?agree=1&amp;lid=' . $lid . '&amp;cid=' . $cid);
     $xoopsTpl->assign('link_disclaimer', true);

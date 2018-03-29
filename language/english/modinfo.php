@@ -692,4 +692,3 @@ define('_MI_WFL_HELP_SUPPORT_DESCRIPTION', '
 ');
 
 define('_MI_WFL_MVOTEDATA_DESC', '');
-

@@ -10,6 +10,8 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
 
@@ -56,7 +58,7 @@ switch (strtolower($op)) {
             $memberHandler = xoops_getHandler('member');
             $submit_user   = $memberHandler->getUser($link_arr['submitter']);
             if (is_object($submit_user) && !empty($submit_user)) {
-                $subdate = formatTimestamp($link_arr['date'], $xoopsModuleConfig['dateformat']);
+                $subdate = formatTimestamp($link_arr['date'], $helper->getConfig('dateformat'));
                 $cid     = $link_arr['cid'];
                 $title   = $wfmyts->htmlSpecialCharsStrip($link_arr['title']);
                 $subject = _MD_WFL_BROKENREPORTED;
@@ -108,7 +110,7 @@ switch (strtolower($op)) {
             $broken['title']        = $wfmyts->htmlSpecialCharsStrip($link_arr['title']);
             $broken['id']           = $broke_arr['reportid'];
             $broken['reporter']     = \XoopsUserUtility::getUnameFromId($broke_arr['sender']);
-            $broken['date']         = formatTimestamp($broke_arr['date'], $xoopsModuleConfig['dateformat']);
+            $broken['date']         = formatTimestamp($broke_arr['date'], $helper->getConfig('dateformat'));
             $broken['acknowledged'] = (1 == $broke_arr['acknowledged']) ? _YES : _NO;
             $broken['confirmed']    = (1 == $broke_arr['confirmed']) ? _YES : _NO;
             $xoopsTpl->assign('broken', $broken);
@@ -121,7 +123,7 @@ switch (strtolower($op)) {
             // file info
             $link['title']     = $wfmyts->htmlSpecialCharsStrip($link_arr['title']);
             $time              = ($link_arr['published'] > 0) ? $link_arr['published'] : $link_arr['updated'];
-            $link['updated']   = formatTimestamp($time, $xoopsModuleConfig['dateformat']);
+            $link['updated']   = formatTimestamp($time, $helper->getConfig('dateformat'));
             $is_updated        = (0 != $link_arr['updated']) ? _MD_WFL_UPDATEDON : _MD_WFL_SUBMITDATE;
             $link['publisher'] = \XoopsUserUtility::getUnameFromId($link_arr['submitter']);
 

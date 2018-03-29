@@ -34,7 +34,7 @@ function b_sitemap_wflinks()
     $sitemap = [];
     $sql     = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE pid=0 ORDER BY weight';
     $result  = $xoopsDB->queryF($sql);
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         if ($gpermHandler->checkRight('WFLinkCatPerm', $myrow['cid'], $groups, $wflinkModule->getVar('mid'))) {
             $i                              = (int)$myrow['cid'];
             $sitemap['parent'][$i]['id']    = (int)$myrow['cid'];

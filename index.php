@@ -10,6 +10,8 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
 
@@ -19,7 +21,6 @@ $start = (int)$start;
 $GLOBALS['xoopsOption']['template_main'] = 'wflinks_index.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
-global $xoopsModuleConfig;
 $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 
 // Begin Main page Heading etc
@@ -51,10 +52,10 @@ $countin = 0;
 // Begin Main page linkload info
 $listings  = Wflinks\Utility::getTotalItems();
 $total_cat = Wflinks\Utility::getTotalCategory();  // get total amount of categories
-$catsort   = $xoopsModuleConfig['sortcats'];
+$catsort   = $helper->getConfig('sortcats');
 $sql       = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE pid=0 ORDER BY ' . $catsort;
 $result    = $xoopsDB->query($sql);
-while ($myrow = $xoopsDB->fetchArray($result)) {
+while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
     ++$countin;
     $subtotallinkload = 0;
     $totallinkload    = Wflinks\Utility::getTotalItems($myrow['cid'], 1);
@@ -70,7 +71,7 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
         $subcategories = '';
         foreach ($arr as $ele) {
             if (true === Wflinks\Utility::checkGroups($ele['cid'])) {
-                if (1 == $xoopsModuleConfig['subcats']) {
+                if (1 == $helper->getConfig('subcats')) {
                     $chtitle = $wfmyts->htmlSpecialCharsStrip($ele['title']);
                     if ($chcount > 5) {
                         $subcategories .= '...';
@@ -88,15 +89,15 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
         // This code is copyright WF-Projects
         // Using this code without our permission or removing this code voids the license agreement
         $_image = $myrow['imgurl'] ? urldecode($myrow['imgurl']) : '';
-        if ('' !== $_image && $xoopsModuleConfig['usethumbs']) {
-            $_thumb_image = new WfThumbsNails($_image, $xoopsModuleConfig['catimage'], 'thumbs');
+        if ('' !== $_image && $helper->getConfig('usethumbs')) {
+            $_thumb_image = new WfThumbsNails($_image, $helper->getConfig('catimage'), 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
-                $_image = $_thumb_image->createThumb($xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
+                $_image = $_thumb_image->createThumb($helper->getConfig('imagequality'), $helper->getConfig('updatethumbs'), $helper->getConfig('keepaspect'));
             }
         }
-        $imgurl = "{$xoopsModuleConfig['catimage']}/$_image";
+        $imgurl = "{$helper->getConfig('catimage')}/$_image";
         if (empty($_image) || '' === $_image) {
             $imgurl = $indicator['image'];
         }
@@ -126,10 +127,10 @@ $xoopsTpl->assign('lang_thereare', sprintf($lang_thereare, $total_cat, $listings
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 
 // Screenshots display
-if (isset($xoopsModuleConfig['screenshot']) && 1 == $xoopsModuleConfig['screenshot']) {
-    $xoopsTpl->assign('shots_dir', $xoopsModuleConfig['screenshots']);
-    $xoopsTpl->assign('shotwidth', $xoopsModuleConfig['shotwidth']);
-    $xoopsTpl->assign('shotheight', $xoopsModuleConfig['shotheight']);
+if  (null !== ($helper->getConfig('screenshot')) && 1 == $helper->getConfig('screenshot')) {
+    $xoopsTpl->assign('shots_dir', $helper->getConfig('screenshots'));
+    $xoopsTpl->assign('shotwidth', $helper->getConfig('shotwidth'));
+    $xoopsTpl->assign('shotheight', $helper->getConfig('shotheight'));
     $xoopsTpl->assign('show_screenshot', true);
 }
 
@@ -149,14 +150,14 @@ if (1 == $lastlinks['lastlinksyn'] && $lastlinks['lastlinkstotal'] > 0) {
 
     $count = (($count > $lastlinks['lastlinkstotal'])
               && (0 != $lastlinks['lastlinkstotal'])) ? $lastlinks['lastlinkstotal'] : $count;
-    $limit = (($start + $xoopsModuleConfig['perpage']) > $count) ? ($count - $start) : $xoopsModuleConfig['perpage'];
+    $limit = (($start + $helper->getConfig('perpage')) > $count) ? ($count - $start) : $helper->getConfig('perpage');
 
     $result = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0
                                 AND published <= ' . $time . '
                                 AND (expired = 0 OR expired > ' . $time . ')
                                 AND offline = 0
                                 ORDER BY published DESC', $limit, $start);
-    while ($link_arr = $xoopsDB->fetchArray($result)) {
+    while (false !== ($link_arr = $xoopsDB->fetchArray($result))) {
         $res_type = 0;
         $moderate = 0;
         $cid      = $link_arr['cid'];
@@ -164,7 +165,7 @@ if (1 == $lastlinks['lastlinksyn'] && $lastlinks['lastlinkstotal'] > 0) {
         $xoopsTpl->append('link', $link);
     }
 
-    $pagenav = new \XoopsPageNav($count, $xoopsModuleConfig['perpage'], $start, 'start');
+    $pagenav = new \XoopsPageNav($count, $helper->getConfig('perpage'), $start, 'start');
     $xoopsTpl->assign('pagenav', $pagenav->renderNav());
 
     $xoopsTpl->assign('showlatest', $lastlinks['lastlinksyn']);

@@ -1,6 +1,7 @@
 <?php
 
 use XoopsModules\Wflinks;
+use XoopsModules\Wflinks\Common;
 
 require_once __DIR__ . '/admin_header.php';
 // Display Admin header
@@ -77,7 +78,8 @@ if (is_dir('../../../uploads/flags')) {
 
 
 //check or upload folders
-$configurator = include __DIR__ . '/../include/config.php';
+//$configurator = include __DIR__ . '/../include/config.php';
+$configurator = new Common\Configurator();
 foreach (array_keys($configurator->uploadFolders) as $i) {
     $utility::createFolder($configurator->uploadFolders[$i]);
     $adminObject->addConfigBoxLine($configurator->uploadFolders[$i], 'folder');

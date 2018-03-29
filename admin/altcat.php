@@ -35,7 +35,7 @@ function makeTreeCheckTable(WflinksXoopsTree $xt, $itemid, $title, $checks)
 
     $result = $xt->db->query($sql);
 
-    while (list($cid, $name) = $xt->db->fetchRow($result)) {
+    while (false !== (list($cid, $name) = $xt->db->fetchRow($result))) {
         $checked  = array_key_exists($cid, $checks) ? 'checked' : '';
         $disabled = ($cid == (int)$_GET['cid']) ? "disabled='yes'" : '';
         $level    = 1;
@@ -80,7 +80,9 @@ switch (strtolower($op)) {
         // first delete all alternate categories for this topic
         $sql = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_altcat') . ' WHERE lid=' . $lid;
         if (!$result = $xoopsDB->query($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            /** @var \XoopsLogger $logger */
+            $logger = \XoopsLogger::getInstance();
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
@@ -90,7 +92,9 @@ switch (strtolower($op)) {
             if (preg_match('/cid-([0-9]*)/', $sid, $cid)) {
                 $sql = 'INSERT INTO ' . $xoopsDB->prefix('wflinks_altcat') . "(cid, lid) VALUES('" . $cid[1] . "','" . $lid . "')";
                 if (!$result = $xoopsDB->query($sql)) {
-                    XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                    /** @var \XoopsLogger $logger */
+                    $logger = \XoopsLogger::getInstance();
+                    $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                     return false;
                 }
@@ -113,7 +117,7 @@ switch (strtolower($op)) {
         // Get an array of all alternate categories for this topic
         $sql     = $xoopsDB->query('SELECT cid FROM ' . $xoopsDB->prefix('wflinks_altcat') . ' WHERE lid=' . $lid . ' ORDER BY lid');
         $altcats = [];
-        while ($altcat = $xoopsDB->fetchArray($sql)) {
+        while (false !== ($altcat = $xoopsDB->fetchArray($sql))) {
             $altcats[$altcat['cid']] = true;
         }
         $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');

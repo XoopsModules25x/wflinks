@@ -9,6 +9,7 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Wflinks;
 
 /**
  * Prepares system prior to attempting to uninstall module
@@ -17,7 +18,7 @@ use Xmf\Request;
  * @return bool true if ready to uninstall, false if not
  */
 
-function xoops_module_pre_uninstall_wflinks(XoopsModule $module)
+function xoops_module_pre_uninstall_wflinks(\XoopsModule $module)
 {
     // Do some synchronization
     return true;
@@ -30,12 +31,12 @@ function xoops_module_pre_uninstall_wflinks(XoopsModule $module)
  *
  * @return bool true if uninstallation successful, false if not
  */
-function xoops_module_uninstall_wflinks(XoopsModule $module)
+function xoops_module_uninstall_wflinks(\XoopsModule $module)
 {
 //    return true;
 
     $moduleDirName = basename(dirname(__DIR__));
-    $helper = \Xmf\Module\Helper::getHelper($moduleDirName);
+    $helper = Wflinks\Helper::getInstance();
 
     /** @var Wflinks\Utility $utilityClass */
     $utilityClass     = ucfirst($moduleDirName) . 'Utility';
@@ -55,7 +56,7 @@ function xoops_module_uninstall_wflinks(XoopsModule $module)
 //    if ($ok == 1) {
     $old_directories = [$GLOBALS['xoops']->path("uploads/{$moduleDirName}")];
     foreach ($old_directories as $old_dir) {
-        $dirInfo = new SplFileInfo($old_dir);
+        $dirInfo = new \SplFileInfo($old_dir);
         if ($dirInfo->isDir()) {
             // The directory exists so delete it
             if (false === $utilityClass::rrmdir($old_dir)) {

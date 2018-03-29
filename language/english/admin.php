@@ -512,7 +512,7 @@ define('_AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_NO', 'Folder "/uploads/flags" does n
 
 define('_AM_WFL_LINK_EXPIREWARNING', 'Link Expired');
 // Error Msgs
-define('_AM_WFL_ERROR_BAD_DEL_PATH', 'Could not delete %s directory');
+//define('_AM_WFL_ERROR_BAD_DEL_PATH', 'Could not delete %s directory');
 define('_AM_WFL_ERROR_BAD_REMOVE', 'Could not delete %s');
 define('_AM_WFL_ERROR_NO_PLUGIN', 'Could not load plugin');
 

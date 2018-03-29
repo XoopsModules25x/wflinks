@@ -10,13 +10,15 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
 
 $GLOBALS['xoopsOption']['template_main'] = 'wflinks_newlistindex.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
-global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+global $xoopsDB, $xoopsModule;
 
 $catarray['imageheader'] = Wflinks\Utility::getImageHeader();
 //$catarray['letters'] = Wflinks\Utility::getLetters();
@@ -38,7 +40,7 @@ if (isset($_GET['newlinkshowdays'])) {
     $allmonthlinks = 0;
     $allweeklinks  = 0;
     $result        = $xoopsDB->query('SELECT lid, cid, published, updated FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE (published >= ' . $duration . ' AND published <= ' . $time_cur . ') OR updated >= ' . $duration . ' AND (expired = 0 OR expired > ' . $time_cur . ') AND offline = 0');
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $published = ($myrow['updated'] > 0) ? $myrow['updated'] : $myrow['published'];
         ++$allmonthlinks;
         if ($published > $duration_week) {
@@ -57,7 +59,7 @@ if (isset($_GET['newlinkshowdays'])) {
         $key                               = $newlinkshowdays - $i - 1;
         $time                              = $time_cur - (86400 * $key);
         $dailylinks[$key]['newlinkdayRaw'] = $time;
-        $dailylinks[$key]['newlinkView']   = formatTimestamp($time, $xoopsModuleConfig['dateformat']);
+        $dailylinks[$key]['newlinkView']   = formatTimestamp($time, $helper->getConfig('dateformat'));
         $dailylinks[$key]['totallinks']    = 0;
     }
 }
@@ -76,7 +78,7 @@ $result   = $xoopsDB->query('SELECT lid, cid, published, updated FROM '
                             . ') AND (expired = 0 OR expired > '
                             . $time_cur
                             . ') AND offline = 0');
-while ($myrow = $xoopsDB->fetchArray($result)) {
+while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
     $published = ($myrow['updated'] > 0) ? $myrow['updated'] : $myrow['published'];
     $d         = date('j', $published);
     $m         = date('m', $published);
@@ -98,17 +100,17 @@ $sql    .= 'WHERE   (published > 0 AND published <= ' . $time_cur . ')
         (expired = 0 OR expired > ' . $time_cur . ')
         AND
         offline = 0
-        ORDER BY ' . $xoopsModuleConfig['linkxorder'];
+        ORDER BY ' . $helper->getConfig('linkxorder');
 $result = $xoopsDB->query($sql, 10, 0);
-while ($link_arr = $xoopsDB->fetchArray($result)) {
+while (false !== ($link_arr = $xoopsDB->fetchArray($result))) {
     include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/linkloadinfo.php';
 }
 
 // Screenshots display
-if ($xoopsModuleConfig['screenshot']) {
-    $xoopsTpl->assign('shots_dir', $xoopsModuleConfig['screenshots']);
-    $xoopsTpl->assign('shotwidth', $xoopsModuleConfig['shotwidth']);
-    $xoopsTpl->assign('shotheight', $xoopsModuleConfig['shotheight']);
+if ($helper->getConfig('screenshot')) {
+    $xoopsTpl->assign('shots_dir', $helper->getConfig('screenshots'));
+    $xoopsTpl->assign('shotwidth', $helper->getConfig('shotwidth'));
+    $xoopsTpl->assign('shotheight', $helper->getConfig('shotheight'));
     $xoopsTpl->assign('show_screenshot', true);
 }
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));

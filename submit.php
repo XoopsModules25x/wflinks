@@ -10,6 +10,8 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
 
@@ -17,7 +19,7 @@ include XOOPS_ROOT_PATH . '/header.php';
 include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
 $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
-global $wfmyts, $xoopsModuleConfig;
+global $wfmyts;
 
 $cid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
 $lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
@@ -42,14 +44,14 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
         $url          = $wfmyts->addSlashes(ltrim($_POST['url']));
         $title        = $wfmyts->addSlashes(ltrim($_REQUEST['title']));
         $descriptionb = $wfmyts->addSlashes(ltrim($_REQUEST['descriptionb']));
-        $keywords     = $wfmyts->addSlashes(trim(substr($_POST['keywords'], 0, $xoopsModuleConfig['keywordlength'])));
+        $keywords     = $wfmyts->addSlashes(trim(substr($_POST['keywords'], 0, $helper->getConfig('keywordlength'))));
 
         $item_tag = '';
-        if ($xoopsModuleConfig['usercantag']) {
+        if ($helper->getConfig('usercantag')) {
             $item_tag = $wfmyts->addSlashes(ltrim($_REQUEST['item_tag']));
         }
 
-        if ($xoopsModuleConfig['useaddress']) {
+        if ($helper->getConfig('useaddress')) {
             $googlemap = ('http://maps.google.com' !== $_POST['googlemap']) ? $wfmyts->addSlashes($_POST['googlemap']) : '';
             $yahoomap  = ('http://maps.yahoo.com' !== $_POST['yahoomap']) ? $wfmyts->addSlashes($_POST['yahoomap']) : '';
             $multimap  = ('http://www.multimap.com' !== $_POST['multimap']) ? $wfmyts->addSlashes($_POST['multimap']) : '';
@@ -92,7 +94,9 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
 
             if (!$result = $xoopsDB->query($sql)) {
                 $_error = $xoopsDB->error() . ' : ' . $xoopsDB->errno();
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
             }
             // $newid = $xoopsDB -> getInsertId();
             $newid = $GLOBALS['xoopsDB']->getInsertId();
@@ -140,7 +144,9 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
                            . $lid;
                 if (!$result = $xoopsDB->query($sql)) {
                     $_error = $xoopsDB->error() . ' : ' . $xoopsDB->errno();
-                    XoopsErrorHandler_HandleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
+                    /** @var \XoopsLogger $logger */
+                    $logger = \XoopsLogger::getInstance();
+                    $logger->handleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
                 }
 
                 $notificationHandler   = xoops_getHandler('notification');
@@ -167,7 +173,9 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
                 $sql             .= " VALUES (0, $lid, $cid, '$title', '$url', '$forumid', '$descriptionb', '$modifysubmitter', '$requestdate', '$country', '$keywords', '$item_tag', '$googlemap', '$yahoomap', '$multimap', '$street1', '$street2', '$town', '$state', '$zip', '$tel', '$fax', '$voip', '$mobile', '$email', '$vat')";
                 if (!$result = $xoopsDB->query($sql)) {
                     $_error = $xoopsDB->error() . ' : ' . $xoopsDB->errno();
-                    XoopsErrorHandler_HandleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
+                    /** @var \XoopsLogger $logger */
+                    $logger = \XoopsLogger::getInstance();
+                    $logger->handleError(E_USER_WARNING, $_error, __FILE__, __LINE__);
                 }
 
                 $tags                      = [];
@@ -187,17 +195,18 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
             redirect_header('index.php', 2, $_message);
         }
     } else {
-        global $xoopsModuleConfig;
+         /** @var Wflinks\Helper $helper */
+        $helper = Wflinks\Helper::getInstance();
 
         $approve = Wflinks\Utility::cleanRequestVars($_REQUEST, 'approve', 0);
 
         //Show disclaimer
-        if (!isset($_GET['agree']) && $xoopsModuleConfig['showdisclaimer'] && 0 == $approve) {
+        if (!isset($_GET['agree']) && $helper->getConfig('showdisclaimer') && 0 == $approve) {
             $GLOBALS['xoopsOption']['template_main'] = 'wflinks_disclaimer.tpl';
             include XOOPS_ROOT_PATH . '/header.php';
 
             $xoopsTpl->assign('image_header', Wflinks\Utility::getImageHeader());
-            $xoopsTpl->assign('disclaimer', $wfmyts->displayTarea($xoopsModuleConfig['disclaimer'], 1, 1, 1, 1, 1));
+            $xoopsTpl->assign('disclaimer', $wfmyts->displayTarea($helper->getConfig('disclaimer'), 1, 1, 1, 1, 1));
             $xoopsTpl->assign('cancel_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php');
             $xoopsTpl->assign('link_disclaimer', false);
             if (!isset($_REQUEST['lid'])) {
@@ -268,7 +277,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
         $submitcats = [];
         $sql        = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . ' ORDER BY title';
         $result     = $xoopsDB->query($sql);
-        while ($myrow = $xoopsDB->fetchArray($result)) {
+        while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
             if (true === Wflinks\Utility::checkGroups($myrow['cid'], 'WFLinkSubPerm')) {
                 $submitcats[$myrow['cid']] = $myrow['title'];
             }
@@ -290,7 +299,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
             $options['cols']   = '100%';
             $options['width']  = '100%';
             $options['height'] = '200px';
-            $editor            = new \XoopsFormEditor('', $xoopsModuleConfig['form_optionsuser'], $options, $nohtml = false, $onfailure = 'textarea');
+            $editor            = new \XoopsFormEditor('', $helper->getConfig('form_optionsuser'), $options, $nohtml = false, $onfailure = 'textarea');
             $optionsTrayNote->addElement($editor);
         } else {
             $editor = new \XoopsFormDhtmlTextArea('', 'descriptionb', $item->getVar('descriptionb', 'e'), '100%', '100%');
@@ -305,7 +314,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
         $sform->addElement($keywords);
 
         // Insert tags if Tag-module is installed and if user is allowed
-        if ($xoopsModuleConfig['usercantag']) {
+        if ($helper->getConfig('usercantag')) {
             if (Wflinks\Utility::isTagModuleIncluded()) {
                 require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
                 $text_tags = new TagFormTag('item_tag', 70, 255, $link_array['item_tag'], 0);
@@ -314,7 +323,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
                 $sform->addElement(new \XoopsFormHidden('item_tag', $link_array['item_tag']));
             }
         }
-        if ($xoopsModuleConfig['useaddress']) {
+        if ($helper->getConfig('useaddress')) {
             $sform->insertBreak(_MD_WFL_LINK_CREATEADDRESS, 'even');
             // Google Maps
             $googlemap_text = new \XoopsFormText('', 'googlemap', 70, 1024, $googlemap);

@@ -60,7 +60,7 @@ switch ($permtoset) {
 $permform = new \XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php');
 $result   = $xoopsDB->query('SELECT cid, pid, title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' ORDER BY title ASC');
 if ($xoopsDB->getRowsNum($result)) {
-    while ($perm_row = $xoopsDB->fetchArray($result)) {
+    while (false !== ($perm_row = $xoopsDB->fetchArray($result))) {
         $permform->addItem($perm_row['cid'], '&nbsp;' . $perm_row['title'], $perm_row['pid']);
     }
     echo $permform->render();

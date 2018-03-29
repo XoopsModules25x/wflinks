@@ -19,9 +19,9 @@ require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/WfThumbsNa
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.php';
 
-if (!file_exists(__DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-    require_once __DIR__ . '/language/english/main.php';
-}
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
+$helper->loadLanguage('main');
 
 require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfltextsanitizer.php';
 $wfmyts = new WflTextSanitizer(); // MyTextSanitizer object

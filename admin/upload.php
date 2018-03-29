@@ -10,10 +10,11 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/admin_header.php';
 
-global $xoopsModuleConfig;
 
 $op       = (isset($_REQUEST['op']) && !empty($_REQUEST['op'])) ? $_REQUEST['op'] : '';
 $rootpath = isset($_GET['rootpath']) ? (int)$_GET['rootpath'] : 0;
@@ -65,9 +66,9 @@ switch (strtolower($op)) {
         xoops_cp_header();
 
         $dirarray  = [
-            1 => $xoopsModuleConfig['catimage'],
-            2 => $xoopsModuleConfig['screenshots'],
-            3 => $xoopsModuleConfig['mainimagedir']
+            1 => $helper->getConfig('catimage'),
+            2 => $helper->getConfig('screenshots'),
+            3 => $helper->getConfig('mainimagedir')
         ];
         $namearray = [1 => _AM_WFL_LINK_CATIMAGE, 2 => _AM_WFL_LINK_SCREENSHOTS, 3 => _AM_WFL_LINK_MAINIMAGEDIR];
         $listarray = [

@@ -10,10 +10,10 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/admin_header.php';
-
-global $xoopsModuleConfig;
 
 $op  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
 $cid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
@@ -37,7 +37,9 @@ switch (strtolower($op)) {
                             . $xoopsDB->prefix('wflinks_indexpage')
                             . " set indexheading='$indexheading', indexheader='$indexheader', indexfooter='$indexfooter', indeximage='$indeximage', indexheaderalign='$indexheaderalign ', indexfooteralign='$indexfooteralign', nohtml='$nohtml', nosmiley='$nosmiley', noxcodes='$noxcodes', noimages='$noimages', nobreak='$nobreak', lastlinksyn='$lastlinksyn', lastlinkstotal='$lastlinkstotal'";
         if (!$result = $xoopsDB->query($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            /** @var \XoopsLogger $logger */
+            $logger = \XoopsLogger::getInstance();
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
@@ -47,7 +49,9 @@ switch (strtolower($op)) {
     default:
         $sql = 'SELECT indeximage, indexheading, indexheader, indexfooter, nohtml, nosmiley, noxcodes, noimages, nobreak, indexheaderalign, indexfooteralign, lastlinksyn, lastlinkstotal FROM ' . $xoopsDB->prefix('wflinks_indexpage');
         if (!$result = $xoopsDB->query($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            /** @var \XoopsLogger $logger */
+            $logger = \XoopsLogger::getInstance();
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
@@ -63,14 +67,14 @@ switch (strtolower($op)) {
 
         $sform = new \XoopsThemeForm(_AM_WFL_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
         $sform->addElement(new \XoopsFormText(_AM_WFL_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading), false);
-        $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['mainimagedir'], $type = 'images');
+        $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $helper->getConfig('mainimagedir'), $type = 'images');
         $indeximage_select = new \XoopsFormSelect('', 'indeximage', $indeximage);
         $indeximage_select->addOptionArray($graph_array);
-        $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"indeximage\", \"" . $xoopsModuleConfig['mainimagedir'] . '", "", "' . XOOPS_URL . "\")'");
+        $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"indeximage\", \"" . $helper->getConfig('mainimagedir') . '", "", "' . XOOPS_URL . "\")'");
         $indeximage_tray = new \XoopsFormElementTray(_AM_WFL_IPAGE_CIMAGE, '&nbsp;');
         $indeximage_tray->addElement($indeximage_select);
         if (!empty($indeximage)) {
-            $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . '/' . $xoopsModuleConfig['mainimagedir'] . '/' . $indeximage . "' name='image' id='image' alt=''>"));
+            $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . '/' . $helper->getConfig('mainimagedir') . '/' . $indeximage . "' name='image' id='image' alt=''>"));
         } else {
             $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . "/uploads/blank.gif' name='image' id='image' alt=''>"));
         }

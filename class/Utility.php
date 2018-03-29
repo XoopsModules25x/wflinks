@@ -26,17 +26,19 @@
 use Xmf\Request;
 use XoopsModules\Wflinks;
 use XoopsModules\Wflinks\Common;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 /**
  * Class Utility
  */
 class Utility
 {
-    use common\VersionChecks; //checkVerXoops, checkVerPhp Traits
+    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
 
-    use common\ServerStats; // getServerStats Trait
+    use Common\ServerStats; // getServerStats Trait
 
-    use common\FilesManagement; // Files Management Trait
+    use Common\FilesManagement; // Files Management Trait
 
     //--------------- Custom module methods -----------------------------
 
@@ -142,7 +144,7 @@ class Utility
             return false;
         }
         $ret['uservotes'] = $xoopsDB->getRowsNum($result);
-        while (list($rating) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($rating) = $xoopsDB->fetchRow($result))) {
             $ret['useravgrating'] += (int)$rating;
         }
         if ($ret['useravgrating'] > 0) {
@@ -237,38 +239,40 @@ class Utility
      */
     public static function displayIcons($time, $status = 0, $counter = 0)
     {
-        global $xoopsModuleConfig, $xoopsModule;
+        global  $xoopsModule;
+        /** @var Wflinks\Helper $helper */
+        $helper = Wflinks\Helper::getInstance();
 
         $new = '';
         $pop = '';
 
-        $newdate = (time() - (86400 * (int)$xoopsModuleConfig['daysnew']));
-        $popdate = (time() - (86400 * (int)$xoopsModuleConfig['daysupdated']));
+        $newdate = (time() - (86400 * (int)$helper->getConfig('daysnew')));
+        $popdate = (time() - (86400 * (int)$helper->getConfig('daysupdated')));
 
-        if (3 != $xoopsModuleConfig['displayicons']) {
+        if (3 != $helper->getConfig('displayicons')) {
             if ($newdate < $time) {
                 if ((int)$status > 1) {
-                    if (1 == $xoopsModuleConfig['displayicons']) {
+                    if (1 == $helper->getConfig('displayicons')) {
                         $new = '&nbsp;<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/update.png" alt="" align="top">';
                     }
-                    if (2 == $xoopsModuleConfig['displayicons']) {
+                    if (2 == $helper->getConfig('displayicons')) {
                         $new = '<i>Updated!</i>';
                     }
                 } else {
-                    if (1 == $xoopsModuleConfig['displayicons']) {
+                    if (1 == $helper->getConfig('displayicons')) {
                         $new = '&nbsp;<img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/new.png" alt="" align="top">';
                     }
-                    if (2 == $xoopsModuleConfig['displayicons']) {
+                    if (2 == $helper->getConfig('displayicons')) {
                         $new = '<i>New!</i>';
                     }
                 }
             }
             if ($popdate > $time) {
-                if ($counter >= $xoopsModuleConfig['popular']) {
-                    if (1 == $xoopsModuleConfig['displayicons']) {
+                if ($counter >= $helper->getConfig('popular')) {
+                    if (1 == $helper->getConfig('displayicons')) {
                         $pop = '&nbsp;<img src ="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/popular.png" alt="" align="top">';
                     }
-                    if (2 == $xoopsModuleConfig['displayicons']) {
+                    if (2 == $helper->getConfig('displayicons')) {
                         $pop = '<i>Popular!</i>';
                     }
                 }
@@ -294,7 +298,7 @@ class Utility
         $voteresult  = $xoopsDB->query($query);
         $votesDB     = $xoopsDB->getRowsNum($voteresult);
         $totalrating = 0;
-        while (list($rating) = $xoopsDB->fetchRow($voteresult)) {
+        while (false !== (list($rating) = $xoopsDB->fetchRow($voteresult))) {
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
@@ -321,7 +325,7 @@ class Utility
         }
         $result     = $xoopsDB->query($sql);
         $catlisting = 0;
-        while (list($cid) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($cid) = $xoopsDB->fetchRow($result))) {
             if (static::checkGroups($cid)) {
                 ++$catlisting;
             }
@@ -375,7 +379,7 @@ class Utility
 
         $items  = [];
         $result = $xoopsDB->query($sql);
-        while (list($lid, $cid, $published) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($lid, $cid, $published) = $xoopsDB->fetchRow($result))) {
             if (true === static::checkGroups()) {
                 ++$count;
                 $published_date = ($published > $published_date) ? $published : $published_date;
@@ -404,7 +408,7 @@ class Utility
                           . ')) ';
 
                 $result2 = $xoopsDB->query($query2);
-                while (list($lid, $published) = $xoopsDB->fetchRow($result2)) {
+                while (false !== (list($lid, $published) = $xoopsDB->fetchRow($result2))) {
                     if (0 == $published) {
                         continue;
                     }
@@ -427,7 +431,9 @@ class Utility
      */
     public static function getImageHeader($indeximage = '', $indexheading = '')
     {
-        global $xoopsDB, $xoopsModuleConfig;
+        global $xoopsDB;
+        /** @var Wflinks\Helper $helper */
+        $helper = Wflinks\Helper::getInstance();
 
         if ('' == $indeximage) {
             $result = $xoopsDB->query('SELECT indeximage, indexheading FROM ' . $xoopsDB->prefix('wflinks_indexpage'));
@@ -436,7 +442,7 @@ class Utility
 
         $image = '';
         if (!empty($indeximage)) {
-            $image = static::displayImage($indeximage, "'index.php'", $xoopsModuleConfig['mainimagedir'], $indexheading);
+            $image = static::displayImage($indeximage, "'index.php'", $helper->getConfig('mainimagedir'), $indexheading);
         }
 
         return $image;
@@ -627,7 +633,9 @@ class Utility
         $redirect = 0,
         $usertype = 1
     ) {
-        global $FILES, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
+        global $FILES, $xoopsConfig,  $xoopsModule;
+         /** @var Wflinks\Helper $helper */
+        $helper = Wflinks\Helper::getInstance();
 
         $down = [];
 //        require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/uploader.php';
@@ -637,9 +645,9 @@ class Utility
         }
         $upload_dir = XOOPS_ROOT_PATH . '/' . $uploaddir . '/';
 
-        $maxfilesize   = $xoopsModuleConfig['maxfilesize'];
-        $maxfilewidth  = $xoopsModuleConfig['maximgwidth'];
-        $maxfileheight = $xoopsModuleConfig['maximgheight'];
+        $maxfilesize   = $helper->getConfig('maxfilesize');
+        $maxfilewidth  = $helper->getConfig('maximgwidth');
+        $maxfileheight = $helper->getConfig('maximgheight');
 
         $uploader = new \XoopsMediaUploader($upload_dir, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
 //        $uploader->noAdminSizeCheck(1);
@@ -683,7 +691,7 @@ class Utility
         } else {
             $result = $xoopsDB->query('SELECT forum_name, forum_id FROM ' . $xoopsDB->prefix('bbex_forums') . ' ORDER BY forum_id');
         }
-        while (list($forum_name, $forum_id) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($forum_name, $forum_id) = $xoopsDB->fetchRow($result))) {
             if ($forum_id == $forumid) {
                 $opt_selected = 'selected';
             } else {
@@ -722,7 +730,9 @@ class Utility
      */
     public static function getLinkListBody($published)
     {
-        global $wfmyts, $imageArray, $xoopsModuleConfig, $xoopsModule;
+        global $wfmyts, $imageArray,  $xoopsModule;
+        /** @var Wflinks\Helper $helper */
+        $helper = Wflinks\Helper::getInstance();
         xoops_load('XoopsUserUtility');
         $lid = $published['lid'];
         $cid = $published['cid'];
@@ -732,9 +742,9 @@ class Utility
         $cattitle  = static::getCategoryTitle($published['cid']);
         $submitter = \XoopsUserUtility::getUnameFromId($published['submitter']);
         $hwhoisurl = str_replace('http://', '', $published['url']);
-        $submitted = formatTimestamp($published['date'], $xoopsModuleConfig['dateformat']);
-        $publish   = ($published['published'] > 0) ? formatTimestamp($published['published'], $xoopsModuleConfig['dateformatadmin']) : 'Not Published';
-        $expires   = $published['expired'] ? formatTimestamp($published['expired'], $xoopsModuleConfig['dateformatadmin']) : _AM_WFL_MINDEX_NOTSET;
+        $submitted = formatTimestamp($published['date'], $helper->getConfig('dateformat'));
+        $publish   = ($published['published'] > 0) ? formatTimestamp($published['published'], $helper->getConfig('dateformatadmin')) : 'Not Published';
+        $expires   = $published['expired'] ? formatTimestamp($published['expired'], $helper->getConfig('dateformatadmin')) : _AM_WFL_MINDEX_NOTSET;
         //    if ( ( $published['published'] && $published['published'] < time() ) && $published['offline'] == 0 ) {
         //        $published_status = $imageArray['online'];
         //    } else {
@@ -799,15 +809,17 @@ class Utility
      */
     public static function getLinkListPageNav($pubrowamount, $start, $art = 'art', $_this = '')
     {
-        global $xoopsModuleConfig;
+        /** @var Wflinks\Helper $helper */
+        $helper = Wflinks\Helper::getInstance();
+
         echo "</table>\n";
-        if ($pubrowamount < $xoopsModuleConfig['admin_perpage']) {
+        if ($pubrowamount < $helper->getConfig('admin_perpage')) {
             return false;
         }
         // Display Page Nav if published is > total display pages amount.
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        //    $page = ( $pubrowamount > $xoopsModuleConfig['admin_perpage'] ) ? _AM_WFL_MINDEX_PAGE : '';
-        $pagenav = new \XoopsPageNav($pubrowamount, $xoopsModuleConfig['admin_perpage'], $start, 'st' . $art, $_this);
+        //    $page = ( $pubrowamount > $helper->getConfig('admin_perpage') ) ? _AM_WFL_MINDEX_PAGE : '';
+        $pagenav = new \XoopsPageNav($pubrowamount, $helper->getConfig('admin_perpage'), $start, 'st' . $art, $_this);
         echo '<div align="right" style="padding: 8px;">' . $pagenav->renderNav() . '</div>';
 
         return null;
@@ -823,15 +835,17 @@ class Utility
      */
     public static function getLinkListPageNavLeft($pubrowamount, $start, $art = 'art', $_this = '')
     {
-        global $xoopsModuleConfig;
+        /** @var Wflinks\Helper $helper */
+        $helper = Wflinks\Helper::getInstance();
+
         //    echo "</table>\n";
-        if ($pubrowamount < $xoopsModuleConfig['admin_perpage']) {
+        if ($pubrowamount < $helper->getConfig('admin_perpage')) {
             return false;
         }
         // Display Page Nav if published is > total display pages amount.
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        //    $page = ( $pubrowamount > $xoopsModuleConfig['admin_perpage'] ) ? _AM_WFL_MINDEX_PAGE : '';
-        $pagenav = new \XoopsPageNav($pubrowamount, $xoopsModuleConfig['admin_perpage'], $start, 'st' . $art, $_this);
+        //    $page = ( $pubrowamount > $helper->getConfig('admin_perpage') ) ? _AM_WFL_MINDEX_PAGE : '';
+        $pagenav = new \XoopsPageNav($pubrowamount, $helper->getConfig('admin_perpage'), $start, 'st' . $art, $_this);
         echo '<div align="left" style="padding: 8px;">' . $pagenav->renderNav() . '</div>';
 
         return null;
@@ -848,7 +862,9 @@ class Utility
      */
     public static function getWysiwygForm($caption, $name, $value)
     {
-        global $xoopsModuleConfig, $xoopsUser, $xoopsModule;
+        global  $xoopsUser, $xoopsModule;
+        /** @var Wflinks\Helper $helper */
+        $helper = Wflinks\Helper::getInstance();
 
         $editor = false;
         $x22    = false;
@@ -867,9 +883,9 @@ class Utility
         $isadmin = ((is_object($xoopsUser) && !empty($xoopsUser))
                     && $xoopsUser->isAdmin($xoopsModule->mid()));
         if (true === $isadmin) {
-            $formuser = $xoopsModuleConfig['form_options'];
+            $formuser = $helper->getConfig('form_options');
         } else {
-            $formuser = $xoopsModuleConfig['form_optionsuser'];
+            $formuser = $helper->getConfig('form_optionsuser');
         }
 
         switch ($formuser) {
@@ -1542,7 +1558,7 @@ class Utility
         global $xoopsModule;
         if (static::isTagModuleIncluded()) {
             require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
-            $tagHandler = xoops_getModuleHandler('tag', 'tag');
+            $tagHandler = \XoopsModules\Tag\Helper::getInstance()->getHandler('Tag'); // xoops_getModuleHandler('tag', 'tag');
             $tagHandler->updateByItem($item_tag, $lid, $xoopsModule->getVar('dirname'), 0);
         }
     }
@@ -1697,7 +1713,7 @@ class Utility
      *
      * @return mixed
      */
-    public function convertEmail($email)
+    public static function convertEmail($email)
     {
         $search = [
             "/\@/",
@@ -1721,7 +1737,7 @@ class Utility
      *
      * @return mixed
      */
-    public function printemailcnvrt($email)
+    public static function printemailcnvrt($email)
     {
         $search = [
             "/\ AT /",

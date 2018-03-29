@@ -2,6 +2,9 @@
 /**
  * this is the image that will be return apon error
  */
+
+use XoopsModules\Wflinks;
+
 if (!defined('_PATH')) {
     define('_PATH', XOOPS_ROOT_PATH);
 }
@@ -89,7 +92,7 @@ class WfThumbsNails
         $path_to_check = XOOPS_ROOT_PATH . "/$img_path/$img_savepath";
 
         if (!is_dir($path_to_check)) {
-            if (false === mkdir("$path_to_check", 0777)) {
+            if (false === mkdir($path_to_check, 0777)) {
 //                return false;
             }
         }
@@ -227,7 +230,9 @@ class WfThumbsNails
      */
     public function resizeImage()
     {
-        global $xoopsModuleConfig;
+        /** @var Wflinks\Helper $helper */
+        $helper = Wflinks\Helper::getInstance();
+
         // $this->_img_info = info array to the image being resized
         // $this->_img_info[0] == width
         // $this->_img_info[1] == height
@@ -263,7 +268,7 @@ class WfThumbsNails
 
         switch ($this->_image_type) {
             case 'im':
-                if (!empty($xoopsModuleConfig['path_magick']) && is_dir($xoopsModuleConfig['path_magick'])) {
+                if (!empty($helper->getConfig('path_magick')) && is_dir($helper->getConfig('path_magick'))) {
                     if (preg_match("#[A-Z]:|\\\\#Ai", __FILE__)) {
                         $cur_dir     = __DIR__;
                         $src_file_im = '"' . $cur_dir . '\\' . str_replace('/', '\\', $this->_source_image) . '"';
@@ -272,7 +277,7 @@ class WfThumbsNails
                         $src_file_im = escapeshellarg($this->_source_image);
                         $new_file_im = escapeshellarg($this->_save_image);
                     }
-                    $magick_command = $xoopsModuleConfig['path_magick'] . '/convert -quality {$xoopsModuleConfig["imagequality"]} -antialias -sample {$newWidth}x{$newHeight} {$src_file_im} +profile "*" ' . str_replace('\\', '/', $new_file_im) . '';
+                    $magick_command = $helper->getConfig('path_magick') . '/convert -quality {$helper->getConfig("imagequality")} -antialias -sample {$newWidth}x{$newHeight} {$src_file_im} +profile "*" ' . str_replace('\\', '/', $new_file_im) . '';
                     passthru($magick_command);
 
                     return $this->_source_url . "/{$this->_img_savepath}/{$savefile}";
@@ -381,7 +386,7 @@ class WfThumbsNails
             return false;
         }
         $gdlib = function_exists('gd_info');
-        if ($gdlib = false === gd_info()) {
+        if (false === $gdlib = gd_info()) {
             return false;
         }
 

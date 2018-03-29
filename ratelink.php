@@ -25,7 +25,7 @@ $ratinguser = (!is_object($xoopsUser)) ? 0 : $xoopsUser->getVar('uid');
 
 if (0 != $ratinguser) {
     $result = $xoopsDB->query('SELECT cid, submitter FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid);
-    while (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result))) {
         if ($ratinguserDB == $ratinguser) {
             $ratemessage = _MD_WFL_CANTVOTEOWN;
             redirect_header('singlelink.php?cid=' . (int)$cid . '&amp;lid=' . $lid, 4, $ratemessage);
@@ -33,7 +33,7 @@ if (0 != $ratinguser) {
     }
     // Check if REG user is trying to vote twice.
     $result = $xoopsDB->query('SELECT cid, ratinguser FROM ' . $xoopsDB->prefix('wflinks_votedata') . ' WHERE lid=' . $lid);
-    while (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result))) {
         if ($ratinguserDB == $ratinguser) {
             $ratemessage = _MD_WFL_VOTEONCE;
             redirect_header('singlelink.php?cid=' . (int)$cid . '&amp;lid=' . $lid, 4, $ratemessage);

@@ -10,6 +10,8 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -73,14 +75,14 @@ switch (strtolower($op)) {
         }
         $sql .= ' ORDER BY ratingtimestamp DESC';
 
-        $results = $xoopsDB->query($sql, $xoopsModuleConfig['admin_perpage'], $start);
+        $results = $xoopsDB->query($sql, $helper->getConfig('admin_perpage'), $start);
         $votes   = $xoopsDB->getRowsNum($xoopsDB->query($sql));
 
         if (0 == $votes) {
             echo "<tr><td class='txtcenter;' colspan='7' class='head'>" . _AM_WFL_VOTE_NOVOTES . '</td></tr>';
         } else {
-            while (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $xoopsDB->fetchRow($results)) {
-                $formatted_date = formatTimestamp($ratingtimestamp, $xoopsModuleConfig['dateformatadmin']);
+            while (false !== (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $xoopsDB->fetchRow($results))) {
+                $formatted_date = formatTimestamp($ratingtimestamp, $helper->getConfig('dateformatadmin'));
                 $ratinguname    = \XoopsUser:: getUnameFromId($ratinguser);
                 echo "
                     <tr class='txtcenter;'>\n
@@ -97,8 +99,8 @@ switch (strtolower($op)) {
         echo '</table>';
         // Include page navigation
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $page    = ($votes > $xoopsModuleConfig['admin_perpage']) ? _AM_WFL_MINDEX_PAGE : '';
-        $pagenav = new \XoopsPageNav($page, $xoopsModuleConfig['admin_perpage'], $start, 'start');
+        $page    = ($votes > $helper->getConfig('admin_perpage')) ? _AM_WFL_MINDEX_PAGE : '';
+        $pagenav = new \XoopsPageNav($page, $helper->getConfig('admin_perpage'), $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $pagenav->renderNav() . '</div>';
         break;
 }

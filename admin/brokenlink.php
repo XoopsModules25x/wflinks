@@ -10,6 +10,8 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -31,7 +33,10 @@ switch (strtolower($op)) {
             }
             $sql .= ' WHERE lid=' . $lid;
             if (!$result = $xoopsDB->queryF($sql)) {
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
@@ -47,7 +52,9 @@ switch (strtolower($op)) {
             }
             $sql .= ' WHERE lid=' . $lid;
             if (!$result = $xoopsDB->queryF($sql)) {
-                XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+                /** @var \XoopsLogger $logger */
+                $logger = \XoopsLogger::getInstance();
+                $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
                 return false;
             }
@@ -104,7 +111,7 @@ switch (strtolower($op)) {
         if (0 == $totalbrokenlinks) {
             echo "<tr class='center;'><td class='center;' class='head' colspan='8'>" . _AM_WFL_BROKEN_NOFILEMATCH . '</td></tr>';
         } else {
-            while (list($reportid, $lid, $sender, $ip, $date, $confirmed, $acknowledged) = $xoopsDB->fetchRow($result)) {
+            while (false !== (list($reportid, $lid, $sender, $ip, $date, $confirmed, $acknowledged) = $xoopsDB->fetchRow($result))) {
                 $result2 = $xoopsDB->query('SELECT cid, title, url, submitter FROM ' . $xoopsDB->prefix('wflinks_links') . " WHERE lid=$lid");
                 list($cid, $linkshowname, $url, $submitter) = $xoopsDB->fetchRow($result2);
                 if (0 != $sender) {
@@ -132,7 +139,7 @@ switch (strtolower($op)) {
                     echo "<td class='even'><a href='mailto:$owneremail'>$ownername</a>";
                 }
                 echo "</td>\n";
-                echo "<td class='even' class='center;'>" . formatTimestamp($date, $xoopsModuleConfig['dateformatadmin']) . "</td>\n";
+                echo "<td class='even' class='center;'>" . formatTimestamp($date, $helper->getConfig('dateformatadmin')) . "</td>\n";
                 echo "<td class='even'><a href='brokenlink.php?op=updateNotice&amp;lid=" . $lid . '&ack=' . (int)$acknowledged . "'>" . $ack_image . " </a></td>\n";
                 echo "<td class='even'><a href='brokenlink.php?op=updateNotice&amp;lid=" . $lid . '&con=' . (int)$confirmed . "'>" . $con_image . "</a></td>\n";
                 echo "<td class='even' class='center;' nowrap>\n";

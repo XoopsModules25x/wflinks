@@ -32,6 +32,10 @@
 
 use XoopsModules\Wflinks;
 
+/**
+ * @param $string
+ * @return mixed
+ */
 function vcard_encode($string)
 {
     return vcard_escape(vcard_quoted_printable_encode($string));
@@ -98,7 +102,7 @@ function vcard_quoted_printable_encode($input, $line_max = 76)
                       || ($dec > 126)) { // always vcard_encode "\t", which is *not* required
                 $h2 = floor($dec / 16);
                 $h1 = floor($dec % 16);
-                $c  = $escape . $hex["$h2"] . $hex["$h1"];
+                $c  = $escape . $hex[(string)$h2] . $hex[(string)$h1];
             }
             if ((strlen($newline) + strlen($c)) >= $line_max) { // CRLF is not counted
                 $output  .= $newline . $escape . $eol; // soft line break; " =\r\n" is okay

@@ -183,7 +183,7 @@ class WflLists
 
         echo "<select size='1' name='forumid'>";
         echo "<option value='0'>" . $noforum . '</option>';
-        while (list($forum_id, $forum_name) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($forum_id, $forum_name) = $xoopsDB->fetchRow($result))) {
             $opt_selected = '';
             if ($forum_id == $selected) {
                 $opt_selected = 'selected';

@@ -11,6 +11,8 @@
 
 use Xmf\Request;
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/admin_header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
@@ -33,10 +35,12 @@ if (isset($_GET)) {
  */
 function createCat($cid = 0)
 {
-    require_once __DIR__ . '/../class/wfllists.php';
+    // require_once __DIR__ . '/../class/wfllists.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    global $xoopsDB, $wfmyts, $xoopsModuleConfig, $totalcats, $xoopsModule;
+    global $xoopsDB, $wfmyts,  $totalcats, $xoopsModule;
+    /** @var Wflinks\Helper $helper */
+    $helper = Wflinks\Helper::getInstance();
 
     $lid          = 0;
     $title        = '';
@@ -101,14 +105,14 @@ function createCat($cid = 0)
         ob_end_clean();
     }
 
-    $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['catimage'], $type = 'images');
+    $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $helper->getConfig('catimage'), $type = 'images');
     $indeximage_select = new \XoopsFormSelect('', 'imgurl', $imgurl);
     $indeximage_select->addOptionArray($graph_array);
-    $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"imgurl\", \"" . $xoopsModuleConfig['catimage'] . '", "", "' . XOOPS_URL . "\")'");
+    $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"imgurl\", \"" . $helper->getConfig('catimage') . '", "", "' . XOOPS_URL . "\")'");
     $indeximage_tray = new \XoopsFormElementTray(_AM_WFL_FCATEGORY_CIMAGE, '&nbsp;');
     $indeximage_tray->addElement($indeximage_select);
     if (!empty($imgurl)) {
-        $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . '/' . $xoopsModuleConfig['catimage'] . '/' . $imgurl . "' name='image' id='image' alt=''>"));
+        $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . '/' . $helper->getConfig('catimage') . '/' . $imgurl . "' name='image' id='image' alt=''>"));
     } else {
         $indeximage_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . XOOPS_URL . "/uploads/blank.gif' name='image' id='image' alt=''>"));
     }
@@ -123,7 +127,7 @@ function createCat($cid = 0)
     $result          = $xoopsDB->query($sql);
     $client_array    = [];
     $client_array[0] = '&nbsp;';
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $client_array[$myrow['cid']] = $myrow['name'];
     }
     $client_select->addOptionArray($client_array);
@@ -136,7 +140,7 @@ function createCat($cid = 0)
     $result          = $xoopsDB->query($sql);
     $banner_array    = [];
     $banner_array[0] = '&nbsp;';
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $banner_array[$myrow['bid']] = $myrow['bid'];
     }
     $banner_select->addOptionArray($banner_array);
@@ -314,7 +318,9 @@ switch ($op) {
             $database_mess = _AM_WFL_CCATEGORY_MODIFIED;
         }
         if (!$result = $xoopsDB->query($sql)) {
-            XoopsErrorHandler_HandleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
+            /** @var \XoopsLogger $logger */
+            $logger = \XoopsLogger::getInstance();
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
 
             return false;
         }
@@ -336,7 +342,7 @@ switch ($op) {
                 // get all links in each subcategory
                 $result = $xoopsDB->query('SELECT lid FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE cid=' . $subcategory . ' ');
                 // now for each linkload, delete the text data and vote ata associated with the linkload
-                while (list($lid) = $xoopsDB->fetchRow($result)) {
+                while (false !== (list($lid) = $xoopsDB->fetchRow($result))) {
                     $sql = sprintf('DELETE FROM %s WHERE lid = %u', $xoopsDB->prefix('wflinks_votedata'), $lid);
                     $xoopsDB->query($sql);
                     $sql = sprintf('DELETE FROM %s WHERE lid = %u', $xoopsDB->prefix('wflinks_links'), $lid);
@@ -354,7 +360,7 @@ switch ($op) {
             }
             // all subcategory and associated data are deleted, now delete category data and its associated data
             $result = $xoopsDB->query('SELECT lid FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE cid=' . $cid . '');
-            while (list($lid) = $xoopsDB->fetchRow($result)) {
+            while (false !== (list($lid) = $xoopsDB->fetchRow($result))) {
                 $sql = sprintf('DELETE FROM %s WHERE lid = %u', $xoopsDB->prefix('wflinks_links'), $lid);
                 $xoopsDB->query($sql);
                 // delete comments

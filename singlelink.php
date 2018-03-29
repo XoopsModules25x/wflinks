@@ -10,6 +10,8 @@
  */
 
 use XoopsModules\Wflinks;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
 
@@ -84,14 +86,14 @@ $email   = $link_arr['email'];
 $vat     = $link_arr['vat'];
 $country = Wflinks\Utility::getCountryName($link_arr['country']);
 
-if ('' === $street1 || '' === $town || 0 == $xoopsModuleConfig['useaddress']) {
+if ('' === $street1 || '' === $town || 0 == $helper->getConfig('useaddress')) {
     $link['addryn'] = 0;
 } else {
     $link['addryn']  = 1;
     $link['address'] = '<br>' . wfl_address($street1, $street2, $town, $state, $zip, $country) . '<br>' . $country;
 }
 
-if (1 == $xoopsModuleConfig['useaddress']) {
+if (1 == $helper->getConfig('useaddress')) {
     $link['addryn'] = 1;
 
     if (true === $link_arr['tel']) {
@@ -126,7 +128,7 @@ if (true === $link_arr['street1'] || true === $link_arr['tel'] || true === $link
 }
 
 // Maps
-if (1 == $xoopsModuleConfig['useaddress']) {
+if (1 == $helper->getConfig('useaddress')) {
     $googlemap = $link_arr['googlemap'];
     $yahoomap  = $link_arr['yahoomap'];
     $mslivemap = $link_arr['multimap'];
@@ -180,10 +182,10 @@ $res_type = 1;
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/linkloadinfo.php';
 
 $xoopsTpl->assign('show_screenshot', false);
-if (isset($xoopsModuleConfig['screenshot']) && 1 == $xoopsModuleConfig['screenshot']) {
-    $xoopsTpl->assign('shots_dir', $xoopsModuleConfig['screenshots']);
-    $xoopsTpl->assign('shotwidth', $xoopsModuleConfig['shotwidth']);
-    $xoopsTpl->assign('shotheight', $xoopsModuleConfig['shotheight']);
+if  (null !== ($helper->getConfig('screenshot')) && 1 == $helper->getConfig('screenshot')) {
+    $xoopsTpl->assign('shots_dir', $helper->getConfig('screenshots'));
+    $xoopsTpl->assign('shotwidth', $helper->getConfig('shotwidth'));
+    $xoopsTpl->assign('shotheight', $helper->getConfig('shotheight'));
     $xoopsTpl->assign('show_screenshot', true);
 }
 
@@ -194,26 +196,26 @@ $sql    = 'SELECT lid, cid, title, published FROM ' . $xoopsDB->prefix('wflinks_
     AND offline = 0 ORDER BY published DESC';
 $result = $xoopsDB->query($sql, 10, 0);
 
-while ($arr = $xoopsDB->fetchArray($result)) {
+while (false !== ($arr = $xoopsDB->fetchArray($result))) {
     $linkuid['title']     = $wfmyts->htmlSpecialCharsStrip($arr['title']);
     $linkuid['lid']       = $arr['lid'];
     $linkuid['cid']       = $arr['cid'];
-    $linkuid['published'] = formatTimestamp($arr['published'], $xoopsModuleConfig['dateformat']);
+    $linkuid['published'] = formatTimestamp($arr['published'], $helper->getConfig('dateformat'));
     $xoopsTpl->append('link_uid', $linkuid);
 }
 
 // Copyright notice
-if (isset($xoopsModuleConfig['copyright']) && 1 == $xoopsModuleConfig['copyright']) {
+if  (null !== ($helper->getConfig('copyright')) && 1 == $helper->getConfig('copyright')) {
     $xoopsTpl->assign('lang_copyright', '' . $link['title'] . ' &copy; ' . _MD_WFL_COPYRIGHT . ' ' . formatTimestamp(time(), 'Y') . " - <a href='" . XOOPS_URL . "'>" . $xoopsConfig['sitename'] . '</a>');
 }
 
-if (isset($xoopsModuleConfig['otherlinks']) && 1 == $xoopsModuleConfig['otherlinks']) {
+if  (null !== ($helper->getConfig('otherlinks')) && 1 == $helper->getConfig('otherlinks')) {
     $xoopsTpl->assign('other_links', '' . '<b>' . _MD_WFL_OTHERBYUID . '</b>' . $link['submitter'] . '<br>');
 }
 
-$link['otherlinx']     = $xoopsModuleConfig['otherlinks'];
-$link['showsbookmarx'] = $xoopsModuleConfig['showsbookmarks'];
-$link['showpagerank']  = $xoopsModuleConfig['showpagerank'];
+$link['otherlinx']     = $helper->getConfig('otherlinks');
+$link['showsbookmarx'] = $helper->getConfig('showsbookmarks');
+$link['showpagerank']  = $helper->getConfig('showpagerank');
 $xoopsTpl->assign('wfllink', $link);
 
 $xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/back.png"></a>'); // Displays Back button
