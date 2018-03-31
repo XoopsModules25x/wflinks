@@ -390,7 +390,7 @@ switch ($op) {
         break;
 
     case 'modCat':
-        $cid = isset($_POST['cid']) ? $_POST['cid'] : 0;
+        $cid = \Xmf\Request::getInt('cid', 0, POST);
         xoops_cp_header();
 
         createCat($cid);

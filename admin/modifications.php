@@ -184,7 +184,7 @@ switch (strtolower($op)) {
     case 'main':
     default:
 
-        $start            = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+        $start            = \Xmf\Request::getInt('start', 0, 'GET');
         $mytree           = new WflinksXoopsTree($xoopsDB->prefix('wflinks_mod'), 'requestid', 0);
         $sql              = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_mod') . ' ORDER BY requestdate DESC';
         $result           = $xoopsDB->query($sql, $helper->getConfig('admin_perpage'), $start);

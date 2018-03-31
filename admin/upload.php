@@ -17,7 +17,7 @@ require_once __DIR__ . '/admin_header.php';
 
 
 $op       = (isset($_REQUEST['op']) && !empty($_REQUEST['op'])) ? $_REQUEST['op'] : '';
-$rootpath = isset($_GET['rootpath']) ? (int)$_GET['rootpath'] : 0;
+$rootpath = \Xmf\Request::getInt('rootpath', 0, 'GET');
 
 switch (strtolower($op)) {
     case 'upload':
