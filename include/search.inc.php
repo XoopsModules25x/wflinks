@@ -19,13 +19,13 @@ function checkSearchgroups($cid = 0, $permType = 'WFLinkCatPerm', $redirect = fa
     global $xoopsUser;
 
     $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $gpermHandler = xoops_getHandler('groupperm');
+    $grouppermHandler = xoops_getHandler('groupperm');
 
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $module        = $moduleHandler->getByDirname($moduleDirName);
 
-    if (!$gpermHandler->checkRight($permType, $cid, $groups, $module->getVar('mid'))) {
+    if (!$grouppermHandler->checkRight($permType, $cid, $groups, $module->getVar('mid'))) {
         if (false === $redirect) {
             return false;
         }

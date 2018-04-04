@@ -17,6 +17,8 @@
  * @author       XOOPS Development Team
  */
 
+use XoopsModules\Wflinks;
+
 if ((!defined('XOOPS_ROOT_PATH')) || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
     || !$GLOBALS['xoopsUser']->IsAdmin()
 ) {
@@ -71,10 +73,10 @@ function xoops_module_update_wflinks(\XoopsModule $module, $previousVersion = nu
 
     /** @var Wflinks\Helper $helper */
     /** @var Wflinks\Utility $utility */
-    /** @var Wflinks\Configurator $configurator */
+    /** @var Wflinks\Common\Configurator $configurator */
     $helper  = Wflinks\Helper::getInstance();
     $utility = new Wflinks\Utility();
-    $configurator = new Wflinks\Configurator();
+    $configurator = new Wflinks\Common\Configurator();
 
     if ($previousVersion < 112) {
 
@@ -123,7 +125,7 @@ function xoops_module_update_wflinks(\XoopsModule $module, $previousVersion = nu
         if (count($configurator->uploadFolders) > 0) {
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator->uploadFolders) as $i) {
-                $utilityClass::createFolder($configurator->uploadFolders[$i]);
+                $utility::createFolder($configurator->uploadFolders[$i]);
             }
         }
 
@@ -132,22 +134,22 @@ function xoops_module_update_wflinks(\XoopsModule $module, $previousVersion = nu
             $file = __DIR__ . '/../assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
-                $utilityClass::copyFile($file, $dest);
+                $utility::copyFile($file, $dest);
             }
         }
 
         //  ---  COPY FLAGS FILES ---------------
         $source = XOOPS_ROOT_PATH . '/modules/' . $moduleDirName .'/EXTRA/htdocs/uploads/flags';
         $dest   = XOOPS_UPLOAD_PATH .'/flags';
-        $utilityClass::rcopy($source, $dest);
+        $utility::rcopy($source, $dest);
 
         //delete .html entries from the tpl table
         $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . '\' AND `tpl_file` LIKE \'%.html%\'';
         $GLOBALS['xoopsDB']->queryF($sql);
 
-        /** @var XoopsGroupPermHandler $gpermHandler */
-        $gpermHandler = xoops_getHandler('groupperm');
-        return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
+        /** @var XoopsGroupPermHandler $grouppermHandler */
+        $grouppermHandler = xoops_getHandler('groupperm');
+        return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
     return true;
 }

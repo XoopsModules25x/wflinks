@@ -78,8 +78,8 @@ function createCat($cid = 0)
         $banner_id    = $cat_arr['banner_id'];
         $heading      = _AM_WFL_CCATEGORY_MODIFY;
 
-        $gpermHandler = xoops_getHandler('groupperm');
-        $groups       = $gpermHandler->getGroupIds('WFLinkCatPerm', $cid, $xoopsModule->getVar('mid'));
+        $grouppermHandler = xoops_getHandler('groupperm');
+        $groups       = $grouppermHandler->getGroupIds('WFLinkCatPerm', $cid, $xoopsModule->getVar('mid'));
         $groups       = $groups;
     } else {
         $groups = true;
@@ -343,36 +343,36 @@ switch ($op) {
                 $result = $xoopsDB->query('SELECT lid FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE cid=' . $subcategory . ' ');
                 // now for each linkload, delete the text data and vote ata associated with the linkload
                 while (false !== (list($lid) = $xoopsDB->fetchRow($result))) {
-                    $sql = sprintf('DELETE FROM %s WHERE lid = %u', $xoopsDB->prefix('wflinks_votedata'), $lid);
+                    $sql = sprintf('DELETE FROM `%s` WHERE lid = %u', $xoopsDB->prefix('wflinks_votedata'), $lid);
                     $xoopsDB->query($sql);
-                    $sql = sprintf('DELETE FROM %s WHERE lid = %u', $xoopsDB->prefix('wflinks_links'), $lid);
+                    $sql = sprintf('DELETE FROM `%s` WHERE lid = %u', $xoopsDB->prefix('wflinks_links'), $lid);
                     $xoopsDB->query($sql);
 
                     // delete comments
                     xoops_comment_delete($xoopsModule->getVar('mid'), $lid);
                 }
                 // all links for each subcategory are deleted, now delete the subcategory data
-                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_cat'), $subcategory);
+                $sql = sprintf('DELETE FROM `%s` WHERE cid = %u', $xoopsDB->prefix('wflinks_cat'), $subcategory);
                 $xoopsDB->query($sql);
                 // delete altcat entries
-                $sql = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_altcat'), $subcategory);
+                $sql = sprintf('DELETE FROM `%s` WHERE cid = %u', $xoopsDB->prefix('wflinks_altcat'), $subcategory);
                 $xoopsDB->query($sql);
             }
             // all subcategory and associated data are deleted, now delete category data and its associated data
             $result = $xoopsDB->query('SELECT lid FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE cid=' . $cid . '');
             while (false !== (list($lid) = $xoopsDB->fetchRow($result))) {
-                $sql = sprintf('DELETE FROM %s WHERE lid = %u', $xoopsDB->prefix('wflinks_links'), $lid);
+                $sql = sprintf('DELETE FROM `%s` WHERE lid = %u', $xoopsDB->prefix('wflinks_links'), $lid);
                 $xoopsDB->query($sql);
                 // delete comments
                 xoops_comment_delete($xoopsModule->getVar('mid'), $lid);
-                $sql = sprintf('DELETE FROM %s WHERE lid = %u', $xoopsDB->prefix('wflinks_votedata'), $lid);
+                $sql = sprintf('DELETE FROM `%s` WHERE lid = %u', $xoopsDB->prefix('wflinks_votedata'), $lid);
                 $xoopsDB->query($sql);
             }
             // delete altcat entries
-            $sql = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_altcat'), $cid);
+            $sql = sprintf('DELETE FROM `%s` WHERE cid = %u', $xoopsDB->prefix('wflinks_altcat'), $cid);
             $xoopsDB->query($sql);
             // delete category
-            $sql   = sprintf('DELETE FROM %s WHERE cid = %u', $xoopsDB->prefix('wflinks_cat'), $cid);
+            $sql   = sprintf('DELETE FROM `%s` WHERE cid = %u', $xoopsDB->prefix('wflinks_cat'), $cid);
             $error = _AM_WFL_DBERROR . ': <br><br>' . $sql;
 
             // delete group permissions

@@ -84,8 +84,8 @@ class Utility
         global $xoopsUser, $xoopsModule;
 
         $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-        $gpermHandler = xoops_getHandler('groupperm');
-        if (!$gpermHandler->checkRight($permType, $cid, $groups, $xoopsModule->getVar('mid'))) {
+        $grouppermHandler = xoops_getHandler('groupperm');
+        if (!$grouppermHandler->checkRight($permType, $cid, $groups, $xoopsModule->getVar('mid'))) {
             if (false === $redirect) {
                 return false;
             }
@@ -1616,7 +1616,7 @@ class Utility
                 $newid = $db->genId($db->prefix('bannerfinish') . '_bid_seq');
                 $sql   = sprintf('INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)', $db->prefix('bannerfinish'), $newid, $cid, $impmade, $clicks, $date, time());
                 $db->queryF($sql);
-                $db->queryF(sprintf('DELETE FROM %s WHERE bid = %u', $db->prefix('banner'), $bid));
+                $db->queryF(sprintf('DELETE FROM `%s` WHERE bid = %u', $db->prefix('banner'), $bid));
             }
             if ($htmlbanner) {
                 $bannerobject = $htmlcode;
@@ -1678,7 +1678,7 @@ class Utility
                 $newid = $db->genId($db->prefix('bannerfinish') . '_bid_seq');
                 $sql   = sprintf('INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)', $db->prefix('bannerfinish'), $newid, $cid, $impmade, $clicks, $date, time());
                 $db->queryF($sql);
-                $db->queryF(sprintf('DELETE FROM %s WHERE bid = %u', $db->prefix('banner'), $bid));
+                $db->queryF(sprintf('DELETE FROM `%s` WHERE bid = %u', $db->prefix('banner'), $bid));
             }
             if ($htmlbanner) {
                 $bannerobject = $htmlcode;

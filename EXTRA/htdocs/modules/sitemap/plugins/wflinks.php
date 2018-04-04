@@ -29,13 +29,13 @@ function b_sitemap_wflinks()
     $wflinkConfig = $MyConfig->getConfigsByCat(0, $wflinkModule->getVar('mid'));
 
     $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $gpermHandler = xoops_getHandler('groupperm');
+    $grouppermHandler = xoops_getHandler('groupperm');
 
     $sitemap = [];
     $sql     = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE pid=0 ORDER BY weight';
     $result  = $xoopsDB->queryF($sql);
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
-        if ($gpermHandler->checkRight('WFLinkCatPerm', $myrow['cid'], $groups, $wflinkModule->getVar('mid'))) {
+        if ($grouppermHandler->checkRight('WFLinkCatPerm', $myrow['cid'], $groups, $wflinkModule->getVar('mid'))) {
             $i                              = (int)$myrow['cid'];
             $sitemap['parent'][$i]['id']    = (int)$myrow['cid'];
             $sitemap['parent'][$i]['title'] = $myts->htmlSpecialChars($myrow['title']);
@@ -44,7 +44,7 @@ function b_sitemap_wflinks()
             if ($sitemap_configs['show_subcategoris']) {
                 $arr = $mytree->getFirstChild($myrow['cid'], 'title');
                 foreach ($arr as $key => $ele) {
-                    if ($gpermHandler->checkRight('WFLinkCatPerm', $ele['cid'], $groups, $wflinkModule->getVar('mid'))) {
+                    if ($grouppermHandler->checkRight('WFLinkCatPerm', $ele['cid'], $groups, $wflinkModule->getVar('mid'))) {
                         $j                                           = $key;
                         $sitemap['parent'][$i]['child'][$j]['id']    = (int)$ele['cid'];
                         $sitemap['parent'][$i]['child'][$j]['title'] = $myts->htmlSpecialChars($ele['title']);
