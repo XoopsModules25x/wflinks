@@ -211,11 +211,7 @@ function createCat($cid = 0)
     list($numrows) = $xoopsDB->fetchRow($result2);
 }
 
-if (!isset($_POST['op'])) {
-    $op = isset($_GET['op']) ? $_GET['op'] : 'main';
-} else {
-    $op = isset($_POST['op']) ? $_POST['op'] : 'main';
-}
+$op    = \Xmf\Request::getCmd('op', 'main');
 
 switch ($op) {
     case 'move':
@@ -331,8 +327,8 @@ switch ($op) {
 
         global $xoopsDB, $xoopsModule;
 
-        $cid    = (isset($_POST['cid']) && is_numeric($_POST['cid'])) ? (int)$_POST['cid'] : (int)$_GET['cid'];
-        $ok     = (isset($_POST['ok']) && 1 == $_POST['ok']) ? (int)$_POST['ok'] : 0;
+        $cid    = (isset($_POST['cid']) && is_numeric($_POST['cid'])) ? \Xmf\Request::getInt('cid', 0, 'POST') : \Xmf\Request::getInt('cid', 0, 'GET');
+        $ok     = (isset($_POST['ok']) && 1 == $_POST['ok']) ? \Xmf\Request::getInt('ok', 0, 'POST') : 0;
         $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 
         if (1 == $ok) {

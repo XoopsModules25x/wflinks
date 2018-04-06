@@ -212,7 +212,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
             if (!isset($_REQUEST['lid'])) {
                 $xoopsTpl->assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?agree=1');
             } elseif (isset($_REQUEST['lid'])) {
-                $lid = (int)$_REQUEST['lid'];
+                $lid = \Xmf\Request::getInt('lid', 0, 'REQUEST');
                 $xoopsTpl->assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?agree=1&amp;lid=' . $lid);
             }
             include XOOPS_ROOT_PATH . '/footer.php';

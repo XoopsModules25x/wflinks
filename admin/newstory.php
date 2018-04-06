@@ -18,7 +18,7 @@ $story->setExpired(0);
 $story->setType('admin');
 $story->setHostname(getenv('REMOTE_ADDR'));
 $story->setApproved(1);
-$topicid = (int)$_REQUEST['newstopicid'];
+$topicid = \Xmf\Request::getInt('newstopicid', 0, 'REQUEST');
 $story->setTopicId($topicid);
 $story->setTitle($title);
 $_linkid = (isset($lid) && $lid > 0) ? $lid : $newid;

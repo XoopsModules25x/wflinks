@@ -37,7 +37,7 @@ function makeTreeCheckTable(WflinksXoopsTree $xt, $itemid, $title, $checks)
 
     while (false !== (list($cid, $name) = $xt->db->fetchRow($result))) {
         $checked  = array_key_exists($cid, $checks) ? 'checked' : '';
-        $disabled = ($cid == (int)$_GET['cid']) ? "disabled='yes'" : '';
+        $disabled = ($cid == \Xmf\Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
         $level    = 1;
         echo "
         <tr style='text-align: left;'>
@@ -52,7 +52,7 @@ function makeTreeCheckTable(WflinksXoopsTree $xt, $itemid, $title, $checks)
             $cat['prefix'] = str_replace('.', '-', $cat['prefix']);
             $catpath       = $cat['prefix'] . '&nbsp;' . $wfmyts->htmlSpecialCharsStrip($cat[$title]) . '&nbsp;';
             $checked       = array_key_exists($cat['cid'], $checks) ? 'checked' : '';
-            $disabled      = ($cat['cid'] == (int)$_GET['cid']) ? "disabled='yes'" : '';
+            $disabled      = ($cat['cid'] == \Xmf\Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
             $level         = substr_count($cat['prefix'], '-') + 1;
             //            echo "<tr><td>" . $catpath . "<input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "></td></tr>\n";
             echo "

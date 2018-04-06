@@ -93,16 +93,16 @@ function edit($lid = 0)
 
               </td>
               <td valign='top'>
-               <div><b>" . _AM_WFL_VOTE_TOTALRATE . ': </b>' . (int)$_vote_data['rate'] . '</div>
+               <div><b>" . _AM_WFL_VOTE_TOTALRATE . ': </b>' . \Xmf\Request::getInt('rate', 0, 'vote_data') . '</div>
                <div><b>' . _AM_WFL_VOTE_USERAVG . ': </b>' . (int)round($_vote_data['avg_rate'], 2) . '</div>
-               <div><b>' . _AM_WFL_VOTE_MAXRATE . ': </b>' . (int)$_vote_data['min_rate'] . '</div>
-               <div><b>' . _AM_WFL_VOTE_MINRATE . ': </b>' . (int)$_vote_data['max_rate'] . "</div>
+               <div><b>' . _AM_WFL_VOTE_MAXRATE . ': </b>' . \Xmf\Request::getInt('min_rate', 0, 'vote_data') . '</div>
+               <div><b>' . _AM_WFL_VOTE_MINRATE . ': </b>' . \Xmf\Request::getInt('max_rate', 0, 'vote_data') . "</div>
               </td>
               <td valign='top'>
-               <div><b>" . _AM_WFL_VOTE_MOSTVOTEDTITLE . ': </b>' . (int)$_vote_data['max_title'] . '</div>
-                   <div><b>' . _AM_WFL_VOTE_LEASTVOTEDTITLE . ': </b>' . (int)$_vote_data['min_title'] . '</div>
+               <div><b>" . _AM_WFL_VOTE_MOSTVOTEDTITLE . ': </b>' . \Xmf\Request::getInt('max_title', 0, 'vote_data') . '</div>
+                   <div><b>' . _AM_WFL_VOTE_LEASTVOTEDTITLE . ': </b>' . \Xmf\Request::getInt('min_title', 0, 'vote_data') . '</div>
                <div><b>' . _AM_WFL_VOTE_REGISTERED . ': </b>' . ((int)($_vote_data['rate'] - $_vote_data['null_ratinguser'])) . '</div>
-               <div><b>' . _AM_WFL_VOTE_NONREGISTERED . ': </b>' . (int)$_vote_data['null_ratinguser'] . '</div>
+               <div><b>' . _AM_WFL_VOTE_NONREGISTERED . ': </b>' . \Xmf\Request::getInt('null_ratinguser', 0, 'vote_data') . '</div>
               </td>
              </tr>
             </table>';
@@ -498,7 +498,7 @@ switch (strtolower($op)) {
         $country      = $wfmyts->addSlashes(trim($_POST['country']));
         $keywords     = $wfmyts->addSlashes(trim(substr($_POST['keywords'], 0, $helper->getConfig('keywordlength'))));
         $item_tag     = $wfmyts->addSlashes(trim($_POST['item_tag']));
-        $forumid      = (isset($_POST['forumid']) && $_POST['forumid'] > 0) ? (int)$_POST['forumid'] : 0;
+        $forumid      = (isset($_POST['forumid']) && $_POST['forumid'] > 0) ? \Xmf\Request::getInt('forumid', 0, 'POST') : 0;
         if ($helper->getConfig('useaddress')) {
             $googlemap = ('http://maps.google.com' !== $_POST['googlemap']) ? $wfmyts->addSlashes($_POST['googlemap']) : '';
             $yahoomap  = ('http://maps.yahoo.com' !== $_POST['yahoomap']) ? $wfmyts->addSlashes($_POST['yahoomap']) : '';

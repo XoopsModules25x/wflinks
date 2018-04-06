@@ -26,7 +26,7 @@ $catarray['imageheader'] = Wflinks\Utility::getImageHeader();
 $xoopsTpl->assign('catarray', $catarray);
 
 if (isset($_GET['newlinkshowdays'])) {
-    $newlinkshowdays = (int)$_GET['newlinkshowdays'] ?: 7;
+    $newlinkshowdays = \Xmf\Request::getInt('newlinkshowdays', 0, 'GET') ?: 7;
     if (7 != $newlinkshowdays) {
         if (14 != $newlinkshowdays) {
             if (30 != $newlinkshowdays) {
