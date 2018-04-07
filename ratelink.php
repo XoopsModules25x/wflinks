@@ -68,7 +68,7 @@ if (!empty($_POST['submit'])) {
     // All is well.  Add to Line Item Rate to DB.
     $newid    = $xoopsDB->genId($xoopsDB->prefix('wflinks_votedata') . '_ratingid_seq');
     $datetime = time();
-    $sql      = sprintf('INSERT INTO %s (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)', $xoopsDB->prefix('wflinks_votedata'), $newid, $lid, $ratinguser, $rating, $xoopsDB->quoteString($ip), $datetime, $xoopsDB->quoteString($title));
+    $sql      = sprintf('INSERT INTO `%s` (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)', $xoopsDB->prefix('wflinks_votedata'), $newid, $lid, $ratinguser, $rating, $xoopsDB->quoteString($ip), $datetime, $xoopsDB->quoteString($title));
     if (!$result = $xoopsDB->query($sql)) {
         $ratemessage = _MD_WFL_ERROR;
     } else {

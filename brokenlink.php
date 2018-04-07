@@ -38,7 +38,7 @@ switch (strtolower($op)) {
             redirect_header('index.php', 2, _MD_WFL_ALREADYREPORTED);
         } else {
             $reportid = 0;
-            $sql      = sprintf('INSERT INTO %s (reportid, lid, sender, ip, DATE, confirmed, acknowledged, title ) VALUES ( %u, %u, %u, %s, %u, %u, %u, %s)', $xoopsDB->prefix('wflinks_broken'), $reportid, $lid, $sender, $xoopsDB->quoteString($ip), $time, 0, 0, $xoopsDB->quoteString($title));
+            $sql      = sprintf('INSERT INTO `%s` (reportid, lid, sender, ip, DATE, confirmed, acknowledged, title ) VALUES ( %u, %u, %u, %s, %u, %u, %u, %s)', $xoopsDB->prefix('wflinks_broken'), $reportid, $lid, $sender, $xoopsDB->quoteString($ip), $time, 0, 0, $xoopsDB->quoteString($title));
             if (!$result = $xoopsDB->query($sql)) {
                 $error[] = _MD_WFL_ERROR;
             }

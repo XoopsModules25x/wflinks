@@ -303,7 +303,7 @@ class Utility
         }
         $finalrating = $totalrating / $votesDB;
         $finalrating = number_format($finalrating, 4);
-        $sql         = sprintf('UPDATE %s SET rating = %u, votes = %u WHERE lid = %u', $xoopsDB->prefix('wflinks_links'), $finalrating, $votesDB, $sel_id);
+        $sql         = sprintf('UPDATE `%s` SET rating = %u, votes = %u WHERE lid = %u', $xoopsDB->prefix('wflinks_links'), $finalrating, $votesDB, $sel_id);
         $xoopsDB->query($sql);
     }
 
@@ -1609,12 +1609,12 @@ class Utility
             if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
                 // EMPTY
             } else {
-                $db->queryF(sprintf('UPDATE %s SET impmade = impmade+1 WHERE bid = %u', $db->prefix('banner'), $bid));
+                $db->queryF(sprintf('UPDATE `%s` SET impmade = impmade+1 WHERE bid = %u', $db->prefix('banner'), $bid));
             }
             /* Check if this impression is the last one and print the banner */
             if ($imptotal == $impmade) {
                 $newid = $db->genId($db->prefix('bannerfinish') . '_bid_seq');
-                $sql   = sprintf('INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)', $db->prefix('bannerfinish'), $newid, $cid, $impmade, $clicks, $date, time());
+                $sql   = sprintf('INSERT INTO `%s` (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)', $db->prefix('bannerfinish'), $newid, $cid, $impmade, $clicks, $date, time());
                 $db->queryF($sql);
                 $db->queryF(sprintf('DELETE FROM `%s` WHERE bid = %u', $db->prefix('banner'), $bid));
             }
@@ -1671,12 +1671,12 @@ class Utility
             if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
                 // EMPTY
             } else {
-                $db->queryF(sprintf('UPDATE %s SET impmade = impmade+1 WHERE bid = %u', $db->prefix('banner'), $bid));
+                $db->queryF(sprintf('UPDATE `%s` SET impmade = impmade+1 WHERE bid = %u', $db->prefix('banner'), $bid));
             }
             /* Check if this impression is the last one and print the banner */
             if ($imptotal == $impmade) {
                 $newid = $db->genId($db->prefix('bannerfinish') . '_bid_seq');
-                $sql   = sprintf('INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)', $db->prefix('bannerfinish'), $newid, $cid, $impmade, $clicks, $date, time());
+                $sql   = sprintf('INSERT INTO `%s` (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)', $db->prefix('bannerfinish'), $newid, $cid, $impmade, $clicks, $date, time());
                 $db->queryF($sql);
                 $db->queryF(sprintf('DELETE FROM `%s` WHERE bid = %u', $db->prefix('banner'), $bid));
             }
