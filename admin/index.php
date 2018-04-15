@@ -78,7 +78,7 @@ if (is_dir('../../../uploads/flags')) {
 
 
 //check or upload folders
-//$configurator = include __DIR__ . '/../include/config.php';
+//$configurator = include  dirname(__DIR__) . '/include/config.php';
 $configurator = new Common\Configurator();
 foreach (array_keys($configurator->uploadFolders) as $i) {
     $utility::createFolder($configurator->uploadFolders[$i]);

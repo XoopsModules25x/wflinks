@@ -38,11 +38,8 @@ function xoops_module_uninstall_wflinks(\XoopsModule $module)
     $moduleDirName = basename(dirname(__DIR__));
     $helper = Wflinks\Helper::getInstance();
 
-    /** @var Wflinks\Utility $utility */
-    $utility     = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($utility)) {
-        xoops_load('utility', $moduleDirName);
-    }
+    /** @var \XoopsModules\Wflinks\Utility $utility */
+    $utility = new \XoopsModules\Wflinks\Utility();
 
     $success = true;
     xoops_loadLanguage('admin', $moduleDirName);

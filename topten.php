@@ -10,10 +10,11 @@
  */
 
 use XoopsModules\Wflinks;
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
+
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 $GLOBALS['xoopsOption']['template_main'] = 'wflinks_topten.tpl';
 include XOOPS_ROOT_PATH . '/header.php';

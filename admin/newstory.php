@@ -32,6 +32,7 @@ $nosmiley = empty($nosmiley) ? 0 : 1;
 $story->setNohtml($nohtml);
 $story->setNosmiley($nosmiley);
 $story->store();
+/** @var \XoopsNotificationHandler $notificationHandler */
 $notificationHandler = xoops_getHandler('notification');
 
 $tags               = [];

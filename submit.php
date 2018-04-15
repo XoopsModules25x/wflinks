@@ -10,13 +10,14 @@
  */
 
 use XoopsModules\Wflinks;
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
 
 include XOOPS_ROOT_PATH . '/header.php';
 include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 global $wfmyts;
@@ -109,6 +110,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
             }
 
             // Notify of new link (anywhere) and new link in category
+            /** @var \XoopsNotificationHandler $notificationHandler */
             $notificationHandler = xoops_getHandler('notification');
 
             $tags              = [];

@@ -26,8 +26,6 @@
 use Xmf\Request;
 use XoopsModules\Wflinks;
 use XoopsModules\Wflinks\Common;
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
 
 /**
  * Class Utility

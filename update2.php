@@ -57,7 +57,7 @@ if (!isset($action) || '' === $action) {
 
 if ('message' === $action) {
     install_header();
-
+    /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $mylinks       = $moduleHandler->getByDirname('mylinks');
     if ($mylinks) {

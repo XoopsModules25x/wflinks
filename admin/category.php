@@ -11,11 +11,12 @@
 
 use Xmf\Request;
 use XoopsModules\Wflinks;
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/admin_header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
+
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 $op = '';
 
@@ -35,7 +36,7 @@ if (isset($_GET)) {
  */
 function createCat($cid = 0)
 {
-    // require_once __DIR__ . '/../class/wfllists.php';
+    // require_once  dirname(__DIR__) . '/class/wfllists.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     global $xoopsDB, $wfmyts,  $totalcats, $xoopsModule;

@@ -10,10 +10,12 @@
  */
 
 use XoopsModules\Wflinks;
+
+require_once __DIR__ . '/header.php';
+
 /** @var Wflinks\Helper $helper */
 $helper = Wflinks\Helper::getInstance();
 
-require_once __DIR__ . '/header.php';
 
 $start = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start', 0);
 $start = (int)$start;

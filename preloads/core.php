@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
  * Class WflinksCorePreload
  */
-class WflinksCorePreload extends XoopsPreloadItem
+class WflinksCorePreload extends \XoopsPreloadItem
 {
     // to add PSR-4 autoloader
     /**

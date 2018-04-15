@@ -10,8 +10,6 @@
  */
 
 use XoopsModules\Wflinks;
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -86,7 +84,7 @@ function edit($lid = 0)
               <td width='33%' valign='top'>
                <div><b>" . _AM_WFL_LINK_ID . ' </b>' . $lid . '</div>
                <div><b>' . _AM_WFL_MINDEX_SUBMITTED . ': </b>' . formatTimestamp($link_array['date'], $helper->getConfig('dateformat')) . '</div>
-               <div><b>' . _AM_WFL_LINK_SUBMITTER . ' </b>' . XoopsUserUtility::getUnameFromId($submitter) . '</div>
+               <div><b>' . _AM_WFL_LINK_SUBMITTER . ' </b>' . \XoopsUserUtility::getUnameFromId($submitter) . '</div>
                <div><b>' . _AM_WFL_LINK_IP . ' </b>' . $ipaddress . '</div>
                <div><b>' . _AM_WFL_PAGERANK . ' </b>' . Wflinks\Utility::pagerank($link_array['url']) . '</div>
                <div><b>' . _AM_WFL_HITS . ' </b>' . $link_array['hits'] . "</div>
@@ -357,6 +355,8 @@ function edit($lid = 0)
  */
 function fetchURL($url, $timeout = 2)
 {
+    /** @var Wflinks\Helper $helper */
+    $helper = Wflinks\Helper::getInstance();
     $url        = urldecode($url);
     $url_parsed = parse_url($url);
     if (!isset($url_parsed['host'])) {

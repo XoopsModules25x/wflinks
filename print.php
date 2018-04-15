@@ -7,13 +7,13 @@
  */
 
 use XoopsModules\Wflinks;
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
-
-$moduleDirName = basename(__DIR__);
 
 require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/template.php';
+
+$moduleDirName = basename(__DIR__);
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 $lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid = (int)$lid;

@@ -10,10 +10,11 @@
  */
 
 use XoopsModules\Wflinks;
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
 
 $module_link = '';
+
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 $link['id']        = (int)$link_arr['lid'];
 $link['cid']       = (int)$link_arr['cid'];

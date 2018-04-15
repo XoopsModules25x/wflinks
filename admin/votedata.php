@@ -10,10 +10,11 @@
  */
 
 use XoopsModules\Wflinks;
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/admin_header.php';
+
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 $op  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
 $rid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'rid', 0);

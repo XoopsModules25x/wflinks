@@ -26,12 +26,12 @@ if (empty($fct)) {
 // if (isset($fct) && $fct == "users") {
 // $xoopsOption['pagetype'] = "user";
 // }
-require_once __DIR__ . '/../../../mainfile.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 // include "../../mainfile.php"; GIJ
 include XOOPS_ROOT_PATH . '/include/cp_functions.php';
 
 require_once XOOPS_ROOT_PATH . '/kernel/module.php';
-//require_once __DIR__ . '/../include/gtickets.php'; // GIJ
+//require_once  dirname(__DIR__) . '/include/gtickets.php'; // GIJ
 
 $admintest = 0;
 

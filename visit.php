@@ -10,10 +10,11 @@
  */
 
 use XoopsModules\Wflinks;
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
+
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 $agreed = Wflinks\Utility::cleanRequestVars($_REQUEST, 'agree', 0);
 $cid    = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);

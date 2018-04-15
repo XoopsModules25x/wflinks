@@ -10,11 +10,11 @@
  */
 
 use XoopsModules\Wflinks;
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
 
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 global $xoopsTpl, $xoTheme;
 
 $lid = (int)Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);

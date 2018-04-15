@@ -99,7 +99,7 @@ if (isset($_POST['previewblock'])) {
     $block['is_custom'] = true;
     $block['cachetime'] = $bcachetime;
     echo '<a href="myblocksadmin.php">' . _AM_BADMIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . $block['form_title'] . '<br><br>';
-    require_once __DIR__ . '/../admin/myblockform.php'; //GIJ
+    require_once  dirname(__DIR__) . '/admin/myblockform.php'; //GIJ
     //echo '<a href="admin.php?fct=blocksadmin">'. _AM_BADMIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$block['form_title'].'<br><br>';
     //include XOOPS_ROOT_PATH.'/modules/system/admin/blocksadmin/blockform.php';
     //    $form->addElement($xoopsGTicket->getTicketXoopsForm(__LINE__));//GIJ
@@ -311,7 +311,7 @@ if ('edit' === $op) {
     ];
 
     echo '<a href="myblocksadmin.php">' . _AM_BADMIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_EDITBLOCK . '<br><br>';
-    require_once __DIR__ . '/../admin/myblockform.php'; //GIJ
+    require_once  dirname(__DIR__) . '/admin/myblockform.php'; //GIJ
     //    $form->addElement($xoopsGTicket->getTicketXoopsForm(__LINE__));//GIJ
     $form->display();
     // end of edit_block() GIJ
@@ -351,7 +351,7 @@ if ('clone' === $op) {
         'submit_button' => _CLONE
     ];
     echo '<a href="myblocksadmin.php">' . _AM_BADMIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_CLONEBLOCK . '<br><br>';
-    require_once __DIR__ . '/../admin/myblockform.php';
+    require_once  dirname(__DIR__) . '/admin/myblockform.php';
     //    $form->addElement($xoopsGTicket->getTicketXoopsForm(__LINE__));//GIJ
     $form->display();
     xoops_cp_footer();

@@ -4,10 +4,10 @@
 // - XOOPS block admin for each modules -                     //
 // GIJOE <http://www.peak.ne.jp>                   //
 // ------------------------------------------------------------------------- //
-require_once __DIR__ . '/../../../include/cp_header.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once __DIR__ . '/mygrouppermform.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
-//require_once __DIR__ . '/../include/gtickets.php'; // GIJ
+//require_once  dirname(__DIR__) . '/include/gtickets.php'; // GIJ
 
 $xoops_system_path = XOOPS_ROOT_PATH . '/modules/system';
 // language files
@@ -300,7 +300,7 @@ function list_blocks()
 function get_block_configs()
 {
     $error_reporting_level = error_reporting(0);
-    require_once __DIR__ . '/../xoops_version.php';
+    require_once  dirname(__DIR__) . '/xoops_version.php';
     error_reporting($error_reporting_level);
     if (empty($modversion['blocks'])) {
         return [];
