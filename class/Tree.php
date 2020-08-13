@@ -80,7 +80,7 @@ class Tree
             return $arr;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
-            \array_push($arr, $myrow);
+            $arr[] = $myrow;
         }
 
         return $arr;
@@ -102,7 +102,7 @@ class Tree
             return $idarray;
         }
         while (list($id) = $this->db->fetchRow($result)) {
-            \array_push($idarray, $id);
+            $idarray[] = $id;
         }
 
         return $idarray;
@@ -129,8 +129,8 @@ class Tree
             return $idarray;
         }
         while (list($r_id) = $this->db->fetchRow($result)) {
-            \array_push($idarray, $r_id);
-            $idarray = $this->getAllChildId($r_id, $order, $idarray);
+            $idarray[] = $r_id;
+            $idarray   = $this->getAllChildId($r_id, $order, $idarray);
         }
 
         return $idarray;
@@ -156,8 +156,8 @@ class Tree
         if (0 == $r_id) {
             return $idarray;
         }
-        \array_push($idarray, $r_id);
-        $idarray = $this->getAllParentId($r_id, $order, $idarray);
+        $idarray[] = $r_id;
+        $idarray   = $this->getAllParentId($r_id, $order, $idarray);
 
         return $idarray;
     }
@@ -318,8 +318,8 @@ class Tree
             return $parray;
         }
         while (false !== ($row = $this->db->fetchArray($result))) {
-            \array_push($parray, $row);
-            $parray = $this->getAllChild($row[$this->id], $order, $parray);
+            $parray[] = $row;
+            $parray   = $this->getAllChild($row[$this->id], $order, $parray);
         }
 
         return $parray;
@@ -348,8 +348,8 @@ class Tree
         }
         while (false !== ($row = $this->db->fetchArray($result))) {
             $row['prefix'] = $r_prefix . '.';
-            \array_push($parray, $row);
-            $parray = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
+            $parray[]      = $row;
+            $parray        = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
         }
 
         return $parray;

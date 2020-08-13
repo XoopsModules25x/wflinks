@@ -134,10 +134,10 @@ class MyXoopsGroupPermForm extends \XoopsForm
         if (!empty($this->_itemTree[$itemId]['children'])) {
             $first_child = $this->_itemTree[$itemId]['children'];
             foreach ($first_child as $fcid) {
-                array_push($childIds, $fcid);
+                $childIds[] = $fcid;
                 if (!empty($this->_itemTree[$fcid]['children'])) {
                     foreach ($this->_itemTree[$fcid]['children'] as $_fcid) {
-                        array_push($childIds, $_fcid);
+                        $childIds[] = $_fcid;
                         $this->_loadAllChildItemIds($_fcid, $childIds);
                     }
                 }
@@ -393,7 +393,7 @@ class MyXoopsGroupFormCheckBox extends \XoopsFormElement
             ) . "\"><br>\n";
         if (isset($option['children'])) {
             foreach ($option['children'] as $child) {
-                array_push($parentIds, $option['id']);
+                $parentIds[] = $option['id'];
                 $this->_renderOptionTree($tree, $this->_optionTree[$child], $prefix . '&nbsp;-', $parentIds);
             }
         }
