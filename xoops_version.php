@@ -15,8 +15,8 @@ $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
 // ------------------- Informations ------------------- //
 $modversion = [
-    'version'                => '1.11',
-    'module_status'          => 'RC 2',
+    'version'                => '1.12',
+    'module_status'          => 'Beta 1',
     'release_date'           => '2020/08/13',
     'name'                   => _MI_WFL_NAME,
     'description'            => _MI_WFL_DESC,
