@@ -26,7 +26,9 @@ namespace XoopsModules\Wflinks\Common;
 use MyTextSanitizer;
 use XoopsFormDhtmlTextArea;
 use XoopsFormTextArea;
-use XoopsModules\Wflinks;
+use XoopsModules\Wflinks\{
+    Helper
+};
 
 /**
  * Class SysUtility
