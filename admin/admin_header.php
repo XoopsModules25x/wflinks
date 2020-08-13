@@ -16,19 +16,26 @@
  * @author         XOOPS Development Team
  **/
 
-use XoopsModules\Wflinks;
+use Xmf\Module\Admin;
+use XoopsModules\Wflinks\{
+    Helper
+};
+/** @var Admin $adminObject */
+/** @var Helper $helper */
 
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require dirname(__DIR__) . '/preloads/autoloader.php';
+
+require dirname(__DIR__, 3) . '/include/cp_header.php';
 
 //require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
 require_once dirname(__DIR__) . '/include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
+/** @var Helper $helper */
+$helper = Helper::getInstance();
 
-/** @var Xmf\Module\Admin $adminObject */
-$adminObject = \Xmf\Module\Admin::getInstance();
+/** @var Admin $adminObject */
+$adminObject = Admin::getInstance();
 
 // Load language files
 $helper->loadLanguage('admin');
@@ -50,7 +57,9 @@ require XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/config/config.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-$myts =\TextSanitizer::getInstance(); // MyTextSanitizer object
+//$myts =\TextSanitizer::getInstance(); // MyTextSanitizer object
+
+$pathIcon16      = Xmf\Module\Admin::iconUrl('', 16);
 
 $imageArray = [
     'editimg'     => "<img src='$pathIcon16/edit.png' alt='" . _AM_WFL_ICO_EDIT . "' align='middle'>",
