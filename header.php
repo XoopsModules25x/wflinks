@@ -8,21 +8,36 @@
  * Licence: GNU
  */
 
-use XoopsModules\Wflinks;
+use XoopsModules\Wflinks\{
+    Helper
+};
 
-$moduleDirName = basename(__DIR__);
+require dirname(__DIR__, 2) . '/mainfile.php';
+require XOOPS_ROOT_PATH . '/header.php';
 
-require_once dirname(__DIR__, 2) . '/mainfile.php';
-require XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/common.php';
+require __DIR__ . '/preloads/autoloader.php';
 //require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/WfThumbsNails.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 //require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.php';
 
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
+$moduleDirName = basename(__DIR__);
+
+/** @var Helper $helper */
+$helper = Helper::getInstance();
+
+$myts = \MyTextSanitizer::getInstance();
+
+if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
+    require $GLOBALS['xoops']->path('class/theme.php');
+    $GLOBALS['xoTheme'] = new \xos_opal_Theme();
+}
+
+// Load language files
 $helper->loadLanguage('main');
 
-//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfltextsanitizer.php';
-$myts =\TextSanitizer::getInstance(); // MyTextSanitizer object
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    require $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
+}
 
 global $xoopModuleConfig;
