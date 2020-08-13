@@ -372,13 +372,12 @@ if ('clone_ok' === $op) {
 
     if (empty($_POST['options'])) {
         $options = [];
-    } else {
-        if (is_array($_POST['options'])) {
+    } elseif (is_array($_POST['options'])) {
             $options = $_POST['options'];
         } else {
             $options = explode('|', $_POST['options']);
         }
-    }
+
 
     // for backward compatibility
     // $cblock = $block->clone(); or $cblock = $block->xoopsClone();
@@ -533,13 +532,12 @@ function myblocksadmin_update_block(
                     $msg = 'Unable to clear cache for block ID' . $bid;
                 }
             }
-        } else {
-            if ($xoopsTpl->is_cached('db:system_dummy.tpl', 'block' . $bid)) {
+        } elseif ($xoopsTpl->is_cached('db:system_dummy.tpl', 'block' . $bid)) {
                 if (!$xoopsTpl->clear_cache('db:system_dummy.tpl', 'block' . $bid)) {
                     $msg = 'Unable to clear cache for block ID' . $bid;
                 }
             }
-        }
+
     } else {
         $msg = 'Failed update of block. ID:' . $bid;
     }

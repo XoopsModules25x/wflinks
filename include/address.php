@@ -42,13 +42,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . ',&nbsp;' . $state . '&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        }
+
     } elseif ('Austria' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
@@ -176,13 +175,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . '&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        }
+
     } elseif ('Cameroon' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
@@ -196,13 +194,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . ',&nbsp;' . $state . '&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        }
+
     } elseif ('Cape Verde' === $country) {
         if ($street2) {
             if ($state) {
@@ -210,13 +207,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        }
+
     } elseif ('Cayman Islands' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
@@ -242,13 +238,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        }
+
     } elseif ('Colombia' === $country) {
         if ($street2) {
             if ($state) {
@@ -256,13 +251,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '&nbsp;-&nbsp;' . $state;
             } else {
                 $address = $street1 . '<br>' . $town;
             }
-        }
+
     } elseif ('Comoros' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
@@ -450,13 +444,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '<br>' . $zip;
             }
-        }
+
     } elseif ('Greece' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
@@ -548,13 +541,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '<br>' . $zip;
             }
-        }
+
     } elseif ('Israel' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
@@ -586,13 +578,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '<br>' . $zip;
             }
-        }
+
     } elseif ('Jordan' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
@@ -690,13 +681,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town . ',&nbsp;' . $state;
             } else {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        }
+
     } elseif ('Mali' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
@@ -722,13 +712,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town . ',&nbsp;' . $state;
             } else {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        }
+
     } elseif ('Moldova' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
@@ -826,13 +815,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '&nbsp;' . $zip . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        }
+
     } elseif ('Norway' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
@@ -918,13 +906,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        }
+
     } elseif ('Russian Federation' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
@@ -1004,13 +991,12 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . ',&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . ',&nbsp;' . $zip;
             }
-        }
+
     } elseif ('Spain' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
@@ -1114,13 +1100,11 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '<br>' . $zip;
             }
-        }
     } elseif ('United States' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $state . '&nbsp;' . $zip;

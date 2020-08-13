@@ -471,13 +471,12 @@ class Utility extends Common\SysUtility
         if (!\is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")
             && \is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")) {
             $showimage .= "<img src='" . XOOPS_URL . "/{$imgsource}/{$image}' border='0' alt='" . $alttext . "'></a>";
-        } else {
-            if ($xoopsUser && $xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
+        } elseif ($xoopsUser && $xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
                 $showimage .= "<img src='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/assets/images/brokenimg.gif' alt='" . _MD_WFL_ISADMINNOTICE . "'></a>";
             } else {
                 $showimage .= "<img src='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/assets/images/blank.gif' alt='" . $alttext . "'></a>";
             }
-        }
+
         \clearstatcache();
 
         return $showimage;
@@ -655,8 +654,7 @@ class Utility extends Common\SysUtility
             if (!$uploader->upload()) {
                 $errors = $uploader->getErrors();
                 \redirect_header($redirecturl, 2, $errors);
-            } else {
-                if ($redirect) {
+            } elseif ($redirect) {
                     \redirect_header($redirecturl, 1, _AM_WFL_UPLOADFILE);
                 } else {
                     if (\is_file($uploader->savedDestination)) {
@@ -666,7 +664,7 @@ class Utility extends Common\SysUtility
 
                     return $down;
                 }
-            }
+
         } else {
             $errors = $uploader->getErrors();
             \redirect_header($redirecturl, 1, $errors);
@@ -894,13 +892,12 @@ class Utility extends Common\SysUtility
                     if (\is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php';
                         $editor = new \XoopsFormFckeditor($editor_configs, true);
-                    } else {
-                        if ($dhtml) {
+                    } elseif ($dhtml) {
                             $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
                         } else {
                             $editor = new \XoopsFormTextArea($caption, $name, $value, 7, 60);
                         }
-                    }
+
                 } else {
                     $editor = new \XoopsFormEditor($caption, 'fckeditor', $editor_configs);
                 }
@@ -938,13 +935,11 @@ class Utility extends Common\SysUtility
                                 'height'  => '400px',
                             ]
                         );
-                    } else {
-                        if ($dhtml) {
+                    } elseif ($dhtml) {
                             $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, 50, 60);
                         } else {
                             $editor = new \XoopsFormTextArea($caption, $name, $value, 7, 60);
                         }
-                    }
                 } else {
                     $editor = new \XoopsFormEditor($caption, 'tinyeditor', $editor_configs);
                 }
@@ -954,13 +949,11 @@ class Utility extends Common\SysUtility
                     if (\is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmlext/dhtmlext.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmlext/dhtmlext.php';
                         $editor = new \XoopsFormDhtmlTextAreaExtended($caption, $name, $value, 10, 50);
-                    } else {
-                        if ($dhtml) {
+                    } elseif ($dhtml) {
                             $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, 50, 60);
                         } else {
                             $editor = new \XoopsFormTextArea($caption, $name, $value, 7, 60);
                         }
-                    }
                 } else {
                     $editor = new \XoopsFormEditor($caption, 'dhtmlext', $editor_configs);
                 }
@@ -989,13 +982,11 @@ class Utility extends Common\SysUtility
                                 'height'  => '400px',
                             ]
                         );
-                    } else {
-                        if ($dhtml) {
+                    } elseif ($dhtml) {
                             $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
                         } else {
                             $editor = new \XoopsFormTextArea($caption, $name, $value, 7, 60);
                         }
-                    }
                 } else {
                     $editor = new \XoopsFormEditor($caption, 'tinymce', $editor_configs);
                 }
