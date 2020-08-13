@@ -856,7 +856,7 @@ class Utility extends Common\SysUtility
      * @param $name
      * @param $value
      *
-     * @return bool|\XoopsFormDhtmlTextArea|\XoopsFormEditor|\XoopsFormFckeditor|\XoopsFormHtmlarea|\XoopsFormTextArea
+     * @return bool|\XoopsFormDhtmlTextArea|\XoopsFormEditor|\XoopsFormHtmlarea|\XoopsFormTextArea
      */
     public static function getWysiwygForm($caption, $name, $value)
     {
@@ -887,21 +887,6 @@ class Utility extends Common\SysUtility
         }
 
         switch ($formuser) {
-            case 'fck':
-                if (!$x22) {
-                    if (\is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php')) {
-                        require_once XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php';
-                        $editor = new \XoopsFormFckeditor($editor_configs, true);
-                    } elseif ($dhtml) {
-                            $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
-                        } else {
-                            $editor = new \XoopsFormTextArea($caption, $name, $value, 7, 60);
-                        }
-
-                } else {
-                    $editor = new \XoopsFormEditor($caption, 'fckeditor', $editor_configs);
-                }
-                break;
             case 'htmlarea':
                 if (!$x22) {
                     if (\is_readable(XOOPS_ROOT_PATH . '/class/htmlarea/formhtmlarea.php')) {
