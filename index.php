@@ -29,8 +29,8 @@ $head_arr = $xoopsDB->fetchArray($xoopsDB->query($sql));
 
 $catarray['imageheader']      = Wflinks\Utility::getImageHeader($head_arr['indeximage'], $head_arr['indexheading']);
 $catarray['indexheading']     = $myts->displayTarea($head_arr['indexheading']);
-$catarray['indexheaderalign'] = $myts->htmlSpecialChars($head_arr['indexheaderalign']);
-$catarray['indexfooteralign'] = $myts->htmlSpecialChars($head_arr['indexfooteralign']);
+$catarray['indexheaderalign'] = htmlspecialchars($head_arr['indexheaderalign']);
+$catarray['indexfooteralign'] = htmlspecialchars($head_arr['indexfooteralign']);
 
 $html   = $head_arr['nohtml'] ? 0 : 1;
 $smiley = $head_arr['nosmiley'] ? 0 : 1;
@@ -61,7 +61,7 @@ while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
     $totallinkload    = Wflinks\Utility::getTotalItems($myrow['cid'], 1);
     $indicator        = Wflinks\Utility::isNewImage($totallinkload['published']);
     if (Wflinks\Utility::checkGroups($myrow['cid'])) {
-        $title = $myts->htmlSpecialChars($myrow['title']);
+        $title = htmlspecialchars($myrow['title']);
 
         $arr = [];
         $arr = $mytree->getFirstChild($myrow['cid'], 'title');
@@ -72,7 +72,7 @@ while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         foreach ($arr as $ele) {
             if (true === Wflinks\Utility::checkGroups($ele['cid'])) {
                 if (1 == $helper->getConfig('subcats')) {
-                    $chtitle = $myts->htmlSpecialChars($ele['title']);
+                    $chtitle = htmlspecialchars($ele['title']);
                     if ($chcount > 5) {
                         $subcategories .= '...';
                         break;

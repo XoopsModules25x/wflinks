@@ -64,9 +64,9 @@ function createCat($cid = 0)
     if ($cid) {
         $sql          = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . " WHERE cid=$cid";
         $cat_arr      = $xoopsDB->fetchArray($xoopsDB->query($sql));
-        $title        = $myts->htmlSpecialChars($cat_arr['title']);
-        $imgurl       = $myts->htmlSpecialChars($cat_arr['imgurl']);
-        $description  = $myts->htmlSpecialChars($cat_arr['description']);
+        $title        = htmlspecialchars($cat_arr['title']);
+        $imgurl       = htmlspecialchars($cat_arr['imgurl']);
+        $description  = htmlspecialchars($cat_arr['description']);
         $nohtml       = (int)$cat_arr['nohtml'];
         $nosmiley     = (int)$cat_arr['nosmiley'];
         $noxcodes     = (int)$cat_arr['noxcodes'];

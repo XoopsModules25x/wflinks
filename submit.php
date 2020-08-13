@@ -228,11 +228,11 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
 
         $lid          = $link_array['lid'] ?: 0;
         $cid          = $link_array['cid'] ?: 0;
-        $title        = $link_array['title'] ? $myts->htmlSpecialChars($link_array['title']) : '';
-        $url          = $link_array['url'] ? $myts->htmlSpecialChars($link_array['url']) : 'http://';
-        $publisher    = $link_array['publisher'] ? $myts->htmlSpecialChars($link_array['publisher']) : '';
-        $screenshot   = $link_array['screenshot'] ? $myts->htmlSpecialChars($link_array['screenshot']) : '';
-        $descriptionb = $link_array['description'] ? $myts->htmlSpecialChars($link_array['description']) : '';
+        $title        = $link_array['title'] ? htmlspecialchars($link_array['title']) : '';
+        $url          = $link_array['url'] ? htmlspecialchars($link_array['url']) : 'http://';
+        $publisher    = $link_array['publisher'] ? htmlspecialchars($link_array['publisher']) : '';
+        $screenshot   = $link_array['screenshot'] ? htmlspecialchars($link_array['screenshot']) : '';
+        $descriptionb = $link_array['description'] ? htmlspecialchars($link_array['description']) : '';
         $published    = $link_array['published'] ?: 0;
         $expired      = $link_array['expired'] ?: 0;
         $updated      = $link_array['updated'] ?: 0;
@@ -240,25 +240,25 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
         $forumid      = $link_array['forumid'] ?: 0;
         $ipaddress    = $link_array['ipaddress'] ?: 0;
         $notifypub    = $link_array['notifypub'] ?: 0;
-        $country      = $link_array['country'] ? $myts->htmlSpecialChars($link_array['country']) : '-';
-        $keywords     = $link_array['keywords'] ? $myts->htmlSpecialChars($link_array['keywords']) : '';
-        $item_tag     = $link_array['item_tag'] ? $myts->htmlSpecialChars($link_array['item_tag']) : '';
+        $country      = $link_array['country'] ? htmlspecialchars($link_array['country']) : '-';
+        $keywords     = $link_array['keywords'] ? htmlspecialchars($link_array['keywords']) : '';
+        $item_tag     = $link_array['item_tag'] ? htmlspecialchars($link_array['item_tag']) : '';
 
-        $googlemap = $link_array['googlemap'] ? $myts->htmlSpecialChars($link_array['googlemap']) : 'http://maps.google.com';
-        $yahoomap  = $link_array['yahoomap'] ? $myts->htmlSpecialChars($link_array['yahoomap']) : 'http://maps.yahoo.com';
-        $multimap  = $link_array['multimap'] ? $myts->htmlSpecialChars($link_array['multimap']) : 'http://www.multimap.com';
+        $googlemap = $link_array['googlemap'] ? htmlspecialchars($link_array['googlemap']) : 'http://maps.google.com';
+        $yahoomap  = $link_array['yahoomap'] ? htmlspecialchars($link_array['yahoomap']) : 'http://maps.yahoo.com';
+        $multimap  = $link_array['multimap'] ? htmlspecialchars($link_array['multimap']) : 'http://www.multimap.com';
 
-        $street1 = $link_array['street1'] ? $myts->htmlSpecialChars($link_array['street1']) : '';
-        $street2 = $link_array['street2'] ? $myts->htmlSpecialChars($link_array['street2']) : '';
-        $town    = $link_array['town'] ? $myts->htmlSpecialChars($link_array['town']) : '';
-        $state   = $link_array['state'] ? $myts->htmlSpecialChars($link_array['state']) : '';
-        $zip     = $link_array['zip'] ? $myts->htmlSpecialChars($link_array['zip']) : '';
-        $tel     = $link_array['tel'] ? $myts->htmlSpecialChars($link_array['tel']) : '';
-        $mobile  = $link_array['mobile'] ? $myts->htmlSpecialChars($link_array['mobile']) : '';
-        $voip    = $link_array['voip'] ? $myts->htmlSpecialChars($link_array['voip']) : '';
-        $fax     = $link_array['fax'] ? $myts->htmlSpecialChars($link_array['fax']) : '';
-        $email   = $link_array['email'] ? $myts->htmlSpecialChars($link_array['email']) : '';
-        $vat     = $link_array['vat'] ? $myts->htmlSpecialChars($link_array['vat']) : '';
+        $street1 = $link_array['street1'] ? htmlspecialchars($link_array['street1']) : '';
+        $street2 = $link_array['street2'] ? htmlspecialchars($link_array['street2']) : '';
+        $town    = $link_array['town'] ? htmlspecialchars($link_array['town']) : '';
+        $state   = $link_array['state'] ? htmlspecialchars($link_array['state']) : '';
+        $zip     = $link_array['zip'] ? htmlspecialchars($link_array['zip']) : '';
+        $tel     = $link_array['tel'] ? htmlspecialchars($link_array['tel']) : '';
+        $mobile  = $link_array['mobile'] ? htmlspecialchars($link_array['mobile']) : '';
+        $voip    = $link_array['voip'] ? htmlspecialchars($link_array['voip']) : '';
+        $fax     = $link_array['fax'] ? htmlspecialchars($link_array['fax']) : '';
+        $email   = $link_array['email'] ? htmlspecialchars($link_array['email']) : '';
+        $vat     = $link_array['vat'] ? htmlspecialchars($link_array['vat']) : '';
 
         $sform = new \XoopsThemeForm(_MD_WFL_SUBMITCATHEAD, 'storyform', xoops_getenv('SCRIPT_NAME'), 'post', true);
         $sform->setExtra('enctype="multipart/form-data"');

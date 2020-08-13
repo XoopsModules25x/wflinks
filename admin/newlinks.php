@@ -94,9 +94,9 @@ switch (mb_strtolower($op)) {
             while (false !== ($new = $xoopsDB->fetchArray($new_array))) {
                 $lid       = (int)$new['lid'];
                 $rating    = number_format($new['rating'], 2);
-                $title     = $myts->htmlSpecialChars($new['title']);
-                $url       = urldecode($myts->htmlSpecialChars($new['url']));
-                $logourl   = $myts->htmlSpecialChars($new['screenshot']);
+                $title     = htmlspecialchars($new['title']);
+                $url       = urldecode(htmlspecialchars($new['url']));
+                $logourl   = htmlspecialchars($new['screenshot']);
                 $submitter = \XoopsUserUtility::getUnameFromId($new['submitter']);
                 $datetime  = formatTimestamp($new['date'], $helper->getConfig('dateformatadmin'));
 

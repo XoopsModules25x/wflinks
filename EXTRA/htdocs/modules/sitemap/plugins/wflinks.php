@@ -38,7 +38,7 @@ function b_sitemap_wflinks()
         if ($grouppermHandler->checkRight('WFLinkCatPerm', $myrow['cid'], $groups, $wflinkModule->getVar('mid'))) {
             $i                              = (int)$myrow['cid'];
             $sitemap['parent'][$i]['id']    = (int)$myrow['cid'];
-            $sitemap['parent'][$i]['title'] = $myts->htmlSpecialChars($myrow['title']);
+            $sitemap['parent'][$i]['title'] = htmlspecialchars($myrow['title']);
             $sitemap['parent'][$i]['url']   = 'viewcat.php?cid=' . (int)$myrow['cid'];
             $arr                            = [];
             if ($sitemap_configs['show_subcategoris']) {
@@ -47,7 +47,7 @@ function b_sitemap_wflinks()
                     if ($grouppermHandler->checkRight('WFLinkCatPerm', $ele['cid'], $groups, $wflinkModule->getVar('mid'))) {
                         $j                                           = $key;
                         $sitemap['parent'][$i]['child'][$j]['id']    = (int)$ele['cid'];
-                        $sitemap['parent'][$i]['child'][$j]['title'] = $myts->htmlSpecialChars($ele['title']);
+                        $sitemap['parent'][$i]['child'][$j]['title'] = htmlspecialchars($ele['title']);
                         $sitemap['parent'][$i]['child'][$j]['image'] = 2;
                         $sitemap['parent'][$i]['child'][$j]['url']   = 'viewcat.php?cid=' . (int)$ele['cid'];
                     }
