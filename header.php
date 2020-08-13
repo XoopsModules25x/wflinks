@@ -23,6 +23,6 @@ $helper = Wflinks\Helper::getInstance();
 $helper->loadLanguage('main');
 
 //require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfltextsanitizer.php';
-$wfmyts = new Wflinks\TextSanitizer(); // MyTextSanitizer object
+$myts =\TextSanitizer::getInstance(); // MyTextSanitizer object
 
 global $xoopModuleConfig;

@@ -42,7 +42,7 @@ if (null !== $helper->getConfig('showpagerank') && 1 == $helper->getConfig('show
 }
 
 if (isset($link_arr['screenshot'])) {
-    $link['screenshot_full'] = $wfmyts->htmlSpecialChars($link_arr['screenshot']);
+    $link['screenshot_full'] = $myts->htmlSpecialChars($link_arr['screenshot']);
     if (!empty($link_arr['screenshot'])
         && file_exists(XOOPS_ROOT_PATH . '/' . $helper->getConfig('screenshots') . '/' . xoops_trim($link_arr['screenshot']))) {
         if (null !== $helper->getConfig('usethumbs') && 1 == $helper->getConfig('usethumbs')) {
@@ -70,13 +70,13 @@ if (0 == $moderate) {
 }
 
 $link['updated'] = formatTimestamp($time, $helper->getConfig('dateformat'));
-$description     = $wfmyts->displayTarea($link_arr['description'], 1, 1, 1, 1, 1);
+$description     = $myts->displayTarea($link_arr['description'], 1, 1, 1, 1, 1);
 
 $link['description'] = xoops_substr($description, 0, $helper->getConfig('totalchars'), '...');
 xoops_load('XoopsUserUtility');
 $link['submitter'] = \XoopsUserUtility::getUnameFromId($link_arr['submitter']);
 $link['publisher'] = (isset($link_arr['publisher'])
-                      && !empty($link_arr['publisher'])) ? $wfmyts->htmlSpecialChars($link_arr['publisher']) : _MD_WFL_NOTSPECIFIED;
+                      && !empty($link_arr['publisher'])) ? $myts->htmlSpecialChars($link_arr['publisher']) : _MD_WFL_NOTSPECIFIED;
 
 $country             = $link_arr['country'];
 $link['country']     = XOOPS_URL . '/' . $helper->getConfig('flagimage') . '/' . $country . '.gif';

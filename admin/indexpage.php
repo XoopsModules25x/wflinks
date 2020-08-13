@@ -20,19 +20,19 @@ $cid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
 
 switch (mb_strtolower($op)) {
     case 'save':
-        $indexheading     = $wfmyts->addSlashes(xoops_trim($_REQUEST['indexheading']));
-        $indexheader      = $wfmyts->addSlashes(xoops_trim($_REQUEST['indexheader']));
-        $indexfooter      = $wfmyts->addSlashes(xoops_trim($_REQUEST['indexfooter']));
-        $indeximage       = $wfmyts->addSlashes($_REQUEST['indeximage']);
+        $indexheading     = $myts->addSlashes(xoops_trim($_REQUEST['indexheading']));
+        $indexheader      = $myts->addSlashes(xoops_trim($_REQUEST['indexheader']));
+        $indexfooter      = $myts->addSlashes(xoops_trim($_REQUEST['indexfooter']));
+        $indeximage       = $myts->addSlashes($_REQUEST['indeximage']);
         $nohtml           = isset($_REQUEST['nohtml']) ? 1 : 0;
         $nosmiley         = isset($_REQUEST['nosmiley']) ? 1 : 0;
         $noxcodes         = isset($_REQUEST['noxcodes']) ? 1 : 0;
         $noimages         = isset($_REQUEST['noimages']) ? 1 : 0;
         $nobreak          = isset($_REQUEST['nobreak']) ? 1 : 0;
-        $indexheaderalign = $wfmyts->addSlashes($_REQUEST['indexheaderalign']);
-        $indexfooteralign = $wfmyts->addSlashes($_REQUEST['indexfooteralign']);
+        $indexheaderalign = $myts->addSlashes($_REQUEST['indexheaderalign']);
+        $indexfooteralign = $myts->addSlashes($_REQUEST['indexfooteralign']);
         $lastlinksyn      = $_REQUEST['lastlinksyn'];
-        $lastlinkstotal   = $wfmyts->addSlashes($_REQUEST['lastlinkstotal']);
+        $lastlinkstotal   = $myts->addSlashes($_REQUEST['lastlinkstotal']);
         $sql              = 'UPDATE '
                             . $xoopsDB->prefix('wflinks_indexpage')
                             . " set indexheading='$indexheading', indexheader='$indexheader', indexfooter='$indexfooter', indeximage='$indeximage', indexheaderalign='$indexheaderalign ', indexfooteralign='$indexfooteralign', nohtml='$nohtml', nosmiley='$nosmiley', noxcodes='$noxcodes', noimages='$noimages', nobreak='$nobreak', lastlinksyn='$lastlinksyn', lastlinkstotal='$lastlinkstotal'";

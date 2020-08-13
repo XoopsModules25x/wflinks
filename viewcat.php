@@ -65,7 +65,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
                 if ($space > 0) {
                     $infercategories .= ', ';
                 }
-                $infercategories .= "<a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $sub_ele['cid'] . "'>" . $wfmyts->htmlSpecialChars($sub_ele['title']) . '</a> (' . $hassubitems['count'] . ')';
+                $infercategories .= "<a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $sub_ele['cid'] . "'>" . $myts->htmlSpecialChars($sub_ele['title']) . '</a> (' . $hassubitems['count'] . ')';
                 ++$space;
                 ++$chcount;
             }
@@ -92,7 +92,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         $xoopsTpl->append(
             'subcategories',
             [
-                'title'           => $wfmyts->htmlSpecialChars($ele['title']),
+                'title'           => $myts->htmlSpecialChars($ele['title']),
                 'id'              => $ele['cid'],
                 'image'           => XOOPS_URL . "/$imgurl",
                 'infercategories' => $infercategories,
@@ -114,7 +114,7 @@ $xcodes   = $head_arr['noxcodes'] ? 0 : 1;
 $images   = $head_arr['noimages'] ? 0 : 1;
 $breaks   = $head_arr['nobreak'] ? 1 : 0;
 
-$description = $wfmyts->displayTarea($head_arr['description'], $html, $smiley, $xcodes, $images, $breaks);
+$description = $myts->displayTarea($head_arr['description'], $html, $smiley, $xcodes, $images, $breaks);
 $xoopsTpl->assign('description', $description);
 $xoopsTpl->assign('xoops_pagetitle', $head_arr['title']);
 //$xoopsTpl -> assign( 'client_banner', Wflinks\Utility::getBannerFromIdClient($head_arr['client_id']) );

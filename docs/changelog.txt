@@ -94,7 +94,7 @@ x moved vCard to /classes (mamba)
 <hr>
 - changed editor list selection to dynamic (mamba)
 - replace http://mozshot.nemui.org with http://open.thumbshots.org for screenshots (Shine)
-- fixed bug related to $wfmyts constructor overriding (mamba)
+- fixed bug related to $myts constructor overriding (mamba)
 
 
 <h5>1.09 Beta 1         [2012-06-24]</h5>

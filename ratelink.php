@@ -12,7 +12,7 @@ use XoopsModules\Wflinks;
 
 require_once __DIR__ . '/header.php';
 
-global $wfmyts, $xoTheme;
+global $myts, $xoTheme;
 
 // Check if linkload POSTER is voting (UNLESS Anonymous users allowed to post)
 $lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
@@ -55,7 +55,7 @@ if (!empty($_POST['submit'])) {
     $lid          = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
     $cid          = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
     $rating       = Wflinks\Utility::cleanRequestVars($_REQUEST, 'rating', 0);
-    $title        = $wfmyts->addSlashes(trim($_POST['title']));
+    $title        = $myts->addSlashes(trim($_POST['title']));
     $lid          = (int)$lid;
     $cid          = (int)$cid;
     $rating       = (int)$rating;
@@ -90,7 +90,7 @@ if (!empty($_POST['submit'])) {
 
     $result = $xoopsDB->query('SELECT title FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid);
     list($title) = $xoopsDB->fetchRow($result);
-    $xoopsTpl->assign('link', ['id' => $lid, 'cid' => $cid, 'title' => $wfmyts->htmlSpecialChars($title)]);
+    $xoopsTpl->assign('link', ['id' => $lid, 'cid' => $cid, 'title' => $myts->htmlSpecialChars($title)]);
 
     if (is_object($xoTheme)) {
         $xoTheme->addMeta('meta', 'robots', 'noindex,nofollow');

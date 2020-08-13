@@ -39,7 +39,7 @@ function createCat($cid = 0)
     // require_once  dirname(__DIR__) . '/class/wfllists.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    global $xoopsDB, $wfmyts, $totalcats, $xoopsModule;
+    global $xoopsDB, $myts, $totalcats, $xoopsModule;
     /** @var Wflinks\Helper $helper */
     $helper = Wflinks\Helper::getInstance();
 
@@ -64,9 +64,9 @@ function createCat($cid = 0)
     if ($cid) {
         $sql          = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . " WHERE cid=$cid";
         $cat_arr      = $xoopsDB->fetchArray($xoopsDB->query($sql));
-        $title        = $wfmyts->htmlSpecialChars($cat_arr['title']);
-        $imgurl       = $wfmyts->htmlSpecialChars($cat_arr['imgurl']);
-        $description  = $wfmyts->htmlSpecialChars($cat_arr['description']);
+        $title        = $myts->htmlSpecialChars($cat_arr['title']);
+        $imgurl       = $myts->htmlSpecialChars($cat_arr['imgurl']);
+        $description  = $myts->htmlSpecialChars($cat_arr['description']);
         $nohtml       = (int)$cat_arr['nohtml'];
         $nosmiley     = (int)$cat_arr['nosmiley'];
         $noxcodes     = (int)$cat_arr['noxcodes'];

@@ -50,7 +50,7 @@ require XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/config/config.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-$wfmyts = new Wflinks\TextSanitizer(); // MyTextSanitizer object
+$myts =\TextSanitizer::getInstance(); // MyTextSanitizer object
 
 $imageArray = [
     'editimg'     => "<img src='$pathIcon16/edit.png' alt='" . _AM_WFL_ICO_EDIT . "' align='middle'>",

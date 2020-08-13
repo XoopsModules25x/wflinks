@@ -26,7 +26,7 @@ $lid = (int)Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
  */
 function edit($lid = 0)
 {
-    global $xoopsDB, $wfmyts, $mytree, $imageArray, $xoopsConfig, $xoopsModule, $xoopsUser;
+    global $xoopsDB, $myts, $mytree, $imageArray, $xoopsConfig, $xoopsModule, $xoopsUser;
     /** @var Wflinks\Helper $helper */
     $helper = Wflinks\Helper::getInstance();
 
@@ -43,12 +43,12 @@ function edit($lid = 0)
     $directory    = $helper->getConfig('screenshots');
     $lid          = $link_array['lid'] ?: 0;
     $cid          = $link_array['cid'] ?: 0;
-    $title        = $link_array['title'] ? $wfmyts->htmlSpecialChars($link_array['title']) : '';
-    $url          = $link_array['url'] ? $wfmyts->htmlSpecialChars($link_array['url']) : 'http://';
-    $publisher    = $link_array['publisher'] ? $wfmyts->htmlSpecialChars($link_array['publisher']) : '';
-    $submitter    = $link_array['submitter'] ? $wfmyts->htmlSpecialChars($link_array['submitter']) : '';
-    $screenshot   = $link_array['screenshot'] ? $wfmyts->htmlSpecialChars($link_array['screenshot']) : '';
-    $descriptionb = $link_array['description'] ? $wfmyts->htmlSpecialChars($link_array['description']) : '';
+    $title        = $link_array['title'] ? $myts->htmlSpecialChars($link_array['title']) : '';
+    $url          = $link_array['url'] ? $myts->htmlSpecialChars($link_array['url']) : 'http://';
+    $publisher    = $link_array['publisher'] ? $myts->htmlSpecialChars($link_array['publisher']) : '';
+    $submitter    = $link_array['submitter'] ? $myts->htmlSpecialChars($link_array['submitter']) : '';
+    $screenshot   = $link_array['screenshot'] ? $myts->htmlSpecialChars($link_array['screenshot']) : '';
+    $descriptionb = $link_array['description'] ? $myts->htmlSpecialChars($link_array['description']) : '';
     $published    = $link_array['published'] ?: time();
     $expired      = $link_array['expired'] ?: 0;
     $updated      = $link_array['updated'] ?: 0;
@@ -56,23 +56,23 @@ function edit($lid = 0)
     $forumid      = $link_array['forumid'] ?: 0;
     $ipaddress    = $link_array['ipaddress'] ?: 0;
     $notifypub    = $link_array['notifypub'] ?: 0;
-    $country      = $link_array['country'] ? $wfmyts->htmlSpecialChars($link_array['country']) : '-';
-    $keywords     = $link_array['keywords'] ? $wfmyts->htmlSpecialChars($link_array['keywords']) : '';
-    $item_tag     = $link_array['item_tag'] ? $wfmyts->htmlSpecialChars($link_array['item_tag']) : '';
-    $googlemap    = $link_array['googlemap'] ? $wfmyts->htmlSpecialChars($link_array['googlemap']) : 'http://maps.google.com';
-    $yahoomap     = $link_array['yahoomap'] ? $wfmyts->htmlSpecialChars($link_array['yahoomap']) : 'http://maps.yahoo.com';
-    $multimap     = $link_array['multimap'] ? $wfmyts->htmlSpecialChars($link_array['multimap']) : 'http://www.multimap.com';
-    $street1      = $link_array['street1'] ? $wfmyts->htmlSpecialChars($link_array['street1']) : '';
-    $street2      = $link_array['street2'] ? $wfmyts->htmlSpecialChars($link_array['street2']) : '';
-    $town         = $link_array['town'] ? $wfmyts->htmlSpecialChars($link_array['town']) : '';
-    $state        = $link_array['state'] ? $wfmyts->htmlSpecialChars($link_array['state']) : '';
-    $zip          = $link_array['zip'] ? $wfmyts->htmlSpecialChars($link_array['zip']) : '';
-    $tel          = $link_array['tel'] ? $wfmyts->htmlSpecialChars($link_array['tel']) : '';
-    $mobile       = $link_array['mobile'] ? $wfmyts->htmlSpecialChars($link_array['mobile']) : '';
-    $voip         = $link_array['voip'] ? $wfmyts->htmlSpecialChars($link_array['voip']) : '';
-    $fax          = $link_array['fax'] ? $wfmyts->htmlSpecialChars($link_array['fax']) : '';
-    $email        = $link_array['email'] ? $wfmyts->htmlSpecialChars($link_array['email']) : '';
-    $vat          = $link_array['vat'] ? $wfmyts->htmlSpecialChars($link_array['vat']) : '';
+    $country      = $link_array['country'] ? $myts->htmlSpecialChars($link_array['country']) : '-';
+    $keywords     = $link_array['keywords'] ? $myts->htmlSpecialChars($link_array['keywords']) : '';
+    $item_tag     = $link_array['item_tag'] ? $myts->htmlSpecialChars($link_array['item_tag']) : '';
+    $googlemap    = $link_array['googlemap'] ? $myts->htmlSpecialChars($link_array['googlemap']) : 'http://maps.google.com';
+    $yahoomap     = $link_array['yahoomap'] ? $myts->htmlSpecialChars($link_array['yahoomap']) : 'http://maps.yahoo.com';
+    $multimap     = $link_array['multimap'] ? $myts->htmlSpecialChars($link_array['multimap']) : 'http://www.multimap.com';
+    $street1      = $link_array['street1'] ? $myts->htmlSpecialChars($link_array['street1']) : '';
+    $street2      = $link_array['street2'] ? $myts->htmlSpecialChars($link_array['street2']) : '';
+    $town         = $link_array['town'] ? $myts->htmlSpecialChars($link_array['town']) : '';
+    $state        = $link_array['state'] ? $myts->htmlSpecialChars($link_array['state']) : '';
+    $zip          = $link_array['zip'] ? $myts->htmlSpecialChars($link_array['zip']) : '';
+    $tel          = $link_array['tel'] ? $myts->htmlSpecialChars($link_array['tel']) : '';
+    $mobile       = $link_array['mobile'] ? $myts->htmlSpecialChars($link_array['mobile']) : '';
+    $voip         = $link_array['voip'] ? $myts->htmlSpecialChars($link_array['voip']) : '';
+    $fax          = $link_array['fax'] ? $myts->htmlSpecialChars($link_array['fax']) : '';
+    $email        = $link_array['email'] ? $myts->htmlSpecialChars($link_array['email']) : '';
+    $vat          = $link_array['vat'] ? $myts->htmlSpecialChars($link_array['vat']) : '';
 
     require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
@@ -454,9 +454,9 @@ switch (mb_strtolower($op)) {
 
                 $lid   = $published['lid'];
                 $cid   = $published['cid'];
-                $title = "<a href='../singlelink.php?cid=" . $published['cid'] . '&amp;lid=' . $published['lid'] . "'>" . $wfmyts->htmlSpecialChars(trim($published['title'])) . '</a>';
+                $title = "<a href='../singlelink.php?cid=" . $published['cid'] . '&amp;lid=' . $published['lid'] . "'>" . $myts->htmlSpecialChars(trim($published['title'])) . '</a>';
 
-                $maintitle = urlencode($wfmyts->htmlSpecialChars(trim($published['title'])));
+                $maintitle = urlencode($myts->htmlSpecialChars(trim($published['title'])));
                 $submitter = \XoopsUserUtility::getUnameFromId($published['submitter']);
                 $publish   = formatTimestamp($published['published'], $helper->getConfig('dateformatadmin'));
                 $status    = ($published['published'] > 0) ? $imageArray['online'] : "<a href='newlinks.php'>" . $imageArray['offline'] . '</a>';
@@ -488,37 +488,37 @@ switch (mb_strtolower($op)) {
         $cid       = !empty($_POST['cid']) ? $_POST['cid'] : 0;
         $urlrating = !empty($_POST['urlrating']) ? $_POST['urlrating'] : 6;
         $status    = !empty($_POST['status']) ? $_POST['status'] : 2;
-        $url       = ('http://' !== $_POST['url']) ? $wfmyts->addSlashes($_POST['url']) : '';
-        $title     = $wfmyts->addSlashes(trim($_POST['title']));
+        $url       = ('http://' !== $_POST['url']) ? $myts->addSlashes($_POST['url']) : '';
+        $title     = $myts->addSlashes(trim($_POST['title']));
 
         // Get data from form
-        $screenshot   = ('blank.gif' !== $_POST['screenshot']) ? $wfmyts->addSlashes($_POST['screenshot']) : '';
-        $descriptionb = $wfmyts->addSlashes(trim($_POST['descriptionb']));
-        $country      = $wfmyts->addSlashes(trim($_POST['country']));
-        $keywords     = $wfmyts->addSlashes(trim(mb_substr($_POST['keywords'], 0, $helper->getConfig('keywordlength'))));
-        $item_tag     = $wfmyts->addSlashes(trim($_POST['item_tag']));
+        $screenshot   = ('blank.gif' !== $_POST['screenshot']) ? $myts->addSlashes($_POST['screenshot']) : '';
+        $descriptionb = $myts->addSlashes(trim($_POST['descriptionb']));
+        $country      = $myts->addSlashes(trim($_POST['country']));
+        $keywords     = $myts->addSlashes(trim(mb_substr($_POST['keywords'], 0, $helper->getConfig('keywordlength'))));
+        $item_tag     = $myts->addSlashes(trim($_POST['item_tag']));
         $forumid      = (isset($_POST['forumid']) && $_POST['forumid'] > 0) ? Request::getInt('forumid', 0, 'POST') : 0;
         if ($helper->getConfig('useaddress')) {
-            $googlemap = ('http://maps.google.com' !== $_POST['googlemap']) ? $wfmyts->addSlashes($_POST['googlemap']) : '';
-            $yahoomap  = ('http://maps.yahoo.com' !== $_POST['yahoomap']) ? $wfmyts->addSlashes($_POST['yahoomap']) : '';
-            $multimap  = ('http://www.multimap.com' !== $_POST['multimap']) ? $wfmyts->addSlashes($_POST['multimap']) : '';
-            $street1   = $wfmyts->addSlashes(trim($_POST['street1']));
-            $street2   = $wfmyts->addSlashes(trim($_POST['street2']));
-            $town      = $wfmyts->addSlashes(trim($_POST['town']));
-            $state     = $wfmyts->addSlashes(trim($_POST['state']));
-            $zip       = $wfmyts->addSlashes(trim($_POST['zip']));
-            $tel       = $wfmyts->addSlashes(trim($_POST['tel']));
-            $fax       = $wfmyts->addSlashes(trim($_POST['fax']));
-            $voip      = $wfmyts->addSlashes(trim($_POST['voip']));
-            $mobile    = $wfmyts->addSlashes(trim($_POST['mobile']));
-            $email     = Wflinks\Utility::convertEmail($wfmyts->addSlashes(trim($_POST['email'])));
-            $vat       = $wfmyts->addSlashes(trim($_POST['vat']));
+            $googlemap = ('http://maps.google.com' !== $_POST['googlemap']) ? $myts->addSlashes($_POST['googlemap']) : '';
+            $yahoomap  = ('http://maps.yahoo.com' !== $_POST['yahoomap']) ? $myts->addSlashes($_POST['yahoomap']) : '';
+            $multimap  = ('http://www.multimap.com' !== $_POST['multimap']) ? $myts->addSlashes($_POST['multimap']) : '';
+            $street1   = $myts->addSlashes(trim($_POST['street1']));
+            $street2   = $myts->addSlashes(trim($_POST['street2']));
+            $town      = $myts->addSlashes(trim($_POST['town']));
+            $state     = $myts->addSlashes(trim($_POST['state']));
+            $zip       = $myts->addSlashes(trim($_POST['zip']));
+            $tel       = $myts->addSlashes(trim($_POST['tel']));
+            $fax       = $myts->addSlashes(trim($_POST['fax']));
+            $voip      = $myts->addSlashes(trim($_POST['voip']));
+            $mobile    = $myts->addSlashes(trim($_POST['mobile']));
+            $email     = Wflinks\Utility::convertEmail($myts->addSlashes(trim($_POST['email'])));
+            $vat       = $myts->addSlashes(trim($_POST['vat']));
         } else {
             $googlemap = $yahoomap = $multimap = $street1 = $street2 = $town = $state = $zip = $tel = $fax = $voip = $mobile = $email = $vat = '';
         }
 
         $submitter = $xoopsUser->uid();
-        $publisher = $wfmyts->addSlashes(trim($_POST['publisher']));
+        $publisher = $myts->addSlashes(trim($_POST['publisher']));
 
         $published = strtotime($_POST['published']['date']) + $_POST['published']['time'];
         $updated   = (isset($_POST['was_published']) && 0 == $_POST['was_published']) ? 0 : time();

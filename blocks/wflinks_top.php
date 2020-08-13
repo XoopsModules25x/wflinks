@@ -75,7 +75,7 @@ function b_wflinks_top_show($options)
     $wflModule       = $moduleHandler->getByDirname($moduleDirName);
     $configHandler   = xoops_getHandler('config');
     $wflModuleConfig = $configHandler->getConfigsByCat(0, $wflModule->getVar('mid'));
-    $wfmyts          = MyTextSanitizer:: getInstance();
+    $myts          = MyTextSanitizer:: getInstance();
 
     $result = $xoopsDB->query('SELECT lid, cid, title, published, hits FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0 AND published <= ' . $time . ' AND (expired = 0 OR expired > ' . $time . ') AND offline = 0 ORDER BY ' . $options[0] . ' DESC', $options[1], 0);
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
@@ -83,7 +83,7 @@ function b_wflinks_top_show($options)
             continue;
         }
         $linkload = [];
-        $title    = $wfmyts->htmlSpecialChars($myrow['title']);
+        $title    = $myts->htmlSpecialChars($myrow['title']);
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
                 $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';

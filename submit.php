@@ -19,7 +19,7 @@ require XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 $helper = Wflinks\Helper::getInstance();
 
 $mytree = new Wflinks\Tree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
-global $wfmyts;
+global $myts;
 
 $cid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
 $lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
@@ -41,36 +41,36 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
         $offline      = Wflinks\Utility::cleanRequestVars($_REQUEST, 'offline', 0);
         $notifypub    = Wflinks\Utility::cleanRequestVars($_REQUEST, 'notifypub', 0);
         $approve      = Wflinks\Utility::cleanRequestVars($_REQUEST, 'approve', 0);
-        $url          = $wfmyts->addSlashes(ltrim($_POST['url']));
-        $title        = $wfmyts->addSlashes(ltrim($_REQUEST['title']));
-        $descriptionb = $wfmyts->addSlashes(ltrim($_REQUEST['descriptionb']));
-        $keywords     = $wfmyts->addSlashes(trim(mb_substr($_POST['keywords'], 0, $helper->getConfig('keywordlength'))));
+        $url          = $myts->addSlashes(ltrim($_POST['url']));
+        $title        = $myts->addSlashes(ltrim($_REQUEST['title']));
+        $descriptionb = $myts->addSlashes(ltrim($_REQUEST['descriptionb']));
+        $keywords     = $myts->addSlashes(trim(mb_substr($_POST['keywords'], 0, $helper->getConfig('keywordlength'))));
 
         $item_tag = '';
         if ($helper->getConfig('usercantag')) {
-            $item_tag = $wfmyts->addSlashes(ltrim($_REQUEST['item_tag']));
+            $item_tag = $myts->addSlashes(ltrim($_REQUEST['item_tag']));
         }
 
         if ($helper->getConfig('useaddress')) {
-            $googlemap = ('http://maps.google.com' !== $_POST['googlemap']) ? $wfmyts->addSlashes($_POST['googlemap']) : '';
-            $yahoomap  = ('http://maps.yahoo.com' !== $_POST['yahoomap']) ? $wfmyts->addSlashes($_POST['yahoomap']) : '';
-            $multimap  = ('http://www.multimap.com' !== $_POST['multimap']) ? $wfmyts->addSlashes($_POST['multimap']) : '';
-            $street1   = $wfmyts->addSlashes(ltrim($_REQUEST['street1']));
-            $street2   = $wfmyts->addSlashes(ltrim($_REQUEST['street2']));
-            $town      = $wfmyts->addSlashes(ltrim($_REQUEST['town']));
-            $state     = $wfmyts->addSlashes(ltrim($_REQUEST['state']));
-            $zip       = $wfmyts->addSlashes(ltrim($_REQUEST['zip']));
-            $tel       = $wfmyts->addSlashes(ltrim($_REQUEST['tel']));
-            $fax       = $wfmyts->addSlashes(ltrim($_REQUEST['fax']));
-            $voip      = $wfmyts->addSlashes(ltrim($_REQUEST['voip']));
-            $mobile    = $wfmyts->addSlashes(ltrim($_REQUEST['mobile']));
-            $email     = Wflinks\Utility::convertEmail($wfmyts->addSlashes(ltrim($_REQUEST['email'])));
-            $vat       = $wfmyts->addSlashes(ltrim($_REQUEST['vat']));
+            $googlemap = ('http://maps.google.com' !== $_POST['googlemap']) ? $myts->addSlashes($_POST['googlemap']) : '';
+            $yahoomap  = ('http://maps.yahoo.com' !== $_POST['yahoomap']) ? $myts->addSlashes($_POST['yahoomap']) : '';
+            $multimap  = ('http://www.multimap.com' !== $_POST['multimap']) ? $myts->addSlashes($_POST['multimap']) : '';
+            $street1   = $myts->addSlashes(ltrim($_REQUEST['street1']));
+            $street2   = $myts->addSlashes(ltrim($_REQUEST['street2']));
+            $town      = $myts->addSlashes(ltrim($_REQUEST['town']));
+            $state     = $myts->addSlashes(ltrim($_REQUEST['state']));
+            $zip       = $myts->addSlashes(ltrim($_REQUEST['zip']));
+            $tel       = $myts->addSlashes(ltrim($_REQUEST['tel']));
+            $fax       = $myts->addSlashes(ltrim($_REQUEST['fax']));
+            $voip      = $myts->addSlashes(ltrim($_REQUEST['voip']));
+            $mobile    = $myts->addSlashes(ltrim($_REQUEST['mobile']));
+            $email     = Wflinks\Utility::convertEmail($myts->addSlashes(ltrim($_REQUEST['email'])));
+            $vat       = $myts->addSlashes(ltrim($_REQUEST['vat']));
         } else {
             $googlemap = $yahoomap = $multimap = $street1 = $street2 = $town = $state = $zip = $tel = $fax = $voip = $mobile = $email = $vat = '';
         }
 
-        $country = $wfmyts->addSlashes(ltrim($_REQUEST['country']));
+        $country = $myts->addSlashes(ltrim($_REQUEST['country']));
 
         $date        = time();
         $publishdate = 0;
@@ -207,7 +207,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
             require XOOPS_ROOT_PATH . '/header.php';
 
             $xoopsTpl->assign('image_header', Wflinks\Utility::getImageHeader());
-            $xoopsTpl->assign('disclaimer', $wfmyts->displayTarea($helper->getConfig('disclaimer'), 1, 1, 1, 1, 1));
+            $xoopsTpl->assign('disclaimer', $myts->displayTarea($helper->getConfig('disclaimer'), 1, 1, 1, 1, 1));
             $xoopsTpl->assign('cancel_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php');
             $xoopsTpl->assign('link_disclaimer', false);
             if (!isset($_REQUEST['lid'])) {
@@ -228,11 +228,11 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
 
         $lid          = $link_array['lid'] ?: 0;
         $cid          = $link_array['cid'] ?: 0;
-        $title        = $link_array['title'] ? $wfmyts->htmlSpecialChars($link_array['title']) : '';
-        $url          = $link_array['url'] ? $wfmyts->htmlSpecialChars($link_array['url']) : 'http://';
-        $publisher    = $link_array['publisher'] ? $wfmyts->htmlSpecialChars($link_array['publisher']) : '';
-        $screenshot   = $link_array['screenshot'] ? $wfmyts->htmlSpecialChars($link_array['screenshot']) : '';
-        $descriptionb = $link_array['description'] ? $wfmyts->htmlSpecialChars($link_array['description']) : '';
+        $title        = $link_array['title'] ? $myts->htmlSpecialChars($link_array['title']) : '';
+        $url          = $link_array['url'] ? $myts->htmlSpecialChars($link_array['url']) : 'http://';
+        $publisher    = $link_array['publisher'] ? $myts->htmlSpecialChars($link_array['publisher']) : '';
+        $screenshot   = $link_array['screenshot'] ? $myts->htmlSpecialChars($link_array['screenshot']) : '';
+        $descriptionb = $link_array['description'] ? $myts->htmlSpecialChars($link_array['description']) : '';
         $published    = $link_array['published'] ?: 0;
         $expired      = $link_array['expired'] ?: 0;
         $updated      = $link_array['updated'] ?: 0;
@@ -240,25 +240,25 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
         $forumid      = $link_array['forumid'] ?: 0;
         $ipaddress    = $link_array['ipaddress'] ?: 0;
         $notifypub    = $link_array['notifypub'] ?: 0;
-        $country      = $link_array['country'] ? $wfmyts->htmlSpecialChars($link_array['country']) : '-';
-        $keywords     = $link_array['keywords'] ? $wfmyts->htmlSpecialChars($link_array['keywords']) : '';
-        $item_tag     = $link_array['item_tag'] ? $wfmyts->htmlSpecialChars($link_array['item_tag']) : '';
+        $country      = $link_array['country'] ? $myts->htmlSpecialChars($link_array['country']) : '-';
+        $keywords     = $link_array['keywords'] ? $myts->htmlSpecialChars($link_array['keywords']) : '';
+        $item_tag     = $link_array['item_tag'] ? $myts->htmlSpecialChars($link_array['item_tag']) : '';
 
-        $googlemap = $link_array['googlemap'] ? $wfmyts->htmlSpecialChars($link_array['googlemap']) : 'http://maps.google.com';
-        $yahoomap  = $link_array['yahoomap'] ? $wfmyts->htmlSpecialChars($link_array['yahoomap']) : 'http://maps.yahoo.com';
-        $multimap  = $link_array['multimap'] ? $wfmyts->htmlSpecialChars($link_array['multimap']) : 'http://www.multimap.com';
+        $googlemap = $link_array['googlemap'] ? $myts->htmlSpecialChars($link_array['googlemap']) : 'http://maps.google.com';
+        $yahoomap  = $link_array['yahoomap'] ? $myts->htmlSpecialChars($link_array['yahoomap']) : 'http://maps.yahoo.com';
+        $multimap  = $link_array['multimap'] ? $myts->htmlSpecialChars($link_array['multimap']) : 'http://www.multimap.com';
 
-        $street1 = $link_array['street1'] ? $wfmyts->htmlSpecialChars($link_array['street1']) : '';
-        $street2 = $link_array['street2'] ? $wfmyts->htmlSpecialChars($link_array['street2']) : '';
-        $town    = $link_array['town'] ? $wfmyts->htmlSpecialChars($link_array['town']) : '';
-        $state   = $link_array['state'] ? $wfmyts->htmlSpecialChars($link_array['state']) : '';
-        $zip     = $link_array['zip'] ? $wfmyts->htmlSpecialChars($link_array['zip']) : '';
-        $tel     = $link_array['tel'] ? $wfmyts->htmlSpecialChars($link_array['tel']) : '';
-        $mobile  = $link_array['mobile'] ? $wfmyts->htmlSpecialChars($link_array['mobile']) : '';
-        $voip    = $link_array['voip'] ? $wfmyts->htmlSpecialChars($link_array['voip']) : '';
-        $fax     = $link_array['fax'] ? $wfmyts->htmlSpecialChars($link_array['fax']) : '';
-        $email   = $link_array['email'] ? $wfmyts->htmlSpecialChars($link_array['email']) : '';
-        $vat     = $link_array['vat'] ? $wfmyts->htmlSpecialChars($link_array['vat']) : '';
+        $street1 = $link_array['street1'] ? $myts->htmlSpecialChars($link_array['street1']) : '';
+        $street2 = $link_array['street2'] ? $myts->htmlSpecialChars($link_array['street2']) : '';
+        $town    = $link_array['town'] ? $myts->htmlSpecialChars($link_array['town']) : '';
+        $state   = $link_array['state'] ? $myts->htmlSpecialChars($link_array['state']) : '';
+        $zip     = $link_array['zip'] ? $myts->htmlSpecialChars($link_array['zip']) : '';
+        $tel     = $link_array['tel'] ? $myts->htmlSpecialChars($link_array['tel']) : '';
+        $mobile  = $link_array['mobile'] ? $myts->htmlSpecialChars($link_array['mobile']) : '';
+        $voip    = $link_array['voip'] ? $myts->htmlSpecialChars($link_array['voip']) : '';
+        $fax     = $link_array['fax'] ? $myts->htmlSpecialChars($link_array['fax']) : '';
+        $email   = $link_array['email'] ? $myts->htmlSpecialChars($link_array['email']) : '';
+        $vat     = $link_array['vat'] ? $myts->htmlSpecialChars($link_array['vat']) : '';
 
         $sform = new \XoopsThemeForm(_MD_WFL_SUBMITCATHEAD, 'storyform', xoops_getenv('SCRIPT_NAME'), 'post', true);
         $sform->setExtra('enctype="multipart/form-data"');

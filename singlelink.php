@@ -68,7 +68,7 @@ if (Wflinks\Utility::isTagModuleIncluded()) {
 //$link['imageheader'] = Wflinks\Utility::getImageHeader();
 $link['id']           = $link_arr['lid'];
 $link['cid']          = $link_arr['cid'];
-$link['description2'] = $wfmyts->displayTarea($link_arr['description'], 1, 1, 1, 1, 1);
+$link['description2'] = $myts->displayTarea($link_arr['description'], 1, 1, 1, 1, 1);
 $link['sbmarks']      = wflinks_sbmarks($link_arr['lid']);
 
 // Address
@@ -199,7 +199,7 @@ $sql    = 'SELECT lid, cid, title, published FROM ' . $xoopsDB->prefix('wflinks_
 $result = $xoopsDB->query($sql, 10, 0);
 
 while (false !== ($arr = $xoopsDB->fetchArray($result))) {
-    $linkuid['title']     = $wfmyts->htmlSpecialChars($arr['title']);
+    $linkuid['title']     = $myts->htmlSpecialChars($arr['title']);
     $linkuid['lid']       = $arr['lid'];
     $linkuid['cid']       = $arr['cid'];
     $linkuid['published'] = formatTimestamp($arr['published'], $helper->getConfig('dateformat'));

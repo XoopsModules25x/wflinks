@@ -26,7 +26,7 @@ $story->setTitle($title);
 $_linkid = (isset($lid) && $lid > 0) ? $lid : $newid;
 $_link   = $_REQUEST['descriptionb'] . '<br><div><a href=' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlelink.php?cid=' . $cid . '&amp;lid=' . $_linkid . '>' . $title . '</a></div>';
 
-$description = $wfmyts->addSlashes(trim($_link));
+$description = $myts->addSlashes(trim($_link));
 $story->setHometext($description);
 $story->setBodytext('');
 $nohtml   = empty($nohtml) ? 0 : 1;

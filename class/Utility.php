@@ -728,15 +728,15 @@ class Utility extends Common\SysUtility
      */
     public static function getLinkListBody($published)
     {
-        global $wfmyts, $imageArray, $xoopsModule;
+        global $myts, $imageArray, $xoopsModule;
         /** @var Wflinks\Helper $helper */
         $helper = Wflinks\Helper::getInstance();
         \xoops_load('XoopsUserUtility');
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title     = "<a href='../singlelink.php?cid=" . $published['cid'] . '&amp;lid=' . $published['lid'] . "'>" . $wfmyts->htmlSpecialChars(\trim($published['title'])) . '</a>';
-        $maintitle = \urlencode($wfmyts->htmlSpecialChars(\trim($published['title'])));
+        $title     = "<a href='../singlelink.php?cid=" . $published['cid'] . '&amp;lid=' . $published['lid'] . "'>" . $myts->htmlSpecialChars(\trim($published['title'])) . '</a>';
+        $maintitle = \urlencode($myts->htmlSpecialChars(\trim($published['title'])));
         $cattitle  = static::getCategoryTitle($published['cid']);
         $submitter = \XoopsUserUtility::getUnameFromId($published['submitter']);
         $hwhoisurl = \str_replace('http://', '', $published['url']);
@@ -759,7 +759,7 @@ class Utility extends Common\SysUtility
         }
         $icon = "<a href='main.php?op=edit&amp;lid=" . $lid . "' title='" . _AM_WFL_ICO_EDIT . "'>" . $imageArray['editimg'] . '</a>&nbsp;';
         $icon .= "<a href='main.php?op=delete&amp;lid=" . $lid . "' title='" . _AM_WFL_ICO_DELETE . "'>" . $imageArray['deleteimg'] . '</a>&nbsp;';
-        $icon .= "<a href='altcat.php?op=main&amp;cid=" . $cid . '&amp;lid=' . $lid . '&amp;title=' . $wfmyts->htmlSpecialChars(\trim($published['title'])) . "' title='" . _AM_WFL_ALTCAT_CREATEF . "'>" . $imageArray['altcat'] . '</a>&nbsp;';
+        $icon .= "<a href='altcat.php?op=main&amp;cid=" . $cid . '&amp;lid=' . $lid . '&amp;title=' . $myts->htmlSpecialChars(\trim($published['title'])) . "' title='" . _AM_WFL_ALTCAT_CREATEF . "'>" . $imageArray['altcat'] . '</a>&nbsp;';
         $icon .= '<a href="http://whois.domaintools.com/' . $hwhoisurl . '" target="_blank"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/domaintools.png" alt="WHOIS" title="WHOIS" align="absmiddle"></a>';
 
         echo "

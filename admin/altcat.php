@@ -26,7 +26,7 @@ $lid = (int)Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
  */
 function makeTreeCheckTable(Wflinks\Tree $xt, $itemid, $title, $checks)
 {
-    global $wfmyts;
+    global $myts;
 
     echo "<div style='text-align: left;'>\n";
     echo "<form name='altcat' method='post' action='" . xoops_getenv('SCRIPT_NAME') . "'>\n";
@@ -50,7 +50,7 @@ function makeTreeCheckTable(Wflinks\Tree $xt, $itemid, $title, $checks)
 
         foreach ($arr as $cat) {
             $cat['prefix'] = str_replace('.', '-', $cat['prefix']);
-            $catpath       = $cat['prefix'] . '&nbsp;' . $wfmyts->htmlSpecialChars($cat[$title]) . '&nbsp;';
+            $catpath       = $cat['prefix'] . '&nbsp;' . $myts->htmlSpecialChars($cat[$title]) . '&nbsp;';
             $checked       = array_key_exists($cat['cid'], $checks) ? 'checked' : '';
             $disabled      = ($cat['cid'] == Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
             $level         = mb_substr_count($cat['prefix'], '-') + 1;
@@ -112,7 +112,7 @@ switch (mb_strtolower($op)) {
             </fieldset>\n
         ";
 
-        echo "<div style='text-align: left; font-size: larger;'><h4>" . $wfmyts->htmlSpecialChars(trim($_GET['title'])) . '</h4></div>';
+        echo "<div style='text-align: left; font-size: larger;'><h4>" . $myts->htmlSpecialChars(trim($_GET['title'])) . '</h4></div>';
         // Get an array of all alternate categories for this topic
         $sql     = $xoopsDB->query('SELECT cid FROM ' . $xoopsDB->prefix('wflinks_altcat') . ' WHERE lid=' . $lid . ' ORDER BY lid');
         $altcats = [];

@@ -49,7 +49,7 @@ if (0 == $agreed && $helper->getConfig('showlinkdisclaimer')) {
     require XOOPS_ROOT_PATH . '/header.php';
 
     $xoopsTpl->assign('image_header', Wflinks\Utility::getImageHeader());
-    $xoopsTpl->assign('linkdisclaimer', $wfmyts->displayTarea($helper->getConfig('linkdisclaimer'), 1, 1, 1, 1, 1));
+    $xoopsTpl->assign('linkdisclaimer', $myts->displayTarea($helper->getConfig('linkdisclaimer'), 1, 1, 1, 1, 1));
     $xoopsTpl->assign('cancel_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php');
     $xoopsTpl->assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/visit.php?agree=1&amp;lid=' . $lid . '&amp;cid=' . $cid);
     $xoopsTpl->assign('link_disclaimer', true);

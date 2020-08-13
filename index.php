@@ -28,9 +28,9 @@ $sql      = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_indexpage');
 $head_arr = $xoopsDB->fetchArray($xoopsDB->query($sql));
 
 $catarray['imageheader']      = Wflinks\Utility::getImageHeader($head_arr['indeximage'], $head_arr['indexheading']);
-$catarray['indexheading']     = $wfmyts->displayTarea($head_arr['indexheading']);
-$catarray['indexheaderalign'] = $wfmyts->htmlSpecialChars($head_arr['indexheaderalign']);
-$catarray['indexfooteralign'] = $wfmyts->htmlSpecialChars($head_arr['indexfooteralign']);
+$catarray['indexheading']     = $myts->displayTarea($head_arr['indexheading']);
+$catarray['indexheaderalign'] = $myts->htmlSpecialChars($head_arr['indexheaderalign']);
+$catarray['indexfooteralign'] = $myts->htmlSpecialChars($head_arr['indexfooteralign']);
 
 $html   = $head_arr['nohtml'] ? 0 : 1;
 $smiley = $head_arr['nosmiley'] ? 0 : 1;
@@ -38,8 +38,8 @@ $xcodes = $head_arr['noxcodes'] ? 0 : 1;
 $images = $head_arr['noimages'] ? 0 : 1;
 $breaks = $head_arr['nobreak'] ? 1 : 0;
 
-$catarray['indexheader'] = $wfmyts->displayTarea($head_arr['indexheader'], $html, $smiley, $xcodes, $images, $breaks);
-$catarray['indexfooter'] = $wfmyts->displayTarea($head_arr['indexfooter'], $html, $smiley, $xcodes, $images, $breaks);
+$catarray['indexheader'] = $myts->displayTarea($head_arr['indexheader'], $html, $smiley, $xcodes, $images, $breaks);
+$catarray['indexfooter'] = $myts->displayTarea($head_arr['indexfooter'], $html, $smiley, $xcodes, $images, $breaks);
 $catarray['letters']     = Wflinks\Utility::getLetters();
 $catarray['toolbar']     = Wflinks\Utility::getToolbar();
 $xoopsTpl->assign('catarray', $catarray);
@@ -61,7 +61,7 @@ while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
     $totallinkload    = Wflinks\Utility::getTotalItems($myrow['cid'], 1);
     $indicator        = Wflinks\Utility::isNewImage($totallinkload['published']);
     if (Wflinks\Utility::checkGroups($myrow['cid'])) {
-        $title = $wfmyts->htmlSpecialChars($myrow['title']);
+        $title = $myts->htmlSpecialChars($myrow['title']);
 
         $arr = [];
         $arr = $mytree->getFirstChild($myrow['cid'], 'title');
@@ -72,7 +72,7 @@ while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         foreach ($arr as $ele) {
             if (true === Wflinks\Utility::checkGroups($ele['cid'])) {
                 if (1 == $helper->getConfig('subcats')) {
-                    $chtitle = $wfmyts->htmlSpecialChars($ele['title']);
+                    $chtitle = $myts->htmlSpecialChars($ele['title']);
                     if ($chcount > 5) {
                         $subcategories .= '...';
                         break;
