@@ -43,9 +43,7 @@ switch (mb_strtolower($op)) {
         $tags['LINK_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlelink.php?cid=' . $cid . '&amp;lid=' . $lid;
 
         $sql = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE cid=' . $cid;
-        if (!$result = $xoopsDB->query($sql)) {
-            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
-        } else {
+        if ($result = $xoopsDB->query($sql)) {
             $row                   = $xoopsDB->fetchArray($result);
             $tags['CATEGORY_NAME'] = $row['title'];
             $tags['CATEGORY_URL']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewcat.php?cid=' . $cid;
@@ -55,6 +53,8 @@ switch (mb_strtolower($op)) {
             if (1 == (int)$notifypub) {
                 $notificationHandler->triggerEvent('link', $lid, 'approve', $tags);
             }
+        } else {
+            $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
         }
         redirect_header('newlinks.php', 1, _AM_WFL_SUB_NEWFILECREATED);
         break;

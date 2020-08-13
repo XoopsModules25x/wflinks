@@ -67,12 +67,12 @@ if (!empty($_POST['submit'])) {
     $newid    = $xoopsDB->genId($xoopsDB->prefix('wflinks_votedata') . '_ratingid_seq');
     $datetime = time();
     $sql      = sprintf('INSERT INTO `%s` (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)', $xoopsDB->prefix('wflinks_votedata'), $newid, $lid, $ratinguser, $rating, $xoopsDB->quoteString($ip), $datetime, $xoopsDB->quoteString($title));
-    if (!$result = $xoopsDB->query($sql)) {
-        $ratemessage = _MD_WFL_ERROR;
-    } else {
+    if ($result = $xoopsDB->query($sql)) {
         // All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
         Wflinks\Utility::updateRating($lid);
         $ratemessage = _MD_WFL_VOTEAPPRE . '<br>' . sprintf(_MD_WFL_THANKYOU, $xoopsConfig['sitename']);
+    } else {
+        $ratemessage = _MD_WFL_ERROR;
     }
     redirect_header('singlelink.php?cid=' . $cid . '&amp;lid=' . $lid, 4, $ratemessage);
 } else {

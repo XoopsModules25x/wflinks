@@ -63,12 +63,12 @@ $sql    = 'UPDATE ' . $xoopsDB->prefix('wflinks_links') . ' SET hits=hits+1 WHER
 $result = $xoopsDB->queryF($sql);
 
 $sql = 'SELECT url FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid;
-if (!$result = $xoopsDB->queryF($sql)) {
-    echo "<br><div style='text-align: center;'>" . Wflinks\Utility::getImageHeader() . '</div>';
-    reportBroken($lid);
-} else {
+if ($result = $xoopsDB->queryF($sql)) {
     list($url) = $xoopsDB->fetchRow($result);
     $url = htmlspecialchars(preg_replace('/javascript:/si', 'java script:', $url), ENT_QUOTES);
+} else {
+    echo "<br><div style='text-align: center;'>" . Wflinks\Utility::getImageHeader() . '</div>';
+    reportBroken($lid);
 }
 
 if (!empty($url)) {

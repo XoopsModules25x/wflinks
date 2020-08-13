@@ -181,18 +181,7 @@ function createCat($cid = 0)
     $hidden     = new \XoopsFormHidden('op', 'save');
     $buttonTray->addElement($hidden);
 
-    if (!$cid) {
-        $butt_create = new \XoopsFormButton('', '', _AM_WFL_BSAVE, 'submit');
-        $butt_create->setExtra('onclick="this.form.elements.op.value=\'addCat\'"');
-        $buttonTray->addElement($butt_create);
-
-        $butt_clear = new \XoopsFormButton('', '', _AM_WFL_BRESET, 'reset');
-        $buttonTray->addElement($butt_clear);
-
-        $butt_cancel = new \XoopsFormButton('', '', _AM_WFL_BCANCEL, 'button');
-        $butt_cancel->setExtra('onclick="history.go(-1)"');
-        $buttonTray->addElement($butt_cancel);
-    } else {
+    if ($cid) {
         $butt_create = new \XoopsFormButton('', '', _AM_WFL_BMODIFY, 'submit');
         $butt_create->setExtra('onclick="this.form.elements.op.value=\'addCat\'"');
         $buttonTray->addElement($butt_create);
@@ -200,6 +189,17 @@ function createCat($cid = 0)
         $butt_delete = new \XoopsFormButton('', '', _AM_WFL_BDELETE, 'submit');
         $butt_delete->setExtra('onclick="this.form.elements.op.value=\'del\'"');
         $buttonTray->addElement($butt_delete);
+
+        $butt_cancel = new \XoopsFormButton('', '', _AM_WFL_BCANCEL, 'button');
+        $butt_cancel->setExtra('onclick="history.go(-1)"');
+        $buttonTray->addElement($butt_cancel);
+    } else {
+        $butt_create = new \XoopsFormButton('', '', _AM_WFL_BSAVE, 'submit');
+        $butt_create->setExtra('onclick="this.form.elements.op.value=\'addCat\'"');
+        $buttonTray->addElement($butt_create);
+
+        $butt_clear = new \XoopsFormButton('', '', _AM_WFL_BRESET, 'reset');
+        $buttonTray->addElement($butt_clear);
 
         $butt_cancel = new \XoopsFormButton('', '', _AM_WFL_BCANCEL, 'button');
         $butt_cancel->setExtra('onclick="history.go(-1)"');
@@ -216,7 +216,25 @@ $op = \Xmf\Request::getString('op', 'main');
 
 switch ($op) {
     case 'move':
-        if (!isset($_POST['ok'])) {
+        if (isset($_POST['ok'])) {
+            global $xoopsDB;
+
+            $source = $_POST['source'];
+            $target = $_POST['target'];
+            if ($target == $source) {
+                redirect_header("category.php?op=move&ok=0&cid=$source", 5, _AM_WFL_CCATEGORY_MODIFY_FAILED);
+            }
+            if (!$target) {
+                redirect_header("category.php?op=move&ok=0&cid=$source", 5, _AM_WFL_CCATEGORY_MODIFY_FAILEDT);
+            }
+            $sql    = 'UPDATE ' . $xoopsDB->prefix('wflinks_links') . ' set cid = ' . $target . ' WHERE cid =' . $source;
+            $result = $xoopsDB->queryF($sql);
+            $error  = _AM_WFL_DBERROR . ': <br><br>' . $sql;
+            if (!$result) {
+                trigger_error($error, E_USER_ERROR);
+            }
+            redirect_header('category.php?op=default', 1, _AM_WFL_CCATEGORY_MODIFY_MOVED);
+        } else {
             $cid = isset($_POST['cid']) ? $_POST['cid'] : $_GET['cid'];
 
             xoops_cp_header();
@@ -241,24 +259,6 @@ switch ($op) {
             $sform->addElement($create_tray);
             $sform->display();
             xoops_cp_footer();
-        } else {
-            global $xoopsDB;
-
-            $source = $_POST['source'];
-            $target = $_POST['target'];
-            if ($target == $source) {
-                redirect_header("category.php?op=move&ok=0&cid=$source", 5, _AM_WFL_CCATEGORY_MODIFY_FAILED);
-            }
-            if (!$target) {
-                redirect_header("category.php?op=move&ok=0&cid=$source", 5, _AM_WFL_CCATEGORY_MODIFY_FAILEDT);
-            }
-            $sql    = 'UPDATE ' . $xoopsDB->prefix('wflinks_links') . ' set cid = ' . $target . ' WHERE cid =' . $source;
-            $result = $xoopsDB->queryF($sql);
-            $error  = _AM_WFL_DBERROR . ': <br><br>' . $sql;
-            if (!$result) {
-                trigger_error($error, E_USER_ERROR);
-            }
-            redirect_header('category.php?op=default', 1, _AM_WFL_CCATEGORY_MODIFY_MOVED);
         }
         break;
     case 'addCat':
@@ -285,7 +285,16 @@ switch ($op) {
         $noimages = Request::getInt('noimages', 0, 'POST');
         $nobreak  = Request::getInt('nobreak', 0, 'POST');
 
-        if (!$cid) {
+        if ($cid) {
+            if ($cid == $pid) {
+                redirect_header('category.php', 1, _AM_WFL_ERROR_CATISCAT);
+            }
+            $sql           = 'UPDATE '
+                             . $xoopsDB->prefix('wflinks_cat')
+                             . " SET title ='$title', imgurl='$imgurl', pid =$pid, description='$descriptionb', spotlighthis='$spotlighthis' , spotlighttop='$spotlighttop', nohtml='$nohtml', nosmiley='$nosmiley', noxcodes='$noxcodes', noimages='$noimages', nobreak='$nobreak', weight='$weight', client_id='$client_id', banner_id='$banner_id' WHERE cid="
+                             . $cid;
+            $database_mess = _AM_WFL_CCATEGORY_MODIFIED;
+        } else {
             $cid = 0;
             $sql = 'INSERT INTO '
                    . $xoopsDB->prefix('wflinks_cat')
@@ -303,15 +312,6 @@ switch ($op) {
             $notificationHandler   = xoops_getHandler('notification');
             $notificationHandler->triggerEvent('global', 0, 'new_category', $tags);
             $database_mess = _AM_WFL_CCATEGORY_CREATED;
-        } else {
-            if ($cid == $pid) {
-                redirect_header('category.php', 1, _AM_WFL_ERROR_CATISCAT);
-            }
-            $sql           = 'UPDATE '
-                             . $xoopsDB->prefix('wflinks_cat')
-                             . " SET title ='$title', imgurl='$imgurl', pid =$pid, description='$descriptionb', spotlighthis='$spotlighthis' , spotlighttop='$spotlighttop', nohtml='$nohtml', nosmiley='$nosmiley', noxcodes='$noxcodes', noimages='$noimages', nobreak='$nobreak', weight='$weight', client_id='$client_id', banner_id='$banner_id' WHERE cid="
-                             . $cid;
-            $database_mess = _AM_WFL_CCATEGORY_MODIFIED;
         }
         if (!$result = $xoopsDB->query($sql)) {
             /** @var \XoopsLogger $logger */

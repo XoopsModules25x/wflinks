@@ -888,7 +888,7 @@ class Utility extends Common\SysUtility
 
         switch ($formuser) {
             case 'htmlarea':
-                if (!$x22) {
+                if ($x22) {
                     if (\is_readable(XOOPS_ROOT_PATH . '/class/htmlarea/formhtmlarea.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/htmlarea/formhtmlarea.php';
                         $editor = new \XoopsFormHtmlarea($caption, $name, $value);
@@ -898,17 +898,19 @@ class Utility extends Common\SysUtility
                 }
                 break;
             case 'dhtml':
-                if (!$x22) {
-                    $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
-                } else {
+                if ($x22) {
                     $editor = new \XoopsFormEditor($caption, 'dhtmltextarea', $editor_configs);
+                } else {
+                    $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
                 }
                 break;
             case 'textarea':
                 $editor = new \XoopsFormTextArea($caption, $name, $value);
                 break;
             case 'tinyeditor':
-                if (!$x22) {
+                if ($x22) {
+                    $editor = new \XoopsFormEditor($caption, 'tinyeditor', $editor_configs);
+                } else {
                     if (\is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php';
                         $editor = new \XoopsFormTinyeditorTextArea(
@@ -925,12 +927,12 @@ class Utility extends Common\SysUtility
                         } else {
                             $editor = new \XoopsFormTextArea($caption, $name, $value, 7, 60);
                         }
-                } else {
-                    $editor = new \XoopsFormEditor($caption, 'tinyeditor', $editor_configs);
                 }
                 break;
             case 'dhtmlext':
-                if (!$x22) {
+                if ($x22) {
+                    $editor = new \XoopsFormEditor($caption, 'dhtmlext', $editor_configs);
+                } else {
                     if (\is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmlext/dhtmlext.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmlext/dhtmlext.php';
                         $editor = new \XoopsFormDhtmlTextAreaExtended($caption, $name, $value, 10, 50);
@@ -939,12 +941,12 @@ class Utility extends Common\SysUtility
                         } else {
                             $editor = new \XoopsFormTextArea($caption, $name, $value, 7, 60);
                         }
-                } else {
-                    $editor = new \XoopsFormEditor($caption, 'dhtmlext', $editor_configs);
                 }
                 break;
             case 'tinymce':
-                if (!$x22) {
+                if ($x22) {
+                    $editor = new \XoopsFormEditor($caption, 'tinymce', $editor_configs);
+                } else {
                     if (\is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php';
                         $editor = new \XoopsFormTinymce(
@@ -972,8 +974,6 @@ class Utility extends Common\SysUtility
                         } else {
                             $editor = new \XoopsFormTextArea($caption, $name, $value, 7, 60);
                         }
-                } else {
-                    $editor = new \XoopsFormEditor($caption, 'tinymce', $editor_configs);
                 }
                 break;
         }
@@ -1465,9 +1465,7 @@ class Utility extends Common\SysUtility
         $pagerank = '';
         $ch       = '6' . static::googleCh(static::strord('info:' . $url));
         $fp       = \fsockopen('www.google.com', 80, $errno, $errstr, 30);
-        if (!$fp) {
-            echo "$errstr ($errno)<br>\n";
-        } else {
+        if ($fp) {
             $out = 'GET /search?client=navclient-auto&ch=' . $ch . '&features=Rank&q=info:' . $url . " HTTP/1.1\r\n";
             $out .= "Host: www.google.com\r\n";
             $out .= "Connection: Close\r\n\r\n";
@@ -1477,12 +1475,14 @@ class Utility extends Common\SysUtility
             while (!\feof($fp)) {
                 $data = \fgets($fp, 128);
                 $pos  = mb_strpos($data, 'Rank_');
-                if (false === $pos) {
-                } else {
+                if (false !== $pos) {
                     $pagerank = mb_substr($data, $pos + 9);
+                } else {
                 }
             }
             \fclose($fp);
+        } else {
+            echo "$errstr ($errno)<br>\n";
         }
 
         return $pagerank;
@@ -1501,10 +1501,10 @@ class Utility extends Common\SysUtility
         if (!isset($wfl_tag_module_included)) {
             $modulesHandler = \xoops_getHandler('module');
             $tag_mod        = $modulesHandler->getByDirname('tag');
-            if (!$tag_mod) {
-                $tag_mod = false;
-            } else {
+            if ($tag_mod) {
                 $wfl_tag_module_included = 1 == $tag_mod->getVar('isactive');
+            } else {
+                $tag_mod = false;
             }
         }
 
@@ -1538,10 +1538,10 @@ class Utility extends Common\SysUtility
         if (!isset($wfl_news_module_included)) {
             $modulesHandler = \xoops_getHandler('module');
             $news_mod       = $modulesHandler->getByDirname('news');
-            if (!$news_mod) {
-                $news_mod = false;
-            } else {
+            if ($news_mod) {
                 $wfl_news_module_included = 1 == $news_mod->getVar('isactive');
+            } else {
+                $news_mod = false;
             }
         }
 

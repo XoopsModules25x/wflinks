@@ -316,14 +316,7 @@ function edit($lid = 0)
         $sform->addElement($approve_checkbox);
     }
 
-    if (!$lid) {
-        $buttonTray = new \XoopsFormElementTray('', '');
-        $buttonTray->addElement(new \XoopsFormHidden('status', 1));
-        $buttonTray->addElement(new \XoopsFormHidden('notifypub', $notifypub));
-        $buttonTray->addElement(new \XoopsFormHidden('op', 'save'));
-        $buttonTray->addElement(new \XoopsFormButton('', '', _AM_WFL_BSAVE, 'submit'));
-        $sform->addElement($buttonTray);
-    } else {
+    if ($lid) {
         $buttonTray = new \XoopsFormElementTray('', '');
         $buttonTray->addElement(new \XoopsFormHidden('lid', $lid));
         $buttonTray->addElement(new \XoopsFormHidden('status', 2));
@@ -339,6 +332,13 @@ function edit($lid = 0)
         $butt_dupct2 = new \XoopsFormButton('', '', _AM_WFL_BCANCEL, 'submit');
         $butt_dupct2->setExtra('onclick="this.form.elements.op.value=\'linksConfigMenu\'"');
         $buttonTray->addElement($butt_dupct2);
+        $sform->addElement($buttonTray);
+    } else {
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $buttonTray->addElement(new \XoopsFormHidden('status', 1));
+        $buttonTray->addElement(new \XoopsFormHidden('notifypub', $notifypub));
+        $buttonTray->addElement(new \XoopsFormHidden('op', 'save'));
+        $buttonTray->addElement(new \XoopsFormButton('', '', _AM_WFL_BSAVE, 'submit'));
         $sform->addElement($buttonTray);
     }
     $sform->display();
@@ -446,10 +446,10 @@ switch (mb_strtolower($op)) {
             while (false !== ($published = $xoopsDB->fetchArray($broken_array))) {
                 $_ping_results = fetchURL($published['url']);
 
-                if (!$_ping_results) {
-                    $_ping_results = _AM_WFL_LINK_NORESPONSE;
-                } else {
+                if ($_ping_results) {
                     $_ping_results .= '(s)';
+                } else {
+                    $_ping_results = _AM_WFL_LINK_NORESPONSE;
                 }
 
                 $lid   = $published['lid'];
@@ -529,13 +529,13 @@ switch (mb_strtolower($op)) {
         $offline   = (1 == $_POST['offline']) ? 1 : 0;
         $approved  = (isset($_POST['approved']) && 1 == $_POST['approved']) ? 1 : 0;
         $notifypub = (isset($_POST['notifypub']) && 1 == $_POST['notifypub']);
-        if (!$lid) {
+        if ($lid) {
+            $publishdate = $_POST['was_published'];
+            $expiredate  = $_POST['was_expired'];
+        } else {
             $date        = time();
             $publishdate = time();
             $expiredate  = '0';
-        } else {
-            $publishdate = $_POST['was_published'];
-            $expiredate  = $_POST['was_expired'];
         }
         if (1 == $approved && empty($publishdate)) {
             $publishdate = time();
@@ -548,7 +548,12 @@ switch (mb_strtolower($op)) {
         }
 
         // Update or insert linkload data into database
-        if (!$lid) {
+        if ($lid) {
+            $sql = 'UPDATE '
+                   . $xoopsDB->prefix('wflinks_links')
+                   . " SET cid = $cid, title='$title', url='$url', screenshot='$screenshot', publisher='$publisher', status='$status', forumid='$forumid', published='$published', expired='$expiredate', updated='$updated', offline='$offline', description='$descriptionb', urlrating='$urlrating', country='$country', keywords='$keywords', item_tag='$item_tag', googlemap='$googlemap', yahoomap='$yahoomap', multimap='$multimap', street1='$street1', street2='$street2', town='$town', state='$state',  zip='$zip', tel='$tel', fax='$fax', voip='$voip', mobile='$mobile', email='$email', vat='$vat' WHERE lid="
+                   . $lid;
+        } else {
             $date        = time();
             $publishdate = time();
             $ipaddress   = $_SERVER['REMOTE_ADDR'];
@@ -557,11 +562,6 @@ switch (mb_strtolower($op)) {
                            . ' (lid, cid, title, url, screenshot, submitter, publisher, status, date, hits, rating, votes, comments, forumid, published, expired, updated, offline, description, ipaddress, notifypub, urlrating, country, keywords, item_tag, googlemap, yahoomap, multimap, street1, street2, town, state, zip, tel, fax, voip, mobile, email, vat )';
             $sql         .= " VALUES    (0, $cid, '$title', '$url', '$screenshot', '$submitter', '$publisher','$status', '$date', 0, 0, 0, 0, '$forumid', '$published', '$expiredate', '$updated', '$offline', '$descriptionb', '$ipaddress', '0', '$urlrating', '$country', '$keywords', '$item_tag', '$googlemap', '$yahoomap', '$multimap', '$street1', '$street2', '$town', '$state', '$zip', '$tel', '$fax', '$voip', '$mobile', '$email', '$vat' )";
             // $newid = $xoopsDB -> getInsertId();
-        } else {
-            $sql = 'UPDATE '
-                   . $xoopsDB->prefix('wflinks_links')
-                   . " SET cid = $cid, title='$title', url='$url', screenshot='$screenshot', publisher='$publisher', status='$status', forumid='$forumid', published='$published', expired='$expiredate', updated='$updated', offline='$offline', description='$descriptionb', urlrating='$urlrating', country='$country', keywords='$keywords', item_tag='$item_tag', googlemap='$googlemap', yahoomap='$yahoomap', multimap='$multimap', street1='$street1', street2='$street2', town='$town', state='$state',  zip='$zip', tel='$tel', fax='$fax', voip='$voip', mobile='$mobile', email='$email', vat='$vat' WHERE lid="
-                   . $lid;
         }
         if (!$result = $xoopsDB->queryF($sql)) {
             $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
@@ -572,10 +572,10 @@ switch (mb_strtolower($op)) {
         $newid = $GLOBALS['xoopsDB']->getInsertId();
 
         // Add item_tag to Tag-module
-        if (!$lid) {
-            $tagupdate = Wflinks\Utility::updateTag($newid, $item_tag);
-        } else {
+        if ($lid) {
             $tagupdate = Wflinks\Utility::updateTag($lid, $item_tag);
+        } else {
+            $tagupdate = Wflinks\Utility::updateTag($newid, $item_tag);
         }
 
         // Send notifications
