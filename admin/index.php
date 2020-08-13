@@ -1,5 +1,6 @@
 <?php
 
+use Xmf\Module\Admin;
 use XoopsModules\Wflinks;
 use XoopsModules\Wflinks\Common;
 
@@ -7,7 +8,7 @@ require_once __DIR__ . '/admin_header.php';
 // Display Admin header
 xoops_cp_header();
 
-$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject = Admin::getInstance();
 
 global $xoopsDB;
 

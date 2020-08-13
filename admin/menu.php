@@ -8,6 +8,7 @@
  * Licence: GNU
  */
 
+use Xmf\Module\Admin;
 use XoopsModules\Wflinks;
 
 // require_once  dirname(__DIR__) . '/class/Helper.php';
@@ -17,7 +18,7 @@ $helper = Wflinks\Helper::getInstance();
 $helper->loadLanguage('common');
 $helper->loadLanguage('feedback');
 
-$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+$pathIcon32 = Admin::menuIconPath('');
 if (is_object($helper->getModule())) {
     $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 }

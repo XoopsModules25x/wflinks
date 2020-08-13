@@ -8,6 +8,7 @@
  * Licence: GNU
  */
 
+use Xmf\Request;
 use XoopsModules\Wflinks;
 
 require_once __DIR__ . '/admin_header.php';
@@ -36,7 +37,7 @@ function makeTreeCheckTable(Wflinks\Tree $xt, $itemid, $title, $checks)
 
     while (list($cid, $name) = $xt->db->fetchRow($result)) {
         $checked  = array_key_exists($cid, $checks) ? 'checked' : '';
-        $disabled = ($cid == \Xmf\Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
+        $disabled = ($cid == Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
         $level    = 1;
         echo "
         <tr style='text-align: left;'>
@@ -51,7 +52,7 @@ function makeTreeCheckTable(Wflinks\Tree $xt, $itemid, $title, $checks)
             $cat['prefix'] = str_replace('.', '-', $cat['prefix']);
             $catpath       = $cat['prefix'] . '&nbsp;' . $wfmyts->htmlSpecialCharsStrip($cat[$title]) . '&nbsp;';
             $checked       = array_key_exists($cat['cid'], $checks) ? 'checked' : '';
-            $disabled      = ($cat['cid'] == \Xmf\Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
+            $disabled      = ($cat['cid'] == Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
             $level         = mb_substr_count($cat['prefix'], '-') + 1;
             //            echo "<tr><td>" . $catpath . "<input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "></td></tr>\n";
             echo "

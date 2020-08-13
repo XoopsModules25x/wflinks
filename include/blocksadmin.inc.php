@@ -16,27 +16,30 @@
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
+
+use Xmf\Request;
+
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit('Access Denied');
 }
 require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
 require XOOPS_ROOT_PATH . '/modules/system/admin/blocksadmin/blocksadmin.php';
 
-$op = \Xmf\Request::getCmd('op', 'list', 'POST');
+$op = Request::getCmd('op', 'list', 'POST');
 
 if (!empty($_POST['bid'])) {
-    $bid = \Xmf\Request::getInt('bid', 0, 'POST');
+    $bid = Request::getInt('bid', 0, 'POST');
 }
 
-if (\Xmf\Request::hasVar('op', 'GET')) {
+if (Request::hasVar('op', 'GET')) {
     if ('edit' === $_GET['op'] || 'delete' === $_GET['op'] || 'delete_ok' === $_GET['op']
         || 'clone' === $_GET['op'] /* || $_GET['op'] == 'previewpopup'*/) {
         $op  = $_GET['op'];
-        $bid = \Xmf\Request::getInt('bid', 0, 'GET');
+        $bid = Request::getInt('bid', 0, 'GET');
     }
 }
 
-if (\Xmf\Request::hasVar('previewblock', 'POST')) {
+if (Request::hasVar('previewblock', 'POST')) {
     //if ( !admin_refcheck("/modules/$admin_mydirname/admin/") ) {
     //  exit('Invalid Referer');
     //}
@@ -48,14 +51,14 @@ if (\Xmf\Request::hasVar('previewblock', 'POST')) {
         exit('Invalid bid.');
     }
 
-    $bside      = \Xmf\Request::getInt('bside', 0, 'POST');
-    $bweight    = \Xmf\Request::getInt('bweight', 0, 'POST');
-    $bvisible   = \Xmf\Request::getInt('bvisible', 0, 'POST');
-    $bmodule    = \Xmf\Request::getArray('bmodule', [], 'POST');
-    $btitle     = \Xmf\Request::getString('btitle', '', 'POST');
-    $bcontent   = \Xmf\Request::getString('bcontent', '', 'POST');
-    $bctype     = \Xmf\Request::getString('bctype', '', 'POST');
-    $bcachetime = \Xmf\Request::getInt('bcachetime', 0, 'POST');
+    $bside      = Request::getInt('bside', 0, 'POST');
+    $bweight    = Request::getInt('bweight', 0, 'POST');
+    $bvisible   = Request::getInt('bvisible', 0, 'POST');
+    $bmodule    = Request::getArray('bmodule', [], 'POST');
+    $btitle     = Request::getString('btitle', '', 'POST');
+    $bcontent   = Request::getString('bcontent', '', 'POST');
+    $bctype     = Request::getString('bctype', '', 'POST');
+    $bcachetime = Request::getInt('bcachetime', 0, 'POST');
 
     xoops_cp_header();
     require_once XOOPS_ROOT_PATH . '/class/template.php';
@@ -150,17 +153,17 @@ if ('order' === $op) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header(XOOPS_URL . '/', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
-    if (\Xmf\Request::hasVar('side', 'POST')) {
+    if (Request::hasVar('side', 'POST')) {
         $side = $_POST['side'];
     }
     //  if ( !empty($_POST['weight']) ) { $weight = $_POST['weight']; }
-    if (\Xmf\Request::hasVar('visible', 'POST')) {
+    if (Request::hasVar('visible', 'POST')) {
         $visible = $_POST['visible'];
     }
     //  if ( !empty($_POST['oldside']) ) { $oldside = $_POST['oldside']; }
     //  if ( !empty($_POST['oldweight']) ) { $oldweight = $_POST['oldweight']; }
     //  if ( !empty($_POST['oldvisible']) ) { $oldvisible = $_POST['oldvisible']; }
-    if (\Xmf\Request::hasVar('bid', 'POST')) {
+    if (Request::hasVar('bid', 'POST')) {
         $bid = $_POST['bid'];
     } else {
         $bid = [];
@@ -224,10 +227,10 @@ if ('update' === $op) {
       if ( !empty($_POST['options']) ) { $options = $_POST['options']; } else { $options = []; }
       update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options);*/
 
-    $bcachetime = \Xmf\Request::getInt('bcachetime', 0, 'POST');
+    $bcachetime = Request::getInt('bcachetime', 0, 'POST');
     $options    = isset($_POST['options']) ? $_POST['options'] : [];
-    $bcontent   = \Xmf\Request::getString('bcontent', '', 'POST');
-    $bctype     = \Xmf\Request::getString('bctype', '', 'POST');
+    $bcontent   = Request::getString('bcontent', '', 'POST');
+    $bctype     = Request::getString('bctype', '', 'POST');
     $bmodule    = (isset($_POST['bmodule']) && is_array($_POST['bmodule'])) ? $_POST['bmodule'] : [-1]; // GIJ +
     $msg        = myblocksadmin_update_block($_POST['bid'], $_POST['bside'], $_POST['bweight'], $_POST['bvisible'], $_POST['btitle'], $bcontent, $bctype, $bcachetime, $bmodule, $options); // GIJ !
     redirect_header('myblocksadmin.php', 1, $msg);

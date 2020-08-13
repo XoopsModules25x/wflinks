@@ -7,6 +7,9 @@
  * Author: WF-Sections
  * Licence: GNU
  */
+
+use Xmf\Request;
+
 require_once __DIR__ . '/admin_header.php';
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopstopic.php';
@@ -15,7 +18,7 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 xoops_cp_header();
 
-$permtoset                = \Xmf\Request::getInt('permtoset', 1, 'POST');
+$permtoset                = Request::getInt('permtoset', 1, 'POST');
 $selected                 = ['', '', '', '', ''];
 $selected[$permtoset - 1] = ' selected';
 echo "<form method='post' name='fselperm' action='permissions.php'><table border=0>

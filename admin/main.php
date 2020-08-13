@@ -8,6 +8,9 @@
  * Licence: GNU
  */
 
+use Xmf\Module\Admin;
+use Xmf\Request;
+use XoopsModules\Tag\FormTag;
 use XoopsModules\Wflinks;
 
 require_once __DIR__ . '/admin_header.php';
@@ -89,16 +92,16 @@ function edit($lid = 0)
 
               </td>
               <td valign='top'>
-               <div><b>" . _AM_WFL_VOTE_TOTALRATE . ': </b>' . \Xmf\Request::getInt('rate', 0, 'vote_data') . '</div>
+               <div><b>" . _AM_WFL_VOTE_TOTALRATE . ': </b>' . Request::getInt('rate', 0, 'vote_data') . '</div>
                <div><b>' . _AM_WFL_VOTE_USERAVG . ': </b>' . (int)round($_vote_data['avg_rate'], 2) . '</div>
-               <div><b>' . _AM_WFL_VOTE_MAXRATE . ': </b>' . \Xmf\Request::getInt('min_rate', 0, 'vote_data') . '</div>
-               <div><b>' . _AM_WFL_VOTE_MINRATE . ': </b>' . \Xmf\Request::getInt('max_rate', 0, 'vote_data') . "</div>
+               <div><b>' . _AM_WFL_VOTE_MAXRATE . ': </b>' . Request::getInt('min_rate', 0, 'vote_data') . '</div>
+               <div><b>' . _AM_WFL_VOTE_MINRATE . ': </b>' . Request::getInt('max_rate', 0, 'vote_data') . "</div>
               </td>
               <td valign='top'>
-               <div><b>" . _AM_WFL_VOTE_MOSTVOTEDTITLE . ': </b>' . \Xmf\Request::getInt('max_title', 0, 'vote_data') . '</div>
-                   <div><b>' . _AM_WFL_VOTE_LEASTVOTEDTITLE . ': </b>' . \Xmf\Request::getInt('min_title', 0, 'vote_data') . '</div>
+               <div><b>" . _AM_WFL_VOTE_MOSTVOTEDTITLE . ': </b>' . Request::getInt('max_title', 0, 'vote_data') . '</div>
+                   <div><b>' . _AM_WFL_VOTE_LEASTVOTEDTITLE . ': </b>' . Request::getInt('min_title', 0, 'vote_data') . '</div>
                <div><b>' . _AM_WFL_VOTE_REGISTERED . ': </b>' . $_vote_data['rate'] - $_vote_data['null_ratinguser'] . '</div>
-               <div><b>' . _AM_WFL_VOTE_NONREGISTERED . ': </b>' . \Xmf\Request::getInt('null_ratinguser', 0, 'vote_data') . '</div>
+               <div><b>' . _AM_WFL_VOTE_NONREGISTERED . ': </b>' . Request::getInt('null_ratinguser', 0, 'vote_data') . '</div>
               </td>
              </tr>
             </table>';
@@ -171,7 +174,7 @@ function edit($lid = 0)
     // Insert tags if Tag-module is installed
     if (Wflinks\Utility::isTagModuleIncluded()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
-        $text_tags = new \XoopsModules\Tag\FormTag('item_tag', 70, 255, $link_array['item_tag'], 0);
+        $text_tags = new FormTag('item_tag', 70, 255, $link_array['item_tag'], 0);
         $sform->addElement($text_tags);
     } else {
         $sform->addElement(new \XoopsFormHidden('item_tag', $link_array['item_tag']));
@@ -494,7 +497,7 @@ switch (mb_strtolower($op)) {
         $country      = $wfmyts->addSlashes(trim($_POST['country']));
         $keywords     = $wfmyts->addSlashes(trim(mb_substr($_POST['keywords'], 0, $helper->getConfig('keywordlength'))));
         $item_tag     = $wfmyts->addSlashes(trim($_POST['item_tag']));
-        $forumid      = (isset($_POST['forumid']) && $_POST['forumid'] > 0) ? \Xmf\Request::getInt('forumid', 0, 'POST') : 0;
+        $forumid      = (isset($_POST['forumid']) && $_POST['forumid'] > 0) ? Request::getInt('forumid', 0, 'POST') : 0;
         if ($helper->getConfig('useaddress')) {
             $googlemap = ('http://maps.google.com' !== $_POST['googlemap']) ? $wfmyts->addSlashes($_POST['googlemap']) : '';
             $yahoomap  = ('http://maps.yahoo.com' !== $_POST['yahoomap']) ? $wfmyts->addSlashes($_POST['yahoomap']) : '';
@@ -537,7 +540,7 @@ switch (mb_strtolower($op)) {
         if (1 == $approved && empty($publishdate)) {
             $publishdate = time();
         }
-        if (\Xmf\Request::hasVar('expiredateactivate', 'POST')) {
+        if (Request::hasVar('expiredateactivate', 'POST')) {
             $expiredate = strtotime($_POST['expired']['date']) + $_POST['expired']['time'];
         }
         if ($_POST['clearexpire']) {
@@ -702,7 +705,7 @@ switch (mb_strtolower($op)) {
 
         xoops_cp_header();
 
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         $adminObject->addItemButton(_MI_WFL_ADD_LINK, 'main.php?op=edit', 'add', '');
         $adminObject->addItemButton(_MI_WFL_ADD_CATEGORY, 'category.php', 'add', '');

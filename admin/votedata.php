@@ -8,6 +8,7 @@
  * Licence: GNU
  */
 
+use Xmf\Request;
 use XoopsModules\Wflinks;
 
 require_once __DIR__ . '/admin_header.php';
@@ -37,16 +38,16 @@ switch (mb_strtolower($op)) {
         <table width='100%'>
          <tr>
           <td width='50%' valign='top'>
-           <div><b>" . _AM_WFL_VOTE_TOTALRATE . ': </b>' . \Xmf\Request::getInt('rate', 0, 'vote_data') . '</div>
+           <div><b>" . _AM_WFL_VOTE_TOTALRATE . ': </b>' . Request::getInt('rate', 0, 'vote_data') . '</div>
            <div><b>' . _AM_WFL_VOTE_USERAVG . ': </b>' . (int)round($_vote_data['avg_rate'], 2) . '</div>
-           <div><b>' . _AM_WFL_VOTE_MAXRATE . ': </b>' . \Xmf\Request::getInt('min_rate', 0, 'vote_data') . '</div>
-           <div><b>' . _AM_WFL_VOTE_MINRATE . ': </b>' . \Xmf\Request::getInt('max_rate', 0, 'vote_data') . '</div>
+           <div><b>' . _AM_WFL_VOTE_MAXRATE . ': </b>' . Request::getInt('min_rate', 0, 'vote_data') . '</div>
+           <div><b>' . _AM_WFL_VOTE_MINRATE . ': </b>' . Request::getInt('max_rate', 0, 'vote_data') . '</div>
           </td>
           <td>
-           <div><b>' . _AM_WFL_VOTE_MOSTVOTEDTITLE . ': </b>' . \Xmf\Request::getInt('max_title', 0, 'vote_data') . '</div>
-           <div><b>' . _AM_WFL_VOTE_LEASTVOTEDTITLE . ': </b>' . \Xmf\Request::getInt('min_title', 0, 'vote_data') . '</div>
+           <div><b>' . _AM_WFL_VOTE_MOSTVOTEDTITLE . ': </b>' . Request::getInt('max_title', 0, 'vote_data') . '</div>
+           <div><b>' . _AM_WFL_VOTE_LEASTVOTEDTITLE . ': </b>' . Request::getInt('min_title', 0, 'vote_data') . '</div>
            <div><b>' . _AM_WFL_VOTE_REGISTERED . ': </b>' . $_vote_data['rate'] - $_vote_data['null_ratinguser'] . '</div>
-           <div><b>' . _AM_WFL_VOTE_NONREGISTERED . ': </b>' . \Xmf\Request::getInt('null_ratinguser', 0, 'vote_data') . '</div>
+           <div><b>' . _AM_WFL_VOTE_NONREGISTERED . ': </b>' . Request::getInt('null_ratinguser', 0, 'vote_data') . '</div>
           </td>
          </tr>
         </table>';

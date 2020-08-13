@@ -4,6 +4,8 @@
 // - XOOPS block admin for each modules -                     //
 // GIJOE <http://www.peak.ne.jp>                   //
 // ------------------------------------------------------------------------- //
+use Xmf\Request;
+
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once __DIR__ . '/mygrouppermform.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
@@ -47,7 +49,7 @@ if (!empty($target_module) && is_object($target_module)) {
     $target_mid     = $target_module->getVar('mid');
     $target_mname   = $target_module->getVar('name');
     $query4redirect = '?dirname=' . urlencode(strip_tags($_GET['dirname']));
-} elseif (\Xmf\Request::hasVar('mid', 'GET') && 0 == $_GET['mid'] || 'blocksadmin' === $xoopsModule->getVar('dirname')) {
+} elseif (Request::hasVar('mid', 'GET') && 0 == $_GET['mid'] || 'blocksadmin' === $xoopsModule->getVar('dirname')) {
     $target_mid     = 0;
     $target_mname   = '';
     $query4redirect = '?mid=0';

@@ -16,8 +16,11 @@
  * @since
  * @author         XOOPS Development Team
  */
+
+use Xmf\Request;
+
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
-$com_itemid = \Xmf\Request::getInt('com_itemid', 0, 'GET');
+$com_itemid = Request::getInt('com_itemid', 0, 'GET');
 if ($com_itemid > 0) {
     // Get file title
     $sql            = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $com_itemid;

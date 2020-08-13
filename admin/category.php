@@ -8,6 +8,7 @@
  * Licence: GNU
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Wflinks;
 
@@ -393,7 +394,7 @@ switch ($op) {
     default:
         xoops_cp_header();
 
-        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject = Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
         $adminObject->addItemButton(_MI_WFL_ADD_LINK, 'main.php?op=edit', 'add', '');
         $adminObject->addItemButton(_MI_WFL_ADD_CATEGORY, 'category.php', 'add', '');

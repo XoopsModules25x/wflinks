@@ -8,6 +8,7 @@
  * Licence: GNU
  */
 
+use Xmf\Request;
 use XoopsModules\Wflinks;
 
 require_once __DIR__ . '/admin_header.php';
@@ -16,7 +17,7 @@ require_once __DIR__ . '/admin_header.php';
 $helper = Wflinks\Helper::getInstance();
 
 $op       = (isset($_REQUEST['op']) && !empty($_REQUEST['op'])) ? $_REQUEST['op'] : '';
-$rootpath = \Xmf\Request::getInt('rootpath', 0, 'GET');
+$rootpath = Request::getInt('rootpath', 0, 'GET');
 
 switch (mb_strtolower($op)) {
     case 'upload':
@@ -33,7 +34,7 @@ switch (mb_strtolower($op)) {
         break;
     case 'delfile':
 
-        if (\Xmf\Request::hasVar('confirm', 'POST') && 1 == $_POST['confirm']) {
+        if (Request::hasVar('confirm', 'POST') && 1 == $_POST['confirm']) {
             $filetodelete = XOOPS_ROOT_PATH . '/' . $_POST['uploadpath'] . '/' . $_POST['linkfile'];
             if (file_exists($filetodelete)) {
                 chmod($filetodelete, 0666);

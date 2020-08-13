@@ -8,6 +8,7 @@
  * Licence: GNU
  */
 
+use Xmf\Request;
 use XoopsModules\Wflinks;
 
 require_once __DIR__ . '/header.php';
@@ -25,8 +26,8 @@ $catarray['imageheader'] = Wflinks\Utility::getImageHeader();
 //$catarray['toolbar'] = Wflinks\Utility::getToolbar();
 $xoopsTpl->assign('catarray', $catarray);
 
-if (\Xmf\Request::hasVar('newlinkshowdays', 'GET')) {
-    $newlinkshowdays = \Xmf\Request::getInt('newlinkshowdays', 0, 'GET') ?: 7;
+if (Request::hasVar('newlinkshowdays', 'GET')) {
+    $newlinkshowdays = Request::getInt('newlinkshowdays', 0, 'GET') ?: 7;
     if (7 != $newlinkshowdays) {
         if (14 != $newlinkshowdays) {
             if (30 != $newlinkshowdays) {

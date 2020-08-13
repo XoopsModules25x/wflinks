@@ -8,6 +8,7 @@
  * Licence: GNU
  */
 
+use Xmf\Request;
 use XoopsModules\Wflinks;
 
 require_once __DIR__ . '/admin_header.php';
@@ -183,7 +184,7 @@ switch (mb_strtolower($op)) {
     case 'main':
     default:
 
-        $start            = \Xmf\Request::getInt('start', 0, 'GET');
+        $start            = Request::getInt('start', 0, 'GET');
         $mytree           = new Wflinks\Tree($xoopsDB->prefix('wflinks_mod'), 'requestid', 0);
         $sql              = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_mod') . ' ORDER BY requestdate DESC';
         $result           = $xoopsDB->query($sql, $helper->getConfig('admin_perpage'), $start);

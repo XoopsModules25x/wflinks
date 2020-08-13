@@ -10,14 +10,17 @@
 
 //require_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
 
-$story = new \XoopsModules\News\NewsStory();
+use Xmf\Request;
+use XoopsModules\News\NewsStory;
+
+$story = new NewsStory();
 $story->setUid($xoopsUser->uid());
 $story->setPublished(time());
 $story->setExpired(0);
 $story->setType('admin');
 $story->setHostname(getenv('REMOTE_ADDR'));
 $story->setApproved(1);
-$topicid = \Xmf\Request::getInt('newstopicid', 0, 'REQUEST');
+$topicid = Request::getInt('newstopicid', 0, 'REQUEST');
 $story->setTopicId($topicid);
 $story->setTitle($title);
 $_linkid = (isset($lid) && $lid > 0) ? $lid : $newid;
