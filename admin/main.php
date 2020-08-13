@@ -100,7 +100,7 @@ function edit($lid = 0)
               <td valign='top'>
                <div><b>" . _AM_WFL_VOTE_MOSTVOTEDTITLE . ': </b>' . Request::getInt('max_title', 0, 'vote_data') . '</div>
                    <div><b>' . _AM_WFL_VOTE_LEASTVOTEDTITLE . ': </b>' . Request::getInt('min_title', 0, 'vote_data') . '</div>
-               <div><b>' . _AM_WFL_VOTE_REGISTERED . ': </b>' . $_vote_data['rate'] - $_vote_data['null_ratinguser'] . '</div>
+               <div><b>' . _AM_WFL_VOTE_REGISTERED . ': </b>' . ($_vote_data['rate'] - $_vote_data['null_ratinguser']) . '</div>
                <div><b>' . _AM_WFL_VOTE_NONREGISTERED . ': </b>' . Request::getInt('null_ratinguser', 0, 'vote_data') . '</div>
               </td>
              </tr>
