@@ -50,11 +50,11 @@ while (list($cid, $ctitle) = $xoopsDB->fetchRow($result)) {
         $filecount = $xoopsDB->getRowsNum($result2);
 
         if ($filecount > 0) {
-            $rankings[$e]['title'] = $wfmyts->htmlSpecialCharsStrip($ctitle);
+            $rankings[$e]['title'] = $wfmyts->htmlSpecialChars($ctitle);
             $rank                  = 1;
             while (list($did, $dcid, $dtitle, $hits, $rating, $votes) = $xoopsDB->fetchRow($result2)) {
                 $catpath                = basename($mytree->getPathFromId($dcid, 'title'));
-                $dtitle                 = $wfmyts->htmlSpecialCharsStrip($dtitle);
+                $dtitle                 = $wfmyts->htmlSpecialChars($dtitle);
                 $rankings[$e]['file'][] = [
                     'id'       => $did,
                     'cid'      => $dcid,

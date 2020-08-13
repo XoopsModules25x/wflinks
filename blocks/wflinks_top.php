@@ -83,7 +83,7 @@ function b_wflinks_top_show($options)
             continue;
         }
         $linkload = [];
-        $title    = $wfmyts->htmlSpecialChars($wfmyts->stripSlashesGPC($myrow['title']));
+        $title    = $wfmyts->htmlSpecialChars($myrow['title']);
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
                 $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';

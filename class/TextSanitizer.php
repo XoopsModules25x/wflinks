@@ -21,6 +21,6 @@ class TextSanitizer extends \MyTextSanitizer
      */
     public function htmlSpecialCharsStrip($text)
     {
-        return $this->htmlSpecialChars($this->stripSlashesGPC($text));
+        return $this->htmlSpecialChars($text);
     }
 }

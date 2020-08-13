@@ -9,6 +9,7 @@
 - renamed include to required for files (mamba)
 - http:// to https:// (mamba)
 - Qualifier replaced with an import (mamba)
+- replaced htmlSpecialCharsStrip with htmlSpecialChars (mamba)
 
 <h5>1.11 RC 1       [2017-09-04]</h5>
 <hr>

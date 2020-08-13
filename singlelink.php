@@ -199,7 +199,7 @@ $sql    = 'SELECT lid, cid, title, published FROM ' . $xoopsDB->prefix('wflinks_
 $result = $xoopsDB->query($sql, 10, 0);
 
 while (false !== ($arr = $xoopsDB->fetchArray($result))) {
-    $linkuid['title']     = $wfmyts->htmlSpecialCharsStrip($arr['title']);
+    $linkuid['title']     = $wfmyts->htmlSpecialChars($arr['title']);
     $linkuid['lid']       = $arr['lid'];
     $linkuid['cid']       = $arr['cid'];
     $linkuid['published'] = formatTimestamp($arr['published'], $helper->getConfig('dateformat'));

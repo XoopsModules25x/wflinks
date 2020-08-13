@@ -735,7 +735,7 @@ class Utility extends Common\SysUtility
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title     = "<a href='../singlelink.php?cid=" . $published['cid'] . '&amp;lid=' . $published['lid'] . "'>" . $wfmyts->htmlSpecialCharsStrip(\trim($published['title'])) . '</a>';
+        $title     = "<a href='../singlelink.php?cid=" . $published['cid'] . '&amp;lid=' . $published['lid'] . "'>" . $wfmyts->htmlSpecialChars(\trim($published['title'])) . '</a>';
         $maintitle = \urlencode($wfmyts->htmlSpecialChars(\trim($published['title'])));
         $cattitle  = static::getCategoryTitle($published['cid']);
         $submitter = \XoopsUserUtility::getUnameFromId($published['submitter']);
@@ -759,7 +759,7 @@ class Utility extends Common\SysUtility
         }
         $icon = "<a href='main.php?op=edit&amp;lid=" . $lid . "' title='" . _AM_WFL_ICO_EDIT . "'>" . $imageArray['editimg'] . '</a>&nbsp;';
         $icon .= "<a href='main.php?op=delete&amp;lid=" . $lid . "' title='" . _AM_WFL_ICO_DELETE . "'>" . $imageArray['deleteimg'] . '</a>&nbsp;';
-        $icon .= "<a href='altcat.php?op=main&amp;cid=" . $cid . '&amp;lid=' . $lid . '&amp;title=' . $wfmyts->htmlSpecialCharsStrip(\trim($published['title'])) . "' title='" . _AM_WFL_ALTCAT_CREATEF . "'>" . $imageArray['altcat'] . '</a>&nbsp;';
+        $icon .= "<a href='altcat.php?op=main&amp;cid=" . $cid . '&amp;lid=' . $lid . '&amp;title=' . $wfmyts->htmlSpecialChars(\trim($published['title'])) . "' title='" . _AM_WFL_ALTCAT_CREATEF . "'>" . $imageArray['altcat'] . '</a>&nbsp;';
         $icon .= '<a href="http://whois.domaintools.com/' . $hwhoisurl . '" target="_blank"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/domaintools.png" alt="WHOIS" title="WHOIS" align="absmiddle"></a>';
 
         echo "
