@@ -12,7 +12,7 @@ use XoopsModules\Wflinks;
 
 $moduleDirName = basename(__DIR__);
 
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(__DIR__, 2) . '/mainfile.php';
 require XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/common.php';
 //require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/WfThumbsNails.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';

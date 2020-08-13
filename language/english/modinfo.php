@@ -326,7 +326,7 @@ define('_MI_WFL_HELP_LINKS', 'Links');
 define('_MI_WFL_DISPLAYFORUM5', 'X-Forum');
 
 // The Directory of this module
-define('_MI_WFL_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_WFL_DIRNAME', basename(dirname(__DIR__, 2)));
 
 // ----------------- Help -----------------
 
