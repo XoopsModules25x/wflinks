@@ -93,7 +93,7 @@ class ThumbsNails
         $path_to_check = XOOPS_ROOT_PATH . "/$img_path/$img_savepath";
 
         if (!\is_dir($path_to_check)) {
-            if (false === \mkdir($path_to_check, 0777)) {
+            if (!mkdir($path_to_check, 0777) && !is_dir($path_to_check)) {
                 //                return false;
             }
         }
