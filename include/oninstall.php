@@ -29,7 +29,6 @@ use XoopsModules\Wflinks;
  */
 function xoops_module_pre_install_wflinks(\XoopsModule $module)
 {
-    /** @var \XoopsModules\Wflinks\Utility $utility */
     $utility = new \XoopsModules\Wflinks\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
@@ -65,7 +64,6 @@ function xoops_module_install_wflinks(\XoopsModule $module)
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');
 
-    /** @var \XoopsModules\Wflinks\Utility $utility */
     $utility = new \XoopsModules\Wflinks\Utility();
 
     $configurator = new Wflinks\Common\Configurator();

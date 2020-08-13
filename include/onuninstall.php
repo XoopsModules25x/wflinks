@@ -37,7 +37,6 @@ function xoops_module_uninstall_wflinks(\XoopsModule $module)
     /** @var Wflinks\Helper $helper */
     $helper = Wflinks\Helper::getInstance();
 
-    /** @var \XoopsModules\Wflinks\Utility $utility */
     $utility = new \XoopsModules\Wflinks\Utility();
 
     $success = true;
