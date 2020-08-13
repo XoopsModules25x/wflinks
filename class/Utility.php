@@ -878,7 +878,7 @@ class Utility extends Common\SysUtility
         $editor_configs['width']  = '100%';
         $editor_configs['height'] = '400px';
 
-        $isadmin = ((\is_object($xoopsUser) && !empty($xoopsUser))
+        $isadmin = ((\is_object($xoopsUser) && null !== $xoopsUser)
                     && $xoopsUser->isAdmin($xoopsModule->mid()));
         if (true === $isadmin) {
             $formuser = $helper->getConfig('form_options');

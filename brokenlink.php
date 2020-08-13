@@ -25,7 +25,7 @@ switch (mb_strtolower($op)) {
     case $buttonn:
         global $xoopsUser;
 
-        $sender = (is_object($xoopsUser) && !empty($xoopsUser)) ? $xoopsUser->getVar('uid') : 0;
+        $sender = (is_object($xoopsUser) && null !== $xoopsUser) ? $xoopsUser->getVar('uid') : 0;
         $ip     = getenv('REMOTE_ADDR');
         $title  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'title', '');
         $title  = $myts->addSlashes($title);
