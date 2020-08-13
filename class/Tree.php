@@ -152,7 +152,7 @@ class Tree
             $sql .= " ORDER BY $order";
         }
         $result = $this->db->query($sql);
-        [$r_id] = $this->db->fetchRow($result);
+        list($r_id) = $this->db->fetchRow($result);
         if (0 == $r_id) {
             return $idarray;
         }
@@ -178,7 +178,7 @@ class Tree
         if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
-        [$parentid, $name] = $this->db->fetchRow($result);
+        list($parentid, $name) = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
         $name = htmlspecialchars($name);
         $path = '/' . $name . $path . '';
@@ -260,7 +260,7 @@ class Tree
         if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
-        [$parentid, $name] = $this->db->fetchRow($result);
+        list($parentid, $name) = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
         $name = htmlspecialchars($name);
         $path = "<a href='" . $funcURL . '&amp;' . $this->id . '=' . $sel_id . "'>" . $name . '</a>' . $path . '';
@@ -287,7 +287,7 @@ class Tree
         if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
-        [$parentid] = $this->db->fetchRow($result);
+        list($parentid) = $this->db->fetchRow($result);
         $path = '/' . $sel_id . $path . '';
         if (0 == $parentid) {
             return $path;
