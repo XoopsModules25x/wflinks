@@ -11,19 +11,21 @@
 
 /**
  * @copyright      {@link https://xoops.org/ XOOPS Project}
- * @license        {@link http://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
+ * @license        {@link https://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
  * @package
  * @since
  * @author         XOOPS Development Team
  */
 
-require_once __DIR__ . '/../../mainfile.php';
-$com_itemid = isset($_GET['com_itemid']) ? (int)$_GET['com_itemid'] : 0;
+use Xmf\Request;
+
+require_once dirname(__DIR__, 2) . '/mainfile.php';
+$com_itemid = Request::getInt('com_itemid', 0, 'GET');
 if ($com_itemid > 0) {
     // Get file title
     $sql            = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $com_itemid;
     $result         = $xoopsDB->query($sql);
     $row            = $xoopsDB->fetchArray($result);
     $com_replytitle = $row['title'];
-    include XOOPS_ROOT_PATH . '/include/comment_new.php';
+    require XOOPS_ROOT_PATH . '/include/comment_new.php';
 }

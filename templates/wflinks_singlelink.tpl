@@ -60,7 +60,7 @@
                                     <{$wfllink.tel}><{$wfllink.mobile}><{$wfllink.voip}><{$wfllink.fax}><{$wfllink.email}><{$vcard}><{$wfllink.vat}></div>
                             </div>
                         <{/if}>
-                        <{if $wfllink.googlemap || $wfllink.yahoomap || $wfllink.multimap == true}>
+                        <{if $wfllink.googlemap || $wfllink.yahoomap || $wfllink.multimap === true}>
                             <div style="clear: both; margin-left: 6px; text-align: left; white-space: nowrap; padding: 3px;"><{$wfllink.googlemap}><{$wfllink.yahoomap}><{$wfllink.multimap}></div>
                         <{/if}>
                         <br>
@@ -82,7 +82,7 @@
                             </div>
                             <div>
                                 <small><{$smarty.const._MD_WFL_COUNTRYB}>&nbsp;</small>
-                                <img src="<{$wfllink.country}>" alt="&lt;{$wfllink.countryname}&gt;"
+                                <img src="<{$wfllink.country}>" alt="<{$wfllink.countryname}>"
                                      title="<{$wfllink.countryname}>" align="absmiddle"></div>
                         </div>
                         <br>
@@ -99,7 +99,7 @@
                                 <div>
                                     <small><b><{$smarty.const._MD_WFL_PAGERANK}></b></small>
                                     <img src="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/assets/images/icon/pr<{$wfllink.pagerank}>.png"
-                                         alt="&lt;{$smarty.const._MD_WFL_PAGERANKALT}&gt;&lt;{$wfllink.pagerank}&gt;"
+                                         alt="<{$smarty.const._MD_WFL_PAGERANKALT}><{$wfllink.pagerank}>"
                                          title="<{$smarty.const._MD_WFL_PAGERANKALT}><{$wfllink.pagerank}>"
                                          align="absmiddle">&nbsp;
                                     <small>(<{$wfllink.pagerank}>/10)</small>
@@ -113,7 +113,7 @@
                         <{/if}>
                         <br>
                         <div>
-                            &nbsp;</div> <{if $wfllink.autoscrshot == 0}> <{if $show_screenshot == true}> <{if $wfllink.screenshot_full != ''}>
+                            &nbsp;</div> <{if $wfllink.autoscrshot == 0}> <{if $show_screenshot === true}> <{if $wfllink.screenshot_full != ''}>
                             <div>
                                 <div align="center"><a href="<{$xoops_url}>/<{$shots_dir}>/<{$wfllink.screenshot_full}>"
                                                        target="_blank"><img src="<{$wfllink.screenshot_thumb}>" alt=""

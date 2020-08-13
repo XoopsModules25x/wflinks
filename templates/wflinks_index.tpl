@@ -8,7 +8,7 @@
 <div style="padding-bottom: 12px; text-align: center;" class="itemPermaLink"><{$catarray.letters}></div>
 <div style="padding-bottom: 12px; text-align: center;"><{$catarray.toolbar}></div>
 
-<{if count($categories) gt 0}>
+<{if $categories|is_array && count($categories) > 0}>
     <div class="even" style="font-weight: bold;"><{$smarty.const._MD_WFL_MAINLISTING}></div>
     <table width="100%" cellspacing="1" cellpadding="3" summary='' style="text-align: center;">
         <tr>
@@ -29,7 +29,7 @@
                     <div style="margin-bottom: 3px; margin-left: 16px; font-size: smaller; vertical-align: top;"><{$category.subcategories}></div>
                 <{/if}>
             </td>
-            <{if $category.count is div by 2}>
+            <{if $category.count % 2 == 0}>
         </tr>
         <tr> <{/if}> <{/foreach}>
             <!-- End category loop -->

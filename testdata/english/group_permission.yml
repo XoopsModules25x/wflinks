@@ -1,0 +1,60 @@
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkAppPerm
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkAutoApp
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkCatPerm
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkCatPerm
+-
+    gperm_groupid: '3'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkCatPerm
+-
+    gperm_groupid: '9'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkCatPerm
+-
+    gperm_groupid: '8'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkCatPerm
+-
+    gperm_groupid: '7'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkCatPerm
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkRatePerms
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkRatePerms
+-
+    gperm_groupid: '1'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkSubPerm
+-
+    gperm_groupid: '2'
+    gperm_itemid: '1'
+    gperm_modid: '178'
+    gperm_name: WFLinkSubPerm

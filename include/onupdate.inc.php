@@ -1,10 +1,10 @@
 <?php
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+
 
 // referer check
 $ref = xoops_getenv('HTTP_REFERER');
-if ($ref === '' || strpos($ref, XOOPS_URL . '/modules/system/admin.php') === 0) {
+if ('' === $ref || 0 === mb_strpos($ref, XOOPS_URL . '/modules/system/admin.php')) {
     /* module specific part */
 
     /* General part */

@@ -1,19 +1,18 @@
 <?php
+
 /**
- *
  * Module: WF-Links
  * Developer: McDonald
  * Licence: GNU
  * @param $lid
  * @return string
  */
-
 function wflinks_sbmarks($lid)
 {
-    global $xoopsDB, $xoopsModule, $wfmyts;
+    global $xoopsDB, $xoopsModule, $myts;
 
     $sbmark_arr          = $xoopsDB->fetchArray($xoopsDB->query('SELECT title FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . (int)$lid . ''));
-    $sbmark_arr['title'] = $wfmyts->htmlSpecialCharsStrip($sbmark_arr['title']);
+    $sbmark_arr['title'] = htmlspecialchars($sbmark_arr['title']);
     $sbmark_arr['link']  = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlelink.php?lid=' . (int)$lid;
 
     //Definitions for social bookmarks

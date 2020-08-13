@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,7 +8,10 @@
  * Licence: GNU
  */
 
-require_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
+//require_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
+
+use Xmf\Request;
+use XoopsModules\News\NewsStory;
 
 $story = new NewsStory();
 $story->setUid($xoopsUser->uid());
@@ -18,13 +20,13 @@ $story->setExpired(0);
 $story->setType('admin');
 $story->setHostname(getenv('REMOTE_ADDR'));
 $story->setApproved(1);
-$topicid = (int)$_REQUEST['newstopicid'];
+$topicid = Request::getInt('newstopicid', 0, 'REQUEST');
 $story->setTopicId($topicid);
 $story->setTitle($title);
 $_linkid = (isset($lid) && $lid > 0) ? $lid : $newid;
 $_link   = $_REQUEST['descriptionb'] . '<br><div><a href=' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlelink.php?cid=' . $cid . '&amp;lid=' . $_linkid . '>' . $title . '</a></div>';
 
-$description = $wfmyts->addSlashes(trim($_link));
+$description = $myts->addSlashes(trim($_link));
 $story->setHometext($description);
 $story->setBodytext('');
 $nohtml   = empty($nohtml) ? 0 : 1;
@@ -32,6 +34,7 @@ $nosmiley = empty($nosmiley) ? 0 : 1;
 $story->setNohtml($nohtml);
 $story->setNosmiley($nosmiley);
 $story->store();
+/** @var \XoopsNotificationHandler $notificationHandler */
 $notificationHandler = xoops_getHandler('notification');
 
 $tags               = [];

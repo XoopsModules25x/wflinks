@@ -11,36 +11,35 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 
+use Xmf\Request;
+
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
     exit('Access Denied');
 }
 require_once XOOPS_ROOT_PATH . '/class/xoopsblock.php';
-include XOOPS_ROOT_PATH . '/modules/system/admin/blocksadmin/blocksadmin.php';
+require XOOPS_ROOT_PATH . '/modules/system/admin/blocksadmin/blocksadmin.php';
 
-$op = 'list';
+$op = Request::getCmd('op', 'list', 'POST');
 
-if (!empty($_POST['op'])) {
-    $op = $_POST['op'];
-}
 if (!empty($_POST['bid'])) {
-    $bid = (int)$_POST['bid'];
+    $bid = Request::getInt('bid', 0, 'POST');
 }
 
-if (isset($_GET['op'])) {
-    if ($_GET['op'] === 'edit' || $_GET['op'] === 'delete' || $_GET['op'] === 'delete_ok'
-        || $_GET['op'] === 'clone' /* || $_GET['op'] == 'previewpopup'*/) {
+if (Request::hasVar('op', 'GET')) {
+    if ('edit' === $_GET['op'] || 'delete' === $_GET['op'] || 'delete_ok' === $_GET['op']
+        || 'clone' === $_GET['op'] /* || $_GET['op'] == 'previewpopup'*/) {
         $op  = $_GET['op'];
-        $bid = isset($_GET['bid']) ? (int)$_GET['bid'] : 0;
+        $bid = Request::getInt('bid', 0, 'GET');
     }
 }
 
-if (isset($_POST['previewblock'])) {
+if (Request::hasVar('previewblock', 'POST')) {
     //if ( !admin_refcheck("/modules/$admin_mydirname/admin/") ) {
     //  exit('Invalid Referer');
     //}
@@ -49,72 +48,40 @@ if (isset($_POST['previewblock'])) {
     }
 
     if (empty($bid)) {
-        die('Invalid bid.');
+        exit('Invalid bid.');
     }
 
-    if (!empty($_POST['bside'])) {
-        $bside = (int)$_POST['bside'];
-    } else {
-        $bside = 0;
-    }
-    if (!empty($_POST['bweight'])) {
-        $bweight = (int)$_POST['bweight'];
-    } else {
-        $bweight = 0;
-    }
-    if (!empty($_POST['bvisible'])) {
-        $bvisible = (int)$_POST['bvisible'];
-    } else {
-        $bvisible = 0;
-    }
-    if (!empty($_POST['bmodule'])) {
-        $bmodule = $_POST['bmodule'];
-    } else {
-        $bmodule = [];
-    }
-    if (!empty($_POST['btitle'])) {
-        $btitle = $_POST['btitle'];
-    } else {
-        $btitle = '';
-    }
-    if (!empty($_POST['bcontent'])) {
-        $bcontent = $_POST['bcontent'];
-    } else {
-        $bcontent = '';
-    }
-    if (!empty($_POST['bctype'])) {
-        $bctype = $_POST['bctype'];
-    } else {
-        $bctype = '';
-    }
-    if (!empty($_POST['bcachetime'])) {
-        $bcachetime = (int)$_POST['bcachetime'];
-    } else {
-        $bcachetime = 0;
-    }
+    $bside      = Request::getInt('bside', 0, 'POST');
+    $bweight    = Request::getInt('bweight', 0, 'POST');
+    $bvisible   = Request::getInt('bvisible', 0, 'POST');
+    $bmodule    = Request::getArray('bmodule', [], 'POST');
+    $btitle     = Request::getString('btitle', '', 'POST');
+    $bcontent   = Request::getString('bcontent', '', 'POST');
+    $bctype     = Request::getString('bctype', '', 'POST');
+    $bcachetime = Request::getInt('bcachetime', 0, 'POST');
 
     xoops_cp_header();
     require_once XOOPS_ROOT_PATH . '/class/template.php';
-    $xoopsTpl = new XoopsTpl();
-    $xoopsTpl->xoops_setCaching(0);
-    $block['bid'] = $bid;
+    $xoopsTpl          = new \XoopsTpl();
+    $xoopsTpl->caching = 0;
+    $block['bid']      = $bid;
 
-    if ($op === 'clone_ok') {
+    if ('clone_ok' === $op) {
         $block['form_title']    = _AM_CLONEBLOCK;
         $block['submit_button'] = _CLONE;
-        $myblock                = new XoopsBlock();
+        $myblock                = new \XoopsBlock();
         $myblock->setVar('block_type', 'C');
     } else {
         $op                     = 'update';
         $block['form_title']    = _AM_EDITBLOCK;
         $block['submit_button'] = _SUBMIT;
-        $myblock                = new XoopsBlock($bid);
+        $myblock                = new \XoopsBlock($bid);
         $block['name']          = $myblock->getVar('name');
     }
 
-    $wfmyts = MyTextSanitizer::getInstance();
-    $myblock->setVar('title', $wfmyts->stripSlashesGPC($btitle));
-    $myblock->setVar('content', $wfmyts->stripSlashesGPC($bcontent));
+    $myts = \MyTextSanitizer::getInstance();
+    $myblock->setVar('title', $btitle);
+    $myblock->setVar('content', $bcontent);
     //  $dummyhtml = '<html><head><meta http-equiv="content-type" content="text/html; charset='._CHARSET.'"><meta http-equiv="content-language" content="'._LANGCODE.'"><title>'.$xoopsConfig['sitename'].'</title><link rel="stylesheet" type="text/css" media="all" href="'.getcss($xoopsConfig['theme_set']).'"></head><body><table><tr><th>'.$myblock->getVar('title').'</th></tr><tr><td>'.$myblock->getContent('S', $bctype).'</td></tr></table></body></html>';
 
     /* $dummyfile = '_dummyfile_'.time().'.html';
@@ -129,14 +96,14 @@ if (isset($_POST['previewblock'])) {
     $block['visible']   = $bvisible;
     $block['title']     = $myblock->getVar('title', 'E');
     $block['content']   = $myblock->getVar('content', 'E');
-    $block['modules']   =& $bmodule;
-    $block['ctype']     = isset($bctype) ? $bctype : $myblock->getVar('c_type');
+    $block['modules']   = &$bmodule;
+    $block['ctype']     = $bctype ?? $myblock->getVar('c_type');
     $block['is_custom'] = true;
     $block['cachetime'] = $bcachetime;
     echo '<a href="myblocksadmin.php">' . _AM_BADMIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . $block['form_title'] . '<br><br>';
-    require_once __DIR__ . '/../admin/myblockform.php'; //GIJ
+    require_once dirname(__DIR__) . '/admin/myblockform.php'; //GIJ
     //echo '<a href="admin.php?fct=blocksadmin">'. _AM_BADMIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$block['form_title'].'<br><br>';
-    //include XOOPS_ROOT_PATH.'/modules/system/admin/blocksadmin/blockform.php';
+    //require_once XOOPS_ROOT_PATH.'/modules/system/admin/blocksadmin/blockform.php';
     //    $form->addElement($xoopsGTicket->getTicketXoopsForm(__LINE__));//GIJ
     $form->display();
 
@@ -166,7 +133,7 @@ if (isset($_POST['previewblock'])) {
   }
   $file = str_replace('..', '', XOOPS_CACHE_PATH.'/'.trim($_GET['file']));
   if (file_exists($file)) {
-    include $file;
+    require_once $file;
     @unlink($file);
   }
   exit();
@@ -179,24 +146,24 @@ if (isset($_POST['previewblock'])) {
   exit();
 } */
 
-if ($op === 'order') {
+if ('order' === $op) {
     //if ( !admin_refcheck("/modules/$admin_mydirname/admin/") ) {
     //  exit('Invalid Referer');
     //}
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header(XOOPS_URL . '/', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
-    if (!empty($_POST['side'])) {
+    if (Request::hasVar('side', 'POST')) {
         $side = $_POST['side'];
     }
     //  if ( !empty($_POST['weight']) ) { $weight = $_POST['weight']; }
-    if (!empty($_POST['visible'])) {
+    if (Request::hasVar('visible', 'POST')) {
         $visible = $_POST['visible'];
     }
     //  if ( !empty($_POST['oldside']) ) { $oldside = $_POST['oldside']; }
     //  if ( !empty($_POST['oldweight']) ) { $oldweight = $_POST['oldweight']; }
     //  if ( !empty($_POST['oldvisible']) ) { $oldvisible = $_POST['oldvisible']; }
-    if (!empty($_POST['bid'])) {
+    if (Request::hasVar('bid', 'POST')) {
         $bid = $_POST['bid'];
     } else {
         $bid = [];
@@ -218,7 +185,7 @@ if ($op === 'order') {
         //    if ( $oldweight[$i] != $weight[$i] || $oldvisible[$i] != $visible[$i] || $oldside[$i] != $side[$i] )
         //    order_block($bid[$i], $weight[$i], $visible[$i], $side[$i]);
     }
-    $query4redirect = '?dirname=' . urlencode(strip_tags(substr($_POST['query4redirect'], 9)));
+    $query4redirect = '?dirname=' . urlencode(strip_tags(mb_substr($_POST['query4redirect'], 9)));
     redirect_header("myblocksadmin.php$query4redirect", 1, _AM_DBUPDATED);
     // GIJ end
 }
@@ -233,7 +200,7 @@ if ($op === 'order') {
   if ( !empty($_POST['bside']) ) { $bside = (int)($_POST['bside']); } else { $bside = 0; }
   if ( !empty($_POST['bweight']) ) { $bweight = (int)($_POST['bweight']); } else { $bweight = 0; }
   if ( !empty($_POST['bvisible']) ) { $bvisible = (int)($_POST['bvisible']); } else { $bvisible = 0; }
-  if ( !empty($_POST['bmodule']) ) { $bmodule = $_POST['bmodule']; } else { $bmodule = array(); }
+  if ( !empty($_POST['bmodule']) ) { $bmodule = $_POST['bmodule']; } else { $bmodule = []; }
   if ( !empty($_POST['btitle']) ) { $btitle = $_POST['btitle']; } else { $btitle = ""; }
   if ( !empty($_POST['bcontent']) ) { $bcontent = $_POST['bcontent']; } else { $bcontent = ""; }
   if ( !empty($_POST['bctype']) ) { $bctype = $_POST['bctype']; } else { $bctype = ""; }
@@ -242,7 +209,7 @@ if ($op === 'order') {
   exit();
 } */
 
-if ($op === 'update') {
+if ('update' === $op) {
     //if ( !admin_refcheck("/modules/$admin_mydirname/admin/") ) {
     //  exit('Invalid Referer');
     //}
@@ -256,20 +223,20 @@ if ($op === 'update') {
       if ( !empty($_POST['bcontent']) ) { $bcontent = $_POST['bcontent']; } else { $bcontent = ""; }
       if ( !empty($_POST['bctype']) ) { $bctype = $_POST['bctype']; } else { $bctype = ""; }
       if ( !empty($_POST['bcachetime']) ) { $bcachetime = (int)($_POST['bcachetime']); } else { $bcachetime = 0; }
-      if ( !empty($_POST['bmodule']) ) { $bmodule = $_POST['bmodule']; } else { $bmodule = array(); }
-      if ( !empty($_POST['options']) ) { $options = $_POST['options']; } else { $options = array(); }
+      if ( !empty($_POST['bmodule']) ) { $bmodule = $_POST['bmodule']; } else { $bmodule = []; }
+      if ( !empty($_POST['options']) ) { $options = $_POST['options']; } else { $options = []; }
       update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options);*/
 
-    $bcachetime = isset($_POST['bcachetime']) ? (int)$_POST['bcachetime'] : 0;
-    $options    = isset($_POST['options']) ? $_POST['options'] : [];
-    $bcontent   = isset($_POST['bcontent']) ? $_POST['bcontent'] : '';
-    $bctype     = isset($_POST['bctype']) ? $_POST['bctype'] : '';
+    $bcachetime = Request::getInt('bcachetime', 0, 'POST');
+    $options    = $_POST['options'] ?? [];
+    $bcontent   = Request::getString('bcontent', '', 'POST');
+    $bctype     = Request::getString('bctype', '', 'POST');
     $bmodule    = (isset($_POST['bmodule']) && is_array($_POST['bmodule'])) ? $_POST['bmodule'] : [-1]; // GIJ +
     $msg        = myblocksadmin_update_block($_POST['bid'], $_POST['bside'], $_POST['bweight'], $_POST['bvisible'], $_POST['btitle'], $bcontent, $bctype, $bcachetime, $bmodule, $options); // GIJ !
     redirect_header('myblocksadmin.php', 1, $msg);
 }
 
-if ($op === 'delete_ok') {
+if ('delete_ok' === $op) {
     //if ( !admin_refcheck("/modules/$admin_mydirname/admin/") ) {
     //  exit('Invalid Referer');
     //}
@@ -277,8 +244,8 @@ if ($op === 'delete_ok') {
         redirect_header(XOOPS_URL . '/', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
     // delete_block_ok($bid); GIJ imported from blocksadmin.php
-    $myblock = new XoopsBlock($bid);
-    if ($myblock->getVar('block_type') !== 'D' && $myblock->getVar('block_type') !== 'C') {
+    $myblock = new \XoopsBlock($bid);
+    if ('D' !== $myblock->getVar('block_type') && 'C' !== $myblock->getVar('block_type')) {
         redirect_header('myblocksadmin.php', 4, 'Invalid block');
     }
     $myblock->delete();
@@ -290,18 +257,17 @@ if ($op === 'delete_ok') {
         }
     }
     redirect_header('myblocksadmin.php', 1, _AM_DBUPDATED);
-
     // end of delete_block_ok() GIJ
 }
 
-if ($op === 'delete') {
+if ('delete' === $op) {
     xoops_cp_header();
     // delete_block($bid); GIJ imported from blocksadmin.php
-    $myblock = new XoopsBlock($bid);
-    if ($myblock->getVar('block_type') === 'S') {
+    $myblock = new \XoopsBlock($bid);
+    if ('S' === $myblock->getVar('block_type')) {
         $message = _AM_SYSTEMCANT;
         redirect_header('admin.php?fct=blocksadmin', 4, $message);
-    } elseif ($myblock->getVar('block_type') === 'M') {
+    } elseif ('M' === $myblock->getVar('block_type')) {
         $message = _AM_MODULECANT;
         redirect_header('admin.php?fct=blocksadmin', 4, $message);
     } else {
@@ -312,19 +278,19 @@ if ($op === 'delete') {
     exit();
 }
 
-if ($op === 'edit') {
+if ('edit' === $op) {
     xoops_cp_header();
     // edit_block($bid); GIJ imported from blocksadmin.php
-    $myblock = new XoopsBlock($bid);
+    $myblock = new \XoopsBlock($bid);
 
-    $db      = XoopsDatabaseFactory:: getDatabaseConnection();
+    $db      = \XoopsDatabaseFactory:: getDatabaseConnection();
     $sql     = 'SELECT module_id FROM ' . $db->prefix('block_module_link') . ' WHERE block_id=' . (int)$bid;
     $result  = $db->query($sql);
     $modules = [];
-    while ($row = $db->fetchArray($result)) {
+    while (false !== ($row = $db->fetchArray($result))) {
         $modules[] = (int)$row['module_id'];
     }
-    $is_custom = ($myblock->getVar('block_type') === 'C' || $myblock->getVar('block_type') === 'E');
+    $is_custom = ('C' === $myblock->getVar('block_type') || 'E' === $myblock->getVar('block_type'));
     $block     = [
         'form_title'    => _AM_EDITBLOCK,
         'name'          => $myblock->getVar('name'),
@@ -342,11 +308,11 @@ if ($op === 'edit') {
         'edit_form'     => $myblock->getOptions(),
         'template'      => $myblock->getVar('template'),
         'options'       => $myblock->getVar('options'),
-        'submit_button' => _SUBMIT
+        'submit_button' => _SUBMIT,
     ];
 
     echo '<a href="myblocksadmin.php">' . _AM_BADMIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_EDITBLOCK . '<br><br>';
-    require_once __DIR__ . '/../admin/myblockform.php'; //GIJ
+    require_once dirname(__DIR__) . '/admin/myblockform.php'; //GIJ
     //    $form->addElement($xoopsGTicket->getTicketXoopsForm(__LINE__));//GIJ
     $form->display();
     // end of edit_block() GIJ
@@ -354,18 +320,18 @@ if ($op === 'edit') {
     exit();
 }
 
-if ($op === 'clone') {
+if ('clone' === $op) {
     xoops_cp_header();
-    $myblock = new XoopsBlock($bid);
+    $myblock = new \XoopsBlock($bid);
 
-    $db      = XoopsDatabaseFactory:: getDatabaseConnection();
+    $db      = \XoopsDatabaseFactory:: getDatabaseConnection();
     $sql     = 'SELECT module_id FROM ' . $db->prefix('block_module_link') . ' WHERE block_id=' . (int)$bid;
     $result  = $db->query($sql);
     $modules = [];
-    while ($row = $db->fetchArray($result)) {
+    while (false !== ($row = $db->fetchArray($result))) {
         $modules[] = (int)$row['module_id'];
     }
-    $is_custom = ($myblock->getVar('block_type') === 'C' || $myblock->getVar('block_type') === 'E');
+    $is_custom = ('C' === $myblock->getVar('block_type') || 'E' === $myblock->getVar('block_type'));
     $block     = [
         'form_title'    => _AM_CLONEBLOCK,
         'name'          => $myblock->getVar('name'),
@@ -383,43 +349,42 @@ if ($op === 'clone') {
         'edit_form'     => $myblock->getOptions(),
         'template'      => $myblock->getVar('template'),
         'options'       => $myblock->getVar('options'),
-        'submit_button' => _CLONE
+        'submit_button' => _CLONE,
     ];
     echo '<a href="myblocksadmin.php">' . _AM_BADMIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . _AM_CLONEBLOCK . '<br><br>';
-    require_once __DIR__ . '/../admin/myblockform.php';
+    require_once dirname(__DIR__) . '/admin/myblockform.php';
     //    $form->addElement($xoopsGTicket->getTicketXoopsForm(__LINE__));//GIJ
     $form->display();
     xoops_cp_footer();
     exit();
 }
 
-if ($op === 'clone_ok') {
+if ('clone_ok' === $op) {
     // Ticket Check
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header(XOOPS_URL . '/', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
 
-    $block = new XoopsBlock($bid);
+    $block = new \XoopsBlock($bid);
 
     // block type check
     $block_type = $block->getVar('block_type');
-    if ($block_type !== 'C' && $block_type !== 'M' && $block_type !== 'D') {
+    if ('C' !== $block_type && 'M' !== $block_type && 'D' !== $block_type) {
         redirect_header('myblocksadmin.php', 4, 'Invalid block');
     }
 
     if (empty($_POST['options'])) {
         $options = [];
-    } else {
-        if (is_array($_POST['options'])) {
+    } elseif (is_array($_POST['options'])) {
             $options = $_POST['options'];
         } else {
             $options = explode('|', $_POST['options']);
         }
-    }
+
 
     // for backward compatibility
     // $cblock = $block->clone(); or $cblock = $block->xoopsClone();
-    $cblock = new XoopsBlock();
+    $cblock = new \XoopsBlock();
     foreach ($block->vars as $k => $v) {
         $cblock->assignVar($k, $v['value']);
     }
@@ -437,7 +402,7 @@ if ($op === 'clone_ok') {
         $cblock->setVar('options', $options);
     }
     $cblock->setVar('bid', 0);
-    $cblock->setVar('block_type', $block_type === 'C' ? 'C' : 'D');
+    $cblock->setVar('block_type', 'C' === $block_type ? 'C' : 'D');
     $cblock->setVar('func_num', 255);
     $newid = $cblock->store();
     if (!$newid) {
@@ -456,7 +421,7 @@ if ($op === 'clone_ok') {
                 $tplman->insert($tplclone);
             }
         } */
-    $db      = XoopsDatabaseFactory:: getDatabaseConnection();
+    $db      = \XoopsDatabaseFactory:: getDatabaseConnection();
     $bmodule = (isset($_POST['bmodule']) && is_array($_POST['bmodule'])) ? $_POST['bmodule'] : [-1]; // GIJ +
     foreach ($bmodule as $bmid) {
         $sql = 'INSERT INTO ' . $db->prefix('block_module_link') . ' (block_id, module_id) VALUES (' . $newid . ', ' . $bmid . ')';
@@ -507,8 +472,8 @@ function myblocksadmin_update_block(
     $bctype,
     $bcachetime,
     $bmodule,
-    $options = [])
-{
+    $options = []
+) {
     global $xoopsConfig;
     /* if (empty($bmodule)) {
         xoops_cp_header();
@@ -516,7 +481,7 @@ function myblocksadmin_update_block(
         xoops_cp_footer();
         exit();
     } */
-    $myblock = new XoopsBlock($bid);
+    $myblock = new \XoopsBlock($bid);
     // $myblock->setVar('side', $bside); GIJ -
     if ($bside >= 0) {
         $myblock->setVar('side', $bside);
@@ -535,7 +500,7 @@ function myblocksadmin_update_block(
         $options = implode('|', $options);
         $myblock->setVar('options', $options);
     }
-    if ($myblock->getVar('block_type') === 'C') {
+    if ('C' === $myblock->getVar('block_type')) {
         switch ($myblock->getVar('c_type')) {
             case 'H':
                 $name = _AM_CUSTOMHTML;
@@ -553,30 +518,29 @@ function myblocksadmin_update_block(
         $myblock->setVar('name', $name);
     }
     $msg = _AM_DBUPDATED;
-    if ($myblock->store() !== false) {
-        $db  = XoopsDatabaseFactory:: getDatabaseConnection();
-        $sql = sprintf('DELETE FROM %s WHERE block_id = %u', $db->prefix('block_module_link'), $bid);
+    if (false !== $myblock->store()) {
+        $db  = \XoopsDatabaseFactory:: getDatabaseConnection();
+        $sql = sprintf('DELETE FROM `%s` WHERE block_id = %u', $db->prefix('block_module_link'), $bid);
         $db->query($sql);
         foreach ($bmodule as $bmid) {
-            $sql = sprintf('INSERT INTO %s (block_id, module_id) VALUES (%u, %d)', $db->prefix('block_module_link'), $bid, (int)$bmid);
+            $sql = sprintf('INSERT INTO `%s` (block_id, module_id) VALUES (%u, %d)', $db->prefix('block_module_link'), $bid, (int)$bmid);
             $db->query($sql);
         }
         require_once XOOPS_ROOT_PATH . '/class/template.php';
-        $xoopsTpl = new XoopsTpl();
-        $xoopsTpl->xoops_setCaching(2);
-        if ($myblock->getVar('template') !== '') {
+        $xoopsTpl          = new \XoopsTpl();
+        $xoopsTpl->caching = 2;
+        if ('' !== $myblock->getVar('template')) {
             if ($xoopsTpl->is_cached('db:' . $myblock->getVar('template'))) {
                 if (!$xoopsTpl->clear_cache('db:' . $myblock->getVar('template'))) {
                     $msg = 'Unable to clear cache for block ID' . $bid;
                 }
             }
-        } else {
-            if ($xoopsTpl->is_cached('db:system_dummy.tpl', 'block' . $bid)) {
+        } elseif ($xoopsTpl->is_cached('db:system_dummy.tpl', 'block' . $bid)) {
                 if (!$xoopsTpl->clear_cache('db:system_dummy.tpl', 'block' . $bid)) {
                     $msg = 'Unable to clear cache for block ID' . $bid;
                 }
             }
-        }
+
     } else {
         $msg = 'Failed update of block. ID:' . $bid;
     }

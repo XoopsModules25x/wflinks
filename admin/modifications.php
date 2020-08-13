@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,18 +8,23 @@
  * Licence: GNU
  */
 
+use Xmf\Request;
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/admin_header.php';
 
-global $mytree, $xoopsModuleConfig;
-xoops_load('XoopsUserUtility');
-$op        = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
-$requestid = WflinksUtility::cleanRequestVars($_REQUEST, 'requestid', 0);
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
-switch (strtolower($op)) {
+global $mytree;
+xoops_load('XoopsUserUtility');
+$op        = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
+$requestid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'requestid', 0);
+
+switch (mb_strtolower($op)) {
     case 'listmodreqshow':
 
         xoops_cp_header();
-        //WflinksUtility::getAdminMenu( _AM_WFL_MOD_MODREQUESTS );
 
         $sql       = 'SELECT modifysubmitter, requestid, lid, cid, title, url, description, screenshot, forumid, country, keywords, item_tag, googlemap, yahoomap, multimap, street1, street2, town, state, zip, tel, fax, voip, mobile, email, vat FROM '
                      . $xoopsDB->prefix('wflinks_mod')
@@ -36,25 +40,25 @@ switch (strtolower($op)) {
         $orig_array = $xoopsDB->fetchArray($xoopsDB->query($sql));
         unset($sql);
 
-        $orig_user      = new XoopsUser($orig_array['submitter']);
-        $submittername  = XoopsUserUtility::getUnameFromId($orig_array['submitter']);
-        $submitteremail = $orig_user->getUnameFromId('email');
+        $orig_user      = new \XoopsUser($orig_array['submitter']);
+        $submittername  = \XoopsUserUtility::getUnameFromId($orig_array['submitter']);
+        $submitteremail = $orig_user::getUnameFromId('email');
 
         echo '<div><b>' . _AM_WFL_MOD_MODPOSTER . "</b> $submittername</div>";
         $not_allowed = ['lid', 'submitter', 'requestid', 'modifysubmitter'];
-        $sform       = new XoopsThemeForm(_AM_WFL_MOD_ORIGINAL, 'storyform', 'index.php');
+        $sform       = new \XoopsThemeForm(_AM_WFL_MOD_ORIGINAL, 'storyform', 'index.php');
         foreach ($orig_array as $key => $content) {
             if (in_array($key, $not_allowed)) {
                 continue;
             }
-            $lang_def = constant('_AM_WFL_MOD_' . strtoupper($key));
+            $lang_def = constant('_AM_WFL_MOD_' . mb_strtoupper($key));
 
-            if ($key === 'cid') {
+            if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE cid=' . $content;
                 $row     = $xoopsDB->fetchArray($xoopsDB->query($sql));
                 $content = $row['title'];
             }
-            if ($key === 'forumid') {
+            if ('forumid' === $key) {
                 $content          = '';
                 $moduleHandler    = xoops_getHandler('module');
                 $xoopsforumModule = $moduleHandler->getByDirname('newbb');
@@ -63,37 +67,37 @@ switch (strtolower($op)) {
                     $content = "<a href='" . XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $content . "'>Forumid</a>";
                 }
             }
-            if ($key === 'screenshot') {
+            if ('screenshot' === $key) {
                 $content = '';
                 if ($content > 0) {
-                    $content = "<img src='" . XOOPS_URL . '/' . $xoopsModuleConfig['screenshots'] . '/' . $logourl . "' width='" . $xoopsModuleConfig['shotwidth'] . "' alt=''>";
+                    $content = "<img src='" . XOOPS_URL . '/' . $helper->getConfig('screenshots') . '/' . $logourl . "' width='" . $helper->getConfig('shotwidth') . "' alt=''>";
                 }
             }
-            if ($key === 'country') {
-                $content = WflinksUtility::getCountryName($mod_array['country']);
+            if ('country' === $key) {
+                $content = Wflinks\Utility::getCountryName($mod_array['country']);
             }
-            $sform->addElement(new XoopsFormLabel($lang_def, $content));
+            $sform->addElement(new \XoopsFormLabel($lang_def, $content));
         }
         $sform->display();
 
-        $orig_user      = new XoopsUser($mod_array['modifysubmitter']);
-        $submittername  = XoopsUserUtility::getUnameFromId($mod_array['modifysubmitter']);
-        $submitteremail = $orig_user->getUnameFromId('email');
+        $orig_user      = new \XoopsUser($mod_array['modifysubmitter']);
+        $submittername  = \XoopsUserUtility::getUnameFromId($mod_array['modifysubmitter']);
+        $submitteremail = $orig_user::getUnameFromId('email');
 
         echo '<div><b>' . _AM_WFL_MOD_MODIFYSUBMITTER . "</b> $submittername</div>";
-        $sform = new XoopsThemeForm(_AM_WFL_MOD_PROPOSED, 'storyform', 'modifications.php');
+        $sform = new \XoopsThemeForm(_AM_WFL_MOD_PROPOSED, 'storyform', 'modifications.php');
         foreach ($mod_array as $key => $content) {
             if (in_array($key, $not_allowed)) {
                 continue;
             }
-            $lang_def = constant('_AM_WFL_MOD_' . strtoupper($key));
+            $lang_def = constant('_AM_WFL_MOD_' . mb_strtoupper($key));
 
-            if ($key === 'cid') {
+            if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE cid=' . $content;
                 $row     = $xoopsDB->fetchArray($xoopsDB->query($sql));
                 $content = $row['title'];
             }
-            if ($key === 'forumid') {
+            if ('forumid' === $key) {
                 $content          = '';
                 $moduleHandler    = xoops_getHandler('module');
                 $xoopsforumModule = $moduleHandler->getByDirname('newbb');
@@ -103,35 +107,34 @@ switch (strtolower($op)) {
                     $content = "<a href='" . XOOPS_URL . '/modules/newbb/viewforum.php?forum=' . $content . "'>Forumid</a>";
                 }
             }
-            if ($key === 'screenshot') {
+            if ('screenshot' === $key) {
                 $content = '';
                 if ($content > 0) {
-                    $content = "<img src='" . XOOPS_URL . '/' . $xoopsModuleConfig['screenshots'] . '/' . $logourl . "' width='" . $xoopsModuleConfig['shotwidth'] . "' alt=''>";
+                    $content = "<img src='" . XOOPS_URL . '/' . $helper->getConfig('screenshots') . '/' . $logourl . "' width='" . $helper->getConfig('shotwidth') . "' alt=''>";
                 }
             }
-            if ($key === 'country') {
-                $content = WflinksUtility::getCountryName($mod_array['country']);
+            if ('country' === $key) {
+                $content = Wflinks\Utility::getCountryName($mod_array['country']);
             }
-            $sform->addElement(new XoopsFormLabel($lang_def, $content));
+            $sform->addElement(new \XoopsFormLabel($lang_def, $content));
         }
-        $button_tray = new XoopsFormElementTray('', '');
-        $button_tray->addElement(new XoopsFormHidden('requestid', $requestid));
-        $button_tray->addElement(new XoopsFormHidden('lid', $mod_array['requestid']));
-        $hidden = new XoopsFormHidden('op', 'changemodreq');
-        $button_tray->addElement($hidden);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $buttonTray->addElement(new \XoopsFormHidden('requestid', $requestid));
+        $buttonTray->addElement(new \XoopsFormHidden('lid', $mod_array['requestid']));
+        $hidden = new \XoopsFormHidden('op', 'changemodreq');
+        $buttonTray->addElement($hidden);
         if ($mod_array) {
-            $butt_dup = new XoopsFormButton('', '', _AM_WFL_BAPPROVE, 'submit');
+            $butt_dup = new \XoopsFormButton('', '', _AM_WFL_BAPPROVE, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'changemodreq\'"');
-            $button_tray->addElement($butt_dup);
+            $buttonTray->addElement($butt_dup);
         }
-        $butt_dupct2 = new XoopsFormButton('', '', _AM_WFL_BIGNORE, 'submit');
+        $butt_dupct2 = new \XoopsFormButton('', '', _AM_WFL_BIGNORE, 'submit');
         $butt_dupct2->setExtra('onclick="this.form.elements.op.value=\'ignoremodreq\'"');
-        $button_tray->addElement($butt_dupct2);
-        $sform->addElement($button_tray);
+        $buttonTray->addElement($butt_dupct2);
+        $sform->addElement($buttonTray);
         $sform->display();
         xoops_cp_footer();
         break;
-
     case 'changemodreq':
         $sql        = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_mod') . ' WHERE requestid=' . $requestid;
         $link_array = $xoopsDB->fetchArray($xoopsDB->query($sql));
@@ -163,32 +166,32 @@ switch (strtolower($op)) {
         $vat         = $link_array['vat'];
         $updated     = time();
 
-        $xoopsDB->query('UPDATE '
-                        . $xoopsDB->prefix('wflinks_links')
-                        . " SET cid = $cid, title='$title', url='$url', submitter='$submitter', screenshot='$screenshot', publisher='$publisher', status='2', updated='$updated', description='$description', country='$country', keywords='$keywords', item_tag='$item_tag', googlemap='$googlemap', yahoomap='$yahoomap', multimap='$multimap', street1='$street1', street2='$street2', town='$town', state='$state',  zip='$zip', tel='$tel', fax='$fax', voip='$voip', mobile='$mobile', email='$email', vat='$vat' WHERE lid = "
-                        . $lid);
+        $xoopsDB->query(
+            'UPDATE '
+            . $xoopsDB->prefix('wflinks_links')
+            . " SET cid = $cid, title='$title', url='$url', submitter='$submitter', screenshot='$screenshot', publisher='$publisher', status='2', updated='$updated', description='$description', country='$country', keywords='$keywords', item_tag='$item_tag', googlemap='$googlemap', yahoomap='$yahoomap', multimap='$multimap', street1='$street1', street2='$street2', town='$town', state='$state',  zip='$zip', tel='$tel', fax='$fax', voip='$voip', mobile='$mobile', email='$email', vat='$vat' WHERE lid = "
+            . $lid
+        );
         $sql    = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_mod') . ' WHERE requestid=' . $requestid;
         $result = $xoopsDB->query($sql);
         redirect_header('index.php', 1, _AM_WFL_MOD_REQUPDATED);
         break;
-
     case 'ignoremodreq':
         $sql = sprintf('DELETE FROM ' . $xoopsDB->prefix('wflinks_mod') . ' WHERE requestid=' . $requestid);
         $xoopsDB->query($sql);
         redirect_header('index.php', 1, _AM_WFL_MOD_REQDELETED);
         break;
-
     case 'main':
     default:
 
-        $start            = isset($_GET['start']) ? (int)$_GET['start'] : 0;
-        $mytree           = new WflinksXoopsTree($xoopsDB->prefix('wflinks_mod'), 'requestid', 0);
+        $start            = Request::getInt('start', 0, 'GET');
+        $mytree           = new Wflinks\Tree($xoopsDB->prefix('wflinks_mod'), 'requestid', 0);
         $sql              = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_mod') . ' ORDER BY requestdate DESC';
-        $result           = $xoopsDB->query($sql, $xoopsModuleConfig['admin_perpage'], $start);
+        $result           = $xoopsDB->query($sql, $helper->getConfig('admin_perpage'), $start);
         $totalmodrequests = $xoopsDB->getRowsNum($xoopsDB->query($sql));
 
         xoops_cp_header();
-        //WflinksUtility::getAdminMenu( _AM_WFL_MOD_MODREQUESTS );
+
         echo "<fieldset><legend style='font-weight: bold; color: #0A3760;'>" . _AM_WFL_MOD_MODREQUESTSINFO . "</legend>\n";
         echo "<div style='padding: 8px;'>" . _AM_WFL_MOD_TOTMODREQUESTS . " <b>$totalmodrequests<></div>\n";
         echo "</fieldset><br>\n";
@@ -202,13 +205,13 @@ switch (strtolower($op)) {
         echo '<th>' . _AM_WFL_MINDEX_ACTION . "</th>\n";
         echo "</tr>\n";
         if ($totalmodrequests > 0) {
-            while ($link_arr = $xoopsDB->fetchArray($result)) {
+            while (false !== ($link_arr = $xoopsDB->fetchArray($result))) {
                 $path        = $mytree->getNicePathFromId($link_arr['requestid'], 'title', 'modifications.php?op=listmodreqshow&requestid');
                 $path        = str_replace('/', '', $path);
                 $path        = str_replace(':', '', trim($path));
                 $title       = trim($path);
-                $submitter   = XoopsUserUtility::getUnameFromId($link_arr['modifysubmitter']);
-                $requestdate = formatTimestamp($link_arr['requestdate'], $xoopsModuleConfig['dateformatadmin']);
+                $submitter   = \XoopsUserUtility::getUnameFromId($link_arr['modifysubmitter']);
+                $requestdate = formatTimestamp($link_arr['requestdate'], $helper->getConfig('dateformatadmin'));
 
                 echo "<tr class='center;'>\n";
                 echo "<td class='head'>" . $link_arr['requestid'] . "</td>\n";
@@ -224,8 +227,8 @@ switch (strtolower($op)) {
         echo "</table>\n";
 
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        //        $page = ( $totalmodrequests > $xoopsModuleConfig['admin_perpage'] ) ? _AM_WFL_MINDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($totalmodrequests, $xoopsModuleConfig['admin_perpage'], $start, 'start');
+        //        $page = ( $totalmodrequests > $helper->getConfig('admin_perpage') ) ? _AM_WFL_MINDEX_PAGE : '';
+        $pagenav = new \XoopsPageNav($totalmodrequests, $helper->getConfig('admin_perpage'), $start, 'start');
         echo "<div style='text-align: right; padding: 8px;'>" . $pagenav->renderNav() . '</div>';
         require_once __DIR__ . '/admin_footer.php';
 }

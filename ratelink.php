@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,18 +8,20 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/header.php';
 
-global $wfmyts, $xoTheme;
+global $myts, $xoTheme;
 
 // Check if linkload POSTER is voting (UNLESS Anonymous users allowed to post)
-$lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid = (int)$lid;
 
 $ip         = getenv('REMOTE_ADDR');
 $ratinguser = (!is_object($xoopsUser)) ? 0 : $xoopsUser->getVar('uid');
 
-if ($ratinguser != 0) {
+if (0 != $ratinguser) {
     $result = $xoopsDB->query('SELECT cid, submitter FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid);
     while (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result)) {
         if ($ratinguserDB == $ratinguser) {
@@ -51,45 +52,45 @@ if (!empty($_POST['submit'])) {
     // Make sure only 1 anonymous from an IP in a single day.
     $anonwaitdays = 1;
     $ip           = getenv('REMOTE_ADDR');
-    $lid          = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
-    $cid          = WflinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
-    $rating       = WflinksUtility::cleanRequestVars($_REQUEST, 'rating', 0);
-    $title        = $wfmyts->addSlashes(trim($_POST['title']));
+    $lid          = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
+    $cid          = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
+    $rating       = Wflinks\Utility::cleanRequestVars($_REQUEST, 'rating', 0);
+    $title        = $myts->addSlashes(trim($_POST['title']));
     $lid          = (int)$lid;
     $cid          = (int)$cid;
     $rating       = (int)$rating;
     // Check if Rating is Null
-    if ($rating == '--') {
+    if ('--' == $rating) {
         redirect_header('ratelink.php?cid=' . $cid . '&amp;lid=' . $lid, 4, _MD_WFL_NORATING);
     }
     // All is well.  Add to Line Item Rate to DB.
     $newid    = $xoopsDB->genId($xoopsDB->prefix('wflinks_votedata') . '_ratingid_seq');
     $datetime = time();
-    $sql      = sprintf('INSERT INTO %s (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)', $xoopsDB->prefix('wflinks_votedata'), $newid, $lid, $ratinguser, $rating, $xoopsDB->quoteString($ip), $datetime, $xoopsDB->quoteString($title));
-    if (!$result = $xoopsDB->query($sql)) {
-        $ratemessage = _MD_WFL_ERROR;
-    } else {
+    $sql      = sprintf('INSERT INTO `%s` (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp, title) VALUES (%u, %u, %u, %u, %s, %u, %s)', $xoopsDB->prefix('wflinks_votedata'), $newid, $lid, $ratinguser, $rating, $xoopsDB->quoteString($ip), $datetime, $xoopsDB->quoteString($title));
+    if ($result = $xoopsDB->query($sql)) {
         // All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
-        WflinksUtility::updateRating($lid);
+        Wflinks\Utility::updateRating($lid);
         $ratemessage = _MD_WFL_VOTEAPPRE . '<br>' . sprintf(_MD_WFL_THANKYOU, $xoopsConfig['sitename']);
+    } else {
+        $ratemessage = _MD_WFL_ERROR;
     }
     redirect_header('singlelink.php?cid=' . $cid . '&amp;lid=' . $lid, 4, $ratemessage);
 } else {
     $GLOBALS['xoopsOption']['template_main'] = 'wflinks_ratelink.tpl';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require XOOPS_ROOT_PATH . '/header.php';
 
-    $catarray['imageheader'] = WflinksUtility::getImageHeader();
-    $cid                     = WflinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
+    $catarray['imageheader'] = Wflinks\Utility::getImageHeader();
+    $cid                     = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
     $cid                     = (int)$cid;
 
-    $catarray['imageheader'] = WflinksUtility::getImageHeader();
-    $catarray['letters']     = WflinksUtility::getLetters();
-    $catarray['toolbar']     = WflinksUtility::getToolbar();
+    $catarray['imageheader'] = Wflinks\Utility::getImageHeader();
+    $catarray['letters']     = Wflinks\Utility::getLetters();
+    $catarray['toolbar']     = Wflinks\Utility::getToolbar();
     $xoopsTpl->assign('catarray', $catarray);
 
     $result = $xoopsDB->query('SELECT title FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid);
     list($title) = $xoopsDB->fetchRow($result);
-    $xoopsTpl->assign('link', array('id' => $lid, 'cid' => $cid, 'title' => $wfmyts->htmlSpecialCharsStrip($title)));
+    $xoopsTpl->assign('link', ['id' => $lid, 'cid' => $cid, 'title' => htmlspecialchars($title)]);
 
     if (is_object($xoTheme)) {
         $xoTheme->addMeta('meta', 'robots', 'noindex,nofollow');
@@ -98,7 +99,7 @@ if (!empty($_POST['submit'])) {
     }
 
     $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require XOOPS_ROOT_PATH . '/footer.php';
 }
 
 if (is_object($xoTheme)) {
@@ -108,4 +109,4 @@ if (is_object($xoTheme)) {
 }
 
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
-include XOOPS_ROOT_PATH . '/footer.php';
+require XOOPS_ROOT_PATH . '/footer.php';

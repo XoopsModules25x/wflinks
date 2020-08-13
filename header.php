@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,20 +8,36 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks\{
+    Helper
+};
+
+require dirname(__DIR__, 2) . '/mainfile.php';
+require XOOPS_ROOT_PATH . '/header.php';
+
+require __DIR__ . '/preloads/autoloader.php';
+//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/WfThumbsNails.php';
+require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.php';
+
 $moduleDirName = basename(__DIR__);
 
-require_once __DIR__ . '/../../mainfile.php';
-include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/config.php';
-include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/utility.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/WfThumbsNails.php';
-require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.php';
+/** @var Helper $helper */
+$helper = Helper::getInstance();
 
-if (!file_exists(__DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-    require_once __DIR__ . '/language/english/main.php';
+$myts = \MyTextSanitizer::getInstance();
+
+if (!isset($GLOBALS['xoTheme']) || !is_object($GLOBALS['xoTheme'])) {
+    require $GLOBALS['xoops']->path('class/theme.php');
+    $GLOBALS['xoTheme'] = new \xos_opal_Theme();
 }
 
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfltextsanitizer.php';
-$wfmyts = new WflTextSanitizer(); // MyTextSanitizer object
+// Load language files
+$helper->loadLanguage('main');
+
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    require $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
+}
 
 global $xoopModuleConfig;

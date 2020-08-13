@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,41 +8,46 @@
  * Licence: GNU
  */
 
+use Xmf\Request;
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/admin_header.php';
 
-$op  = WflinksUtility::cleanRequestVars($_REQUEST, 'op', '');
-$rid = WflinksUtility::cleanRequestVars($_REQUEST, 'rid', 0);
-$lid = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
-switch (strtolower($op)) {
+$op  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
+$rid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'rid', 0);
+$lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
+
+switch (mb_strtolower($op)) {
     case 'delvote':
         $sql    = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_votedata') . ' WHERE ratingid=' . $rid;
         $result = $xoopsDB->queryF($sql);
-        WflinksUtility::updateRating($lid);
+        Wflinks\Utility::updateRating($lid);
         redirect_header('votedata.php', 1, _AM_WFL_VOTEDELETED);
         break;
-
     case 'main':
     default:
-        $start = WflinksUtility::cleanRequestVars($_REQUEST, 'start', 0);
+        $start = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start', 0);
         xoops_cp_header();
-        //WflinksUtility::getAdminMenu( _AM_WFL_VOTE_RATINGINFOMATION );
-        $_vote_data = WflinksUtility::getVoteDetails($lid);
+
+        $_vote_data = Wflinks\Utility::getVoteDetails($lid);
 
         $text_info = "
         <table width='100%'>
          <tr>
           <td width='50%' valign='top'>
-           <div><b>" . _AM_WFL_VOTE_TOTALRATE . ': </b>' . (int)$_vote_data['rate'] . '</div>
+           <div><b>" . _AM_WFL_VOTE_TOTALRATE . ': </b>' . Request::getInt('rate', 0, 'vote_data') . '</div>
            <div><b>' . _AM_WFL_VOTE_USERAVG . ': </b>' . (int)round($_vote_data['avg_rate'], 2) . '</div>
-           <div><b>' . _AM_WFL_VOTE_MAXRATE . ': </b>' . (int)$_vote_data['min_rate'] . '</div>
-           <div><b>' . _AM_WFL_VOTE_MINRATE . ': </b>' . (int)$_vote_data['max_rate'] . '</div>
+           <div><b>' . _AM_WFL_VOTE_MAXRATE . ': </b>' . Request::getInt('min_rate', 0, 'vote_data') . '</div>
+           <div><b>' . _AM_WFL_VOTE_MINRATE . ': </b>' . Request::getInt('max_rate', 0, 'vote_data') . '</div>
           </td>
           <td>
-           <div><b>' . _AM_WFL_VOTE_MOSTVOTEDTITLE . ': </b>' . (int)$_vote_data['max_title'] . '</div>
-           <div><b>' . _AM_WFL_VOTE_LEASTVOTEDTITLE . ': </b>' . (int)$_vote_data['min_title'] . '</div>
-           <div><b>' . _AM_WFL_VOTE_REGISTERED . ': </b>' . ((int)($_vote_data['rate'] - $_vote_data['null_ratinguser'])) . '</div>
-           <div><b>' . _AM_WFL_VOTE_NONREGISTERED . ': </b>' . (int)$_vote_data['null_ratinguser'] . '</div>
+           <div><b>' . _AM_WFL_VOTE_MOSTVOTEDTITLE . ': </b>' . Request::getInt('max_title', 0, 'vote_data') . '</div>
+           <div><b>' . _AM_WFL_VOTE_LEASTVOTEDTITLE . ': </b>' . Request::getInt('min_title', 0, 'vote_data') . '</div>
+           <div><b>' . _AM_WFL_VOTE_REGISTERED . ': </b>' . $_vote_data['rate'] - $_vote_data['null_ratinguser'] . '</div>
+           <div><b>' . _AM_WFL_VOTE_NONREGISTERED . ': </b>' . Request::getInt('null_ratinguser', 0, 'vote_data') . '</div>
           </td>
          </tr>
         </table>';
@@ -71,15 +75,15 @@ switch (strtolower($op)) {
         }
         $sql .= ' ORDER BY ratingtimestamp DESC';
 
-        $results = $xoopsDB->query($sql, $xoopsModuleConfig['admin_perpage'], $start);
+        $results = $xoopsDB->query($sql, $helper->getConfig('admin_perpage'), $start);
         $votes   = $xoopsDB->getRowsNum($xoopsDB->query($sql));
 
-        if ($votes == 0) {
+        if (0 == $votes) {
             echo "<tr><td class='txtcenter;' colspan='7' class='head'>" . _AM_WFL_VOTE_NOVOTES . '</td></tr>';
         } else {
             while (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $xoopsDB->fetchRow($results)) {
-                $formatted_date = formatTimestamp($ratingtimestamp, $xoopsModuleConfig['dateformatadmin']);
-                $ratinguname    = XoopsUser:: getUnameFromId($ratinguser);
+                $formatted_date = formatTimestamp($ratingtimestamp, $helper->getConfig('dateformatadmin'));
+                $ratinguname    = \XoopsUser:: getUnameFromId($ratinguser);
                 echo "
                     <tr class='txtcenter;'>\n
                     <td class='head'>$ratingid</td>\n
@@ -95,8 +99,8 @@ switch (strtolower($op)) {
         echo '</table>';
         // Include page navigation
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $page    = ($votes > $xoopsModuleConfig['admin_perpage']) ? _AM_WFL_MINDEX_PAGE : '';
-        $pagenav = new XoopsPageNav($page, $xoopsModuleConfig['admin_perpage'], $start, 'start');
+        $page    = ($votes > $helper->getConfig('admin_perpage')) ? _AM_WFL_MINDEX_PAGE : '';
+        $pagenav = new \XoopsPageNav($page, $helper->getConfig('admin_perpage'), $start, 'start');
         echo '<div align="right" style="padding: 8px;">' . $pagenav->renderNav() . '</div>';
         break;
 }

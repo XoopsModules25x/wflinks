@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,82 +8,54 @@
  * Licence: GNU
  */
 
-/*
-* WARNING: ONCE SET DO NOT CHANGE! Improper use will render this module useless and unworkable.
-* Only Change if you know what you are doing.
-*/
-if (!defined('WFLINKS_BROKEN')) {
-    define('WFLINKS_BROKEN', 'wflinks_broken');
-}
-if (!defined('WFLINKS_CAT')) {
-    define('WFLINKS_CAT', 'wflinks_cat');
-}
-if (!defined('WFLINKS_LINKS')) {
-    define('WFLINKS_LINKS', 'wflinks_links');
-}
-if (!defined('WFLINKS_MOD')) {
-    define('WFLINKS_MOD', 'wflinks_mod');
-}
-if (!defined('WFLINKS_VOTEDATA')) {
-    define('WFLINKS_VOTEDATA', 'wflinks_votedata');
-}
-if (!defined('WFLINKS_INDEXPAGE')) {
-    define('WFLINKS_INDEXPAGE', 'wflinks_indexpage');
-}
-if (!defined('WFLINKS_ALTCAT')) {
-    define('WFLINKS_ALTCAT', 'wflinks_altcat');
-}
+use Xmf\Module\Admin;
 
-$moduleDirName = basename(dirname(__DIR__));
-$capsDirName   = strtoupper($moduleDirName);
+$moduleDirName      = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-if (!defined($capsDirName . '_DIRNAME')) {
-    //if (!defined(constant($capsDirName . '_DIRNAME'))) {
-    define($capsDirName . '_DIRNAME', $GLOBALS['xoopsModule']->dirname());
-    define($capsDirName . '_PATH', XOOPS_ROOT_PATH . '/modules/' . constant($capsDirName . '_DIRNAME'));
-    define($capsDirName . '_URL', XOOPS_URL . '/modules/' . constant($capsDirName . '_DIRNAME'));
-    define($capsDirName . '_ADMIN', constant($capsDirName . '_URL') . '/admin/index.php');
-    define($capsDirName . '_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . constant($capsDirName . '_DIRNAME'));
-    define($capsDirName . '_AUTHOR_LOGOIMG', constant($capsDirName . '_URL') . '/assets/images/logoModule.png');
-    define($capsDirName . '_UPLOAD_URL', XOOPS_UPLOAD_URL . '/' . $moduleDirName); // WITHOUT Trailing slash
-    define($capsDirName . '_UPLOAD_PATH', XOOPS_UPLOAD_PATH . '/' . $moduleDirName); // WITHOUT Trailing slash
-}
-
-//Configurator
 return (object)[
-    'name'          => strtoupper($moduleDirName) .' Module Configurator',
-    'paths'         => [
+    'name'           => $moduleDirNameUpper . ' Module Configurator',
+    'paths'          => [
         'dirname'    => $moduleDirName,
         'admin'      => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/admin',
-        //        'path'       => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName,
-        //        'url'        => XOOPS_URL . '/modules/' . $moduleDirName,
+        'modPath'    => XOOPS_ROOT_PATH . '/modules/' . $moduleDirName,
+        'modUrl'     => XOOPS_URL . '/modules/' . $moduleDirName,
         'uploadPath' => XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
         'uploadUrl'  => XOOPS_UPLOAD_URL . '/' . $moduleDirName,
     ],
-    'uploadFolders' => [
-        constant($capsDirName . '_UPLOAD_PATH'),
-        constant($capsDirName . '_UPLOAD_PATH') . '/category',
-        constant($capsDirName . '_UPLOAD_PATH') . '/screenshots',
-        XOOPS_UPLOAD_PATH . '/flags'
+    'uploadFolders'  => [
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/category',
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/screenshots',
+        //XOOPS_UPLOAD_PATH . '/flags'
     ],
-    'blankFiles'    => [
-        constant($capsDirName . '_UPLOAD_PATH'),
-        constant($capsDirName . '_UPLOAD_PATH') . '/category',
-        constant($capsDirName . '_UPLOAD_PATH') . '/screenshots',
-        XOOPS_UPLOAD_PATH . '/flags'
+    'copyBlankFiles' => [
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/category',
+        XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/screenshots',
+        //XOOPS_UPLOAD_PATH . '/flags'
+    ],
+
+    'copyTestFolders' => [
+        //[
+        //    constant($moduleDirNameUpper . '_PATH') . '/testdata/images',
+        //    XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/images',
+        //]
     ],
 
     'templateFolders' => [
         '/templates/',
         '/templates/blocks/',
-        '/templates/admin/'
-
+        '/templates/admin/',
     ],
     'oldFiles'        => [
-        '/sql/wflinks.sql',
-        '/class/wfl_lists.php',
-        '/class/class_thumbnail.php',
-        '/vcard.php',
+        '/class/request.php',
+        '/class/registry.php',
+        '/class/utilities.php',
+        '/class/util.php',
+        '/include/constants.php',
+        '/include/functions.php',
+        '/ajaxrating.txt',
     ],
     'oldFolders'      => [
         '/images',
@@ -93,6 +64,13 @@ return (object)[
         '/tcpdf',
         '/images',
     ],
+    'renameTables'    => [//         'XX_archive'     => 'ZZZZ_archive',
+    ],
+    'moduleStats'     => [
+        //            'totalcategories' => $helper->getHandler('Category')->getCategoriesCount(-1),
+        //            'totalitems'      => $helper->getHandler('Item')->getItemsCount(),
+        //            'totalsubmitted'  => $helper->getHandler('Item')->getItemsCount(-1, [Constants::PUBLISHER_STATUS_SUBMITTED]),
+    ],
     'modCopyright'    => "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
-                     <img src='" . constant($capsDirName . '_AUTHOR_LOGOIMG') . '\' alt=\'XOOPS Project\' /></a>',
+                     <img src='" . Admin::iconUrl('xoopsmicrobutton.gif') . "' alt='XOOPS Project'></a>",
 ];

@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -8,7 +8,6 @@
  * Team: WF-Projects
  * Licence: GNU
  */
-
 require_once __DIR__ . '/header.php';
 
 define('IS_UPDATE_FILE', true);
@@ -17,12 +16,12 @@ global $xoopsDB, $xoopsConfig, $xoopsUser, $xoopsModule;
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
     exit('Access Denied');
 }
-include XOOPS_ROOT_PATH . '/header.php';
+require XOOPS_ROOT_PATH . '/header.php';
 
 function install_header()
 {
     ?>
-    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+    <!DOCTYPE HTML>
     <html>
     <head>
         <title>WF-Links Upgrade</title>
@@ -51,13 +50,13 @@ foreach ($_GET as $k => $v) {
     ${$k} = $v;
 }
 
-if (!isset($action) || $action === '') {
+if (!isset($action) || '' === $action) {
     $action = 'message';
 }
 
-if ($action === 'message') {
+if ('message' === $action) {
     install_header();
-
+    /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $mylinks       = $moduleHandler->getByDirname('mylinks');
     if ($mylinks) {
@@ -81,10 +80,10 @@ if ($action === 'message') {
      * Set version number
      */
 
-    if ($act_wflinks_version == 1.0 && !$mylinks_version && !$weblinks_version) {
+    if (1.0 == $act_wflinks_version && !$mylinks_version && !$weblinks_version) {
         echo '<h4>Latest version of WF-Links installed. No Update Required</h4>';
         install_footer();
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require XOOPS_ROOT_PATH . '/footer.php';
         exit();
     }
 
@@ -97,14 +96,14 @@ if ($action === 'message') {
         $link_num = $weblinks_version;
     }
 
-    if (isset($wflinks_version) && $act_wflinks_version != 1.0) {
+    if (isset($wflinks_version) && 1.0 != $act_wflinks_version) {
         $link_num = $wflinks_version;
     }
 
     echo '<div><b>Welcome to the WF-Links Update script</b></div><br>';
     echo '<div>This script will upgrade My-links or weblinks.</div><br><br>';
 
-    if ($link_num != 0) {
+    if (0 != $link_num) {
         echo "<div><span style='color:#ff0000;font-weight:bold;'>WARNING: If upgrading from My links or weblinks. The My links Module or weblinks Module will **NOT** function after the upgrade and should be unistalled. </span></div><br>";
         echo '<div><b>Before upgrading WF-Links, make sure that you have:</b></div><br>';
         echo "<div><span style='color:#ff0000; '>1. <b>Important:</b> First, create a back-up from your database before proceeding further. </span></div>";
@@ -123,7 +122,7 @@ if ($action === 'message') {
                 break;
         }
 
-        echo "<form action='" . $HTTP_SERVER_VARS['PHP_SELF'] . "' method='post'>";
+        echo "<form action='" . $_SERVER['SCRIPT_NAME'] . "' method='post'>";
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         echo "<input type='submit' value='Start Upgrade'>
             <input type='hidden' value='upgrade' name='action'>
@@ -134,11 +133,11 @@ if ($action === 'message') {
     }
 
     install_footer();
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require XOOPS_ROOT_PATH . '/footer.php';
     exit();
 }
 // THIS IS THE UPDATE DATABASE FROM HERE!!!!!!!!! DO NOT TOUCH THIS!!!!!!!!
-if ($action === 'upgrade') {
+if ('upgrade' === $action) {
     install_header();
 
     $num = $_POST['link_num'];
@@ -160,5 +159,5 @@ if ($action === 'upgrade') {
     }
     echo 'To complete the upgrade, You must update WF-Links in Xoops System Admin -> Modules';
     echo 'Please enjoy using WF-Links, the WF-Project Team';
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require XOOPS_ROOT_PATH . '/footer.php';
 }

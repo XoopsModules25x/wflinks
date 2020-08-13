@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * Module: WF-Downloads
  * Version: v2.0.5a
  * Release Date: 26 july 2004
@@ -8,16 +8,17 @@
  * Licence: GNU
  */
 
+use Xmf\Request;
+
 require_once __DIR__ . '/admin_header.php';
-require_once __DIR__ . '/../../../include/cp_header.php';
+require_once dirname(__DIR__, 3) . '/include/cp_header.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopstopic.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 xoops_cp_header();
-//WflinksUtility::getAdminMenu( _AM_WFL_PERM_MANAGEMENT );
 
-$permtoset                = isset($_POST['permtoset']) ? (int)$_POST['permtoset'] : 1;
+$permtoset                = Request::getInt('permtoset', 1, 'POST');
 $selected                 = ['', '', '', '', ''];
 $selected[$permtoset - 1] = ' selected';
 echo "<form method='post' name='fselperm' action='permissions.php'><table border=0>
@@ -58,10 +59,10 @@ switch ($permtoset) {
         break;
 }
 
-$permform = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php');
+$permform = new \XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php');
 $result   = $xoopsDB->query('SELECT cid, pid, title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' ORDER BY title ASC');
 if ($xoopsDB->getRowsNum($result)) {
-    while ($perm_row = $xoopsDB->fetchArray($result)) {
+    while (false !== ($perm_row = $xoopsDB->fetchArray($result))) {
         $permform->addItem($perm_row['cid'], '&nbsp;' . $perm_row['title'], $perm_row['pid']);
     }
     echo $permform->render();

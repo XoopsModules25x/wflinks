@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * Module: WF-links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,7 +9,6 @@
  * Licence: GNU
  * Format: UTF-8
  */
-
 define('_AM_WFL_WARNINSTALL1', "<b>WARNING:</b> <span style='text-decoration: underline;'>Directory</span> %s exists on your server. <br>Please remove this directory for security reasons.");
 define('_AM_WFL_WARNINSTALL2', "<b>WARNING:</b> <span style='text-decoration: underline;'>File</span> %s exists on your server. <br>Please remove this directory for security reasons.");
 define('_AM_WFL_WARNINSTALL3', "<b>WARNING:</b> <span style='text-decoration: underline;'>Folder</span> %s does not exists on your server. <br>This folder is required by WF-Links.");
@@ -107,8 +106,10 @@ define('_AM_WFL_IPAGE_CRIGHT', 'Align Right');
  * Permissions defines
  */
 define('_AM_WFL_PERM_MANAGEMENT', 'Permissions Management');
-define('_AM_WFL_PERM_PERMSNOTE',
-       "<div><b>NOTE:</b> Please be aware that even if you've set correct viewing permissions here, a group might not see the articles or blocks if you don't also grant that group permissions to access the module. To do that, go to <b>System admin > Groups</b>, choose the appropriate group and click the checkboxes to grant its members the access.</div>");
+define(
+    '_AM_WFL_PERM_PERMSNOTE',
+    "<div><b>NOTE:</b> Please be aware that even if you've set correct viewing permissions here, a group might not see the articles or blocks if you don't also grant that group permissions to access the module. To do that, go to <b>System admin > Groups</b>, choose the appropriate group and click the checkboxes to grant its members the access.</div>"
+);
 define('_AM_WFL_PERM_CPERMISSIONS', 'Category Permissions');
 define('_AM_WFL_PERM_CSELECTPERMISSIONS', 'Select categories that each group is allowed to view');
 define('_AM_WFL_PERM_CNOCATEGORY', "Cannot set permission's: No Categories's have been created yet!");
@@ -281,7 +282,6 @@ define('_AM_WFL_LINK_NEWSCATEGORY', 'Select News Category to submit News:');
 define('_AM_WFL_LINK_NEWSTITLE', "News Title:<div style='padding-top: 4px; padding-bottom: 4px;'><span style='font-weight: normal;'>Leave Blank to use Link Title</span></div>");
 define('_AM_WFL_LINK_PUBLISHER', 'Link Publisher Name: ');
 
-
 /**
  * Broken links defines
  */
@@ -371,10 +371,13 @@ define('_AM_WFL_RES_NAMEF', 'Resource name:');
 define('_AM_WFL_RES_DESCF', 'Resource description:');
 define('_AM_WFL_RES_URLF', 'Resource URL:');
 define('_AM_WFL_RES_ITEMIDF', 'Resource Item ID:');
-define('_AM_WFL_RES_INFOTEXT', '<ul><li>New resources can be added, edited or removed easily via this form.</li>
+define(
+    '_AM_WFL_RES_INFOTEXT',
+    '<ul><li>New resources can be added, edited or removed easily via this form.</li>
     <li>List all resources linked to a link</li>
     <li>Modify resource name and description</li></ul>
-    ');
+    '
+);
 define('_AM_WFL_LISTBROKEN', 'Displays Links that are possibly broken. NB: These results may not be accurate and should be taken as a rough guide.<br><br>Please check the link does exist first before any action taken.<br><br>');
 define('_AM_WFL_PINGTIMES', 'Displays the first estimated round ping time to each link.<br><br>NB: These results may not be accurate and should be taken as a rough guide.<br><br>');
 
@@ -457,7 +460,7 @@ define('_AM_WFL_ERRORSRETURNUPLOAD', '<h4>Errors Returned While Uploading</h4>')
 define('_AM_WFL_DOESNOTEXIST', ' does not exist!');
 define('_AM_WFL_INFORMATION', 'Link Information');
 define('_AM_WFL_HITS', 'Hits: ');
-define('_AM_WFL_PAGERANK', 'PageRankâ„¢: ');
+define('_AM_WFL_PAGERANK', 'PageRank: ');
 define('_AM_WFL_ERROR_CATISCAT', 'You can NOT set a category as a sub-category of itself!');
 define('_AM_WFL_MOD_COUNTRY', 'Country:');
 define('_AM_WFL_MOD_KEYWORDS', 'Keywords:');
@@ -510,7 +513,7 @@ define('_AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_NO', 'Folder "/uploads/flags" does n
 
 define('_AM_WFL_LINK_EXPIREWARNING', 'Link Expired');
 // Error Msgs
-define('_AM_WFL_ERROR_BAD_DEL_PATH', 'Could not delete %s directory');
+//define('_AM_WFL_ERROR_BAD_DEL_PATH', 'Could not delete %s directory');
 define('_AM_WFL_ERROR_BAD_REMOVE', 'Could not delete %s');
 define('_AM_WFL_ERROR_NO_PLUGIN', 'Could not load plugin');
 

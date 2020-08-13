@@ -1,3 +1,16 @@
+<h5>1.12 Beta 1       [2020-08-13]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.9
+<hr>
+- clean up namespaces (mamba)
+- added Migrate (mamba)
+- renamed 'PHP_SELF' to 'SCRIPT_NAME' (mamba)
+- Yoda (mamba)
+- reversed to while (list()) (mamba)
+- renamed $syspermHandler to $grouppermHandler (mamba)
+- renamed include to required for files (mamba)
+- http:// to https:// (mamba)
+- Qualifier replaced with an import (mamba)
+- replaced htmlSpecialCharsStrip() with htmlspecialchars() (mamba)
+
 <h5>1.11 RC 1       [2017-09-04]</h5>
 <hr>
 + added install/update/uninstall scripts (mamba)
@@ -6,6 +19,8 @@
 x moved vCard to /classes (mamba)
 * Short syntax in array literals (mamba)
 + added "todo.txt" file (mamba)
+- delete getAdminMenu() (mamba)
++ namespaces (mamba)
 
 
 <h5>1.11 Beta 2       [2017-09-02]</h5>
@@ -79,7 +94,7 @@ x moved vCard to /classes (mamba)
 <hr>
 - changed editor list selection to dynamic (mamba)
 - replace http://mozshot.nemui.org with http://open.thumbshots.org for screenshots (Shine)
-- fixed bug related to $wfmyts constructor overriding (mamba)
+- fixed bug related to $myts constructor overriding (mamba)
 
 
 <h5>1.09 Beta 1         [2012-06-24]</h5>

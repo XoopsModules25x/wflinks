@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,14 +8,19 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 $module_link = '';
+
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
 $link['id']        = (int)$link_arr['lid'];
 $link['cid']       = (int)$link_arr['cid'];
 $link['published'] = (int)$link_arr['published'] ? true : false;
 
 $path             = $mytree->getPathFromId($link_arr['cid'], 'title');
-$path             = substr($path, 1);
+$path             = mb_substr($path, 1);
 $path             = basename($path);
 $path             = str_replace('/', '', $path);
 $link['category'] = $path;
@@ -25,7 +29,7 @@ $rating          = round(number_format($link_arr['rating'], 0) / 2);
 $link['rateimg'] = 'rate' . $rating . '.gif';
 unset($rating);
 
-$link['votes'] = ($link_arr['votes'] == 1) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMVOTES, $link_arr['votes']);
+$link['votes'] = (1 == $link_arr['votes']) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMVOTES, $link_arr['votes']);
 $link['hits']  = sprintf(_MD_WFL_LINKHITS, (int)$link_arr['hits']);
 $xoopsTpl->assign('lang_dltimes', $link['hits']);
 
@@ -33,31 +37,31 @@ $link['title'] = $link_arr['title'];
 $link['url']   = $link_arr['url'];
 
 // Get Google Pagerank
-if (isset($xoopsModuleConfig['showpagerank']) && $xoopsModuleConfig['showpagerank'] == 1) {
-    $link['pagerank'] = WflinksUtility::pagerank($link['url']);
+if (null !== $helper->getConfig('showpagerank') && 1 == $helper->getConfig('showpagerank')) {
+    $link['pagerank'] = Wflinks\Utility::pagerank($link['url']);
 }
 
 if (isset($link_arr['screenshot'])) {
-    $link['screenshot_full'] = $wfmyts->htmlSpecialCharsStrip($link_arr['screenshot']);
+    $link['screenshot_full'] = htmlspecialchars($link_arr['screenshot']);
     if (!empty($link_arr['screenshot'])
-        && file_exists(XOOPS_ROOT_PATH . '/' . $xoopsModuleConfig['screenshots'] . '/' . xoops_trim($link_arr['screenshot']))) {
-        if (isset($xoopsModuleConfig['usethumbs']) && $xoopsModuleConfig['usethumbs'] == 1) {
-            $_thumb_image = new WfThumbsNails($link['screenshot_full'], $xoopsModuleConfig['screenshots'], 'thumbs');
+        && file_exists(XOOPS_ROOT_PATH . '/' . $helper->getConfig('screenshots') . '/' . xoops_trim($link_arr['screenshot']))) {
+        if (null !== $helper->getConfig('usethumbs') && 1 == $helper->getConfig('usethumbs')) {
+            $_thumb_image = new Wflinks\ThumbsNails($link['screenshot_full'], $helper->getConfig('screenshots'), 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
-                $_image = $_thumb_image->createThumb($xoopsModuleConfig['shotwidth'], $xoopsModuleConfig['shotheight'], $xoopsModuleConfig['imagequality'], $xoopsModuleConfig['updatethumbs'], $xoopsModuleConfig['keepaspect']);
+                $_image = $_thumb_image->createThumb($helper->getConfig('shotwidth'), $helper->getConfig('shotheight'), $helper->getConfig('imagequality'), $helper->getConfig('updatethumbs'), $helper->getConfig('keepaspect'));
             }
-            $link['screenshot_thumb'] = XOOPS_URL . "/{$xoopsModuleConfig['screenshots']}/$_image";
+            $link['screenshot_thumb'] = XOOPS_URL . "/{$helper->getConfig('screenshots')}/$_image";
         } else {
-            $link['screenshot_thumb'] = XOOPS_URL . "/{$xoopsModuleConfig['screenshots']}/" . xoops_trim($link_arr['screenshot']);
+            $link['screenshot_thumb'] = XOOPS_URL . "/{$helper->getConfig('screenshots')}/" . xoops_trim($link_arr['screenshot']);
         }
     }
 }
 
-if ($moderate == 0) {
-    $time       = ($link_arr['updated'] != 0) ? $link_arr['updated'] : $link_arr['published'];
-    $is_updated = ($link_arr['updated'] != 0) ? _MD_WFL_UPDATEDON : _MD_WFL_PUBLISHDATE;
+if (0 == $moderate) {
+    $time       = (0 != $link_arr['updated']) ? $link_arr['updated'] : $link_arr['published'];
+    $is_updated = (0 != $link_arr['updated']) ? _MD_WFL_UPDATEDON : _MD_WFL_PUBLISHDATE;
     $xoopsTpl->assign('lang_subdate', $is_updated);
 } else {
     $time       = $link_arr['date'];
@@ -65,18 +69,18 @@ if ($moderate == 0) {
     $xoopsTpl->assign('lang_subdate', $is_updated);
 }
 
-$link['updated'] = formatTimestamp($time, $xoopsModuleConfig['dateformat']);
-$description     = $wfmyts->displayTarea($link_arr['description'], 1, 1, 1, 1, 1);
+$link['updated'] = formatTimestamp($time, $helper->getConfig('dateformat'));
+$description     = $myts->displayTarea($link_arr['description'], 1, 1, 1, 1, 1);
 
-$link['description'] = xoops_substr($description, 0, $xoopsModuleConfig['totalchars'], '...');
+$link['description'] = xoops_substr($description, 0, $helper->getConfig('totalchars'), '...');
 xoops_load('XoopsUserUtility');
-$link['submitter'] = XoopsUserUtility::getUnameFromId($link_arr['submitter']);
+$link['submitter'] = \XoopsUserUtility::getUnameFromId($link_arr['submitter']);
 $link['publisher'] = (isset($link_arr['publisher'])
-                      && !empty($link_arr['publisher'])) ? $wfmyts->htmlSpecialCharsStrip($link_arr['publisher']) : _MD_WFL_NOTSPECIFIED;
+                      && !empty($link_arr['publisher'])) ? htmlspecialchars($link_arr['publisher']) : _MD_WFL_NOTSPECIFIED;
 
 $country             = $link_arr['country'];
-$link['country']     = XOOPS_URL . '/' . $xoopsModuleConfig['flagimage'] . '/' . $country . '.gif';
-$link['countryname'] = WflinksUtility::getCountryName($link_arr['country']);
+$link['country']     = XOOPS_URL . '/' . $helper->getConfig('flagimage') . '/' . $country . '.gif';
+$link['countryname'] = Wflinks\Utility::getCountryName($link_arr['country']);
 
 $mail_subject     = rawurlencode(sprintf(_MD_WFL_INTFILEFOUND, $xoopsConfig['sitename']));
 $mail_body        = rawurlencode(sprintf(_MD_WFL_INTFILEFOUND, $xoopsConfig['sitename']) . ':  ' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/singlelink.php?cid=' . $link_arr['cid'] . '&amp;lid=' . $link_arr['lid']);
@@ -86,7 +90,7 @@ $link['comments'] = $link_arr['comments'];
 $whoisurl         = str_replace('http://', '', $link['url']);
 
 $link['adminlink'] = '';
-if (0 == $moderate && $link['isadmin'] === true) {
+if (0 == $moderate && true === $link['isadmin']) {
     $link['adminlink'] = '<a href="'
                          . XOOPS_URL
                          . '/modules/'
@@ -132,12 +136,12 @@ if (0 == $moderate && $link['isadmin'] === true) {
     $link['adminlink'] .= '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?op=delete&amp;lid=' . $link_arr['lid'] . '">' . _MD_WFL_DELETE . '</a> ]';
 }
 
-$votestring = ($link_arr['votes'] == 1) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMVOTES, $link_arr['votes']);
+$votestring = (1 == $link_arr['votes']) ? _MD_WFL_ONEVOTE : sprintf(_MD_WFL_NUMVOTES, $link_arr['votes']);
 
 $link['useradminlink'] = 0;
 if (is_object($xoopsUser) && !empty($xoopsUser)) {
-    $_user_submitter = $xoopsUser->getvar('uid') == $link_arr['submitter'];
-    if (true === WflinksUtility::checkGroups($cid)) {
+    $_user_submitter = $xoopsUser->getVar('uid') == $link_arr['submitter'];
+    if (true === Wflinks\Utility::checkGroups($cid)) {
         $link['useradminlink'] = 1;
         if ($xoopsUser->getVar('uid') == $link_arr['submitter']) {
             $link['usermodify'] = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?lid=' . $link_arr['lid'] . '"> ' . _MD_WFL_MODIFY . '</a> |';
@@ -145,7 +149,7 @@ if (is_object($xoopsUser) && !empty($xoopsUser)) {
     }
 }
 
-switch ($xoopsModuleConfig['selectforum']) {
+switch ($helper->getConfig('selectforum')) {
     case '1':
         $forum             = 'newbb';
         $forum_path_prefix = '/modules/newbb/viewforum.php?forum=';
@@ -163,10 +167,10 @@ switch ($xoopsModuleConfig['selectforum']) {
         $forum_path_prefix = '/modules/newbbex/viewforum.php?forum=';
         break;
 }
-$xoopsforumModule = $xoopsModule->getByDirname($forum);
+$xoopsforumModule = $xoopsModule::getByDirname($forum);
 if (is_object($xoopsforumModule) && $xoopsforumModule->getVar('isactive')) {
     $link['forumid']    = ($link_arr['forumid'] > 0) ? $link_arr['forumid'] : 0;
-    $link['forum_path'] = $forum_path_prefix . "{$link['forumid']}";
+    $link['forum_path'] = $forum_path_prefix . (string)$link['forumid'];
 }
 
 $xoopsTpl->assign('ratethislink', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/ratelink.php?cid=' . $link_arr['cid'] . '&amp;lid=' . $link_arr['lid'] . '">' . _MD_WFL_RATETHISFILE . '</a>');
@@ -179,12 +183,12 @@ $xoopsTpl->assign('commentz', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModu
 
 $xoopsTpl->assign('print', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/print.php?lid=' . $link_arr['lid'] . '"  target="_blank">' . _MD_WFL_PRINT . '</a>');
 
-$link['icons']         = WflinksUtility::displayIcons($link_arr['published'], $link_arr['status'], $link_arr['hits']);
-$link['allow_rating']  = WflinksUtility::checkGroups($cid, 'WFLinkRatePerms') ? true : false;
-$link['total_chars']   = $xoopsModuleConfig['totalchars'];
+$link['icons']         = Wflinks\Utility::displayIcons($link_arr['published'], $link_arr['status'], $link_arr['hits']);
+$link['allow_rating']  = Wflinks\Utility::checkGroups($cid, 'WFLinkRatePerms') ? true : false;
+$link['total_chars']   = $helper->getConfig('totalchars');
 $link['module_dir']    = $xoopsModule->getVar('dirname');
-$link['otherlinx']     = $xoopsModuleConfig['otherlinks'];
-$link['showpagerank']  = $xoopsModuleConfig['showpagerank'];
-$link['quickview']     = $xoopsModuleConfig['quickview'];
-$link['comment_rules'] = $xoopsModuleConfig['com_rule'];
-$link['autoscrshot']   = $xoopsModuleConfig['useautothumb'];
+$link['otherlinx']     = $helper->getConfig('otherlinks');
+$link['showpagerank']  = $helper->getConfig('showpagerank');
+$link['quickview']     = $helper->getConfig('quickview');
+$link['comment_rules'] = $helper->getConfig('com_rule');
+$link['autoscrshot']   = $helper->getConfig('useautothumb');

@@ -11,10 +11,12 @@
 
 /**
  * @copyright      {@link https://xoops.org/ XOOPS Project}
- * @license        {@link http://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
+ * @license        {@link https://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
  * @package
  * @since
  * @author         XOOPS Development Team
+ * @param mixed $linkload_id
+ * @param mixed $total_num
  */
 
 // comment callback functions
@@ -25,7 +27,7 @@
  */
 function wflinks_com_update($linkload_id, $total_num)
 {
-    $db  = XoopsDatabaseFactory::getDatabaseConnection();
+    $db  = \XoopsDatabaseFactory::getDatabaseConnection();
     $sql = 'UPDATE ' . $db->prefix('wflinks_links') . ' SET comments=' . $total_num . ' WHERE lid=' . $linkload_id;
     $db->query($sql);
 }

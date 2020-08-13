@@ -23,7 +23,7 @@
                             &nbsp;&nbsp;<{$subcat.infercategories}>
                         <{/if}>
                     </td>
-                    <{if $subcat.count is div by 2}>
+                    <{if $subcat.count % 2 == 0}>
                 </tr>
                 <tr>
                     <{/if}>
@@ -35,7 +35,7 @@
     <br>
 <{/if}>
 
-<{if $show_links == true}>
+<{if $show_links === true}>
     <div style="text-align:center;">
         <small>
             <b><{$smarty.const._MD_WFL_SORTBY}></b>&nbsp;<{$smarty.const._MD_WFL_TITLE}> (
@@ -79,7 +79,7 @@
     <br>
 <{/if}>
 
-<{if $page_nav == true}>
+<{if $page_nav === true}>
     <div><{$pagenav}></div>
     <br>
 <{/if}>
@@ -96,7 +96,7 @@
     </tr>
 </table>
 
-<{if $page_nav == true}>
+<{if $page_nav === true}>
     <div align="right"><{$pagenav}></div>
 <{/if}>
 

@@ -7,9 +7,10 @@
  * @author         Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since          1.00
  * @package        module::tag
+ * @param mixed $items
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+
 
 /**
  * Get item fields:
@@ -21,12 +22,10 @@
  * uname
  * tags
  *
+ * @return bool
  * @var array $items associative array of items: [modid][catid][itemid]
  *
- * @return boolean
- *
  */
-
 function wflinks_tag_iteminfo(&$items)
 {
     $moduleDirName = basename(dirname(__DIR__));
@@ -36,7 +35,7 @@ function wflinks_tag_iteminfo(&$items)
     }
 
     global $xoopsDB;
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $items_id = [];
 
@@ -67,7 +66,7 @@ function wflinks_tag_iteminfo(&$items)
                 'link'    => "singlelink.php?cid=$lcid&amp;lid=$item_id",
                 'time'    => $row['date'],
                 'tags'    => $row['item_tag'],
-                'content' => $row['description']
+                'content' => $row['description'],
             ];
         }
     }

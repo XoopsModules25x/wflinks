@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * Module: WF-Links
  * Developer: McDonald
  * Licence: GNU
@@ -15,1162 +15,1145 @@
  * @param string $country
  * @return string
  */
-
 function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
 {
-    if ($country === 'Albania') {
+    if ('Albania' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Argentina') {
+    } elseif ('Argentina' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Armenia') {
+    } elseif ('Armenia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Australia') {
+    } elseif ('Australia' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $state . '&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . ',&nbsp;' . $state . '&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        }
-    } elseif ($country === 'Austria') {
+
+    } elseif ('Austria' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Azerbaijan') {
+    } elseif ('Azerbaijan' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Bahamas') {
+    } elseif ('Bahamas' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $state;
         } else {
             $address = $street1 . '<br>' . $town . ',&nbsp;' . $state;
         }
-    } elseif ($country === 'Bahrain') {
+    } elseif ('Bahrain' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Bangladesh') {
+    } elseif ('Bangladesh' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;-&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;-&nbsp;' . $zip;
         }
-    } elseif ($country === 'Barbados') {
+    } elseif ('Barbados' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Belarus') {
+    } elseif ('Belarus' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Belgium') {
+    } elseif ('Belgium' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Belize') {
+    } elseif ('Belize' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $state;
         }
-    } elseif ($country === 'Benin') {
+    } elseif ('Benin' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Bermuda') {
+    } elseif ('Bermuda' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Bhutan') {
+    } elseif ('Bhutan' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Bolivia') {
+    } elseif ('Bolivia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Bosnia and Herzegovina') {
+    } elseif ('Bosnia and Herzegovina' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Botswana') {
+    } elseif ('Botswana' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Brazil') {
+    } elseif ('Brazil' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
         }
-    } elseif ($country === 'Brunei Darussalam') {
+    } elseif ('Brunei Darussalam' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $state . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Bulgaria') {
+    } elseif ('Bulgaria' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Burkina Faso') {
+    } elseif ('Burkina Faso' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Burundi') {
+    } elseif ('Burundi' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Cambodia') {
+    } elseif ('Cambodia' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . '&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        }
-    } elseif ($country === 'Cameroon') {
+
+    } elseif ('Cameroon' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Canada') {
+    } elseif ('Canada' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $state . '&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . ',&nbsp;' . $state . '&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        }
-    } elseif ($country === 'Cape Verde') {
+
+    } elseif ('Cape Verde' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        }
-    } elseif ($country === 'Cayman Islands') {
+
+    } elseif ('Cayman Islands' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Chad') {
+    } elseif ('Chad' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Chile') {
+    } elseif ('Chile' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'China') {
+    } elseif ('China' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        }
-    } elseif ($country === 'Colombia') {
+
+    } elseif ('Colombia' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;-&nbsp;' . $state;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '&nbsp;-&nbsp;' . $state;
             } else {
                 $address = $street1 . '<br>' . $town;
             }
-        }
-    } elseif ($country === 'Comoros') {
+
+    } elseif ('Comoros' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Congo') {
+    } elseif ('Congo' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Congo (Dem. Rep.)') {
+    } elseif ('Congo (Dem. Rep.)' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Cook Islands') {
+    } elseif ('Cook Islands' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Costa Rica') {
+    } elseif ('Costa Rica' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Croatia') {
+    } elseif ('Croatia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Cuba') {
+    } elseif ('Cuba' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Cyprus') {
+    } elseif ('Cyprus' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Czech Republic') {
+    } elseif ('Czech Republic' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . ',&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . ',&nbsp;' . $town;
         }
-    } elseif ($country === 'Denmark') {
+    } elseif ('Denmark' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Djibouti') {
+    } elseif ('Djibouti' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Dominica') {
+    } elseif ('Dominica' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Dominican Republic') {
+    } elseif ('Dominican Republic' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $state . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $state . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Ecuador') {
+    } elseif ('Ecuador' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '<br>' . $town;
         }
-    } elseif ($country === 'Egypt') {
+    } elseif ('Egypt' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $zip;
         }
-    } elseif ($country === 'El Salvador') {
+    } elseif ('El Salvador' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Equatorial Guinea') {
+    } elseif ('Equatorial Guinea' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Eritrea') {
+    } elseif ('Eritrea' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Estonia') {
+    } elseif ('Estonia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . ',&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . ',&nbsp;' . $town;
         }
-    } elseif ($country === 'Ethiopia') {
+    } elseif ('Ethiopia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Falkland Islands (Malvinas)') {
+    } elseif ('Falkland Islands (Malvinas)' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Faroe Islands') {
+    } elseif ('Faroe Islands' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Fiji') {
+    } elseif ('Fiji' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $state . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $state . '<br>' . $town;
         }
-    } elseif ($country === 'Finland') {
+    } elseif ('Finland' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'France') {
+    } elseif ('France' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Gabon') {
+    } elseif ('Gabon' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $zip;
         }
-    } elseif ($country === 'Gambia') {
+    } elseif ('Gambia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Georgia') {
+    } elseif ('Georgia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Germany') {
+    } elseif ('Germany' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Ghana') {
+    } elseif ('Ghana' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Gibraltar') {
+    } elseif ('Gibraltar' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '<br>' . $zip;
             }
-        }
-    } elseif ($country === 'Greece') {
+
+    } elseif ('Greece' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Greenland') {
+    } elseif ('Greenland' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Grenada') {
+    } elseif ('Grenada' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Guatemala') {
+    } elseif ('Guatemala' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '-' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '-' . $town;
         }
-    } elseif ($country === 'Guinea') {
+    } elseif ('Guinea' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Guyana') {
+    } elseif ('Guyana' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Haiti') {
+    } elseif ('Haiti' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Honduras') {
+    } elseif ('Honduras' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town . ',&nbsp;' . $state;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town . ',&nbsp;' . $state;
         }
-    } elseif ($country === 'Hong Kong') {
+    } elseif ('Hong Kong' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Iceland') {
+    } elseif ('Iceland' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'India') {
+    } elseif ('India' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '-' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '-' . $zip;
         }
-    } elseif ($country === 'Indonesia') {
+    } elseif ('Indonesia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Iraq') {
+    } elseif ('Iraq' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $state . '<br>' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . ',&nbsp;' . $state . '<br>' . $zip;
         }
-    } elseif ($country === 'Ireland') {
+    } elseif ('Ireland' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Isle of Man') {
+    } elseif ('Isle of Man' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '<br>' . $zip;
             }
-        }
-    } elseif ($country === 'Israel') {
+
+    } elseif ('Israel' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Italy') {
+    } elseif ('Italy' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Jamaica') {
+    } elseif ('Jamaica' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Japan') {
+    } elseif ('Japan' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Jersey') {
+    } elseif ('Jersey' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '<br>' . $zip;
             }
-        }
-    } elseif ($country === 'Jordan') {
+
+    } elseif ('Jordan' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Kazakhstan') {
+    } elseif ('Kazakhstan' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
         }
-    } elseif ($country === 'Kenya') {
+    } elseif ('Kenya' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $zip;
         }
-    } elseif ($country === 'Kiribati') {
+    } elseif ('Kiribati' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $state;
         }
-    } elseif ($country === 'Kuwait') {
+    } elseif ('Kuwait' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Kyrgyzstan') {
+    } elseif ('Kyrgyzstan' === $country) {
         if ($street2) {
             $address = $zip . '&nbsp;' . $town . '<br>' . $street1 . '<br>' . $street2;
         } else {
             $address = $zip . '&nbsp;' . $town . '<br>' . $street1;
         }
-    } elseif ($country === 'Latvia') {
+    } elseif ('Latvia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . ',&nbsp;' . $zip;
         }
-    } elseif ($country === 'Lebanon') {
+    } elseif ('Lebanon' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Lesotho') {
+    } elseif ('Lesotho' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Liberia') {
+    } elseif ('Liberia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Libya') {
+    } elseif ('Libya' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Lithuania') {
+    } elseif ('Lithuania' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Luxembourg') {
+    } elseif ('Luxembourg' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Madagascar') {
+    } elseif ('Madagascar' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Malawi') {
+    } elseif ('Malawi' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Malaysia') {
+    } elseif ('Malaysia' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town . ',&nbsp;' . $state;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town . ',&nbsp;' . $state;
             } else {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        }
-    } elseif ($country === 'Mali') {
+
+    } elseif ('Mali' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Malta') {
+    } elseif ('Malta' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $zip;
         }
-    } elseif ($country === 'Mauritania') {
+    } elseif ('Mauritania' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Mexico') {
+    } elseif ('Mexico' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town . ',&nbsp;' . $state;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town . ',&nbsp;' . $state;
             } else {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        }
-    } elseif ($country === 'Moldova') {
+
+    } elseif ('Moldova' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Monaco') {
+    } elseif ('Monaco' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Mongolia') {
+    } elseif ('Mongolia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . ',&nbsp;' . $zip;
         }
-    } elseif ($country === 'Montenegro') {
+    } elseif ('Montenegro' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Morocco') {
+    } elseif ('Morocco' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Mozambique') {
+    } elseif ('Mozambique' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Myanmar') {
+    } elseif ('Myanmar' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . ',&nbsp;' . $zip;
         }
-    } elseif ($country === 'Namibia') {
+    } elseif ('Namibia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Nauru') {
+    } elseif ('Nauru' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Nepal') {
+    } elseif ('Nepal' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Netherlands') {
+    } elseif ('Netherlands' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Netherlands Antilles') {
+    } elseif ('Netherlands Antilles' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'New Zealand') {
+    } elseif ('New Zealand' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Nicaragua') {
+    } elseif ('Nicaragua' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '<br>' . $town;
         }
-    } elseif ($country === 'Niger') {
+    } elseif ('Niger' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Nigeria') {
+    } elseif ('Nigeria' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '&nbsp;' . $zip . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
             }
-        }
-    } elseif ($country === 'Norway') {
+
+    } elseif ('Norway' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Oman') {
+    } elseif ('Oman' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '<br>' . $town;
         }
-    } elseif ($country === 'Pakistan') {
+    } elseif ('Pakistan' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '-' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '-' . $zip;
         }
-    } elseif ($country === 'Palau') {
+    } elseif ('Palau' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $state . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . ',&nbsp;' . $state . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Panama') {
+    } elseif ('Panama' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $state;
         }
-    } elseif ($country === 'Papua New Guinea') {
+    } elseif ('Papua New Guinea' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Paraguay') {
+    } elseif ('Paraguay' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Peru') {
+    } elseif ('Peru' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Philippines') {
+    } elseif ('Philippines' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '<br>' . $town;
         }
-    } elseif ($country === 'Poland') {
+    } elseif ('Poland' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Portugal') {
+    } elseif ('Portugal' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Puerto Rico') {
+    } elseif ('Puerto Rico' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Qatar') {
+    } elseif ('Qatar' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Romania') {
+    } elseif ('Romania' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town . '<br>' . $state;
             } else {
                 $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
             }
-        }
-    } elseif ($country === 'Russian Federation') {
+
+    } elseif ('Russian Federation' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Rwanda') {
+    } elseif ('Rwanda' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Saudi Arabia') {
+    } elseif ('Saudi Arabia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Senegal') {
+    } elseif ('Senegal' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Serbia') {
+    } elseif ('Serbia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Seychelles') {
+    } elseif ('Seychelles' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Sierra Leone') {
+    } elseif ('Sierra Leone' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Singapore') {
+    } elseif ('Singapore' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Slovakia') {
+    } elseif ('Slovakia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Slovenia') {
+    } elseif ('Slovenia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Somalia') {
+    } elseif ('Somalia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . ',&nbsp;' . $zip;
         }
-    } elseif ($country === 'South Africa') {
+    } elseif ('South Africa' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Korea (South)') {
+    } elseif ('Korea (South)' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . ',&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . ',&nbsp;' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . ',&nbsp;' . $zip;
             }
-        }
-    } elseif ($country === 'Spain') {
+
+    } elseif ('Spain' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Sri Lanka') {
+    } elseif ('Sri Lanka' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $zip;
         }
-    } elseif ($country === 'Sudan') {
+    } elseif ('Sudan' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '<br>' . $town;
         }
-    } elseif ($country === 'Suriname') {
+    } elseif ('Suriname' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Swaziland') {
+    } elseif ('Swaziland' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $zip;
         }
-    } elseif ($country === 'Sweden') {
+    } elseif ('Sweden' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Switzerland') {
+    } elseif ('Switzerland' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Taiwan') {
+    } elseif ('Taiwan' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Thailand') {
+    } elseif ('Thailand' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $state . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Tunisia') {
+    } elseif ('Tunisia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Turkey') {
+    } elseif ('Turkey' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Turkmenistan') {
+    } elseif ('Turkmenistan' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Tuvalu') {
+    } elseif ('Tuvalu' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $state;
         }
-    } elseif ($country === 'Uganda') {
+    } elseif ('Uganda' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Ukraine') {
+    } elseif ('Ukraine' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $zip;
         }
-    } elseif ($country === 'United Arab Emirates') {
+    } elseif ('United Arab Emirates' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         }
-    } elseif ($country === 'United Kingdom') {
+    } elseif ('United Kingdom' === $country) {
         if ($street2) {
             if ($state) {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
             }
-        } else {
-            if ($state) {
+        } elseif ($state) {
                 $address = $street1 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
             } else {
                 $address = $street1 . '<br>' . $town . '<br>' . $zip;
             }
-        }
-    } elseif ($country === 'United States') {
+    } elseif ('United States' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . ',&nbsp;' . $state . '&nbsp;' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . ',&nbsp;' . $state . '&nbsp;' . $zip;
         }
-    } elseif ($country === 'Uruguay') {
+    } elseif ('Uruguay' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Uzbekistan') {
+    } elseif ('Uzbekistan' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $zip;
         }
-    } elseif ($country === 'Vatican City State') {
+    } elseif ('Vatican City State' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Venezuela') {
+    } elseif ('Venezuela' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '&nbsp;' . $zip . ',&nbsp' . $state;
         } else {
             $address = $street1 . '<br>' . $town . '&nbsp;' . $zip . ',&nbsp' . $state;
         }
-    } elseif ($country === 'Viet Nam') {
+    } elseif ('Viet Nam' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '&nbsp' . $zip;
         } else {
             $address = $street1 . '<br>' . $town . '<br>' . $state . '&nbsp' . $zip;
         }
-    } elseif ($country === 'Yemen') {
+    } elseif ('Yemen' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
             $address = $street1 . '<br>' . $town;
         }
-    } elseif ($country === 'Zambia') {
+    } elseif ('Zambia' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $zip . '&nbsp;' . $town;
         } else {
             $address = $street1 . '<br>' . $zip . '&nbsp;' . $town;
         }
-    } elseif ($country === 'Zimbabwe') {
+    } elseif ('Zimbabwe' === $country) {
         if ($street2) {
             $address = $street1 . '<br>' . $street2 . '<br>' . $town;
         } else {
@@ -1178,7 +1161,6 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
         }
 
         return $address;
-
         // Default address
     } else {
         $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;

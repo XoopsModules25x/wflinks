@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,13 +8,16 @@
  * Licence: GNU
  */
 
+use XoopsModules\Wflinks;
+
 require_once __DIR__ . '/header.php';
 
-global $xoopsModuleConfig;
+/** @var Wflinks\Helper $helper */
+$helper = Wflinks\Helper::getInstance();
 
-$agreed = WflinksUtility::cleanRequestVars($_REQUEST, 'agree', 0);
-$cid    = WflinksUtility::cleanRequestVars($_REQUEST, 'cid', 0);
-$lid    = WflinksUtility::cleanRequestVars($_REQUEST, 'lid', 0);
+$agreed = Wflinks\Utility::cleanRequestVars($_REQUEST, 'agree', 0);
+$cid    = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
+$lid    = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 $cid    = (int)$cid;
 $lid    = (int)$lid;
 $agreed = (int)$agreed;
@@ -38,21 +40,21 @@ $sql2 = 'SELECT count(*) FROM '
         . '))';
 list($count) = $xoopsDB->fetchRow($xoopsDB->query($sql2));
 
-if (0 == $count && false === WflinksUtility::checkGroups($cid)) {
+if (0 == $count && false === Wflinks\Utility::checkGroups($cid)) {
     redirect_header('index.php', 1, _MD_WFL_MUSTREGFIRST);
 }
 
-if (0 == $agreed && $xoopsModuleConfig['showlinkdisclaimer']) {
+if (0 == $agreed && $helper->getConfig('showlinkdisclaimer')) {
     $GLOBALS['xoopsOption']['template_main'] = 'wflinks_disclaimer.tpl';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require XOOPS_ROOT_PATH . '/header.php';
 
-    $xoopsTpl->assign('image_header', WflinksUtility::getImageHeader());
-    $xoopsTpl->assign('linkdisclaimer', $wfmyts->displayTarea($xoopsModuleConfig['linkdisclaimer'], 1, 1, 1, 1, 1));
+    $xoopsTpl->assign('image_header', Wflinks\Utility::getImageHeader());
+    $xoopsTpl->assign('linkdisclaimer', $myts->displayTarea($helper->getConfig('linkdisclaimer'), 1, 1, 1, 1, 1));
     $xoopsTpl->assign('cancel_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php');
     $xoopsTpl->assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/visit.php?agree=1&amp;lid=' . $lid . '&amp;cid=' . $cid);
     $xoopsTpl->assign('link_disclaimer', true);
 
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require XOOPS_ROOT_PATH . '/footer.php';
     exit();
 }
 
@@ -61,12 +63,12 @@ $sql    = 'UPDATE ' . $xoopsDB->prefix('wflinks_links') . ' SET hits=hits+1 WHER
 $result = $xoopsDB->queryF($sql);
 
 $sql = 'SELECT url FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid;
-if (!$result = $xoopsDB->queryF($sql)) {
-    echo "<br><div style='text-align: center;'>" . WflinksUtility::getImageHeader() . '</div>';
-    reportBroken($lid);
-} else {
+if ($result = $xoopsDB->queryF($sql)) {
     list($url) = $xoopsDB->fetchRow($result);
     $url = htmlspecialchars(preg_replace('/javascript:/si', 'java script:', $url), ENT_QUOTES);
+} else {
+    echo "<br><div style='text-align: center;'>" . Wflinks\Utility::getImageHeader() . '</div>';
+    reportBroken($lid);
 }
 
 if (!empty($url)) {

@@ -9,68 +9,60 @@
  */
 
 use Xmf\Request;
+use XoopsModules\Wflinks;
 
 /**
  * Prepares system prior to attempting to uninstall module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if ready to uninstall, false if not
  */
-
-function xoops_module_pre_uninstall_wflinks(XoopsModule $module)
+function xoops_module_pre_uninstall_wflinks(\XoopsModule $module)
 {
     // Do some synchronization
     return true;
 }
 
 /**
- *
  * Performs tasks required during uninstallation of the module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if uninstallation successful, false if not
  */
-function xoops_module_uninstall_wflinks(XoopsModule $module)
+function xoops_module_uninstall_wflinks(\XoopsModule $module)
 {
-//    return true;
+    //    return true;
 
     $moduleDirName = basename(dirname(__DIR__));
-    if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-    } else {
-        $moduleHelper = Xmf\Module\Helper::getHelper('system');
-    }
+    /** @var Wflinks\Helper $helper */
+    $helper = Wflinks\Helper::getInstance();
 
-    /** @var WflinksUtility $utilityClass */
-    $utilityClass     = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($utilityClass)) {
-        xoops_load('utility', $moduleDirName);
-    }
+    $utility = new \XoopsModules\Wflinks\Utility();
 
     $success = true;
-    xoops_loadLanguage('admin',$moduleDirName);
-
+    xoops_loadLanguage('admin', $moduleDirName);
 
     //------------------------------------------------------------------
     // Remove uploads folder (and all subfolders) if they exist
     //------------------------------------------------------------------
 
-//    $ok     = Request::getInt('ok', 0, 'POST');
-//    if ($ok == 1) {
-        $old_directories = [$GLOBALS['xoops']->path("uploads/{$moduleDirName}")];
-        foreach ($old_directories as $old_dir) {
-            $dirInfo = new SplFileInfo($old_dir);
-            if ($dirInfo->isDir()) {
-                // The directory exists so delete it
-                if (false === $utilityClass::rrmdir($old_dir)) {
-                    $module->setErrors(sprintf(_AM_WFL_ERROR_BAD_DEL_PATH, $old_dir));
-                    $success = false;
-                }
+    //    $ok     = Request::getInt('ok', 0, 'POST');
+    //    if ($ok == 1) {
+    $old_directories = [$GLOBALS['xoops']->path("uploads/{$moduleDirName}")];
+    foreach ($old_directories as $old_dir) {
+        $dirInfo = new \SplFileInfo($old_dir);
+        if ($dirInfo->isDir()) {
+            // The directory exists so delete it
+            if (false === $utility::rrmdir($old_dir)) {
+                $module->setErrors(sprintf(_AM_WFL_ERROR_BAD_DEL_PATH, $old_dir));
+                $success = false;
             }
-            unset($dirInfo);
         }
-//    } else {
-//        xoops_confirm(['op' => 'del', '', 'ok' => 1, ''], $_SERVER['REQUEST_URI'], _AM_WFL_FOLDERS_DELETE, _DELETE, true);
-//    }
+        unset($dirInfo);
+    }
+    //    } else {
+    //        xoops_confirm(['op' => 'del', '', 'ok' => 1, ''], $_SERVER['REQUEST_URI'], _AM_WFL_FOLDERS_DELETE, _DELETE, true);
+    //    }
 
     /*
     //------------ START ----------------
@@ -88,6 +80,4 @@ function xoops_module_uninstall_wflinks(XoopsModule $module)
 
     return $success;
     //------------ END  ----------------
-
 }
-

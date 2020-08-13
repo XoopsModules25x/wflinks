@@ -1,12 +1,12 @@
 <?php
 /**
- *
  * Module: WF-links
  * Developer: McDonald
  * Licence: GNU
+ * @param mixed $options
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+
 
 /**
  * @param $options
@@ -23,28 +23,26 @@ function b_wflinks_banner_show($options)
     $moduleHandler = xoops_getHandler('module');
     $wflModule     = $moduleHandler->getByDirname($moduleDirName);
 
-    $result = $xoopsDB->query('SELECT a.cid AS acid, a.title, a.client_id, a.banner_id, b.bid, b.cid, b.imptotal, b.impmade, b.clicks FROM '
-                              . $xoopsDB->prefix('wflinks_cat')
-                              . ' a, '
-                              . $xoopsDB->prefix('banner')
-                              . ' b WHERE (b.cid = a.client_id) OR (b.bid = a.banner_id) ORDER BY b.cid, b.bid, a.title ASC');
+    $result = $xoopsDB->query(
+        'SELECT a.cid AS acid, a.title, a.client_id, a.banner_id, b.bid, b.cid, b.imptotal, b.impmade, b.clicks FROM ' . $xoopsDB->prefix('wflinks_cat') . ' a, ' . $xoopsDB->prefix('banner') . ' b WHERE (b.cid = a.client_id) OR (b.bid = a.banner_id) ORDER BY b.cid, b.bid, a.title ASC'
+    );
 
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $impmade    = $myrow['impmade'];
         $clicks     = $myrow['clicks'];
         $imptotal   = $myrow['imptotal'];
         $bannerload = [];
         $result2    = $xoopsDB->query('SELECT name FROM ' . $xoopsDB->prefix('bannerclient') . ' WHERE cid=' . (int)$myrow['cid']);
         $myclient   = $xoopsDB->fetchArray($result2);
-        if ($impmade == 0) {
+        if (0 == $impmade) {
             $percent = 0;
         } else {
-            $percent = substr(100 * $clicks / $impmade, 0, 5);
+            $percent = mb_substr(100 * $clicks / $impmade, 0, 5);
         }
-        if ($imptotal == 0) {
+        if (0 == $imptotal) {
             $left = 'Unlimited';
         } else {
-            $left = (int)($imptotal - $impmade);
+            $left = ($imptotal - $impmade);
         }
         $bannerload['cat']      = (int)$myrow['acid'];
         $bannerload['bid']      = (int)$myrow['bid'];

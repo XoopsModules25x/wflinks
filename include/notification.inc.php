@@ -12,7 +12,7 @@
  * @param $category
  * @param $item_id
  *
- * @return null
+ * @return bool|null
  */
 function wflinks_notify_iteminfo($category, $item_id)
 {
@@ -20,7 +20,7 @@ function wflinks_notify_iteminfo($category, $item_id)
     global $xoopsModule, $xoopsModuleConfig, $xoopsConfig;
 
     if (empty($xoopsModule) || $xoopsModule->getVar('dirname') != $moduleDirName) {
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname($moduleDirName);
         $configHandler = xoops_getHandler('config');
@@ -30,7 +30,7 @@ function wflinks_notify_iteminfo($category, $item_id)
         $config = $xoopsModuleConfig;
     }
 
-    if ($category === 'global') {
+    if ('global' === $category) {
         $item['name'] = '';
         $item['url']  = '';
 
@@ -38,7 +38,7 @@ function wflinks_notify_iteminfo($category, $item_id)
     }
 
     global $xoopsDB;
-    if ($category === 'category') {
+    if ('category' === $category) {
         // Assume we have a valid category id
         $sql = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE cid=' . $item_id;
         if (!$result = $xoopsDB->query($sql)) {
@@ -51,7 +51,7 @@ function wflinks_notify_iteminfo($category, $item_id)
         return $item;
     }
 
-    if ($category === 'link') {
+    if ('link' === $category) {
         // Assume we have a valid file id
         $sql = 'SELECT cid,title FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $item_id;
         if (!$result = $xoopsDB->query($sql)) {
