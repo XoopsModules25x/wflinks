@@ -1447,7 +1447,7 @@ class Utility extends Common\SysUtility
      */
     public static function strord($string)
     {
-        $iMax = mb_strlen($string)
+        $iMax = mb_strlen($string);
         for ($i = 0; $i < $iMax; ++$i) {
             $result[$i] = \ord($string[$i]);
         }
