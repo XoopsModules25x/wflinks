@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Wflinks;
+
 /***************************************************************************
  *
  * PHP vCard class v2.0
@@ -29,7 +32,6 @@
  * @return mixed
  */
 
-
 use XoopsModules\Wflinks;
 
 /**
@@ -48,7 +50,7 @@ function vcard_encode($string)
  */
 function vcard_escape($string)
 {
-    return str_replace(';', "\;", $string);
+    return \str_replace(';', "\;", $string);
 }
 
 /**
@@ -68,7 +70,7 @@ function vcardemailcnvrt($email)
         '.',
     ];
 
-    $text = preg_replace($search, $replace, $email);
+    $text = \preg_replace($search, $replace, $email);
 
     return $text;
 }
@@ -83,40 +85,40 @@ function vcardemailcnvrt($email)
 function vcard_quoted_printable_encode($input, $line_max = 76)
 {
     $hex       = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
-    $lines     = preg_split("/(?:\r\n|\r|\n)/", $input);
+    $lines     = \preg_split("/(?:\r\n|\r|\n)/", $input);
     $eol       = "\r\n";
     $linebreak = '=0D=0A';
     $escape    = '=';
     $output    = '';
 
-    for ($j = 0, $jMax = count($lines); $j < $jMax; ++$j) {
+    for ($j = 0, $jMax = \count($lines); $j < $jMax; ++$j) {
         $line    = $lines[$j];
-        $linlen  = strlen($line);
+        $linlen  = mb_strlen($line);
         $newline = '';
         for ($i = 0; $i < $linlen; ++$i) {
-            $c   = substr($line, $i, 1);
-            $dec = ord($c);
+            $c   = mb_substr($line, $i, 1);
+            $dec = \ord($c);
             if ((32 == $dec) && ($i == ($linlen - 1))) { // convert space at eol only
                 $c = '=20';
             } elseif ((61 == $dec) || ($dec < 32)
                       || ($dec > 126)) { // always vcard_encode "\t", which is *not* required
-                $h2 = floor($dec / 16);
-                $h1 = floor($dec % 16);
+                $h2 = \floor($dec / 16);
+                $h1 = \floor($dec % 16);
                 $c  = $escape . $hex[(string)$h2] . $hex[(string)$h1];
             }
-            if ((strlen($newline) + strlen($c)) >= $line_max) { // CRLF is not counted
+            if ((mb_strlen($newline) + mb_strlen($c)) >= $line_max) { // CRLF is not counted
                 $output  .= $newline . $escape . $eol; // soft line break; " =\r\n" is okay
                 $newline = '    ';
             }
             $newline .= $c;
         } // end of for
         $output .= $newline;
-        if ($j < count($lines) - 1) {
+        if ($j < \count($lines) - 1) {
             $output .= $linebreak;
         }
     }
 
-    return trim($output);
+    return \trim($output);
 }
 
 /**
@@ -173,7 +175,7 @@ class VCard
         $this->properties['N'] = "$family;$first;$additional;$prefix;$suffix";
         //  $this -> filename = "$first%20$family.vcf";
         if ('' === $this->properties['FN']) {
-            $this->setFormattedName(trim("$prefix $first $additional $family $suffix"));
+            $this->setFormattedName(\trim("$prefix $first $additional $family $suffix"));
         }
     }
 
@@ -313,7 +315,7 @@ class VCard
         foreach ($this->properties as $key => $value) {
             $text .= "$key:$value\r\n";
         }
-        $text .= 'REV:' . date('Y-m-d') . 'T' . date('H:i:s') . "Z\r\n";
+        $text .= 'REV:' . \date('Y-m-d') . 'T' . \date('H:i:s') . "Z\r\n";
         $text .= "MAILER:PHP vCard class by Kai Blankenhorn\r\n";
         $text .= "END:VCARD\r\n";
 
@@ -324,6 +326,7 @@ class VCard
     {
         return $this->filename;
     }
+
     // NOT TESTED -- McDONALD
 
     /**
@@ -406,9 +409,9 @@ $v->setCOMP($title);
 $output   = $v->getVCard();
 $filename = $v->getFileName();
 
-header("Content-Disposition: attachment; filename=$filename");
-header('Content-Length: ' . strlen($output));
-header('Connection: close');
-header("Content-Type: text/x-vCard; name=$filename");
+\header("Content-Disposition: attachment; filename=$filename");
+\header('Content-Length: ' . mb_strlen($output));
+\header('Connection: close');
+\header("Content-Type: text/x-vCard; name=$filename");
 
 echo $output;

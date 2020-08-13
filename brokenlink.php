@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -20,9 +19,9 @@ $op      = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
 $lid     = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 $lid     = (int)$lid;
 $buttonn = _MD_WFL_SUBMITBROKEN;
-$buttonn = strtolower($buttonn);
+$buttonn = mb_strtolower($buttonn);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case $buttonn:
         global $xoopsUser;
 
@@ -88,11 +87,10 @@ switch (strtolower($op)) {
             redirect_header('index.php', 2, $message);
         }
         break;
-
     default:
 
         $GLOBALS['xoopsOption']['template_main'] = 'wflinks_brokenlink.tpl';
-        include XOOPS_ROOT_PATH . '/header.php';
+        require XOOPS_ROOT_PATH . '/header.php';
         xoops_load('XoopsUserUtility');
 
         $catarray['imageheader'] = Wflinks\Utility::getImageHeader();
@@ -140,6 +138,6 @@ switch (strtolower($op)) {
         }
 
         $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require XOOPS_ROOT_PATH . '/footer.php';
         break;
 } // switch

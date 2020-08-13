@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -56,7 +55,7 @@ if (!is_array($link_arr)) {
 
 $GLOBALS['xoopsOption']['template_main'] = 'wflinks_singlelink.tpl';
 
-include XOOPS_ROOT_PATH . '/header.php';
+require XOOPS_ROOT_PATH . '/header.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/sbookmarks.php';
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/address.php';
 
@@ -124,7 +123,10 @@ if (1 == $helper->getConfig('useaddress')) {
 if (true === $link_arr['street1'] || true === $link_arr['tel'] || true === $link_arr['mobile'] || true === $link_arr['fax']
     || true === $link_arr['email']) {
     $xoopsTpl->assign('contactdetails', '<b>' . _MD_WFL_ADDRESS . '</b>');
-    $xoopsTpl->assign('vcard', '<br>' . '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/class/vcard.php?lid=' . $link_arr['lid'] . '"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/vcard.png" title="vCard" alt="vCard"></a>');
+    $xoopsTpl->assign(
+        'vcard',
+        '<br>' . '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/class/vcard.php?lid=' . $link_arr['lid'] . '"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/vcard.png" title="vCard" alt="vCard"></a>'
+    );
 }
 
 // Maps
@@ -146,7 +148,7 @@ if (1 == $helper->getConfig('useaddress')) {
     }
 }
 
-$mytree       = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
+$mytree       = new Wflinks\Tree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 $pathstring   = "<a href='index.php'>" . _MD_WFL_MAIN . '</a>&nbsp;:&nbsp;';
 $pathstring   .= $mytree->getNicePathFromId($link['cid'], 'title', 'viewcat.php?op=');
 $link['path'] = $pathstring;
@@ -182,7 +184,7 @@ $res_type = 1;
 require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/linkloadinfo.php';
 
 $xoopsTpl->assign('show_screenshot', false);
-if  (null !== ($helper->getConfig('screenshot')) && 1 == $helper->getConfig('screenshot')) {
+if (null !== $helper->getConfig('screenshot') && 1 == $helper->getConfig('screenshot')) {
     $xoopsTpl->assign('shots_dir', $helper->getConfig('screenshots'));
     $xoopsTpl->assign('shotwidth', $helper->getConfig('shotwidth'));
     $xoopsTpl->assign('shotheight', $helper->getConfig('shotheight'));
@@ -205,11 +207,11 @@ while (false !== ($arr = $xoopsDB->fetchArray($result))) {
 }
 
 // Copyright notice
-if  (null !== ($helper->getConfig('copyright')) && 1 == $helper->getConfig('copyright')) {
+if (null !== $helper->getConfig('copyright') && 1 == $helper->getConfig('copyright')) {
     $xoopsTpl->assign('lang_copyright', '' . $link['title'] . ' &copy; ' . _MD_WFL_COPYRIGHT . ' ' . formatTimestamp(time(), 'Y') . " - <a href='" . XOOPS_URL . "'>" . $xoopsConfig['sitename'] . '</a>');
 }
 
-if  (null !== ($helper->getConfig('otherlinks')) && 1 == $helper->getConfig('otherlinks')) {
+if (null !== $helper->getConfig('otherlinks') && 1 == $helper->getConfig('otherlinks')) {
     $xoopsTpl->assign('other_links', '' . '<b>' . _MD_WFL_OTHERBYUID . '</b>' . $link['submitter'] . '<br>');
 }
 
@@ -222,5 +224,5 @@ $xoopsTpl->assign('back', '<a href="javascript:history.go(-1)"><img src="' . XOO
 
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 
-include XOOPS_ROOT_PATH . '/include/comment_view.php';
-include XOOPS_ROOT_PATH . '/footer.php';
+require XOOPS_ROOT_PATH . '/include/comment_view.php';
+require XOOPS_ROOT_PATH . '/footer.php';

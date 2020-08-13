@@ -1,3 +1,14 @@
+<h5>1.11 RC 2       [2020-08-10]</h5>
+<hr>
+- clean up namespaces (mamba)
+- added Migrate (mamba)
+- renamed 'PHP_SELF' to 'SCRIPT_NAME' (mamba)
+- Yoda (mamba)
+- reversed to while (list()) (mamba)
+- renamed $syspermHandler to $grouppermHandler (mamba)
+- renamed include to required for files (mamba)
+- http:// to https:// (mamba)
+
 <h5>1.11 RC 1       [2017-09-04]</h5>
 <hr>
 + added install/update/uninstall scripts (mamba)

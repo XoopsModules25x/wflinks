@@ -76,9 +76,7 @@ if (is_dir('../../../uploads/flags')) {
     $adminObject->addConfigBoxLine('<label><img src="../../../Frameworks/moduleclasses/icons/16/0.png"><span class="Red">' . _AM_WFL_CHECKINGFOLDER_FOLDER_FLAGS_NO . '</span></label>', '', '');
 }
 
-
 //check or upload folders
-//$configurator = include  dirname(__DIR__) . '/include/config.php';
 $configurator = new Common\Configurator();
 foreach (array_keys($configurator->uploadFolders) as $i) {
     $utility::createFolder($configurator->uploadFolders[$i]);

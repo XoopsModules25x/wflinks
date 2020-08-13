@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -8,7 +7,6 @@
  * Team: WF-Projects
  * Licence: GNU
  */
-
 
 use XoopsModules\Wflinks;
 
@@ -25,7 +23,7 @@ $ratinguser = (!is_object($xoopsUser)) ? 0 : $xoopsUser->getVar('uid');
 
 if (0 != $ratinguser) {
     $result = $xoopsDB->query('SELECT cid, submitter FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid);
-    while (false !== (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result))) {
+    while (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result)) {
         if ($ratinguserDB == $ratinguser) {
             $ratemessage = _MD_WFL_CANTVOTEOWN;
             redirect_header('singlelink.php?cid=' . (int)$cid . '&amp;lid=' . $lid, 4, $ratemessage);
@@ -33,7 +31,7 @@ if (0 != $ratinguser) {
     }
     // Check if REG user is trying to vote twice.
     $result = $xoopsDB->query('SELECT cid, ratinguser FROM ' . $xoopsDB->prefix('wflinks_votedata') . ' WHERE lid=' . $lid);
-    while (false !== (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result))) {
+    while (list($cid, $ratinguserDB) = $xoopsDB->fetchRow($result)) {
         if ($ratinguserDB == $ratinguser) {
             $ratemessage = _MD_WFL_VOTEONCE;
             redirect_header('singlelink.php?cid=' . (int)$cid . '&amp;lid=' . $lid, 4, $ratemessage);
@@ -79,7 +77,7 @@ if (!empty($_POST['submit'])) {
     redirect_header('singlelink.php?cid=' . $cid . '&amp;lid=' . $lid, 4, $ratemessage);
 } else {
     $GLOBALS['xoopsOption']['template_main'] = 'wflinks_ratelink.tpl';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require XOOPS_ROOT_PATH . '/header.php';
 
     $catarray['imageheader'] = Wflinks\Utility::getImageHeader();
     $cid                     = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
@@ -101,7 +99,7 @@ if (!empty($_POST['submit'])) {
     }
 
     $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require XOOPS_ROOT_PATH . '/footer.php';
 }
 
 if (is_object($xoTheme)) {
@@ -111,4 +109,4 @@ if (is_object($xoTheme)) {
 }
 
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
-include XOOPS_ROOT_PATH . '/footer.php';
+require XOOPS_ROOT_PATH . '/footer.php';

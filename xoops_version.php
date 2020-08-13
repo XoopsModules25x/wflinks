@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * Module: WF-Links
  * Version: v1.0.9
  * Release Date: 21 June 2005
@@ -8,15 +8,15 @@
  * Team: WF-Projects
  * Licence: GNU
  */
-include __DIR__ . '/preloads/autoloader.php';
+require __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
 // ------------------- Informations ------------------- //
 $modversion = [
     'version'                => '1.11',
-    'module_status'          => 'RC 1',
-    'release_date'           => '2017/09/04',
+    'module_status'          => 'RC 2',
+    'release_date'           => '2020/08/10',
     'name'                   => _MI_WFL_NAME,
     'description'            => _MI_WFL_DESC,
     'help'                   => 'page=help',
@@ -43,8 +43,8 @@ $modversion = [
     'release_file'           => XOOPS_URL . '/modules/' . $moduleDirName . '/docs/changelog.txt',
     'module_website_url'     => 'www.xoops.org/',
     'module_website_name'    => 'XOOPS',
-    'min_php'                => '5.5',
-    'min_xoops'              => '2.5.9',
+    'min_php'                =>  '7.2',
+    'min_xoops'              => '2.5.10',
     'min_admin'              => '1.2',
     'min_db'                 => ['mysql' => '5.5'],
     // ------------------- Admin Menu -------------------
@@ -66,20 +66,20 @@ $modversion = [
         $moduleDirName . '_' . 'mod',
         $moduleDirName . '_' . 'votedata',
         $moduleDirName . '_' . 'indexpage',
-        $moduleDirName . '_' . 'altcat'
+        $moduleDirName . '_' . 'altcat',
     ],
     // -------------------  PayPal ---------------------------
     'paypal'                 => [
-        'business'      => 'foundation@xoops.org',
+        'business'      => 'xoopsfoundation@gmail.com',
         'item_name'     => 'Donation : ' . _MI_WFL_NAME,
         'amount'        => 25,
-        'currency_code' => 'USD'
+        'currency_code' => 'USD',
     ],
     // ------------------- Search ---------------------------
     'hasSearch'              => 1,
     'search'                 => [
         'file' => 'include/search.inc.php',
-        'func' => 'pedigree_search'
+        'func' => 'pedigree_search',
     ],
 ];
 
@@ -164,13 +164,13 @@ $modversion['blocks'][] = [
 $modversion['hasMain'] = 1;
 
 // This part inserts the selected topics as sub items in the Xoops main menu
-/** @var XoopsModuleHandler $moduleHandler */
+/** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $module        = $moduleHandler->getByDirname($modversion['dirname']);
 $cansubmit     = 0;
 if (is_object($module)) {
     global $xoopsUser;
-    $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups           = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $grouppermHandler = xoops_getHandler('groupperm');
     if ($grouppermHandler->checkRight('WFLinkSubPerm', 0, $groups, $module->getVar('mid'))) {
         $cansubmit = 1;
@@ -220,7 +220,7 @@ $modversion['templates'] = [
     ['file' => 'wflinks_viewcat.tpl', 'description' => ''],
     ['file' => 'wflinks_newlistindex.tpl', 'description' => ''],
     ['file' => 'wflinks_print.tpl', 'description' => ''],
-    ['file' => 'wflinks_disclaimer.tpl', 'description' => '']
+    ['file' => 'wflinks_disclaimer.tpl', 'description' => ''],
 ];
 
 // Module config setting
@@ -241,7 +241,7 @@ $modversion['config'][] = [
         '500'  => 500,
         '1000' => 1000,
         '1500' => 1500,
-        '2000' => 2000
+        '2000' => 2000,
     ],
 ];
 $modversion['config'][] = [
@@ -254,7 +254,7 @@ $modversion['config'][] = [
     'options'     => [
         '_MI_WFL_DISPLAYICON1' => 1,
         '_MI_WFL_DISPLAYICON2' => 2,
-        '_MI_WFL_DISPLAYICON3' => 3
+        '_MI_WFL_DISPLAYICON3' => 3,
     ],
 ];
 $modversion['config'][] = [
@@ -290,7 +290,7 @@ $modversion['config'][] = [
         '50'  => 50,
         '75'  => 75,
         '100' => 100,
-        '200' => 200
+        '200' => 200,
     ],
 ];
 $modversion['config'][] = [
@@ -310,7 +310,7 @@ $modversion['config'][] = [
         '50'  => 50,
         '75'  => 75,
         '100' => 100,
-        '200' => 200
+        '200' => 200,
     ],
 ];
 $modversion['config'][] = [
@@ -330,7 +330,7 @@ $modversion['config'][] = [
         '_MI_WFL_POPULARITY_A' => 'hits ASC',
         '_MI_WFL_POPULARITY_D' => 'hits DESC',
         '_MI_WFL_COUNTRY_A'    => 'country ASC',
-        '_MI_WFL_COUNTRY_D'    => 'country DESC'
+        '_MI_WFL_COUNTRY_D'    => 'country DESC',
     ],
 ];
 $modversion['config'][] = [
@@ -359,7 +359,7 @@ $modversion['config'][] = [
 //'formtype' =>  'select',
 //'valuetype' =>  'text',
 //'default' =>  'dhtml',
-//'options' =>  array(    _MI_WFL_FORM_DHTML => 'dhtml',
+//'options' => [ array(]    _MI_WFL_FORM_DHTML => 'dhtmltextarea',
 //                                                _MI_WFL_FORM_DHTMLEXT => 'dhtmlext',
 //                                              _MI_WFL_FORM_COMPACT => 'textarea',
 //                                              _MI_WFL_FORM_HTMLAREA => 'htmlarea',
@@ -367,15 +367,17 @@ $modversion['config'][] = [
 //                                              _MI_WFL_FORM_FCK => 'fck',
 //                                              _MI_WFL_FORM_TINYEDITOR => 'tinyeditor',
 //                                              _MI_WFL_FORM_TINYMCE => 'tinymce'
-//                                              );
-//++$i;
+//                                              ],
+//];
+
+//$modversion['config'][] = [
 //'name' =>  'form_optionsuser',
 //'title' =>  '_MI_WFL_EDITORUSER',
 //'description' =>  '_MI_WFL_EDITORCHOICEUSER',
 //'formtype' =>  'select',
 //'valuetype' =>  'text',
 //'default' =>  'dhtml',
-//'options' =>  array(  _MI_WFL_FORM_DHTML => 'dhtml',
+//'options' =>  array(  _MI_WFL_FORM_DHTML => 'dhtmltextarea',
 //                                                _MI_WFL_FORM_DHTMLEXT => 'dhtmlext',
 //                                              _MI_WFL_FORM_COMPACT => 'textarea',
 //                                              _MI_WFL_FORM_HTMLAREA => 'htmlarea',
@@ -397,7 +399,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'options'     => $editorList,
-    'default'     => 'dhtmltextarea'
+    'default'     => 'dhtmltextarea',
 ];
 
 $modversion['config'][] = [
@@ -407,7 +409,7 @@ $modversion['config'][] = [
     'formtype'    => 'select',
     'valuetype'   => 'text',
     'options'     => $editorList,
-    'default'     => 'dhtmltextarea'
+    'default'     => 'dhtmltextarea',
 ];
 
 $modversion['config'][] = [
@@ -559,7 +561,7 @@ $modversion['config'][] = [
         '300' => 300,
         '400' => 400,
         '500' => 500,
-        '750' => 750
+        '750' => 750,
     ],
 ];
 $modversion['config'][] = [
@@ -692,8 +694,8 @@ $modversion['config'][] = [
         '_MI_WFL_DISPLAYFORUM1' => 1,
         '_MI_WFL_DISPLAYFORUM2' => 2,
         '_MI_WFL_DISPLAYFORUM3' => 3,
-        '_MI_WFL_DISPLAYFORUM4' => 4
-    ]
+        '_MI_WFL_DISPLAYFORUM4' => 4,
+    ],
 ];
 
 // Notification
@@ -814,5 +816,5 @@ $modversion['notification']['event'][] = [
 if (!empty($_POST['fct']) && !empty($_POST['op']) && !empty($_POST['diranme']) && 'modulesadmin' === $_POST['fct']
     && 'update_ok' === $_POST['op']
     && $_POST['dirname'] == $modversion['dirname']) {
-    include __DIR__ . '/include/onupdate.inc.php';
+    require_once __DIR__ . '/include/onupdate.inc.php';
 }

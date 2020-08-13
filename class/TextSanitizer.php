@@ -1,5 +1,7 @@
 <?php
 
+namespace XoopsModules\Wflinks;
+
 /**
  * Class: WflTextSanitizer
  *
@@ -10,7 +12,7 @@
  * Team: WF-Projects
  * Licence: GNU
  */
-class WflTextSanitizer extends MyTextSanitizer
+class TextSanitizer extends \MyTextSanitizer
 {
     /**
      * @param $text

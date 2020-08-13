@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,9 +8,9 @@
  * Licence: GNU
  */
 
-require_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
+//require_once XOOPS_ROOT_PATH . '/modules/news/class/class.newsstory.php';
 
-$story = new NewsStory();
+$story = new \XoopsModules\News\NewsStory();
 $story->setUid($xoopsUser->uid());
 $story->setPublished(time());
 $story->setExpired(0);

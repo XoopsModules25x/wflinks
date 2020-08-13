@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -16,14 +15,13 @@ require_once __DIR__ . '/header.php';
 /** @var Wflinks\Helper $helper */
 $helper = Wflinks\Helper::getInstance();
 
-
 $start = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start', 0);
 $start = (int)$start;
 
 $GLOBALS['xoopsOption']['template_main'] = 'wflinks_index.tpl';
-include XOOPS_ROOT_PATH . '/header.php';
+require XOOPS_ROOT_PATH . '/header.php';
 
-$mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
+$mytree = new Wflinks\Tree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 
 // Begin Main page Heading etc
 $sql      = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_indexpage');
@@ -92,7 +90,7 @@ while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         // Using this code without our permission or removing this code voids the license agreement
         $_image = $myrow['imgurl'] ? urldecode($myrow['imgurl']) : '';
         if ('' !== $_image && $helper->getConfig('usethumbs')) {
-            $_thumb_image = new WfThumbsNails($_image, $helper->getConfig('catimage'), 'thumbs');
+            $_thumb_image = new Wflinks\ThumbsNails($_image, $helper->getConfig('catimage'), 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
@@ -105,15 +103,17 @@ while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         }
         // End
 
-        $xoopsTpl->append('categories', [
-            'image'         => XOOPS_URL . "/$imgurl",
-            'id'            => $myrow['cid'],
-            'title'         => $title,
-            'subcategories' => $subcategories,
-            'totallinks'    => $totallinkload['count'],
-            'count'         => $count,
-            'alttext'       => $myrow['description']
-        ]);
+        $xoopsTpl->append('categories',
+            [
+                'image'         => XOOPS_URL . "/$imgurl",
+                'id'            => $myrow['cid'],
+                'title'         => $title,
+                'subcategories' => $subcategories,
+                'totallinks'    => $totallinkload['count'],
+                'count'         => $count,
+                'alttext'       => $myrow['description'],
+            ]
+        );
         ++$count;
     }
 }
@@ -129,7 +129,7 @@ $xoopsTpl->assign('lang_thereare', sprintf($lang_thereare, $total_cat, $listings
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
 
 // Screenshots display
-if  (null !== ($helper->getConfig('screenshot')) && 1 == $helper->getConfig('screenshot')) {
+if (null !== $helper->getConfig('screenshot') && 1 == $helper->getConfig('screenshot')) {
     $xoopsTpl->assign('shots_dir', $helper->getConfig('screenshots'));
     $xoopsTpl->assign('shotwidth', $helper->getConfig('shotwidth'));
     $xoopsTpl->assign('shotheight', $helper->getConfig('shotheight'));
@@ -154,11 +154,15 @@ if (1 == $lastlinks['lastlinksyn'] && $lastlinks['lastlinkstotal'] > 0) {
               && (0 != $lastlinks['lastlinkstotal'])) ? $lastlinks['lastlinkstotal'] : $count;
     $limit = (($start + $helper->getConfig('perpage')) > $count) ? ($count - $start) : $helper->getConfig('perpage');
 
-    $result = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0
+    $result = $xoopsDB->query(
+        'SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0
                                 AND published <= ' . $time . '
                                 AND (expired = 0 OR expired > ' . $time . ')
                                 AND offline = 0
-                                ORDER BY published DESC', $limit, $start);
+                                ORDER BY published DESC',
+        $limit,
+        $start
+    );
     while (false !== ($link_arr = $xoopsDB->fetchArray($result))) {
         $res_type = 0;
         $moderate = 0;
@@ -173,4 +177,4 @@ if (1 == $lastlinks['lastlinksyn'] && $lastlinks['lastlinkstotal'] > 0) {
     $xoopsTpl->assign('showlatest', $lastlinks['lastlinksyn']);
 }
 
-include XOOPS_ROOT_PATH . '/footer.php';
+require XOOPS_ROOT_PATH . '/footer.php';

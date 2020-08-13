@@ -1,4 +1,5 @@
 <?php
+
 /**
  * -----------------------------------------------------------------------------
  * About this sitemap plug-in : wflinks for sitemap
@@ -12,7 +13,6 @@
  *
  * -----------------------------------------------------------------------------
  **/
-
 function b_sitemap_wflinks()
 {
     global $sitemap_configs;
@@ -28,7 +28,7 @@ function b_sitemap_wflinks()
     $MyConfig     = xoops_getHandler('config');
     $wflinkConfig = $MyConfig->getConfigsByCat(0, $wflinkModule->getVar('mid'));
 
-    $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups           = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $grouppermHandler = xoops_getHandler('groupperm');
 
     $sitemap = [];
@@ -40,7 +40,7 @@ function b_sitemap_wflinks()
             $sitemap['parent'][$i]['id']    = (int)$myrow['cid'];
             $sitemap['parent'][$i]['title'] = $myts->htmlSpecialChars($myrow['title']);
             $sitemap['parent'][$i]['url']   = 'viewcat.php?cid=' . (int)$myrow['cid'];
-            $arr = [];
+            $arr                            = [];
             if ($sitemap_configs['show_subcategoris']) {
                 $arr = $mytree->getFirstChild($myrow['cid'], 'title');
                 foreach ($arr as $key => $ele) {

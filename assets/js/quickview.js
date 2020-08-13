@@ -16,47 +16,47 @@ var is_nav2 = (is_nav && (is_major == 2));
 var is_nav3 = (is_nav && (is_major == 3));
 var is_nav4 = (is_nav && (is_major == 4));
 function Maximize(id, sURL){
-	var preview;
-	preview=new String(document.getElementById("idMax" + id).innerHTML);
-	var i=preview.indexOf("Max<");
-	if(i > 0){	
-		document.getElementById("idFrame" + id).height = 600;
-		document.getElementById("idMax" + id).innerHTML = ' &nbsp; <a href="javascript:Maximize(' + id + ', \'' + sURL + '\')">Min</a>';
-		document.getElementById("idFrame" + id).src = sURL;
-	}else{
-		document.getElementById("idFrame" + id).height = previewSize;
-		document.getElementById("idMax" + id).innerHTML = ' &nbsp; <a href="javascript:Maximize(' + id + ', \'' + sURL + '\')">Max</a>';
-		document.getElementById("idFrame" + id).src = sURL;
-	}
+    var preview;
+    preview=new String(document.getElementById("idMax" + id).innerHTML);
+    var i=preview.indexOf("Max<");
+    if(i > 0){
+        document.getElementById("idFrame" + id).height = 600;
+        document.getElementById("idMax" + id).innerHTML = ' &nbsp; <a href="javascript:Maximize(' + id + ', \'' + sURL + '\')">Min</a>';
+        document.getElementById("idFrame" + id).src = sURL;
+    }else{
+        document.getElementById("idFrame" + id).height = previewSize;
+        document.getElementById("idMax" + id).innerHTML = ' &nbsp; <a href="javascript:Maximize(' + id + ', \'' + sURL + '\')">Max</a>';
+        document.getElementById("idFrame" + id).src = sURL;
+    }
 }
 function OnPreview(n, sUrl) {
-  var prevID = n;  
+  var prevID = n;
   var preview;
   if(!ns6){
-		preview=document.getElementById("id" + prevID).innerText;
+        preview=document.getElementById("id" + prevID).innerText;
   }else{
-		preview=document.getElementById("id" + prevID).childNodes[0].nodeValue;		
+        preview=document.getElementById("id" + prevID).childNodes[0].nodeValue;
   }
 //  var temp = new String(sUrl);
   if(preview == "Quick View"){
-	document.getElementById("id" + prevID).innerHTML = "Close Quick View";
-	document.getElementById("id" + prevID).style.cssText = "";
-	if(!ns6)		
-		document.getElementById("idSpan" + prevID).style.visibility = "visible";
+    document.getElementById("id" + prevID).innerHTML = "Close Quick View";
+    document.getElementById("id" + prevID).style.cssText = "";
+    if(!ns6)
+        document.getElementById("idSpan" + prevID).style.visibility = "visible";
 
-	document.getElementById("idMax" + prevID).style.visibility = "visible";
-	document.getElementById("idShow" + prevID).style.display = "block";
-	document.getElementById("idFrame" + prevID).src = sUrl;
+    document.getElementById("idMax" + prevID).style.visibility = "visible";
+    document.getElementById("idShow" + prevID).style.display = "block";
+    document.getElementById("idFrame" + prevID).src = sUrl;
   }
   else{
-	document.getElementById("id" + prevID).innerHTML = "Quick View";
-	document.getElementById("id" + prevID).style.cssText = "";
-	if(!ns6)	
-		document.getElementById("idSpan" + prevID).style.visibility = "hidden";
-	document.getElementById("idMax" + prevID).style.visibility = "hidden";
+    document.getElementById("id" + prevID).innerHTML = "Quick View";
+    document.getElementById("id" + prevID).style.cssText = "";
+    if(!ns6)
+        document.getElementById("idSpan" + prevID).style.visibility = "hidden";
+    document.getElementById("idMax" + prevID).style.visibility = "hidden";
 
-	document.getElementById("idShow" + prevID).style.display = "none";
-	document.getElementById("idFrame" + prevID).src = "";
+    document.getElementById("idShow" + prevID).style.display = "none";
+    document.getElementById("idFrame" + prevID).src = "";
   }
   // BUGBUG - for Netscape 6.0 & 6.01 - force screen redraw; do not remove.
   //window.resizeBy( -1, -1 );
@@ -67,17 +67,17 @@ var ti = url.replace(/'/g, '\\\'');
 ti = ti.replace(/<b>/g, '');
 ti = ti.replace(/<\/b>/g, '');
   if(is_nav4 == false)
- 	document.write(" &nbsp; <A class=\"sl\" href=\""+url+"\" id=id"+id+" onClick=\"OnPreview("+id+",'"+ti+"');return false\">Quick View</A>");
+    document.write(" &nbsp; <A class=\"sl\" href=\""+url+"\" id=id"+id+" onClick=\"OnPreview("+id+",'"+ti+"');return false\">Quick View</A>");
   }
 function potherfunctions(url, id, title) {
 var ti = title.replace(/'/g, '\\\'');
 ti = ti.replace(/<b>/g, '');
-ti = ti.replace(/<\/b>/g, '');	
+ti = ti.replace(/<\/b>/g, '');
   if(is_nav4 == false)
-  {	document.write("<span class=sl id=\"idMax"+id+"\" STYLE=\"visibility:hidden\"> &nbsp; <a href=\""+url+"\" onClick=\"javascript:Maximize("+id+",'"+url+"');return false\">Max</a></span> &nbsp; ");
-	if(!ns6)
-		document.write("<span class=sl id=\"idSpan"+id+"\" STYLE=\"visibility:hidden\"><a href=\""+url+"\" onClick=\"javascript:window.external.AddFavorite('"+url+"','"+ti+"');return false\">Bookmark</a></span>");  
-	document.write("<div class=sl id=\"idShow"+id+"\" STYLE=\"display:none\"><iframe ID=\"idFrame"+id+"\" HEIGHT=\"300\" SRC WIDTH=\"100%\"></iframe></div>");
+  { document.write("<span class=sl id=\"idMax"+id+"\" STYLE=\"visibility:hidden\"> &nbsp; <a href=\""+url+"\" onClick=\"javascript:Maximize("+id+",'"+url+"');return false\">Max</a></span> &nbsp; ");
+    if(!ns6)
+        document.write("<span class=sl id=\"idSpan"+id+"\" STYLE=\"visibility:hidden\"><a href=\""+url+"\" onClick=\"javascript:window.external.AddFavorite('"+url+"','"+ti+"');return false\">Bookmark</a></span>");
+    document.write("<div class=sl id=\"idShow"+id+"\" STYLE=\"display:none\"><iframe ID=\"idFrame"+id+"\" HEIGHT=\"300\" SRC WIDTH=\"100%\"></iframe></div>");
   }
   }
 

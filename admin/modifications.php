@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -21,7 +20,7 @@ xoops_load('XoopsUserUtility');
 $op        = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
 $requestid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'requestid', 0);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'listmodreqshow':
 
         xoops_cp_header();
@@ -42,7 +41,7 @@ switch (strtolower($op)) {
 
         $orig_user      = new \XoopsUser($orig_array['submitter']);
         $submittername  = \XoopsUserUtility::getUnameFromId($orig_array['submitter']);
-        $submitteremail = $orig_user->getUnameFromId('email');
+        $submitteremail = $orig_user::getUnameFromId('email');
 
         echo '<div><b>' . _AM_WFL_MOD_MODPOSTER . "</b> $submittername</div>";
         $not_allowed = ['lid', 'submitter', 'requestid', 'modifysubmitter'];
@@ -51,7 +50,7 @@ switch (strtolower($op)) {
             if (in_array($key, $not_allowed)) {
                 continue;
             }
-            $lang_def = constant('_AM_WFL_MOD_' . strtoupper($key));
+            $lang_def = constant('_AM_WFL_MOD_' . mb_strtoupper($key));
 
             if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE cid=' . $content;
@@ -82,7 +81,7 @@ switch (strtolower($op)) {
 
         $orig_user      = new \XoopsUser($mod_array['modifysubmitter']);
         $submittername  = \XoopsUserUtility::getUnameFromId($mod_array['modifysubmitter']);
-        $submitteremail = $orig_user->getUnameFromId('email');
+        $submitteremail = $orig_user::getUnameFromId('email');
 
         echo '<div><b>' . _AM_WFL_MOD_MODIFYSUBMITTER . "</b> $submittername</div>";
         $sform = new \XoopsThemeForm(_AM_WFL_MOD_PROPOSED, 'storyform', 'modifications.php');
@@ -90,7 +89,7 @@ switch (strtolower($op)) {
             if (in_array($key, $not_allowed)) {
                 continue;
             }
-            $lang_def = constant('_AM_WFL_MOD_' . strtoupper($key));
+            $lang_def = constant('_AM_WFL_MOD_' . mb_strtoupper($key));
 
             if ('cid' === $key) {
                 $sql     = 'SELECT title FROM ' . $xoopsDB->prefix('wflinks_cat') . ' WHERE cid=' . $content;
@@ -118,24 +117,23 @@ switch (strtolower($op)) {
             }
             $sform->addElement(new \XoopsFormLabel($lang_def, $content));
         }
-        $button_tray = new \XoopsFormElementTray('', '');
-        $button_tray->addElement(new \XoopsFormHidden('requestid', $requestid));
-        $button_tray->addElement(new \XoopsFormHidden('lid', $mod_array['requestid']));
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $buttonTray->addElement(new \XoopsFormHidden('requestid', $requestid));
+        $buttonTray->addElement(new \XoopsFormHidden('lid', $mod_array['requestid']));
         $hidden = new \XoopsFormHidden('op', 'changemodreq');
-        $button_tray->addElement($hidden);
+        $buttonTray->addElement($hidden);
         if ($mod_array) {
             $butt_dup = new \XoopsFormButton('', '', _AM_WFL_BAPPROVE, 'submit');
             $butt_dup->setExtra('onclick="this.form.elements.op.value=\'changemodreq\'"');
-            $button_tray->addElement($butt_dup);
+            $buttonTray->addElement($butt_dup);
         }
         $butt_dupct2 = new \XoopsFormButton('', '', _AM_WFL_BIGNORE, 'submit');
         $butt_dupct2->setExtra('onclick="this.form.elements.op.value=\'ignoremodreq\'"');
-        $button_tray->addElement($butt_dupct2);
-        $sform->addElement($button_tray);
+        $buttonTray->addElement($butt_dupct2);
+        $sform->addElement($buttonTray);
         $sform->display();
         xoops_cp_footer();
         break;
-
     case 'changemodreq':
         $sql        = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_mod') . ' WHERE requestid=' . $requestid;
         $link_array = $xoopsDB->fetchArray($xoopsDB->query($sql));
@@ -167,26 +165,26 @@ switch (strtolower($op)) {
         $vat         = $link_array['vat'];
         $updated     = time();
 
-        $xoopsDB->query('UPDATE '
-                        . $xoopsDB->prefix('wflinks_links')
-                        . " SET cid = $cid, title='$title', url='$url', submitter='$submitter', screenshot='$screenshot', publisher='$publisher', status='2', updated='$updated', description='$description', country='$country', keywords='$keywords', item_tag='$item_tag', googlemap='$googlemap', yahoomap='$yahoomap', multimap='$multimap', street1='$street1', street2='$street2', town='$town', state='$state',  zip='$zip', tel='$tel', fax='$fax', voip='$voip', mobile='$mobile', email='$email', vat='$vat' WHERE lid = "
-                        . $lid);
+        $xoopsDB->query(
+            'UPDATE '
+            . $xoopsDB->prefix('wflinks_links')
+            . " SET cid = $cid, title='$title', url='$url', submitter='$submitter', screenshot='$screenshot', publisher='$publisher', status='2', updated='$updated', description='$description', country='$country', keywords='$keywords', item_tag='$item_tag', googlemap='$googlemap', yahoomap='$yahoomap', multimap='$multimap', street1='$street1', street2='$street2', town='$town', state='$state',  zip='$zip', tel='$tel', fax='$fax', voip='$voip', mobile='$mobile', email='$email', vat='$vat' WHERE lid = "
+            . $lid
+        );
         $sql    = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_mod') . ' WHERE requestid=' . $requestid;
         $result = $xoopsDB->query($sql);
         redirect_header('index.php', 1, _AM_WFL_MOD_REQUPDATED);
         break;
-
     case 'ignoremodreq':
         $sql = sprintf('DELETE FROM ' . $xoopsDB->prefix('wflinks_mod') . ' WHERE requestid=' . $requestid);
         $xoopsDB->query($sql);
         redirect_header('index.php', 1, _AM_WFL_MOD_REQDELETED);
         break;
-
     case 'main':
     default:
 
         $start            = \Xmf\Request::getInt('start', 0, 'GET');
-        $mytree           = new WflinksXoopsTree($xoopsDB->prefix('wflinks_mod'), 'requestid', 0);
+        $mytree           = new Wflinks\Tree($xoopsDB->prefix('wflinks_mod'), 'requestid', 0);
         $sql              = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_mod') . ' ORDER BY requestdate DESC';
         $result           = $xoopsDB->query($sql, $helper->getConfig('admin_perpage'), $start);
         $totalmodrequests = $xoopsDB->getRowsNum($xoopsDB->query($sql));

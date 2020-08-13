@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -20,7 +19,7 @@ $op        = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
 $lid       = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', '');
 $requestid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'requestid', 0);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'approve':
 
         global $xoopsModule;
@@ -59,7 +58,6 @@ switch (strtolower($op)) {
         }
         redirect_header('newlinks.php', 1, _AM_WFL_SUB_NEWFILECREATED);
         break;
-
     case 'main':
     default:
 

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -47,7 +46,7 @@ if (0 == $count && false === Wflinks\Utility::checkGroups($cid)) {
 
 if (0 == $agreed && $helper->getConfig('showlinkdisclaimer')) {
     $GLOBALS['xoopsOption']['template_main'] = 'wflinks_disclaimer.tpl';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require XOOPS_ROOT_PATH . '/header.php';
 
     $xoopsTpl->assign('image_header', Wflinks\Utility::getImageHeader());
     $xoopsTpl->assign('linkdisclaimer', $wfmyts->displayTarea($helper->getConfig('linkdisclaimer'), 1, 1, 1, 1, 1));
@@ -55,7 +54,7 @@ if (0 == $agreed && $helper->getConfig('showlinkdisclaimer')) {
     $xoopsTpl->assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/visit.php?agree=1&amp;lid=' . $lid . '&amp;cid=' . $cid);
     $xoopsTpl->assign('link_disclaimer', true);
 
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require XOOPS_ROOT_PATH . '/footer.php';
     exit();
 }
 

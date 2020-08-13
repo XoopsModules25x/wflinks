@@ -21,7 +21,7 @@ $list       = Wflinks\Utility::cleanRequestVars($_REQUEST, 'list', '');
 $cid        = (int)$cid;
 $catsort    = $helper->getConfig('sortcats');
 
-$mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
+$mytree = new Wflinks\Tree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 $arr    = $mytree->getFirstChild($cid, $catsort);
 
 if (is_array($arr) > 0 && !$list && !$selectdate) {
@@ -30,7 +30,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
     }
 }
 $GLOBALS['xoopsOption']['template_main'] = 'wflinks_viewcat.tpl';
-include XOOPS_ROOT_PATH . '/header.php';
+require XOOPS_ROOT_PATH . '/header.php';
 
 // Breadcrumb
 $pathstring = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/index.php">' . _MD_WFL_MAIN . '</a>&nbsp;:&nbsp;';
@@ -77,7 +77,7 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
         // Using this code without our permission or removing this code voids the license agreement
         $_image = $ele['imgurl'] ? urldecode($ele['imgurl']) : '';
         if ('' !== $_image && $helper->getConfig('usethumbs')) {
-            $_thumb_image = new WfThumbsNails($_image, $helper->getConfig('catimage'), 'thumbs');
+            $_thumb_image = new Wflinks\ThumbsNails($_image, $helper->getConfig('catimage'), 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
@@ -89,15 +89,18 @@ if (is_array($arr) > 0 && !$list && !$selectdate) {
             $imgurl = $indicator['image'];
         }
         // End
-        $xoopsTpl->append('subcategories', [
-            'title'           => $wfmyts->htmlSpecialCharsStrip($ele['title']),
-            'id'              => $ele['cid'],
-            'image'           => XOOPS_URL . "/$imgurl",
-            'infercategories' => $infercategories,
-            'totallinks'      => $totallinks['count'],
-            'count'           => $scount,
-            'alttext'         => $ele['description']
-        ]);
+        $xoopsTpl->append(
+            'subcategories',
+            [
+                'title'           => $wfmyts->htmlSpecialCharsStrip($ele['title']),
+                'id'              => $ele['cid'],
+                'image'           => XOOPS_URL . "/$imgurl",
+                'infercategories' => $infercategories,
+                'totallinks'      => $totallinks['count'],
+                'count'           => $scount,
+                'alttext'         => $ele['description'],
+            ]
+        );
         ++$scount;
     }
 }
@@ -233,7 +236,7 @@ if ($count > 0) {
 
     // Screenshots display
     $xoopsTpl->assign('show_screenshot', false);
-    if  (null !== ($helper->getConfig('screenshot')) && 1 == $helper->getConfig('screenshot')) {
+    if (null !== $helper->getConfig('screenshot') && 1 == $helper->getConfig('screenshot')) {
         $xoopsTpl->assign('shots_dir', $helper->getConfig('screenshots'));
         $xoopsTpl->assign('shotwidth', $helper->getConfig('shotwidth'));
         $xoopsTpl->assign('shotheight', $helper->getConfig('shotheight'));
@@ -242,4 +245,4 @@ if ($count > 0) {
 }
 unset($link_arr);
 
-include XOOPS_ROOT_PATH . '/footer.php';
+require XOOPS_ROOT_PATH . '/footer.php';

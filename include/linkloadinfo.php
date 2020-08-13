@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -21,7 +20,7 @@ $link['cid']       = (int)$link_arr['cid'];
 $link['published'] = (int)$link_arr['published'] ? true : false;
 
 $path             = $mytree->getPathFromId($link_arr['cid'], 'title');
-$path             = substr($path, 1);
+$path             = mb_substr($path, 1);
 $path             = basename($path);
 $path             = str_replace('/', '', $path);
 $link['category'] = $path;
@@ -38,7 +37,7 @@ $link['title'] = $link_arr['title'];
 $link['url']   = $link_arr['url'];
 
 // Get Google Pagerank
-if  (null !== ($helper->getConfig('showpagerank')) && 1 == $helper->getConfig('showpagerank')) {
+if (null !== $helper->getConfig('showpagerank') && 1 == $helper->getConfig('showpagerank')) {
     $link['pagerank'] = Wflinks\Utility::pagerank($link['url']);
 }
 
@@ -46,8 +45,8 @@ if (isset($link_arr['screenshot'])) {
     $link['screenshot_full'] = $wfmyts->htmlSpecialCharsStrip($link_arr['screenshot']);
     if (!empty($link_arr['screenshot'])
         && file_exists(XOOPS_ROOT_PATH . '/' . $helper->getConfig('screenshots') . '/' . xoops_trim($link_arr['screenshot']))) {
-        if  (null !== ($helper->getConfig('usethumbs')) && 1 == $helper->getConfig('usethumbs')) {
-            $_thumb_image = new WfThumbsNails($link['screenshot_full'], $helper->getConfig('screenshots'), 'thumbs');
+        if (null !== $helper->getConfig('usethumbs') && 1 == $helper->getConfig('usethumbs')) {
+            $_thumb_image = new Wflinks\ThumbsNails($link['screenshot_full'], $helper->getConfig('screenshots'), 'thumbs');
             if ($_thumb_image) {
                 $_thumb_image->setUseThumbs(1);
                 $_thumb_image->setImageType('gd2');
@@ -168,10 +167,10 @@ switch ($helper->getConfig('selectforum')) {
         $forum_path_prefix = '/modules/newbbex/viewforum.php?forum=';
         break;
 }
-$xoopsforumModule = $xoopsModule->getByDirname($forum);
+$xoopsforumModule = $xoopsModule::getByDirname($forum);
 if (is_object($xoopsforumModule) && $xoopsforumModule->getVar('isactive')) {
     $link['forumid']    = ($link_arr['forumid'] > 0) ? $link_arr['forumid'] : 0;
-    $link['forum_path'] = $forum_path_prefix . (string)($link['forumid']);
+    $link['forum_path'] = $forum_path_prefix . (string)$link['forumid'];
 }
 
 $xoopsTpl->assign('ratethislink', '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/ratelink.php?cid=' . $link_arr['cid'] . '&amp;lid=' . $link_arr['lid'] . '">' . _MD_WFL_RATETHISFILE . '</a>');

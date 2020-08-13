@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -19,23 +18,23 @@ $op  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
 $lid = (int)Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
- * @param $xt WflinksXoopsTree
- * @param $itemid
- * @param $title
- * @param $checks
+ * @param Wflinks\Tree $xt
+ * @param              $itemid
+ * @param              $title
+ * @param              $checks
  */
-function makeTreeCheckTable(WflinksXoopsTree $xt, $itemid, $title, $checks)
+function makeTreeCheckTable(Wflinks\Tree $xt, $itemid, $title, $checks)
 {
     global $wfmyts;
 
     echo "<div style='text-align: left;'>\n";
-    echo "<form name='altcat' method='post' action='" . xoops_getenv('PHP_SELF') . "'>\n";
+    echo "<form name='altcat' method='post' action='" . xoops_getenv('SCRIPT_NAME') . "'>\n";
     echo "<table width='100%' callspacing='1' class='outer'>\n";
     $sql = 'SELECT ' . $xt->id . ', ' . $title . ' FROM ' . $xt->table . ' WHERE ' . $xt->pid . '=0 ORDER BY ' . $title;
 
     $result = $xt->db->query($sql);
 
-    while (false !== (list($cid, $name) = $xt->db->fetchRow($result))) {
+    while (list($cid, $name) = $xt->db->fetchRow($result)) {
         $checked  = array_key_exists($cid, $checks) ? 'checked' : '';
         $disabled = ($cid == \Xmf\Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
         $level    = 1;
@@ -53,7 +52,7 @@ function makeTreeCheckTable(WflinksXoopsTree $xt, $itemid, $title, $checks)
             $catpath       = $cat['prefix'] . '&nbsp;' . $wfmyts->htmlSpecialCharsStrip($cat[$title]) . '&nbsp;';
             $checked       = array_key_exists($cat['cid'], $checks) ? 'checked' : '';
             $disabled      = ($cat['cid'] == \Xmf\Request::getInt('cid', 0, 'GET')) ? "disabled='yes'" : '';
-            $level         = substr_count($cat['prefix'], '-') + 1;
+            $level         = mb_substr_count($cat['prefix'], '-') + 1;
             //            echo "<tr><td>" . $catpath . "<input type='checkbox' name='cid-" . $cat['cid'] . "' value='0' " . $checked . " " . $disabled . "></td></tr>\n";
             echo "
         <tr style='text-align: left;'>
@@ -75,7 +74,7 @@ function makeTreeCheckTable(WflinksXoopsTree $xt, $itemid, $title, $checks)
     echo "</table></form></div>\n";
 }
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'save':
         // first delete all alternate categories for this topic
         $sql = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_altcat') . ' WHERE lid=' . $lid;
@@ -102,7 +101,6 @@ switch (strtolower($op)) {
         }
         redirect_header('index.php', 1, _AM_WFL_ALTCAT_CREATED);
         break;
-
     case 'main':
     default:
         xoops_cp_header();
@@ -120,7 +118,7 @@ switch (strtolower($op)) {
         while (false !== ($altcat = $xoopsDB->fetchArray($sql))) {
             $altcats[$altcat['cid']] = true;
         }
-        $mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
+        $mytree = new Wflinks\Tree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 
         makeTreeCheckTable($mytree, $lid, 'title', $altcats);
         require_once __DIR__ . '/admin_footer.php';

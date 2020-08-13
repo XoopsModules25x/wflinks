@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-links
  * Developer: John N
  * Team: WF-Projects

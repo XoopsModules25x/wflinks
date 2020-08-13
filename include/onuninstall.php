@@ -13,11 +13,10 @@ use XoopsModules\Wflinks;
 
 /**
  * Prepares system prior to attempting to uninstall module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if ready to uninstall, false if not
  */
-
 function xoops_module_pre_uninstall_wflinks(\XoopsModule $module)
 {
     // Do some synchronization
@@ -25,17 +24,17 @@ function xoops_module_pre_uninstall_wflinks(\XoopsModule $module)
 }
 
 /**
- *
  * Performs tasks required during uninstallation of the module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if uninstallation successful, false if not
  */
 function xoops_module_uninstall_wflinks(\XoopsModule $module)
 {
-//    return true;
+    //    return true;
 
     $moduleDirName = basename(dirname(__DIR__));
+    /** @var Wflinks\Helper $helper */
     $helper = Wflinks\Helper::getInstance();
 
     /** @var \XoopsModules\Wflinks\Utility $utility */
@@ -44,13 +43,12 @@ function xoops_module_uninstall_wflinks(\XoopsModule $module)
     $success = true;
     xoops_loadLanguage('admin', $moduleDirName);
 
-
     //------------------------------------------------------------------
     // Remove uploads folder (and all subfolders) if they exist
     //------------------------------------------------------------------
 
-//    $ok     = Request::getInt('ok', 0, 'POST');
-//    if ($ok == 1) {
+    //    $ok     = Request::getInt('ok', 0, 'POST');
+    //    if ($ok == 1) {
     $old_directories = [$GLOBALS['xoops']->path("uploads/{$moduleDirName}")];
     foreach ($old_directories as $old_dir) {
         $dirInfo = new \SplFileInfo($old_dir);
@@ -63,9 +61,9 @@ function xoops_module_uninstall_wflinks(\XoopsModule $module)
         }
         unset($dirInfo);
     }
-//    } else {
-//        xoops_confirm(['op' => 'del', '', 'ok' => 1, ''], $_SERVER['REQUEST_URI'], _AM_WFL_FOLDERS_DELETE, _DELETE, true);
-//    }
+    //    } else {
+    //        xoops_confirm(['op' => 'del', '', 'ok' => 1, ''], $_SERVER['REQUEST_URI'], _AM_WFL_FOLDERS_DELETE, _DELETE, true);
+    //    }
 
     /*
     //------------ START ----------------

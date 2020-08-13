@@ -4,7 +4,7 @@
 <div style="padding-bottom: 12px; text-align: center;" class="itemPermaLink"><{$catarray.letters}></div>
 <div style="padding-bottom: 12px; text-align: center;"><{$catarray.toolbar}></div>
 
-<{if $brokenreport == true}>
+<{if $brokenreport === true}>
     <div align="left">
         <h4><{$smarty.const._MD_WFL_RESOURCEREPORTED}></h4>
         <div align="center">

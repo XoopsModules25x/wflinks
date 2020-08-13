@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Developer: McDonald
  * Licence: GNU
@@ -20,10 +19,10 @@ $lid = (int)$lid;
 
 $error_message = _MD_WFL_NOITEMSELECTED;
 if (0 == $lid) {
-    redirect_header('javascript:history.go(-1)', 1, $error_message);
+    redirect_header('<script>javascript:history.go(-1)</script>', 1, $error_message);
 }
 
-global $xoopsDB, $xoopsConfig,  $xoopsModule;
+global $xoopsDB, $xoopsConfig, $xoopsModule;
 
 $result = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE published > 0 AND published <= ' . time() . ' AND offline = 0 AND lid=' . $lid);
 $myrow  = $xoopsDB->fetchArray($result);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tag management for XOOPS
  *
@@ -9,4 +10,4 @@
  * @package        module::tag
  */
 require_once __DIR__ . '/header.php';
-include XOOPS_ROOT_PATH . '/modules/tag/list.tag.php';
+require XOOPS_ROOT_PATH . '/modules/tag/list.tag.php';

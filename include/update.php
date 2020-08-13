@@ -1,12 +1,11 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Developer: McDonald
  * Licence: GNU
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 global $xoopsDB;
 

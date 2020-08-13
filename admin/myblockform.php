@@ -11,13 +11,13 @@
 
 /**
  * @copyright      {@link https://xoops.org/ XOOPS Project}
- * @license        {@link http://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
+ * @license        {@link https://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
  * @package
  * @since
  * @author         XOOPS Development Team
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 $form = new \XoopsThemeForm($block['form_title'], 'blockform', 'admin.php');
@@ -25,21 +25,23 @@ if (isset($block['name'])) {
     $form->addElement(new \XoopsFormLabel(_AM_NAME, $block['name']));
 }
 $side_select = new \XoopsFormSelect(_AM_BLKTYPE, 'bside', $block['side']);
-$side_select->addOptionArray([
-                                 1 => _AM_SBLEFT,
-                                 2 => _AM_SBRIGHT,
-                                 3 => _AM_CBLEFT,
-                                 5 => _AM_CBRIGHT,
-                                 4 => _AM_CBCENTER,
-                                 6 => _AM_CBBOTTOMLEFT,
-                                 7 => _AM_CBBOTTOM,
-                                 8 => _AM_CBBOTTOMRIGHT
-                             ]);
+$side_select->addOptionArray(
+    [
+        1 => _AM_SBLEFT,
+        2 => _AM_SBRIGHT,
+        3 => _AM_CBLEFT,
+        5 => _AM_CBRIGHT,
+        4 => _AM_CBCENTER,
+        6 => _AM_CBBOTTOMLEFT,
+        7 => _AM_CBBOTTOM,
+        8 => _AM_CBBOTTOMRIGHT,
+    ]
+);
 $form->addElement($side_select);
 $form->addElement(new \XoopsFormText(_AM_WEIGHT, 'bweight', 2, 5, $block['weight']));
 $form->addElement(new \XoopsFormRadioYN(_AM_VISIBLE, 'bvisible', $block['visible']));
 $mod_select = new \XoopsFormSelect(_AM_VISIBLEIN, 'bmodule', $block['modules'], 5, true);
-/** @var XoopsModuleHandler $moduleHandler */
+/** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $criteria      = new \CriteriaCompo(new \Criteria('hasmain', 1));
 $criteria->add(new \Criteria('isactive', 1));
@@ -75,19 +77,21 @@ if ($block['is_custom']) {
     }
 }
 $cache_select = new \XoopsFormSelect(_AM_BCACHETIME, 'bcachetime', $block['cachetime']);
-$cache_select->addOptionArray([
-                                  '0'       => _NOCACHE,
-                                  '30'      => sprintf(_SECONDS, 30),
-                                  '60'      => _MINUTE,
-                                  '300'     => sprintf(_MINUTES, 5),
-                                  '1800'    => sprintf(_MINUTES, 30),
-                                  '3600'    => _HOUR,
-                                  '18000'   => sprintf(_HOURS, 5),
-                                  '86400'   => _DAY,
-                                  '259200'  => sprintf(_DAYS, 3),
-                                  '604800'  => _WEEK,
-                                  '2592000' => _MONTH
-                              ]);
+$cache_select->addOptionArray(
+    [
+        '0'       => _NOCACHE,
+        '30'      => sprintf(_SECONDS, 30),
+        '60'      => _MINUTE,
+        '300'     => sprintf(_MINUTES, 5),
+        '1800'    => sprintf(_MINUTES, 30),
+        '3600'    => _HOUR,
+        '18000'   => sprintf(_HOURS, 5),
+        '86400'   => _DAY,
+        '259200'  => sprintf(_DAYS, 3),
+        '604800'  => _WEEK,
+        '2592000' => _MONTH,
+    ]
+);
 $form->addElement($cache_select);
 if (isset($block['bid'])) {
     $form->addElement(new \XoopsFormHidden('bid', $block['bid']));
@@ -95,9 +99,9 @@ if (isset($block['bid'])) {
 // $form -> addElement(new \XoopsFormHidden('options', $block['options']));
 $form->addElement(new \XoopsFormHidden('op', $block['op']));
 $form->addElement(new \XoopsFormHidden('fct', 'blocksadmin'));
-$button_tray = new \XoopsFormElementTray('', '&nbsp;');
+$buttonTray = new \XoopsFormElementTray('', '&nbsp;');
 if ($block['is_custom']) {
-    $button_tray->addElement(new \XoopsFormButton('', 'previewblock', _PREVIEW, 'submit'));
+    $buttonTray->addElement(new \XoopsFormButton('', 'previewblock', _PREVIEW, 'submit'));
 }
-$button_tray->addElement(new \XoopsFormButton('', 'submitblock', $block['submit_button'], 'submit'));
-$form->addElement($button_tray);
+$buttonTray->addElement(new \XoopsFormButton('', 'submitblock', $block['submit_button'], 'submit'));
+$form->addElement($buttonTray);

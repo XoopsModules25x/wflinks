@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -13,19 +12,18 @@ use XoopsModules\Wflinks;
 
 require_once __DIR__ . '/admin_header.php';
 
-$mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
+$mytree = new Wflinks\Tree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 
 $op  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
 $lid = (int)Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 
 /**
  * @param int $lid
- *
- * @return null
+ * @return bool|null
  */
 function edit($lid = 0)
 {
-    global $xoopsDB, $wfmyts, $mytree, $imageArray, $xoopsConfig,  $xoopsModule, $xoopsUser;
+    global $xoopsDB, $wfmyts, $mytree, $imageArray, $xoopsConfig, $xoopsModule, $xoopsUser;
     /** @var Wflinks\Helper $helper */
     $helper = Wflinks\Helper::getInstance();
 
@@ -99,7 +97,7 @@ function edit($lid = 0)
               <td valign='top'>
                <div><b>" . _AM_WFL_VOTE_MOSTVOTEDTITLE . ': </b>' . \Xmf\Request::getInt('max_title', 0, 'vote_data') . '</div>
                    <div><b>' . _AM_WFL_VOTE_LEASTVOTEDTITLE . ': </b>' . \Xmf\Request::getInt('min_title', 0, 'vote_data') . '</div>
-               <div><b>' . _AM_WFL_VOTE_REGISTERED . ': </b>' . ((int)($_vote_data['rate'] - $_vote_data['null_ratinguser'])) . '</div>
+               <div><b>' . _AM_WFL_VOTE_REGISTERED . ': </b>' . $_vote_data['rate'] - $_vote_data['null_ratinguser'] . '</div>
                <div><b>' . _AM_WFL_VOTE_NONREGISTERED . ': </b>' . \Xmf\Request::getInt('null_ratinguser', 0, 'vote_data') . '</div>
               </td>
              </tr>
@@ -113,7 +111,7 @@ function edit($lid = 0)
     unset($_vote_data);
 
     $caption = $lid ? _AM_WFL_LINK_MODIFYFILE : _AM_WFL_LINK_CREATENEWFILE;
-    $sform   = new \XoopsThemeForm($caption, 'storyform', xoops_getenv('PHP_SELF'), 'post', true);
+    $sform   = new \XoopsThemeForm($caption, 'storyform', xoops_getenv('SCRIPT_NAME'), 'post', true);
     $sform->setExtra('enctype="multipart / form - data"');
 
     if ('' === $submitter) {
@@ -123,7 +121,7 @@ function edit($lid = 0)
     // Link publisher form
     if ($publisher) {
         $sform->addElement(new \XoopsFormText(_AM_WFL_LINK_PUBLISHER, 'publisher', 70, 255, $publisher));
-    //$sform -> addElement( new \XoopsFormHidden( 'publisher', $publisher ) ) ;
+        //$sform -> addElement( new \XoopsFormHidden( 'publisher', $publisher ) ) ;
     } else {
         $publisher = $xoopsUser->uname();
         $sform->addElement(new \XoopsFormHidden('publisher', $publisher));
@@ -173,14 +171,14 @@ function edit($lid = 0)
     // Insert tags if Tag-module is installed
     if (Wflinks\Utility::isTagModuleIncluded()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
-        $text_tags = new TagFormTag('item_tag', 70, 255, $link_array['item_tag'], 0);
+        $text_tags = new \XoopsModules\Tag\FormTag('item_tag', 70, 255, $link_array['item_tag'], 0);
         $sform->addElement($text_tags);
     } else {
         $sform->addElement(new \XoopsFormHidden('item_tag', $link_array['item_tag']));
     }
 
     // Screenshot
-    $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $helper->getConfig('screenshots'), $type = 'images');
+    $graph_array       = Wflinks\Lists::getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $helper->getConfig('screenshots'), $type = 'images');
     $indeximage_select = new \XoopsFormSelect('', 'screenshot', $screenshot);
     $indeximage_select->addOptionArray($graph_array);
     $indeximage_select->setExtra("onchange = 'showImgSelected(\"image\", \"screenshot\", \"" . $helper->getConfig('screenshots') . '", "", "' . XOOPS_URL . "\")'");
@@ -289,7 +287,7 @@ function edit($lid = 0)
 
     // Select forum
     ob_start();
-    WflLists:: getForum($helper->getConfig('selectforum'), $forumid);
+    Wflinks\Lists::getForum($helper->getConfig('selectforum'), $forumid);
     $sform->addElement(new \XoopsFormLabel(_AM_WFL_LINK_DISCUSSINFORUM, ob_get_contents()));
     ob_end_clean();
 
@@ -316,29 +314,29 @@ function edit($lid = 0)
     }
 
     if (!$lid) {
-        $button_tray = new \XoopsFormElementTray('', '');
-        $button_tray->addElement(new \XoopsFormHidden('status', 1));
-        $button_tray->addElement(new \XoopsFormHidden('notifypub', $notifypub));
-        $button_tray->addElement(new \XoopsFormHidden('op', 'save'));
-        $button_tray->addElement(new \XoopsFormButton('', '', _AM_WFL_BSAVE, 'submit'));
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $buttonTray->addElement(new \XoopsFormHidden('status', 1));
+        $buttonTray->addElement(new \XoopsFormHidden('notifypub', $notifypub));
+        $buttonTray->addElement(new \XoopsFormHidden('op', 'save'));
+        $buttonTray->addElement(new \XoopsFormButton('', '', _AM_WFL_BSAVE, 'submit'));
+        $sform->addElement($buttonTray);
     } else {
-        $button_tray = new \XoopsFormElementTray('', '');
-        $button_tray->addElement(new \XoopsFormHidden('lid', $lid));
-        $button_tray->addElement(new \XoopsFormHidden('status', 2));
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $buttonTray->addElement(new \XoopsFormHidden('lid', $lid));
+        $buttonTray->addElement(new \XoopsFormHidden('status', 2));
         $hidden = new \XoopsFormHidden('op', 'save');
-        $button_tray->addElement($hidden);
+        $buttonTray->addElement($hidden);
 
         $butt_dup = new \XoopsFormButton('', '', _AM_WFL_BMODIFY, 'submit');
         $butt_dup->setExtra('onclick="this . form . elements . op . value = \'save\'"');
-        $button_tray->addElement($butt_dup);
+        $buttonTray->addElement($butt_dup);
         $butt_dupct = new \XoopsFormButton('', '', _AM_WFL_BDELETE, 'submit');
         $butt_dupct->setExtra('onclick="this.form.elements.op.value=\'delete\'"');
-        $button_tray->addElement($butt_dupct);
+        $buttonTray->addElement($butt_dupct);
         $butt_dupct2 = new \XoopsFormButton('', '', _AM_WFL_BCANCEL, 'submit');
         $butt_dupct2->setExtra('onclick="this.form.elements.op.value=\'linksConfigMenu\'"');
-        $button_tray->addElement($butt_dupct2);
-        $sform->addElement($button_tray);
+        $buttonTray->addElement($butt_dupct2);
+        $sform->addElement($buttonTray);
     }
     $sform->display();
     unset($hidden);
@@ -356,7 +354,7 @@ function edit($lid = 0)
 function fetchURL($url, $timeout = 2)
 {
     /** @var Wflinks\Helper $helper */
-    $helper = Wflinks\Helper::getInstance();
+    $helper     = Wflinks\Helper::getInstance();
     $url        = urldecode($url);
     $url_parsed = parse_url($url);
     if (!isset($url_parsed['host'])) {
@@ -389,16 +387,16 @@ function fetchURL($url, $timeout = 2)
         $laptime = ((float)$usec + (float)$sec) - $start;
         if ($laptime > $timeout) {
             return 'No Reply';
-        } else {
-            return round($laptime, 3);
         }
+
+        return round($laptime, 3);
     }
     fclose($handle);
 
     return null;
 }
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'pingtime':
     case 'is_broken':
 
@@ -428,7 +426,7 @@ switch (strtolower($op)) {
         require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
 
-            echo "
+        echo "
             <table width='100%' cellspacing='1' cellpadding='2' border='0' class='outer'>\n
             <tr>\n
             <th class='txtcenter;'>" . _AM_WFL_MINDEX_ID . "</th>\n
@@ -478,17 +476,15 @@ switch (strtolower($op)) {
         Wflinks\Utility::getLinkListPageNav($broken_array_count, $start, 'art', 'op=' . $op);
         require_once __DIR__ . '/admin_footer.php';
         break;
-
     case 'edit':
         edit($lid);
         break;
-
     case 'save':
         $groups    = isset($_POST['groups']) ? $_POST['groups'] : [];
-        $lid       = (!empty($_POST['lid'])) ? $_POST['lid'] : 0;
-        $cid       = (!empty($_POST['cid'])) ? $_POST['cid'] : 0;
-        $urlrating = (!empty($_POST['urlrating'])) ? $_POST['urlrating'] : 6;
-        $status    = (!empty($_POST['status'])) ? $_POST['status'] : 2;
+        $lid       = !empty($_POST['lid']) ? $_POST['lid'] : 0;
+        $cid       = !empty($_POST['cid']) ? $_POST['cid'] : 0;
+        $urlrating = !empty($_POST['urlrating']) ? $_POST['urlrating'] : 6;
+        $status    = !empty($_POST['status']) ? $_POST['status'] : 2;
         $url       = ('http://' !== $_POST['url']) ? $wfmyts->addSlashes($_POST['url']) : '';
         $title     = $wfmyts->addSlashes(trim($_POST['title']));
 
@@ -496,7 +492,7 @@ switch (strtolower($op)) {
         $screenshot   = ('blank.gif' !== $_POST['screenshot']) ? $wfmyts->addSlashes($_POST['screenshot']) : '';
         $descriptionb = $wfmyts->addSlashes(trim($_POST['descriptionb']));
         $country      = $wfmyts->addSlashes(trim($_POST['country']));
-        $keywords     = $wfmyts->addSlashes(trim(substr($_POST['keywords'], 0, $helper->getConfig('keywordlength'))));
+        $keywords     = $wfmyts->addSlashes(trim(mb_substr($_POST['keywords'], 0, $helper->getConfig('keywordlength'))));
         $item_tag     = $wfmyts->addSlashes(trim($_POST['item_tag']));
         $forumid      = (isset($_POST['forumid']) && $_POST['forumid'] > 0) ? \Xmf\Request::getInt('forumid', 0, 'POST') : 0;
         if ($helper->getConfig('useaddress')) {
@@ -541,7 +537,7 @@ switch (strtolower($op)) {
         if (1 == $approved && empty($publishdate)) {
             $publishdate = time();
         }
-        if (isset($_POST['expiredateactivate'])) {
+        if (\Xmf\Request::hasVar('expiredateactivate', 'POST')) {
             $expiredate = strtotime($_POST['expired']['date']) + $_POST['expired']['time'];
         }
         if ($_POST['clearexpire']) {
@@ -557,7 +553,7 @@ switch (strtolower($op)) {
                            . $xoopsDB->prefix('wflinks_links')
                            . ' (lid, cid, title, url, screenshot, submitter, publisher, status, date, hits, rating, votes, comments, forumid, published, expired, updated, offline, description, ipaddress, notifypub, urlrating, country, keywords, item_tag, googlemap, yahoomap, multimap, street1, street2, town, state, zip, tel, fax, voip, mobile, email, vat )';
             $sql         .= " VALUES    (0, $cid, '$title', '$url', '$screenshot', '$submitter', '$publisher','$status', '$date', 0, 0, 0, 0, '$forumid', '$published', '$expiredate', '$updated', '$offline', '$descriptionb', '$ipaddress', '0', '$urlrating', '$country', '$keywords', '$item_tag', '$googlemap', '$yahoomap', '$multimap', '$street1', '$street2', '$town', '$state', '$zip', '$tel', '$fax', '$voip', '$mobile', '$email', '$vat' )";
-        // $newid = $xoopsDB -> getInsertId();
+            // $newid = $xoopsDB -> getInsertId();
         } else {
             $sql = 'UPDATE '
                    . $xoopsDB->prefix('wflinks_links')
@@ -622,7 +618,6 @@ switch (strtolower($op)) {
         }
         redirect_header('main.php', 1, $message);
         break;
-
     case 'delete':
         if (Wflinks\Utility::cleanRequestVars($_REQUEST, 'confirm', 0)) {
             $title = Wflinks\Utility::cleanRequestVars($_REQUEST, 'title', 0);
@@ -676,7 +671,6 @@ switch (strtolower($op)) {
             require_once __DIR__ . '/admin_footer.php';
         }
         break;
-
     case 'delvote':
         $rid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'rid', 0);
         $sql = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_votedata') . ' WHERE ratingid=' . $rid;
@@ -688,7 +682,6 @@ switch (strtolower($op)) {
         Wflinks\Utility::updateRating($rid);
         redirect_header('main.php', 1, _AM_WFL_VOTE_VOTEDELETED);
         break;
-
     case 'main':
     default:
         $start     = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start', 0);

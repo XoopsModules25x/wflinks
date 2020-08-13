@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -13,17 +12,17 @@ use XoopsModules\Wflinks;
 
 $moduleDirName = basename(__DIR__);
 
-require_once  dirname(dirname(__DIR__)) . '/mainfile.php';
-include XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/common.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/WfThumbsNails.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/common.php';
+//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/WfThumbsNails.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.php';
+//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/xoopstree.php';
 
 /** @var Wflinks\Helper $helper */
 $helper = Wflinks\Helper::getInstance();
 $helper->loadLanguage('main');
 
-require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfltextsanitizer.php';
-$wfmyts = new WflTextSanitizer(); // MyTextSanitizer object
+//require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/wfltextsanitizer.php';
+$wfmyts = new Wflinks\TextSanitizer(); // MyTextSanitizer object
 
 global $xoopModuleConfig;

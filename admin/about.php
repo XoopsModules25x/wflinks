@@ -1,4 +1,5 @@
 <?php
+
 /**
  * WF-Links
  *
@@ -10,12 +11,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @copyright    XOOPS Project (https://xoops.org)
- * @license      {@link http://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
+ * @license      {@link https://www.gnu.org/licenses/gpl-2.0.html GNU Public License}
  * @package      WF-Links
  * @since        2.5.0
  * @author       Mage, Mamba
  **/
-
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 

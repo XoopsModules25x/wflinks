@@ -1,4 +1,4 @@
-<{if $show_categort_title == true}>
+<{if $show_categort_title === true}>
     <div style="margin-bottom: 4px;"><b><{$smarty.const._MD_WFL_CATEGORYC}></b><{$wfllink.category}></div>
 <{/if}>
 <table width="100%" cellspacing="0" cellpadding="2">
@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <td width="65%"
-                        valign="top"> <{if $wfllink.autoscrshot == 0}> <{if $show_screenshot == true}> <{if $wfllink.screenshot_full != ''}>
+                        valign="top"> <{if $wfllink.autoscrshot == 0}> <{if $show_screenshot === true}> <{if $wfllink.screenshot_full != ''}>
                             <div>
                                 <a href="<{$xoops_url}>/modules/<{$wfllink.module_dir}>/visit.php?cid=<{$wfllink.cid}>&amp;lid=<{$wfllink.id}>"
                                    target="_blank"><img

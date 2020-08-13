@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -20,14 +19,13 @@ $op  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
 $rid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'rid', 0);
 $lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'delvote':
         $sql    = 'DELETE FROM ' . $xoopsDB->prefix('wflinks_votedata') . ' WHERE ratingid=' . $rid;
         $result = $xoopsDB->queryF($sql);
         Wflinks\Utility::updateRating($lid);
         redirect_header('votedata.php', 1, _AM_WFL_VOTEDELETED);
         break;
-
     case 'main':
     default:
         $start = Wflinks\Utility::cleanRequestVars($_REQUEST, 'start', 0);
@@ -47,7 +45,7 @@ switch (strtolower($op)) {
           <td>
            <div><b>' . _AM_WFL_VOTE_MOSTVOTEDTITLE . ': </b>' . \Xmf\Request::getInt('max_title', 0, 'vote_data') . '</div>
            <div><b>' . _AM_WFL_VOTE_LEASTVOTEDTITLE . ': </b>' . \Xmf\Request::getInt('min_title', 0, 'vote_data') . '</div>
-           <div><b>' . _AM_WFL_VOTE_REGISTERED . ': </b>' . ((int)($_vote_data['rate'] - $_vote_data['null_ratinguser'])) . '</div>
+           <div><b>' . _AM_WFL_VOTE_REGISTERED . ': </b>' . $_vote_data['rate'] - $_vote_data['null_ratinguser'] . '</div>
            <div><b>' . _AM_WFL_VOTE_NONREGISTERED . ': </b>' . \Xmf\Request::getInt('null_ratinguser', 0, 'vote_data') . '</div>
           </td>
          </tr>
@@ -82,7 +80,7 @@ switch (strtolower($op)) {
         if (0 == $votes) {
             echo "<tr><td class='txtcenter;' colspan='7' class='head'>" . _AM_WFL_VOTE_NOVOTES . '</td></tr>';
         } else {
-            while (false !== (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $xoopsDB->fetchRow($results))) {
+            while (list($ratingid, $lid, $ratinguser, $rating, $ratinghostname, $ratingtimestamp, $title) = $xoopsDB->fetchRow($results)) {
                 $formatted_date = formatTimestamp($ratingtimestamp, $helper->getConfig('dateformatadmin'));
                 $ratinguname    = \XoopsUser:: getUnameFromId($ratinguser);
                 echo "

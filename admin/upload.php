@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -19,7 +18,7 @@ $helper = Wflinks\Helper::getInstance();
 $op       = (isset($_REQUEST['op']) && !empty($_REQUEST['op'])) ? $_REQUEST['op'] : '';
 $rootpath = \Xmf\Request::getInt('rootpath', 0, 'GET');
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'upload':
         if ('' !== $_FILES['uploadfile']['name']) {
             if (file_exists(XOOPS_ROOT_PATH . '/' . $_POST['uploadpath'] . '/' . $_FILES['uploadfile']['name'])) {
@@ -32,10 +31,9 @@ switch (strtolower($op)) {
             redirect_header('upload.php', 2, _AM_WFL_LINK_NOIMAGEEXIST);
         }
         break;
-
     case 'delfile':
 
-        if (isset($_POST['confirm']) && 1 == $_POST['confirm']) {
+        if (\Xmf\Request::hasVar('confirm', 'POST') && 1 == $_POST['confirm']) {
             $filetodelete = XOOPS_ROOT_PATH . '/' . $_POST['uploadpath'] . '/' . $_POST['linkfile'];
             if (file_exists($filetodelete)) {
                 chmod($filetodelete, 0666);
@@ -46,20 +44,24 @@ switch (strtolower($op)) {
                 }
             }
             exit();
-        } else {
-            if (empty($_POST['linkfile'])) {
-                redirect_header('upload.php', 1, _AM_WFL_LINK_NOFILEERROR);
-            }
-            xoops_cp_header();
-            xoops_confirm([
-                              'op'         => 'delfile',
-                              'uploadpath' => $_POST['uploadpath'],
-                              'linkfile'   => $_POST['linkfile'],
-                              'confirm'    => 1
-                          ], 'upload.php', _AM_WFL_LINK_DELETEFILE . '<br><br>' . $_POST['linkfile'], _AM_WFL_BDELETE);
         }
-        break;
+        if (empty($_POST['linkfile'])) {
+            redirect_header('upload.php', 1, _AM_WFL_LINK_NOFILEERROR);
+        }
+        xoops_cp_header();
+        xoops_confirm(
+            [
+                'op'         => 'delfile',
+                'uploadpath' => $_POST['uploadpath'],
+                'linkfile'   => $_POST['linkfile'],
+                'confirm'    => 1,
+            ],
+            'upload.php',
+            _AM_WFL_LINK_DELETEFILE . '<br><br>' . $_POST['linkfile'],
+            _AM_WFL_BDELETE
+        );
 
+        break;
     case 'default':
     default:
         $displayimage = '';
@@ -68,13 +70,13 @@ switch (strtolower($op)) {
         $dirarray  = [
             1 => $helper->getConfig('catimage'),
             2 => $helper->getConfig('screenshots'),
-            3 => $helper->getConfig('mainimagedir')
+            3 => $helper->getConfig('mainimagedir'),
         ];
         $namearray = [1 => _AM_WFL_LINK_CATIMAGE, 2 => _AM_WFL_LINK_SCREENSHOTS, 3 => _AM_WFL_LINK_MAINIMAGEDIR];
         $listarray = [
             1 => _AM_WFL_LINK_FCATIMAGE,
             2 => _AM_WFL_LINK_FSCREENSHOTS,
-            3 => _AM_WFL_LINK_FMAINIMAGEDIR
+            3 => _AM_WFL_LINK_FMAINIMAGEDIR,
         ];
 
         Wflinks\Utility::getServerStats();
@@ -85,7 +87,7 @@ switch (strtolower($op)) {
         $pathlist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
         $namelist = isset($listarray[$rootpath]) ? $namearray[$rootpath] : '';
 
-        $iform = new \XoopsThemeForm(_AM_WFL_LINK_FUPLOADIMAGETO . $pathlist, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $iform = new \XoopsThemeForm(_AM_WFL_LINK_FUPLOADIMAGETO . $pathlist, 'op', xoops_getenv('SCRIPT_NAME'), 'post', true);
         $iform->setExtra('enctype="multipart/form-data"');
         ob_start();
         $iform->addElement(new \XoopsFormHidden('dir', $rootpath));
@@ -94,7 +96,7 @@ switch (strtolower($op)) {
         ob_end_clean();
 
         if ($rootpath > 0) {
-            $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'images');
+            $graph_array       = Wflinks\Lists::getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'images');
             $indeximage_select = new \XoopsFormSelect('', 'linkfile', '');
             $indeximage_select->addOptionArray($graph_array);
             $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"linkfile\", \"" . $dirarray[$rootpath] . '", "", "' . XOOPS_URL . "\")'");

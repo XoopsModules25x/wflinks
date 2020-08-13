@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -14,7 +13,7 @@ use XoopsModules\Wflinks;
 require_once __DIR__ . '/header.php';
 
 $GLOBALS['xoopsOption']['template_main'] = 'wflinks_newlistindex.tpl';
-include XOOPS_ROOT_PATH . '/header.php';
+require XOOPS_ROOT_PATH . '/header.php';
 
 /** @var Wflinks\Helper $helper */
 $helper = Wflinks\Helper::getInstance();
@@ -26,7 +25,7 @@ $catarray['imageheader'] = Wflinks\Utility::getImageHeader();
 //$catarray['toolbar'] = Wflinks\Utility::getToolbar();
 $xoopsTpl->assign('catarray', $catarray);
 
-if (isset($_GET['newlinkshowdays'])) {
+if (\Xmf\Request::hasVar('newlinkshowdays', 'GET')) {
     $newlinkshowdays = \Xmf\Request::getInt('newlinkshowdays', 0, 'GET') ?: 7;
     if (7 != $newlinkshowdays) {
         if (14 != $newlinkshowdays) {
@@ -52,7 +51,7 @@ if (isset($_GET['newlinkshowdays'])) {
     $xoopsTpl->assign('allmonthlinks', $allmonthlinks);
 
     // List Last VARIABLE Days of links
-    $newlinkshowdays = (!isset($_GET['newlinkshowdays'])) ? 7 : $_GET['newlinkshowdays'];
+    $newlinkshowdays = !isset($_GET['newlinkshowdays']) ? 7 : $_GET['newlinkshowdays'];
     $xoopsTpl->assign('newlinkshowdays', (int)$newlinkshowdays);
 
     $dailylinks = [];
@@ -66,19 +65,9 @@ if (isset($_GET['newlinkshowdays'])) {
 }
 
 $duration = ($time_cur - (86400 * ((int)$newlinkshowdays - 1)));
-$result   = $xoopsDB->query('SELECT lid, cid, published, updated FROM '
-                            . $xoopsDB->prefix('wflinks_links')
-                            . ' WHERE (published > '
-                            . $duration
-                            . ' AND published <= '
-                            . $time_cur
-                            . ') OR (updated >= '
-                            . $duration
-                            . ' AND updated <= '
-                            . $time_cur
-                            . ') AND (expired = 0 OR expired > '
-                            . $time_cur
-                            . ') AND offline = 0');
+$result   = $xoopsDB->query(
+    'SELECT lid, cid, published, updated FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE (published > ' . $duration . ' AND published <= ' . $time_cur . ') OR (updated >= ' . $duration . ' AND updated <= ' . $time_cur . ') AND (expired = 0 OR expired > ' . $time_cur . ') AND offline = 0'
+);
 while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
     $published = ($myrow['updated'] > 0) ? $myrow['updated'] : $myrow['published'];
     $d         = date('j', $published);
@@ -92,7 +81,7 @@ reset($dailylinks);
 $xoopsTpl->assign('dailylinks', $dailylinks);
 unset($dailylinks);
 
-$mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
+$mytree = new Wflinks\Tree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 $sql    = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_links');
 $sql    .= 'WHERE   (published > 0 AND published <= ' . $time_cur . ')
                 OR
@@ -104,7 +93,7 @@ $sql    .= 'WHERE   (published > 0 AND published <= ' . $time_cur . ')
         ORDER BY ' . $helper->getConfig('linkxorder');
 $result = $xoopsDB->query($sql, 10, 0);
 while (false !== ($link_arr = $xoopsDB->fetchArray($result))) {
-    include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/linkloadinfo.php';
+    require XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/include/linkloadinfo.php';
 }
 
 // Screenshots display
@@ -115,4 +104,4 @@ if ($helper->getConfig('screenshot')) {
     $xoopsTpl->assign('show_screenshot', true);
 }
 $xoopsTpl->assign('module_dir', $xoopsModule->getVar('dirname'));
-include XOOPS_ROOT_PATH . '/footer.php';
+require XOOPS_ROOT_PATH . '/footer.php';

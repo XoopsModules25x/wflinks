@@ -69,7 +69,7 @@ function wflinks_tag_block_top_show($options)
 function wflinks_tag_block_top_edit($options)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    require_once XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
+    //    require XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/class/Utility.php';
     if (Wflinks\Utility::isTagModuleIncluded()) {
         require_once XOOPS_ROOT_PATH . '/modules/tag/blocks/block.php';
 

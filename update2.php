@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -8,7 +8,6 @@
  * Team: WF-Projects
  * Licence: GNU
  */
-
 require_once __DIR__ . '/header.php';
 
 define('IS_UPDATE_FILE', true);
@@ -17,12 +16,12 @@ global $xoopsDB, $xoopsConfig, $xoopsUser, $xoopsModule;
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
     exit('Access Denied');
 }
-include XOOPS_ROOT_PATH . '/header.php';
+require XOOPS_ROOT_PATH . '/header.php';
 
 function install_header()
 {
     ?>
-    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+    <!DOCTYPE HTML>
     <html>
     <head>
         <title>WF-Links Upgrade</title>
@@ -84,7 +83,7 @@ if ('message' === $action) {
     if (1.0 == $act_wflinks_version && !$mylinks_version && !$weblinks_version) {
         echo '<h4>Latest version of WF-Links installed. No Update Required</h4>';
         install_footer();
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require XOOPS_ROOT_PATH . '/footer.php';
         exit();
     }
 
@@ -123,7 +122,7 @@ if ('message' === $action) {
                 break;
         }
 
-        echo "<form action='" . $HTTP_SERVER_VARS['PHP_SELF'] . "' method='post'>";
+        echo "<form action='" . $_SERVER['SCRIPT_NAME'] . "' method='post'>";
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         echo "<input type='submit' value='Start Upgrade'>
             <input type='hidden' value='upgrade' name='action'>
@@ -134,7 +133,7 @@ if ('message' === $action) {
     }
 
     install_footer();
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require XOOPS_ROOT_PATH . '/footer.php';
     exit();
 }
 // THIS IS THE UPDATE DATABASE FROM HERE!!!!!!!!! DO NOT TOUCH THIS!!!!!!!!
@@ -160,5 +159,5 @@ if ('upgrade' === $action) {
     }
     echo 'To complete the upgrade, You must update WF-Links in Xoops System Admin -> Modules';
     echo 'Please enjoy using WF-Links, the WF-Project Team';
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require XOOPS_ROOT_PATH . '/footer.php';
 }

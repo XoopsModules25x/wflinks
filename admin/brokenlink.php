@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -21,7 +20,7 @@ global $imageArray, $xoopsModule;
 $op  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
 $lid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'lid', 0);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'updateNotice':
         $ack = Wflinks\Utility::cleanRequestVars($_REQUEST, 'ack', 0);
         $con = Wflinks\Utility::cleanRequestVars($_REQUEST, 'con', 1);
@@ -34,7 +33,6 @@ switch (strtolower($op)) {
             }
             $sql .= ' WHERE lid=' . $lid;
             if (!$result = $xoopsDB->queryF($sql)) {
-
                 /** @var \XoopsLogger $logger */
                 $logger = \XoopsLogger::getInstance();
                 $logger->handleError(E_USER_WARNING, $sql, __FILE__, __LINE__);
@@ -64,19 +62,16 @@ switch (strtolower($op)) {
         }
         //  redirect_header( "brokenlink.php?op=default", 1, $update_mess );
         break;
-
     case 'delbrokenlinks':
         $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('wflinks_broken') . ' WHERE lid=' . $lid);
         $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE lid=' . $lid);
         redirect_header('brokenlink.php?op=default', 1, _AM_WFL_BROKENFILEDELETED);
 
         break;
-
     case 'ignorebrokenlinks':
         $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('wflinks_broken') . ' WHERE lid=' . $lid);
         redirect_header('brokenlink.php?op=default', 1, _AM_WFL_BROKEN_FILEIGNORED);
         break;
-
     default:
         $result           = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('wflinks_broken') . ' ORDER BY reportid');
         $totalbrokenlinks = $xoopsDB->getRowsNum($result);
@@ -112,7 +107,7 @@ switch (strtolower($op)) {
         if (0 == $totalbrokenlinks) {
             echo "<tr class='center;'><td class='center;' class='head' colspan='8'>" . _AM_WFL_BROKEN_NOFILEMATCH . '</td></tr>';
         } else {
-            while (false !== (list($reportid, $lid, $sender, $ip, $date, $confirmed, $acknowledged) = $xoopsDB->fetchRow($result))) {
+            while (list($reportid, $lid, $sender, $ip, $date, $confirmed, $acknowledged) = $xoopsDB->fetchRow($result)) {
                 $result2 = $xoopsDB->query('SELECT cid, title, url, submitter FROM ' . $xoopsDB->prefix('wflinks_links') . " WHERE lid=$lid");
                 list($cid, $linkshowname, $url, $submitter) = $xoopsDB->fetchRow($result2);
                 if (0 != $sender) {

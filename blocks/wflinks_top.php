@@ -1,15 +1,17 @@
 <?php
 /**
- *
  * Module: WF-links
  * Version: v1.0.3
  * Release Date: 21 June 2005
  * Developer: John N
  * Team: WF-Projects
  * Licence: GNU
+ * @param mixed $cid
+ * @param mixed $permType
+ * @param mixed $redirect
  */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 // checkBlockgroups()
 //
@@ -29,11 +31,11 @@ function checkBlockgroups($cid = 0, $permType = 'WFLinkCatPerm', $redirect = fal
     $moduleDirName = basename(dirname(__DIR__));
     global $xoopsUser;
 
-    $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
 
-    /** @var XoopsModuleHandler $moduleHandler */
+    /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $module        = $moduleHandler->getByDirname($moduleDirName);
 
@@ -83,8 +85,8 @@ function b_wflinks_top_show($options)
         $linkload = [];
         $title    = $wfmyts->htmlSpecialChars($wfmyts->stripSlashesGPC($myrow['title']));
         if (!XOOPS_USE_MULTIBYTES) {
-            if (strlen($myrow['title']) >= $options[2]) {
-                $title = substr($myrow['title'], 0, $options[2] - 1) . '...';
+            if (mb_strlen($myrow['title']) >= $options[2]) {
+                $title = mb_substr($myrow['title'], 0, $options[2] - 1) . '...';
             }
         }
         $linkload['id']    = (int)$myrow['lid'];

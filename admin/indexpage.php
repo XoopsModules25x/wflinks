@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -19,7 +18,7 @@ $helper = Wflinks\Helper::getInstance();
 $op  = Wflinks\Utility::cleanRequestVars($_REQUEST, 'op', '');
 $cid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
 
-switch (strtolower($op)) {
+switch (mb_strtolower($op)) {
     case 'save':
         $indexheading     = $wfmyts->addSlashes(xoops_trim($_REQUEST['indexheading']));
         $indexheader      = $wfmyts->addSlashes(xoops_trim($_REQUEST['indexheader']));
@@ -46,7 +45,6 @@ switch (strtolower($op)) {
         }
         redirect_header('index.php', 1, _AM_WFL_IPAGE_UPDATED);
         break;
-
     default:
         $sql = 'SELECT indeximage, indexheading, indexheader, indexfooter, nohtml, nosmiley, noxcodes, noimages, nobreak, indexheaderalign, indexfooteralign, lastlinksyn, lastlinkstotal FROM ' . $xoopsDB->prefix('wflinks_indexpage');
         if (!$result = $xoopsDB->query($sql)) {
@@ -66,9 +64,9 @@ switch (strtolower($op)) {
          </fieldset><br>\n
         ";
 
-        $sform = new \XoopsThemeForm(_AM_WFL_IPAGE_MODIFY, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform = new \XoopsThemeForm(_AM_WFL_IPAGE_MODIFY, 'op', xoops_getenv('SCRIPT_NAME'), 'post', true);
         $sform->addElement(new \XoopsFormText(_AM_WFL_IPAGE_CTITLE, 'indexheading', 60, 60, $indexheading), false);
-        $graph_array       = WflLists:: getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $helper->getConfig('mainimagedir'), $type = 'images');
+        $graph_array       = Wflinks\Lists::getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $helper->getConfig('mainimagedir'), $type = 'images');
         $indeximage_select = new \XoopsFormSelect('', 'indeximage', $indeximage);
         $indeximage_select->addOptionArray($graph_array);
         $indeximage_select->setExtra("onchange='showImgSelected(\"image\", \"indeximage\", \"" . $helper->getConfig('mainimagedir') . '", "", "' . XOOPS_URL . "\")'");
@@ -85,19 +83,23 @@ switch (strtolower($op)) {
         $sform->addElement($editor, false);
 
         $headeralign_select = new \XoopsFormSelect(_AM_WFL_IPAGE_CHEADINGA, 'indexheaderalign', $indexheaderalign);
-        $headeralign_select->addOptionArray([
-                                                'left'   => _AM_WFL_IPAGE_CLEFT,
-                                                'right'  => _AM_WFL_IPAGE_CRIGHT,
-                                                'center' => _AM_WFL_IPAGE_CCENTER
-                                            ]);
+        $headeralign_select->addOptionArray(
+            [
+                'left'   => _AM_WFL_IPAGE_CLEFT,
+                'right'  => _AM_WFL_IPAGE_CRIGHT,
+                'center' => _AM_WFL_IPAGE_CCENTER,
+            ]
+        );
         $sform->addElement($headeralign_select);
         $sform->addElement(new \XoopsFormTextArea(_AM_WFL_IPAGE_CFOOTER, 'indexfooter', $indexfooter, 10, 60));
         $footeralign_select = new \XoopsFormSelect(_AM_WFL_IPAGE_CFOOTERA, 'indexfooteralign', $indexfooteralign);
-        $footeralign_select->addOptionArray([
-                                                'left'   => _AM_WFL_IPAGE_CLEFT,
-                                                'right'  => _AM_WFL_IPAGE_CRIGHT,
-                                                'center' => _AM_WFL_IPAGE_CCENTER
-                                            ]);
+        $footeralign_select->addOptionArray(
+            [
+                'left'   => _AM_WFL_IPAGE_CLEFT,
+                'right'  => _AM_WFL_IPAGE_CRIGHT,
+                'center' => _AM_WFL_IPAGE_CCENTER,
+            ]
+        );
         $sform->addElement($footeralign_select);
 
         $options_tray = new \XoopsFormElementTray(_AM_WFL_TEXTOPTIONS, '<br>');
@@ -129,11 +131,11 @@ switch (strtolower($op)) {
         $lastlinkstotalform->setDescription('<small>' . _AM_WFL_IPAGE_LATESTTOTAL_DSC . '</small>');
         $sform->addElement($lastlinkstotalform, false);
 
-        $button_tray = new \XoopsFormElementTray('', '');
-        $hidden      = new \XoopsFormHidden('op', 'save');
-        $button_tray->addElement($hidden);
-        $button_tray->addElement(new \XoopsFormButton('', 'post', _AM_WFL_BSAVE, 'submit'));
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $hidden     = new \XoopsFormHidden('op', 'save');
+        $buttonTray->addElement($hidden);
+        $buttonTray->addElement(new \XoopsFormButton('', 'post', _AM_WFL_BSAVE, 'submit'));
+        $sform->addElement($buttonTray);
         $sform->display();
         break;
 }

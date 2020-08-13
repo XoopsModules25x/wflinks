@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * Module: WF-Links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -13,13 +12,13 @@ use XoopsModules\Wflinks;
 
 require_once __DIR__ . '/header.php';
 
-include XOOPS_ROOT_PATH . '/header.php';
-include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+require XOOPS_ROOT_PATH . '/header.php';
+require XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
 /** @var Wflinks\Helper $helper */
 $helper = Wflinks\Helper::getInstance();
 
-$mytree = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
+$mytree = new Wflinks\Tree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
 global $wfmyts;
 
 $cid = Wflinks\Utility::cleanRequestVars($_REQUEST, 'cid', 0);
@@ -45,7 +44,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
         $url          = $wfmyts->addSlashes(ltrim($_POST['url']));
         $title        = $wfmyts->addSlashes(ltrim($_REQUEST['title']));
         $descriptionb = $wfmyts->addSlashes(ltrim($_REQUEST['descriptionb']));
-        $keywords     = $wfmyts->addSlashes(trim(substr($_POST['keywords'], 0, $helper->getConfig('keywordlength'))));
+        $keywords     = $wfmyts->addSlashes(trim(mb_substr($_POST['keywords'], 0, $helper->getConfig('keywordlength'))));
 
         $item_tag = '';
         if ($helper->getConfig('usercantag')) {
@@ -197,7 +196,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
             redirect_header('index.php', 2, $_message);
         }
     } else {
-         /** @var Wflinks\Helper $helper */
+        /** @var Wflinks\Helper $helper */
         $helper = Wflinks\Helper::getInstance();
 
         $approve = Wflinks\Utility::cleanRequestVars($_REQUEST, 'approve', 0);
@@ -205,7 +204,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
         //Show disclaimer
         if (!isset($_GET['agree']) && $helper->getConfig('showdisclaimer') && 0 == $approve) {
             $GLOBALS['xoopsOption']['template_main'] = 'wflinks_disclaimer.tpl';
-            include XOOPS_ROOT_PATH . '/header.php';
+            require XOOPS_ROOT_PATH . '/header.php';
 
             $xoopsTpl->assign('image_header', Wflinks\Utility::getImageHeader());
             $xoopsTpl->assign('disclaimer', $wfmyts->displayTarea($helper->getConfig('disclaimer'), 1, 1, 1, 1, 1));
@@ -213,11 +212,11 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
             $xoopsTpl->assign('link_disclaimer', false);
             if (!isset($_REQUEST['lid'])) {
                 $xoopsTpl->assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?agree=1');
-            } elseif (isset($_REQUEST['lid'])) {
+            } elseif (\Xmf\Request::hasVar('lid', 'REQUEST')) {
                 $lid = \Xmf\Request::getInt('lid', 0, 'REQUEST');
                 $xoopsTpl->assign('agree_location', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/submit.php?agree=1&amp;lid=' . $lid);
             }
-            include XOOPS_ROOT_PATH . '/footer.php';
+            require XOOPS_ROOT_PATH . '/footer.php';
             exit();
         }
 
@@ -261,7 +260,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
         $email   = $link_array['email'] ? $wfmyts->htmlSpecialCharsStrip($link_array['email']) : '';
         $vat     = $link_array['vat'] ? $wfmyts->htmlSpecialCharsStrip($link_array['vat']) : '';
 
-        $sform = new \XoopsThemeForm(_MD_WFL_SUBMITCATHEAD, 'storyform', xoops_getenv('PHP_SELF'), 'post', true);
+        $sform = new \XoopsThemeForm(_MD_WFL_SUBMITCATHEAD, 'storyform', xoops_getenv('SCRIPT_NAME'), 'post', true);
         $sform->setExtra('enctype="multipart/form-data"');
 
         // Title form
@@ -275,7 +274,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
         $sform->addElement($url_tray);
 
         // Category selection menu
-        $mytree     = new WflinksXoopsTree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
+        $mytree     = new Wflinks\Tree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
         $submitcats = [];
         $sql        = 'SELECT * FROM ' . $xoopsDB->prefix('wflinks_cat') . ' ORDER BY title';
         $result     = $xoopsDB->query($sql);
@@ -319,7 +318,7 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
         if ($helper->getConfig('usercantag')) {
             if (Wflinks\Utility::isTagModuleIncluded()) {
                 require_once XOOPS_ROOT_PATH . '/modules/tag/include/formtag.php';
-                $text_tags = new TagFormTag('item_tag', 70, 255, $link_array['item_tag'], 0);
+                $text_tags = new \XoopsModules\Tag\FormTag('item_tag', 70, 255, $link_array['item_tag'], 0);
                 $sform->addElement($text_tags);
             } else {
                 $sform->addElement(new \XoopsFormHidden('item_tag', $link_array['item_tag']));
@@ -397,12 +396,12 @@ if (true === Wflinks\Utility::checkGroups($cid, 'WFLinkSubPerm')) {
             $sform->addElement(new \XoopsFormHidden('approve', 0));
         }
         $sform->addElement($option_tray);
-        $button_tray = new \XoopsFormElementTray('', '');
-        $button_tray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
-        $button_tray->addElement(new \XoopsFormHidden('lid', $lid));
-        $sform->addElement($button_tray);
+        $buttonTray = new \XoopsFormElementTray('', '');
+        $buttonTray->addElement(new \XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+        $buttonTray->addElement(new \XoopsFormHidden('lid', $lid));
+        $sform->addElement($buttonTray);
         $sform->display();
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require XOOPS_ROOT_PATH . '/footer.php';
     }
 } else {
     redirect_header('index.php', 2, _MD_WFL_NOPERMISSIONTOPOST);

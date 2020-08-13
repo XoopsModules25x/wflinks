@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * Module: WF-links
  * Version: v1.0.3
  * Release Date: 21 June 2005
@@ -9,7 +9,6 @@
  * Licence: GNU
  * Format: UTF-8
  */
-
 define('_MD_WFL_NOLINK', 'This link does not exist!');
 define('_MD_WFL_SUBCATLISTING', 'Category Listing');
 define('_MD_WFL_ISADMINNOTICE', 'Webmaster: There is a problem with this image.');
@@ -126,8 +125,7 @@ define('_MD_WFL_LEGENDTEXTNEWLAST', 'Over 1 Week');
 define('_MD_WFL_THISFILEDOESNOTEXIST', 'Error: This link does not exist!');
 define('_MD_WFL_BROKENREPORTED', 'Broken link Reported');
 
-define('_MD_WFL_REV_SNEWMNAMEDESC', "
-Please completely fill out the form below, and we'll add your review as soon as possible.<br><br>
+define('_MD_WFL_REV_SNEWMNAMEDESC', "Please completely fill out the form below, and we'll add your review as soon as possible.<br><br>
 Thank you for taking the time to submit your opinion. We want to give our users a possibility to find quality software faster.<br><br>All reviews will be reviewed by one of our webmasters before they are put up on the web site.
 ");
 define('_MD_WFL_ISNOTAPPROVED', 'Your submission has to be approved by a moderator first.');

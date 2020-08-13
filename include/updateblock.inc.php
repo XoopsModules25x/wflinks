@@ -1,6 +1,6 @@
 <?php
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
 
 // Keep Block option values when update (by nobunobu)
 global $xoopsDB;

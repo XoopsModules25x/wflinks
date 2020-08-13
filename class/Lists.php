@@ -1,7 +1,9 @@
 <?php
 
+namespace XoopsModules\Wflinks;
+
 /**
- * Class: WflLists
+ * Class: Lists
  *
  * Module: WF-Links
  * Version: v1.0.3
@@ -10,7 +12,7 @@
  * Team: WF-Projects
  * Licence: GNU
  */
-class WflLists
+class Lists
 {
     public $value;
     public $selected;
@@ -56,7 +58,7 @@ class WflLists
      */
     public function getArray($this_array)
     {
-        $ret = "<select size='" . $this->getSize() . "' name='". $this->getValue() ."'>";
+        $ret = "<select size='" . $this->getSize() . "' name='" . $this->getValue() . "'>";
         if ($this->emptyselect) {
             $ret .= "<option value='" . $this->getValue() . "'>----------------------</option>";
         }
@@ -81,17 +83,17 @@ class WflLists
     public function getDirListAsArray($dirname)
     {
         $dirlist = [];
-        if (is_dir($dirname) && $handle = opendir($dirname)) {
-            while (false !== ($file = readdir($handle))) {
-                if (!preg_match('/^[.]{1,2}$/', $file)) {
-                    if ('cvs' !== strtolower($file) && is_dir($dirname . $file)) {
+        if (\is_dir($dirname) && $handle = \opendir($dirname)) {
+            while (false !== ($file = \readdir($handle))) {
+                if (!\preg_match('/^[.]{1,2}$/', $file)) {
+                    if ('cvs' !== mb_strtolower($file) && \is_dir($dirname . $file)) {
                         $dirlist[$file] = $file;
                     }
                 }
             }
-            closedir($handle);
+            \closedir($handle);
 
-            reset($dirlist);
+            \reset($dirlist);
         }
 
         return $dirlist;
@@ -108,7 +110,7 @@ class WflLists
     public static function getListTypeAsArray($dirname, $type = '', $prefix = '', $noselection = 1)
     {
         $filelist = [];
-        switch (trim($type)) {
+        switch (\trim($type)) {
             case 'images':
                 $types = '[.gif|.jpg|.png]';
                 if ($noselection) {
@@ -129,24 +131,24 @@ class WflLists
                 break;
         }
 
-        if ('/' === substr($dirname, -1)) {
-            $dirname = substr($dirname, 0, -1);
+        if ('/' === mb_substr($dirname, -1)) {
+            $dirname = mb_substr($dirname, 0, -1);
         }
 
-        if (is_dir($dirname) && $handle = opendir($dirname)) {
-            while (false !== ($file = readdir($handle))) {
-                if (!preg_match('/^[.]{1,2}$/', $file) && preg_match("/$types$/i", $file)
-                    && is_file($dirname . '/' . $file)) {
-                    if ('blank.gif' === strtolower($file)) {
+        if (\is_dir($dirname) && $handle = \opendir($dirname)) {
+            while (false !== ($file = \readdir($handle))) {
+                if (!\preg_match('/^[.]{1,2}$/', $file) && \preg_match("/$types$/i", $file)
+                    && \is_file($dirname . '/' . $file)) {
+                    if ('blank.gif' === mb_strtolower($file)) {
                         continue;
                     }
                     $file            = $prefix . $file;
                     $filelist[$file] = $file;
                 }
             }
-            closedir($handle);
-            asort($filelist);
-            reset($filelist);
+            \closedir($handle);
+            \asort($filelist);
+            \reset($filelist);
         }
 
         return $filelist;
@@ -158,10 +160,10 @@ class WflLists
      *
      * @return mixed
      */
-    public static function getForum($type = 1, $selected)
+    public static function getForum($type, $selected)
     {
         global $xoopsDB;
-        switch (xoops_trim($type)) {
+        switch (\xoops_trim($type)) {
             case 2:
                 $sql = 'SELECT id, name FROM ' . $xoopsDB->prefix('ibf_forums') . ' ORDER BY id';
                 break;
@@ -179,11 +181,11 @@ class WflLists
         }
         $result = $xoopsDB->query($sql);
 
-        $noforum = defined('_WFL_NO_FORUM') ? _WFL_NO_FORUM : _AM_WFL_NO_FORUM;
+        $noforum = \defined('_WFL_NO_FORUM') ? _WFL_NO_FORUM : _AM_WFL_NO_FORUM;
 
         echo "<select size='1' name='forumid'>";
         echo "<option value='0'>" . $noforum . '</option>';
-        while (false !== (list($forum_id, $forum_name) = $xoopsDB->fetchRow($result))) {
+        while (list($forum_id, $forum_name) = $xoopsDB->fetchRow($result)) {
             $opt_selected = '';
             if ($forum_id == $selected) {
                 $opt_selected = 'selected';
@@ -195,9 +197,6 @@ class WflLists
         return $noforum;
     }
 
-    /**
-     * @return null
-     */
     public function getValue()
     {
         return $this->value;

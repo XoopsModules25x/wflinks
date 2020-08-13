@@ -11,7 +11,7 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
@@ -22,9 +22,8 @@ use XoopsModules\Wflinks;
 //require_once __DIR__ . '/setup.php';
 
 /**
- *
  * Prepares system prior to attempting to install module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if ready to install, false if not
  */
@@ -37,28 +36,29 @@ function xoops_module_pre_install_wflinks(\XoopsModule $module)
     $phpSuccess   = $utility::checkVerPhp($module);
 
     if (false !== $xoopsSuccess && false !== $phpSuccess) {
-        $mod_tables =& $module->getInfo('tables');
+        $mod_tables = &$module->getInfo('tables');
         foreach ($mod_tables as $table) {
             $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
         }
     }
+
     return $xoopsSuccess && $phpSuccess;
 }
 
 /**
- *
  * Performs tasks required during installation of the module
- * @param XoopsModule $module {@link XoopsModule}
+ * @param \XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if installation successful, false if not
  */
 function xoops_module_install_wflinks(\XoopsModule $module)
 {
-    require_once  dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
-    require_once  dirname(__DIR__) . '/include/config.php';
+    require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+
     // require_once  dirname(__DIR__) . '/class/Utility.php';
 
     $moduleDirName = basename(dirname(__DIR__));
+    /** @var Wflinks\Helper $helper */
     $helper = Wflinks\Helper::getInstance();
 
     // Load language files
@@ -68,12 +68,12 @@ function xoops_module_install_wflinks(\XoopsModule $module)
     /** @var \XoopsModules\Wflinks\Utility $utility */
     $utility = new \XoopsModules\Wflinks\Utility();
 
-    $configurator = include __DIR__ . '/config.php';
+    $configurator = new Wflinks\Common\Configurator();
 
     // default Permission Settings ----------------------
     global $xoopsModule;
-    $moduleId     = $xoopsModule->getVar('mid');
-    $moduleId2    = $helper->getModule()->mid();
+    $moduleId = $xoopsModule->getVar('mid');
+    // $moduleId2        = $helper->getModule()->mid();
     $grouppermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
     $grouppermHandler->addRight($moduleDirName . '_approve', 1, XOOPS_GROUP_ADMIN, $moduleId);
@@ -92,7 +92,7 @@ function xoops_module_install_wflinks(\XoopsModule $module)
 
     //  ---  COPY blank.png FILES ---------------
     if (count($configurator->copyBlankFiles) > 0) {
-        $file =  dirname(__DIR__) . '/assets/images/blank.png';
+        $file = dirname(__DIR__) . '/assets/images/blank.png';
         foreach (array_keys($configurator->copyBlankFiles) as $i) {
             $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
             $utility::copyFile($file, $dest);
@@ -100,10 +100,9 @@ function xoops_module_install_wflinks(\XoopsModule $module)
     }
 
     //  ---  COPY FLAGS FILES ---------------
-    $source = XOOPS_ROOT_PATH . '/modules/' . $moduleDirName .'/EXTRA/htdocs/uploads/flags';
-    $dest   = XOOPS_UPLOAD_PATH .'/flags';
+    $source = XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/EXTRA/htdocs/uploads/flags';
+    $dest   = XOOPS_UPLOAD_PATH . '/flags';
     $utility::rcopy($source, $dest);
-
 
     //delete .html entries from the tpl table
     $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $xoopsModule->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";

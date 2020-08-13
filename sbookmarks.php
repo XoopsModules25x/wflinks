@@ -1,13 +1,12 @@
 <?php
+
 /**
- *
  * Module: WF-Links
  * Developer: McDonald
  * Licence: GNU
  * @param $lid
  * @return string
  */
-
 function wflinks_sbmarks($lid)
 {
     global $xoopsDB, $xoopsModule, $wfmyts;

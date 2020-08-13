@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * Module: WF-Links
  * Developer: McDonald
  * Licence: GNU
@@ -15,7 +15,6 @@
  * @param string $country
  * @return string
  */
-
 function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
 {
     if ('Albania' === $country) {
@@ -1178,8 +1177,7 @@ function wfl_address($street1, $street2, $town, $state, $zip, $country = '')
         }
 
         return $address;
-
-    // Default address
+        // Default address
     } else {
         $address = $street1 . '<br>' . $street2 . '<br>' . $town . '<br>' . $state . '<br>' . $zip;
     }

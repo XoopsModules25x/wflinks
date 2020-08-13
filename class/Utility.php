@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Wflinks;
+<?php
+
+namespace XoopsModules\Wflinks;
 
 /*
  Utility Class Definition
@@ -12,13 +14,14 @@
  WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
 /**
  * Module:  wflinks
  *
  * @package      \module\xsitemap\class
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  * @copyright    https://xoops.org 2001-2017 &copy; XOOPS Project
- * @author       ZySpec <owners@zyspec.com>
+ * @author       ZySpec <zyspec@yahoo.com>
  * @author       Mamba <mambax7@gmail.com>
  * @since        File available since version 1.54
  */
@@ -26,25 +29,20 @@
 use Xmf\Request;
 use XoopsModules\Wflinks;
 use XoopsModules\Wflinks\Common;
+use XoopsModules\Wflinks\Constants;
 
 /**
  * Class Utility
  */
-class Utility
+class Utility extends Common\SysUtility
 {
-    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
-
-    use Common\ServerStats; // getServerStats Trait
-
-    use Common\FilesManagement; // Files Management Trait
-
     //--------------- Custom module methods -----------------------------
 
     /**
      * getHandler()
      *
      * @param         $name
-     * @param boolean $optional
+     * @param bool    $optional
      *
      * @return bool
      */
@@ -52,19 +50,22 @@ class Utility
     {
         global $handlers, $xoopsModule;
 
-        $name = strtolower(trim($name));
+        $name = mb_strtolower(\trim($name));
         if (!isset($handlers[$name])) {
-            if (file_exists($hnd_file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/class_' . $name . '.php')) {
+            if (\is_file($hnd_file = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/class_' . $name . '.php')) {
                 require_once $hnd_file;
             }
-            $class = 'wfl' . ucfirst($name) . 'Handler';
-            if (class_exists($class)) {
+            $class = 'wfl' . \ucfirst($name) . 'Handler';
+            if (\class_exists($class)) {
                 $handlers[$name] = new $class($GLOBALS['xoopsDB']);
             }
         }
         if (!$optional && !isset($handlers[$name])) {
-            trigger_error('<div>Class <b>' . $class . '</b> does not exist.</div>
-                        <div>Handler Name: ' . $name, E_USER_ERROR) . '</div>';
+            \trigger_error(
+                '<div>Class <b>' . $class . '</b> does not exist.</div>
+                        <div>Handler Name: ' . $name,
+                \E_USER_ERROR
+            ) . '</div>';
         }
 
         return isset($handlers[$name]) ? $handlers[$name] : false;
@@ -81,14 +82,14 @@ class Utility
     {
         global $xoopsUser, $xoopsModule;
 
-        $groups       = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-        $grouppermHandler = xoops_getHandler('groupperm');
+        $groups           = \is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $grouppermHandler = \xoops_getHandler('groupperm');
         if (!$grouppermHandler->checkRight($permType, $cid, $groups, $xoopsModule->getVar('mid'))) {
             if (false === $redirect) {
                 return false;
             }
 
-            redirect_header('index.php', 3, _NOPERM);
+            \redirect_header('index.php', 3, _NOPERM);
         }
 
         return true;
@@ -142,11 +143,11 @@ class Utility
             return false;
         }
         $ret['uservotes'] = $xoopsDB->getRowsNum($result);
-        while (false !== (list($rating) = $xoopsDB->fetchRow($result))) {
+        while (list($rating) = $xoopsDB->fetchRow($result)) {
             $ret['useravgrating'] += (int)$rating;
         }
         if ($ret['useravgrating'] > 0) {
-            $ret['useravgrating'] = number_format($ret['useravgrating'] / $ret['uservotes'], 2);
+            $ret['useravgrating'] = \number_format($ret['useravgrating'] / $ret['uservotes'], 2);
         }
 
         return $ret;
@@ -167,10 +168,10 @@ class Utility
         // Method is more for functionality rather than beauty at the moment, will correct later.
         unset($array['usercookie'], $array['PHPSESSID']);
 
-        if (is_array($array) && null === $name) {
+        if (\is_array($array) && null === $name) {
             $globals = [];
-            foreach (array_keys($array) as $k) {
-                $value = strip_tags(trim($array[$k]));
+            foreach (\array_keys($array) as $k) {
+                $value = \strip_tags(\trim($array[$k]));
                 if ('' !== $value >= $lengthcheck) {
                     return null;
                 }
@@ -178,27 +179,27 @@ class Utility
                     $value = (int)$value;
                 } else {
                     if (true === $strict) {
-                        $value = preg_replace('/\W/', '', trim($value));
+                        $value = \preg_replace('/\W/', '', \trim($value));
                     }
-                    $value = strtolower((string)$value);
+                    $value = mb_strtolower((string)$value);
                 }
                 $globals[$k] = $value;
             }
 
             return $globals;
         }
-        if (!array_key_exists($name, $array) || !isset($array[$name])) {
+        if (!\array_key_exists($name, $array) || !isset($array[$name])) {
             return $def;
         }
 
-        $value = strip_tags(trim($array[$name]));
+        $value = \strip_tags(\trim($array[$name]));
         if (ctype_digit($value)) {
             $value = (int)$value;
         } else {
             if (true === $strict) {
-                $value = preg_replace('/\W/', '', trim($value));
+                $value = \preg_replace('/\W/', '', \trim($value));
             }
-            $value = strtolower((string)$value);
+            $value = mb_strtolower((string)$value);
         }
 
         return $value;
@@ -206,6 +207,7 @@ class Utility
 
     // toolbar()
     // @return
+
     /**
      * @param int $cid
      *
@@ -222,12 +224,12 @@ class Utility
         return $toolbar;
     }
 
-
     // displayicons()
     // @param  $time
     // @param integer $status
     // @param integer $counter
     // @return
+
     /**
      * @param     $time
      * @param int $status
@@ -237,15 +239,15 @@ class Utility
      */
     public static function displayIcons($time, $status = 0, $counter = 0)
     {
-        global  $xoopsModule;
+        global $xoopsModule;
         /** @var Wflinks\Helper $helper */
         $helper = Wflinks\Helper::getInstance();
 
         $new = '';
         $pop = '';
 
-        $newdate = (time() - (86400 * (int)$helper->getConfig('daysnew')));
-        $popdate = (time() - (86400 * (int)$helper->getConfig('daysupdated')));
+        $newdate = (\time() - (86400 * (int)$helper->getConfig('daysnew')));
+        $popdate = (\time() - (86400 * (int)$helper->getConfig('daysupdated')));
 
         if (3 != $helper->getConfig('displayicons')) {
             if ($newdate < $time) {
@@ -281,11 +283,10 @@ class Utility
         return $icons;
     }
 
-
-
     // updaterating()
     // @param  $sel_id
     // @return updates rating data in itemtable for a given item
+
     /**
      * @param $sel_id
      */
@@ -296,18 +297,19 @@ class Utility
         $voteresult  = $xoopsDB->query($query);
         $votesDB     = $xoopsDB->getRowsNum($voteresult);
         $totalrating = 0;
-        while (false !== (list($rating) = $xoopsDB->fetchRow($voteresult))) {
+        while (list($rating) = $xoopsDB->fetchRow($voteresult)) {
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
-        $finalrating = number_format($finalrating, 4);
-        $sql         = sprintf('UPDATE `%s` SET rating = %u, votes = %u WHERE lid = %u', $xoopsDB->prefix('wflinks_links'), $finalrating, $votesDB, $sel_id);
+        $finalrating = \number_format($finalrating, 4);
+        $sql         = \sprintf('UPDATE `%s` SET rating = %u, votes = %u WHERE lid = %u', $xoopsDB->prefix('wflinks_links'), $finalrating, $votesDB, $sel_id);
         $xoopsDB->query($sql);
     }
 
     // totalcategory()
     // @param integer $pid
     // @return
+
     /**
      * @param int $pid
      *
@@ -323,7 +325,7 @@ class Utility
         }
         $result     = $xoopsDB->query($sql);
         $catlisting = 0;
-        while (false !== (list($cid) = $xoopsDB->fetchRow($result))) {
+        while (list($cid) = $xoopsDB->fetchRow($result)) {
             if (static::checkGroups($cid)) {
                 ++$catlisting;
             }
@@ -337,6 +339,7 @@ class Utility
     // @param integer $get_child
     // @param integer $return_sql
     // @return
+
     /**
      * @param int $sel_id
      * @param int $get_child
@@ -356,9 +359,9 @@ class Utility
                    . ' b '
                    . 'ON b.lid=a.lid '
                    . 'WHERE published > 0 AND published <= '
-                   . time()
+                   . \time()
                    . ' AND (expired = 0 OR expired > '
-                   . time()
+                   . \time()
                    . ') AND offline = 0 '
                    . ' AND (b.cid=a.cid OR (a.cid='
                    . $sel_id
@@ -366,7 +369,7 @@ class Utility
                    . $sel_id
                    . ')) ';
         } else {
-            $sql = 'SELECT lid, cid, published FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE offline = 0 AND published > 0 AND published <= ' . time() . ' AND (expired = 0 OR expired > ' . time() . ')';
+            $sql = 'SELECT lid, cid, published FROM ' . $xoopsDB->prefix('wflinks_links') . ' WHERE offline = 0 AND published > 0 AND published <= ' . \time() . ' AND (expired = 0 OR expired > ' . \time() . ')';
         }
         if (1 == $return_sql) {
             return $sql;
@@ -377,7 +380,7 @@ class Utility
 
         $items  = [];
         $result = $xoopsDB->query($sql);
-        while (false !== (list($lid, $cid, $published) = $xoopsDB->fetchRow($result))) {
+        while (list($lid, $cid, $published) = $xoopsDB->fetchRow($result)) {
             if (true === static::checkGroups()) {
                 ++$count;
                 $published_date = ($published > $published_date) ? $published : $published_date;
@@ -395,9 +398,9 @@ class Utility
                           . ' b '
                           . 'ON b.lid=a.lid '
                           . 'WHERE published > 0 AND published <= '
-                          . time()
+                          . \time()
                           . ' AND (expired = 0 OR expired > '
-                          . time()
+                          . \time()
                           . ') AND offline = 0 '
                           . ' AND (b.cid=a.cid OR (a.cid='
                           . $item
@@ -406,7 +409,7 @@ class Utility
                           . ')) ';
 
                 $result2 = $xoopsDB->query($query2);
-                while (false !== (list($lid, $published) = $xoopsDB->fetchRow($result2))) {
+                while (list($lid, $published) = $xoopsDB->fetchRow($result2)) {
                     if (0 == $published) {
                         continue;
                     }
@@ -465,8 +468,8 @@ class Utility
         }
 
         // checks to see if the file is valid else displays default blank image
-        if (!is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")
-            && file_exists(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")) {
+        if (!\is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")
+            && \is_dir(XOOPS_ROOT_PATH . "/{$imgsource}/{$image}")) {
             $showimage .= "<img src='" . XOOPS_URL . "/{$imgsource}/{$image}' border='0' alt='" . $alttext . "'></a>";
         } else {
             if ($xoopsUser && $xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
@@ -475,7 +478,7 @@ class Utility
                 $showimage .= "<img src='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/assets/images/blank.gif' alt='" . $alttext . "'></a>";
             }
         }
-        clearstatcache();
+        \clearstatcache();
 
         return $showimage;
     }
@@ -525,14 +528,14 @@ class Utility
             'W',
             'X',
             'Y',
-            'Z'
+            'Z',
         ];
-        $num          = count($alphabet) - 1;
+        $num          = \count($alphabet) - 1;
         $counter      = 0;
         //    while (list(, $ltr) = each($alphabet)) {
         foreach ($alphabet as $key => $ltr) {
             $letterchoice .= "<a href='" . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . "/viewcat.php?list=$ltr'>$ltr</a>";
-            if ($counter == round($num / 2)) {
+            if ($counter == \round($num / 2)) {
                 $letterchoice .= ' ]<br>[ ';
             } elseif ($counter != $num) {
                 $letterchoice .= '&nbsp;|&nbsp;';
@@ -553,9 +556,9 @@ class Utility
     {
         global $xoopsModule, $xoopsDB;
 
-        $oneday    = (time() - (86400 * 1));
-        $threedays = (time() - (86400 * 3));
-        $week      = (time() - (86400 * 7));
+        $oneday    = (\time() - (86400 * 1));
+        $threedays = (\time() - (86400 * 3));
+        $week      = (\time() - (86400 * 7));
 
         $path = 'modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon';
 
@@ -587,9 +590,8 @@ class Utility
      */
     public static function searchString($haystack, $needle)
     {
-        return substr($haystack, 0, strpos($haystack, $needle) + 1);
+        return mb_substr($haystack, 0, mb_strpos($haystack, $needle) + 1);
     }
-
 
     /**
      * @param $selected
@@ -606,7 +608,7 @@ class Utility
             } else {
                 $opt_selected = '';
             }
-            echo "<option value='" . htmlspecialchars($namearray, ENT_QUOTES) . "' $opt_selected>" . $workd . '</option>';
+            echo "<option value='" . \htmlspecialchars($namearray, \ENT_QUOTES) . "' $opt_selected>" . $workd . '</option>';
         }
         echo '</select>';
     }
@@ -631,12 +633,12 @@ class Utility
         $redirect = 0,
         $usertype = 1
     ) {
-        global $FILES, $xoopsConfig,  $xoopsModule;
-         /** @var Wflinks\Helper $helper */
+        global $FILES, $xoopsConfig, $xoopsModule;
+        /** @var Wflinks\Helper $helper */
         $helper = Wflinks\Helper::getInstance();
 
         $down = [];
-//        require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/uploader.php';
+        //        require_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/uploader.php';
         require_once XOOPS_ROOT_PATH . '/class/uploader.php';
         if (empty($allowed_mimetypes)) {
             $allowed_mimetypes = wfl_getmime($FILES['userfile']['name'], $usertype);
@@ -648,18 +650,18 @@ class Utility
         $maxfileheight = $helper->getConfig('maximgheight');
 
         $uploader = new \XoopsMediaUploader($upload_dir, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
-//        $uploader->noAdminSizeCheck(1);
+        //        $uploader->noAdminSizeCheck(1);
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             if (!$uploader->upload()) {
                 $errors = $uploader->getErrors();
-                redirect_header($redirecturl, 2, $errors);
+                \redirect_header($redirecturl, 2, $errors);
             } else {
                 if ($redirect) {
-                    redirect_header($redirecturl, 1, _AM_WFL_UPLOADFILE);
+                    \redirect_header($redirecturl, 1, _AM_WFL_UPLOADFILE);
                 } else {
-                    if (is_file($uploader->savedDestination)) {
-                        $down['url']  = XOOPS_URL . '/' . $uploaddir . '/' . strtolower($uploader->savedFileName);
-                        $down['size'] = filesize(XOOPS_ROOT_PATH . '/' . $uploaddir . '/' . strtolower($uploader->savedFileName));
+                    if (\is_file($uploader->savedDestination)) {
+                        $down['url']  = XOOPS_URL . '/' . $uploaddir . '/' . mb_strtolower($uploader->savedFileName);
+                        $down['size'] = \filesize(XOOPS_ROOT_PATH . '/' . $uploaddir . '/' . mb_strtolower($uploader->savedFileName));
                     }
 
                     return $down;
@@ -667,7 +669,7 @@ class Utility
             }
         } else {
             $errors = $uploader->getErrors();
-            redirect_header($redirecturl, 1, $errors);
+            \redirect_header($redirecturl, 1, $errors);
         }
 
         return null;
@@ -689,7 +691,7 @@ class Utility
         } else {
             $result = $xoopsDB->query('SELECT forum_name, forum_id FROM ' . $xoopsDB->prefix('bbex_forums') . ' ORDER BY forum_id');
         }
-        while (false !== (list($forum_name, $forum_id) = $xoopsDB->fetchRow($result))) {
+        while (list($forum_name, $forum_id) = $xoopsDB->fetchRow($result)) {
             if ($forum_id == $forumid) {
                 $opt_selected = 'selected';
             } else {
@@ -728,38 +730,38 @@ class Utility
      */
     public static function getLinkListBody($published)
     {
-        global $wfmyts, $imageArray,  $xoopsModule;
+        global $wfmyts, $imageArray, $xoopsModule;
         /** @var Wflinks\Helper $helper */
         $helper = Wflinks\Helper::getInstance();
-        xoops_load('XoopsUserUtility');
+        \xoops_load('XoopsUserUtility');
         $lid = $published['lid'];
         $cid = $published['cid'];
 
-        $title     = "<a href='../singlelink.php?cid=" . $published['cid'] . '&amp;lid=' . $published['lid'] . "'>" . $wfmyts->htmlSpecialCharsStrip(trim($published['title'])) . '</a>';
-        $maintitle = urlencode($wfmyts->htmlSpecialChars(trim($published['title'])));
+        $title     = "<a href='../singlelink.php?cid=" . $published['cid'] . '&amp;lid=' . $published['lid'] . "'>" . $wfmyts->htmlSpecialCharsStrip(\trim($published['title'])) . '</a>';
+        $maintitle = \urlencode($wfmyts->htmlSpecialChars(\trim($published['title'])));
         $cattitle  = static::getCategoryTitle($published['cid']);
         $submitter = \XoopsUserUtility::getUnameFromId($published['submitter']);
-        $hwhoisurl = str_replace('http://', '', $published['url']);
-        $submitted = formatTimestamp($published['date'], $helper->getConfig('dateformat'));
-        $publish   = ($published['published'] > 0) ? formatTimestamp($published['published'], $helper->getConfig('dateformatadmin')) : 'Not Published';
-        $expires   = $published['expired'] ? formatTimestamp($published['expired'], $helper->getConfig('dateformatadmin')) : _AM_WFL_MINDEX_NOTSET;
+        $hwhoisurl = \str_replace('http://', '', $published['url']);
+        $submitted = \formatTimestamp($published['date'], $helper->getConfig('dateformat'));
+        $publish   = ($published['published'] > 0) ? \formatTimestamp($published['published'], $helper->getConfig('dateformatadmin')) : 'Not Published';
+        $expires   = $published['expired'] ? \formatTimestamp($published['expired'], $helper->getConfig('dateformatadmin')) : _AM_WFL_MINDEX_NOTSET;
         //    if ( ( $published['published'] && $published['published'] < time() ) && $published['offline'] == 0 ) {
         //        $published_status = $imageArray['online'];
         //    } else {
         //        $published_status = ( $published['published'] == 0 ) ? "<a href='newlinks.php'>" . $imageArray['offline'] . "</a>" : $imageArray['offline'];
         //    }
         if (0 == $published['offline']
-            && ($published['published'] && $published['published'] < time())
-            && (($published['expired'] && $published['expired'] > time()) || 0 == $published['expired'])) {
+            && ($published['published'] && $published['published'] < \time())
+            && (($published['expired'] && $published['expired'] > \time()) || 0 == $published['expired'])) {
             $published_status = $imageArray['online'];
-        } elseif (0 == $published['offline'] && ($published['expired'] && $published['expired'] < time())) {
+        } elseif (0 == $published['offline'] && ($published['expired'] && $published['expired'] < \time())) {
             $published_status = $imageArray['expired'];
         } else {
             $published_status = (0 == $published['published']) ? "<a href='newlinks.php'>" . $imageArray['offline'] . '</a>' : $imageArray['offline'];
         }
         $icon = "<a href='main.php?op=edit&amp;lid=" . $lid . "' title='" . _AM_WFL_ICO_EDIT . "'>" . $imageArray['editimg'] . '</a>&nbsp;';
         $icon .= "<a href='main.php?op=delete&amp;lid=" . $lid . "' title='" . _AM_WFL_ICO_DELETE . "'>" . $imageArray['deleteimg'] . '</a>&nbsp;';
-        $icon .= "<a href='altcat.php?op=main&amp;cid=" . $cid . '&amp;lid=' . $lid . '&amp;title=' . $wfmyts->htmlSpecialCharsStrip(trim($published['title'])) . "' title='" . _AM_WFL_ALTCAT_CREATEF . "'>" . $imageArray['altcat'] . '</a>&nbsp;';
+        $icon .= "<a href='altcat.php?op=main&amp;cid=" . $cid . '&amp;lid=' . $lid . '&amp;title=' . $wfmyts->htmlSpecialCharsStrip(\trim($published['title'])) . "' title='" . _AM_WFL_ALTCAT_CREATEF . "'>" . $imageArray['altcat'] . '</a>&nbsp;';
         $icon .= '<a href="http://whois.domaintools.com/' . $hwhoisurl . '" target="_blank"><img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/assets/images/icon/domaintools.png" alt="WHOIS" title="WHOIS" align="absmiddle"></a>';
 
         echo "
@@ -860,14 +862,14 @@ class Utility
      */
     public static function getWysiwygForm($caption, $name, $value)
     {
-        global  $xoopsUser, $xoopsModule;
+        global $xoopsUser, $xoopsModule;
         /** @var Wflinks\Helper $helper */
         $helper = Wflinks\Helper::getInstance();
 
         $editor = false;
         $x22    = false;
-        $xv     = str_replace('XOOPS ', '', XOOPS_VERSION);
-        if ('2' == substr($xv, 2, 1)) {
+        $xv     = \str_replace('XOOPS ', '', \XOOPS_VERSION);
+        if ('2' == mb_substr($xv, 2, 1)) {
             $x22 = true;
         }
         $editor_configs           = [];
@@ -878,7 +880,7 @@ class Utility
         $editor_configs['width']  = '100%';
         $editor_configs['height'] = '400px';
 
-        $isadmin = ((is_object($xoopsUser) && !empty($xoopsUser))
+        $isadmin = ((\is_object($xoopsUser) && !empty($xoopsUser))
                     && $xoopsUser->isAdmin($xoopsModule->mid()));
         if (true === $isadmin) {
             $formuser = $helper->getConfig('form_options');
@@ -889,7 +891,7 @@ class Utility
         switch ($formuser) {
             case 'fck':
                 if (!$x22) {
-                    if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php')) {
+                    if (\is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php';
                         $editor = new \XoopsFormFckeditor($editor_configs, true);
                     } else {
@@ -903,10 +905,9 @@ class Utility
                     $editor = new \XoopsFormEditor($caption, 'fckeditor', $editor_configs);
                 }
                 break;
-
             case 'htmlarea':
                 if (!$x22) {
-                    if (is_readable(XOOPS_ROOT_PATH . '/class/htmlarea/formhtmlarea.php')) {
+                    if (\is_readable(XOOPS_ROOT_PATH . '/class/htmlarea/formhtmlarea.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/htmlarea/formhtmlarea.php';
                         $editor = new \XoopsFormHtmlarea($caption, $name, $value);
                     }
@@ -914,7 +915,6 @@ class Utility
                     $editor = new \XoopsFormEditor($caption, 'htmlarea', $editor_configs);
                 }
                 break;
-
             case 'dhtml':
                 if (!$x22) {
                     $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
@@ -922,39 +922,22 @@ class Utility
                     $editor = new \XoopsFormEditor($caption, 'dhtmltextarea', $editor_configs);
                 }
                 break;
-
             case 'textarea':
                 $editor = new \XoopsFormTextArea($caption, $name, $value);
                 break;
-
-            case 'koivi':
-                if (!$x22) {
-                    if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/formwysiwygtextarea.php')) {
-                        require_once XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/formwysiwygtextarea.php';
-                        $editor = new \XoopsFormWysiwygTextArea($caption, $name, $value, '100%', '400px');
-                    } else {
-                        if ($dhtml) {
-                            $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
-                        } else {
-                            $editor = new \XoopsFormTextArea($caption, $name, $value, 7, 60);
-                        }
-                    }
-                } else {
-                    $editor = new \XoopsFormEditor($caption, 'koivi', $editor_configs);
-                }
-                break;
-
             case 'tinyeditor':
                 if (!$x22) {
-                    if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php')) {
+                    if (\is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php';
-                        $editor = new \XoopsFormTinyeditorTextArea([
-                                                                      'caption' => $caption,
-                                                                      'name'    => $name,
-                                                                      'value'   => $value,
-                                                                      'width'   => '100%',
-                                                                      'height'  => '400px'
-                                                                  ]);
+                        $editor = new \XoopsFormTinyeditorTextArea(
+                            [
+                                'caption' => $caption,
+                                'name'    => $name,
+                                'value'   => $value,
+                                'width'   => '100%',
+                                'height'  => '400px',
+                            ]
+                        );
                     } else {
                         if ($dhtml) {
                             $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, 50, 60);
@@ -966,10 +949,9 @@ class Utility
                     $editor = new \XoopsFormEditor($caption, 'tinyeditor', $editor_configs);
                 }
                 break;
-
             case 'dhtmlext':
                 if (!$x22) {
-                    if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmlext/dhtmlext.php')) {
+                    if (\is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmlext/dhtmlext.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmlext/dhtmlext.php';
                         $editor = new \XoopsFormDhtmlTextAreaExtended($caption, $name, $value, 10, 50);
                     } else {
@@ -983,27 +965,30 @@ class Utility
                     $editor = new \XoopsFormEditor($caption, 'dhtmlext', $editor_configs);
                 }
                 break;
-
             case 'tinymce':
                 if (!$x22) {
-                    if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php')) {
+                    if (\is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php')) {
                         require_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php';
-                        $editor = new \XoopsFormTinymce([
-                                                           'caption' => $caption,
-                                                           'name'    => $name,
-                                                           'value'   => $value,
-                                                           'width'   => '100%',
-                                                           'height'  => '400px'
-                                                       ]);
-                    } elseif (is_readable(XOOPS_ROOT_PATH . '/editors/tinymce/formtinymce.php')) {
+                        $editor = new \XoopsFormTinymce(
+                            [
+                                'caption' => $caption,
+                                'name'    => $name,
+                                'value'   => $value,
+                                'width'   => '100%',
+                                'height'  => '400px',
+                            ]
+                        );
+                    } elseif (\is_readable(XOOPS_ROOT_PATH . '/editors/tinymce/formtinymce.php')) {
                         require_once XOOPS_ROOT_PATH . '/editors/tinymce/formtinymce.php';
-                        $editor = new \XoopsFormTinymce([
-                                                           'caption' => $caption,
-                                                           'name'    => $name,
-                                                           'value'   => $value,
-                                                           'width'   => '100%',
-                                                           'height'  => '400px'
-                                                       ]);
+                        $editor = new \XoopsFormTinymce(
+                            [
+                                'caption' => $caption,
+                                'name'    => $name,
+                                'value'   => $value,
+                                'width'   => '100%',
+                                'height'  => '400px',
+                            ]
+                        );
                     } else {
                         if ($dhtml) {
                             $editor = new \XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
@@ -1284,7 +1269,7 @@ class Utility
             'ZA' => 'South Africa',
             'ZM' => 'Zambia',
             'ZR' => 'Zaire',             // Removed from iso list
-            'ZW' => 'Zimbabwe'
+            'ZW' => 'Zimbabwe',
         ];
 
         return $country_array[$countryn];
@@ -1310,30 +1295,34 @@ class Utility
             "'&(iexcl|#161);'i",
             "'&(cent|#162);'i",
             "'&(pound|#163);'i",
-            "'&(copy|#169);'i"
+            "'&(copy|#169);'i",
         ]; // evaluate as php
 
         $replace = [
             '',
             '',
             '',
-            "\\1",
+            '\\1',
             '"',
             '&',
             '<',
             '>',
             ' ',
-            chr(161),
-            chr(162),
-            chr(163),
-            chr(169),
+            \chr(161),
+            \chr(162),
+            \chr(163),
+            \chr(169),
         ];
 
-        $text = preg_replace($search, $replace, $document);
+        $text = \preg_replace($search, $replace, $document);
 
-        preg_replace_callback('/&#(\d+);/', function ($matches) {
-            return chr($matches[1]);
-        }, $document);
+        \preg_replace_callback(
+            '/&#(\d+);/',
+            static function ($matches) {
+                return \chr($matches[1]);
+            },
+            $document
+        );
 
         return $text;
     }
@@ -1341,6 +1330,7 @@ class Utility
     //    Start functions for Google PageRank
     //    Source: http://www.sws-tech.com/scripts/googlepagerank.php
     //    This code is released under the public domain
+
     /**
      * @param $a
      * @param $b
@@ -1349,7 +1339,7 @@ class Utility
      */
     public static function fillZeroes($a, $b)
     {
-        $z = hexdec(80000000);
+        $z = \hexdec(80000000);
         //echo $z;
         if ($z & $a) {
             $a >>= 1;
@@ -1404,16 +1394,16 @@ class Utility
     }
 
     /**
-     * @param array|null     $url
-     * @param null $length
-     * @param int  $init
+     * @param array|null $url
+     * @param null       $length
+     * @param int        $init
      *
      * @return mixed
      */
     public static function googleCh($url, $length = null, $init = 0xE6359A60)
     {
         if (null === $length) {
-            $length = count($url);
+            $length = \count($url);
         }
         $a   = $b = 0x9E3779B9;
         $c   = $init;
@@ -1431,17 +1421,15 @@ class Utility
             $len -= 12;
         }
         $c += $length;
-        switch ($len) {              /* all the case statements fall through */
-            case 11:
-                $c += ($url[$k + 10] << 24);
+        switch ($len) {              /* all the case statements fall through */ case 11:
+            $c += ($url[$k + 10] << 24);
             // no break
             case 10:
                 $c += ($url[$k + 9] << 16);
             // no break
             case 9:
                 $c += ($url[$k + 8] << 8);
-            /* the first byte of c is reserved for the length */
-            // no break
+            /* the first byte of c is reserved for the length */ // no break
             case 8:
                 $b += ($url[$k + 7] << 24);
             // no break
@@ -1483,8 +1471,9 @@ class Utility
      */
     public static function strord($string)
     {
-        for ($i = 0, $iMax = strlen($string); $i < $iMax; ++$i) {
-            $result[$i] = ord($string{$i});
+        $iMax = mb_strlen($string)
+        for ($i = 0; $i < $iMax; ++$i) {
+            $result[$i] = \ord($string[$i]);
         }
 
         return $result;
@@ -1499,7 +1488,7 @@ class Utility
     {
         $pagerank = '';
         $ch       = '6' . static::googleCh(static::strord('info:' . $url));
-        $fp       = fsockopen('www.google.com', 80, $errno, $errstr, 30);
+        $fp       = \fsockopen('www.google.com', 80, $errno, $errstr, 30);
         if (!$fp) {
             echo "$errstr ($errno)<br>\n";
         } else {
@@ -1507,17 +1496,17 @@ class Utility
             $out .= "Host: www.google.com\r\n";
             $out .= "Connection: Close\r\n\r\n";
 
-            fwrite($fp, $out);
+            \fwrite($fp, $out);
 
-            while (!feof($fp)) {
-                $data = fgets($fp, 128);
-                $pos  = strpos($data, 'Rank_');
+            while (!\feof($fp)) {
+                $data = \fgets($fp, 128);
+                $pos  = mb_strpos($data, 'Rank_');
                 if (false === $pos) {
                 } else {
-                    $pagerank = substr($data, $pos + 9);
+                    $pagerank = mb_substr($data, $pos + 9);
                 }
             }
-            fclose($fp);
+            \fclose($fp);
         }
 
         return $pagerank;
@@ -1526,6 +1515,7 @@ class Utility
     //  End functions for Google PageRank
 
     // Check if Tag module is installed
+
     /**
      * @return bool
      */
@@ -1533,8 +1523,8 @@ class Utility
     {
         static $wfl_tag_module_included;
         if (!isset($wfl_tag_module_included)) {
-            $modulesHandler = xoops_getHandler('module');
-            $tag_mod        = $modulesHandler->getByDirName('tag');
+            $modulesHandler = \xoops_getHandler('module');
+            $tag_mod        = $modulesHandler->getByDirname('tag');
             if (!$tag_mod) {
                 $tag_mod = false;
             } else {
@@ -1570,8 +1560,8 @@ class Utility
     {
         static $wfl_news_module_included;
         if (!isset($wfl_news_module_included)) {
-            $modulesHandler = xoops_getHandler('module');
-            $news_mod       = $modulesHandler->getByDirName('news');
+            $modulesHandler = \xoops_getHandler('module');
+            $news_mod       = $modulesHandler->getByDirname('news');
             if (!$news_mod) {
                 $news_mod = false;
             } else {
@@ -1596,31 +1586,30 @@ class Utility
         list($numrows) = $db->fetchRow($bresult);
         if ($numrows > 1) {
             --$numrows;
-            mt_srand((double)microtime() * 1000000);
-            $bannum = mt_rand(0, $numrows);
+            $bannum = \mt_rand(0, $numrows);
         } else {
             $bannum = 0;
         }
         if ($numrows > 0) {
             $bresult = $db->query('SELECT * FROM ' . $db->prefix('banner') . ' WHERE bid=' . $banner_id, 1, $bannum);
             list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
-            if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
+            if ($xoopsConfig['my_ip'] == \xoops_getenv('REMOTE_ADDR')) {
                 // EMPTY
             } else {
-                $db->queryF(sprintf('UPDATE `%s` SET impmade = impmade+1 WHERE bid = %u', $db->prefix('banner'), $bid));
+                $db->queryF(\sprintf('UPDATE `%s` SET impmade = impmade+1 WHERE bid = %u', $db->prefix('banner'), $bid));
             }
             /* Check if this impression is the last one and print the banner */
             if ($imptotal == $impmade) {
                 $newid = $db->genId($db->prefix('bannerfinish') . '_bid_seq');
-                $sql   = sprintf('INSERT INTO `%s` (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)', $db->prefix('bannerfinish'), $newid, $cid, $impmade, $clicks, $date, time());
+                $sql   = \sprintf('INSERT INTO `%s` (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)', $db->prefix('bannerfinish'), $newid, $cid, $impmade, $clicks, $date, \time());
                 $db->queryF($sql);
-                $db->queryF(sprintf('DELETE FROM `%s` WHERE bid = %u', $db->prefix('banner'), $bid));
+                $db->queryF(\sprintf('DELETE FROM `%s` WHERE bid = %u', $db->prefix('banner'), $bid));
             }
             if ($htmlbanner) {
                 $bannerobject = $htmlcode;
             } else {
                 $bannerobject = '<div align="center"><a href="' . XOOPS_URL . '/banners.php?op=click&bid=' . $bid . '" target="_blank">';
-                if (false !== stripos($imageurl, '.swf')) {
+                if (false !== mb_stripos($imageurl, '.swf')) {
                     $bannerobject = $bannerobject
                                     . '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
                                     . '<param name="movie" value="'
@@ -1658,31 +1647,30 @@ class Utility
         list($numrows) = $db->fetchRow($bresult);
         if ($numrows > 1) {
             --$numrows;
-            mt_srand((double)microtime() * 1000000);
-            $bannum = mt_rand(0, $numrows);
+            $bannum = \mt_rand(0, $numrows);
         } else {
             $bannum = 0;
         }
         if ($numrows > 0) {
             $bresult = $db->query('SELECT * FROM ' . $db->prefix('banner') . ' WHERE cid=' . $client_id . ' ORDER BY rand()', 1, $bannum);
             list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
-            if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
+            if ($xoopsConfig['my_ip'] == \xoops_getenv('REMOTE_ADDR')) {
                 // EMPTY
             } else {
-                $db->queryF(sprintf('UPDATE `%s` SET impmade = impmade+1 WHERE bid = %u', $db->prefix('banner'), $bid));
+                $db->queryF(\sprintf('UPDATE `%s` SET impmade = impmade+1 WHERE bid = %u', $db->prefix('banner'), $bid));
             }
             /* Check if this impression is the last one and print the banner */
             if ($imptotal == $impmade) {
                 $newid = $db->genId($db->prefix('bannerfinish') . '_bid_seq');
-                $sql   = sprintf('INSERT INTO `%s` (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)', $db->prefix('bannerfinish'), $newid, $cid, $impmade, $clicks, $date, time());
+                $sql   = \sprintf('INSERT INTO `%s` (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)', $db->prefix('bannerfinish'), $newid, $cid, $impmade, $clicks, $date, \time());
                 $db->queryF($sql);
-                $db->queryF(sprintf('DELETE FROM `%s` WHERE bid = %u', $db->prefix('banner'), $bid));
+                $db->queryF(\sprintf('DELETE FROM `%s` WHERE bid = %u', $db->prefix('banner'), $bid));
             }
             if ($htmlbanner) {
                 $bannerobject = $htmlcode;
             } else {
                 $bannerobject = '<div align="center"><a href="' . XOOPS_URL . '/banners.php?op=click&bid=' . $bid . '" target="_blank">';
-                if (false !== stripos($imageurl, '.swf')) {
+                if (false !== mb_stripos($imageurl, '.swf')) {
                     $bannerobject = $bannerobject
                                     . '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
                                     . '<param name="movie" value="'
@@ -1725,7 +1713,7 @@ class Utility
             '',
         ];
 
-        $text = preg_replace($search, $replace, $email);
+        $text = \preg_replace($search, $replace, $email);
 
         return $text;
     }
@@ -1747,7 +1735,7 @@ class Utility
             '.',
         ];
 
-        $text = preg_replace($search, $replace, $email);
+        $text = \preg_replace($search, $replace, $email);
 
         return $text;
     }
@@ -1762,16 +1750,16 @@ class Utility
      */
     public static function getSubstring($str, $start, $length, $trimmarker = '...')
     {
-        $configHandler          = xoops_getHandler('config');
+        $configHandler          = \xoops_getHandler('config');
         $im_multilanguageConfig = $configHandler->getConfigsByCat(IM_CONF_MULILANGUAGE);
 
         if ($im_multilanguageConfig['ml_enable']) {
-            $tags  = explode(',', $im_multilanguageConfig['ml_tags']);
+            $tags  = \explode(',', $im_multilanguageConfig['ml_tags']);
             $strs  = [];
             $hasML = false;
             foreach ($tags as $tag) {
-                if (preg_match("/\[" . $tag . "](.*)\[\/" . $tag . "\]/sU", $str, $matches)) {
-                    if (count($matches) > 0) {
+                if (\preg_match("/\[" . $tag . "](.*)\[\/" . $tag . "\]/sU", $str, $matches)) {
+                    if (\count($matches) > 0) {
                         $hasML  = true;
                         $strs[] = $matches[1];
                     }
@@ -1785,13 +1773,13 @@ class Utility
             $strs = [$str];
         }
 
-        for ($i = 0; $i <= count($strs) - 1; ++$i) {
+        for ($i = 0; $i <= \count($strs) - 1; ++$i) {
             if (!XOOPS_USE_MULTIBYTES) {
-                $strs[$i] = (strlen($strs[$i]) - $start <= $length) ? substr($strs[$i], $start, $length) : substr($strs[$i], $start, $length - strlen($trimmarker)) . $trimmarker;
+                $strs[$i] = (mb_strlen($strs[$i]) - $start <= $length) ? mb_substr($strs[$i], $start, $length) : mb_substr($strs[$i], $start, $length - mb_strlen($trimmarker)) . $trimmarker;
             }
 
-            if (function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET)) {
-                $str2     = mb_strcut($strs[$i], $start, $length - strlen($trimmarker));
+            if (\function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET)) {
+                $str2     = mb_strcut($strs[$i], $start, $length - mb_strlen($trimmarker));
                 $strs[$i] = $str2 . (mb_strlen($strs[$i]) != mb_strlen($str2) ? $trimmarker : '');
             }
 
@@ -1799,8 +1787,8 @@ class Utility
             $DEP_CHAR = 127;
             $pos_st   = 0;
             $action   = false;
-            for ($pos_i = 0, $pos_iMax = strlen($strs[$i]); $pos_i < $pos_iMax; ++$pos_i) {
-                if (ord(substr($strs[$i], $pos_i, 1)) > 127) {
+            for ($pos_i = 0, $pos_iMax = mb_strlen($strs[$i]); $pos_i < $pos_iMax; ++$pos_i) {
+                if (\ord(mb_substr($strs[$i], $pos_i, 1)) > 127) {
                     ++$pos_i;
                 }
                 if ($pos_i <= $start) {
@@ -1811,18 +1799,20 @@ class Utility
                     break;
                 }
             }
-            $strs[$i] = $action ? substr($strs[$i], $pos_st, $pos_i - $pos_st - strlen($trimmarker)) . $trimmarker : $strs[$i];
+            $strs[$i] = $action ? mb_substr($strs[$i], $pos_st, $pos_i - $pos_st - mb_strlen($trimmarker)) . $trimmarker : $strs[$i];
 
             $strs[$i] = $hasML ? '[' . $tags[$i] . ']' . $strs[$i] . '[/' . $tags[$i] . ']' : $strs[$i];
         }
-        $str = implode('', $strs);
+        $str = \implode('', $strs);
 
         return $str;
     }
+
     // Reusable Link Sorting Functions
     // convertOrderByIn()
     // @param  $orderby
     // @return
+
     /**
      * @param $orderby
      *
@@ -1830,7 +1820,7 @@ class Utility
      */
     public static function convertOrderByIn($orderby)
     {
-        switch (trim($orderby)) {
+        switch (\trim($orderby)) {
             case 'titleA':
                 $orderby = 'title ASC';
                 break;
@@ -1912,7 +1902,6 @@ class Utility
      *
      * @return string
      */
-
     public static function convertOrderByOut($orderby)
     {
         if ('title ASC' === $orderby) {
