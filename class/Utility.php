@@ -68,7 +68,7 @@ class Utility extends Common\SysUtility
             ) . '</div>';
         }
 
-        return isset($handlers[$name]) ? $handlers[$name] : false;
+        return $handlers[$name] ?? false;
     }
 
     /**

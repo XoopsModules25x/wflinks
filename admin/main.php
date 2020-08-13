@@ -363,7 +363,7 @@ function fetchURL($url, $timeout = 2)
 
     $host = $url_parsed['host'];
     $host = preg_replace('#http://#', '', $host);
-    $port = isset($url_parsed['port']) ? $url_parsed['port'] : 80;
+    $port = $url_parsed['port'] ?? 80;
     // Open the socket
     $handle = @fsockopen('http://' . $host, $port, $errno, $errstr, $timeout);
     if (!$handle) {
@@ -480,7 +480,7 @@ switch (mb_strtolower($op)) {
         edit($lid);
         break;
     case 'save':
-        $groups    = isset($_POST['groups']) ? $_POST['groups'] : [];
+        $groups    = $_POST['groups'] ?? [];
         $lid       = !empty($_POST['lid']) ? $_POST['lid'] : 0;
         $cid       = !empty($_POST['cid']) ? $_POST['cid'] : 0;
         $urlrating = !empty($_POST['urlrating']) ? $_POST['urlrating'] : 6;

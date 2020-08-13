@@ -52,7 +52,7 @@ if (Request::hasVar('newlinkshowdays', 'GET')) {
     $xoopsTpl->assign('allmonthlinks', $allmonthlinks);
 
     // List Last VARIABLE Days of links
-    $newlinkshowdays = !isset($_GET['newlinkshowdays']) ? 7 : $_GET['newlinkshowdays'];
+    $newlinkshowdays = $_GET['newlinkshowdays'] ?? 7;
     $xoopsTpl->assign('newlinkshowdays', (int)$newlinkshowdays);
 
     $dailylinks = [];

@@ -97,7 +97,7 @@ if (Request::hasVar('previewblock', 'POST')) {
     $block['title']     = $myblock->getVar('title', 'E');
     $block['content']   = $myblock->getVar('content', 'E');
     $block['modules']   = &$bmodule;
-    $block['ctype']     = isset($bctype) ? $bctype : $myblock->getVar('c_type');
+    $block['ctype']     = $bctype ?? $myblock->getVar('c_type');
     $block['is_custom'] = true;
     $block['cachetime'] = $bcachetime;
     echo '<a href="myblocksadmin.php">' . _AM_BADMIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . $block['form_title'] . '<br><br>';
@@ -228,7 +228,7 @@ if ('update' === $op) {
       update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options);*/
 
     $bcachetime = Request::getInt('bcachetime', 0, 'POST');
-    $options    = isset($_POST['options']) ? $_POST['options'] : [];
+    $options    = $_POST['options'] ?? [];
     $bcontent   = Request::getString('bcontent', '', 'POST');
     $bctype     = Request::getString('bctype', '', 'POST');
     $bmodule    = (isset($_POST['bmodule']) && is_array($_POST['bmodule'])) ? $_POST['bmodule'] : [-1]; // GIJ +
