@@ -26,11 +26,10 @@ use XoopsModules\Wflinks\{
 require dirname(__DIR__) . '/preloads/autoloader.php';
 
 require dirname(__DIR__, 3) . '/include/cp_header.php';
-
-//require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
 require_once dirname(__DIR__) . '/include/common.php';
 
 $moduleDirName = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
 /** @var Helper $helper */
 $helper = Helper::getInstance();
 

@@ -7,15 +7,15 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright       XOOPS Project (https://xoops.org)
- * @license         GNU GPL 2 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+ * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @license         GNU GPL 2 (http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
  * @package
  * @since           2.5.9
  * @author          Michael Beck (aka Mamba)
  */
 
 use Xmf\Database\TableLoad;
-use \Xmf\Request;
+use Xmf\Request;
 use XoopsModules\Wflinks\{
     Helper,
     Common,
@@ -23,7 +23,7 @@ use XoopsModules\Wflinks\{
 };
 use Xmf\Yaml;
 
-require dirname(__DIR__, 3) . '/include/cp_header.php';
+require_once dirname(__DIR__, 3) . '/include/cp_header.php';
 require dirname(__DIR__) . '/preloads/autoloader.php';
 
 $op = Request::getCmd('op', '');

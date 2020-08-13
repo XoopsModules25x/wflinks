@@ -9,12 +9,18 @@
  */
 
 use Xmf\Module\Admin;
-use XoopsModules\Wflinks;
+use XoopsModules\Wflinks\{
+    Helper
+};
+/** @var Admin $adminObject */
+/** @var Helper $helper */
 
-// require_once  dirname(__DIR__) . '/class/Helper.php';
-//require_once  dirname(__DIR__) . '/include/common.php';
-/** @var Wflinks\Helper $helper */
-$helper = Wflinks\Helper::getInstance();
+include dirname(__DIR__) . '/preloads/autoloader.php';
+
+$moduleDirName = basename(dirname(__DIR__));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+
+$helper = Helper::getInstance();
 $helper->loadLanguage('common');
 $helper->loadLanguage('feedback');
 
@@ -84,10 +90,32 @@ $adminmenu = [
         'desc'  => _MI_WFL_PERMISSIONS_DESC,
         'icon'  => $pathIcon32 . '/permissions.png',
     ],
+
+    // Blocks Admin
     [
-        'title' => _MI_WFL_ABOUT,
-        'link'  => 'admin/about.php',
-        //        'desc'  => _MI_WFL_ABOUTS_DESC,
-        'icon'  => $pathIcon32 . '/about.png',
+        'title' => constant('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS'),
+        'link'  => 'admin/blocksadmin.php',
+        'icon'  => $pathIcon32 . '/block.png',
     ],
+
+    //Feedback
+    [
+        'title' => constant('CO_' . $moduleDirNameUpper . '_' . 'ADMENU_FEEDBACK'),
+        'link'  => 'admin/feedback.php',
+        'icon'  => $pathIcon32 . '/mail_foward.png',
+    ],
+];
+
+if (is_object($helper->getModule()) && $helper->getConfig('displayDeveloperTools')) {
+    $adminmenu[] = [
+        'title' => constant('CO_' . $moduleDirNameUpper . '_' . 'ADMENU_MIGRATE'),
+        'link'  => 'admin/migrate.php',
+        'icon'  => $pathIcon32 . '/database_go.png',
+    ];
+}
+    
+$adminmenu[] = [
+    'title' => _MI_WFL_ABOUT,
+    'link' => 'admin/about.php',
+    'icon' => $pathIcon32 . '/about.png',
 ];
