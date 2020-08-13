@@ -143,8 +143,7 @@ function edit($lid = 0)
     // Category form
     ob_start();
     $mytree->makeMySelBox('title', 'title', $cid, 0);
-    $sform->addElement(new \XoopsFormLabel(_AM_WFL_LINK_CATEGORY, ob_get_contents()));
-    ob_end_clean();
+    $sform->addElement(new \XoopsFormLabel(_AM_WFL_LINK_CATEGORY, ob_get_clean()));
 
     // Link description form
     //    $editor = Wflinks\Utility::getWysiwygForm( _AM_WFL_LINK_DESCRIPTION, 'descriptionb', $descriptionb, 15, 60 );
@@ -291,8 +290,7 @@ function edit($lid = 0)
     // Select forum
     ob_start();
     Wflinks\Lists::getForum($helper->getConfig('selectforum'), $forumid);
-    $sform->addElement(new \XoopsFormLabel(_AM_WFL_LINK_DISCUSSINFORUM, ob_get_contents()));
-    ob_end_clean();
+    $sform->addElement(new \XoopsFormLabel(_AM_WFL_LINK_DISCUSSINFORUM, ob_get_clean()));
 
     //Create News Story
     if (Wflinks\Utility::isNewsModuleIncluded()) {
@@ -304,8 +302,7 @@ function edit($lid = 0)
         $xt = new \XoopsTopic($xoopsDB->prefix('news_topics'));
         ob_start();
         $xt->makeTopicSelBox(1, 0, 'newstopicid');
-        $sform->addElement(new \XoopsFormLabel(_AM_WFL_LINK_NEWSCATEGORY, ob_get_contents()));
-        ob_end_clean();
+        $sform->addElement(new \XoopsFormLabel(_AM_WFL_LINK_NEWSCATEGORY, ob_get_clean()));
         $sform->addElement(new \XoopsFormText(_AM_WFL_LINK_NEWSTITLE, 'topic_id', 70, 255, ''), false);
     }
 

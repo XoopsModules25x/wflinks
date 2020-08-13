@@ -96,14 +96,12 @@ function createCat($cid = 0)
         $mytreechose = new Wflinks\Tree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
         ob_start();
         $mytreechose->makeMySelBox('title', 'title', $cat_arr['pid'], 1, 'pid');
-        $sform->addElement(new \XoopsFormLabel(_AM_WFL_FCATEGORY_SUBCATEGORY, ob_get_contents()));
-        ob_end_clean();
+        $sform->addElement(new \XoopsFormLabel(_AM_WFL_FCATEGORY_SUBCATEGORY, ob_get_clean()));
     } else {
         $mytreechose = new Wflinks\Tree($xoopsDB->prefix('wflinks_cat'), 'cid', 'pid');
         ob_start();
         $mytreechose->makeMySelBox('title', 'title', $cid, 1, 'pid');
-        $sform->addElement(new \XoopsFormLabel(_AM_WFL_FCATEGORY_SUBCATEGORY, ob_get_contents()));
-        ob_end_clean();
+        $sform->addElement(new \XoopsFormLabel(_AM_WFL_FCATEGORY_SUBCATEGORY, ob_get_clean()));
     }
 
     $graph_array       = Wflinks\Lists::getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $helper->getConfig('catimage'), $type = 'images');
@@ -408,8 +406,7 @@ switch ($op) {
         if ($totalcats > 0) {
             ob_start();
             $mytree->makeMySelBox('title', 'title');
-            $sform->addElement(new \XoopsFormLabel(_AM_WFL_CCATEGORY_MODIFY_TITLE, ob_get_contents()));
-            ob_end_clean();
+            $sform->addElement(new \XoopsFormLabel(_AM_WFL_CCATEGORY_MODIFY_TITLE, ob_get_clean()));
             $dup_tray = new \XoopsFormElementTray('', '');
             $dup_tray->addElement(new \XoopsFormHidden('op', 'modCat'));
             $butt_dup = new \XoopsFormButton('', '', _AM_WFL_BMODIFY, 'submit');

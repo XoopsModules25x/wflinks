@@ -93,10 +93,9 @@ switch (mb_strtolower($op)) {
         ob_start();
         $iform->addElement(new \XoopsFormHidden('dir', $rootpath));
         Wflinks\Utility::getDirSelectOption($namelist, $dirarray, $namearray);
-        $iform->addElement(new \XoopsFormLabel(_AM_WFL_LINK_FOLDERSELECTION, ob_get_contents()));
-        ob_end_clean();
+        $iform->addElement(new \XoopsFormLabel(_AM_WFL_LINK_FOLDERSELECTION, ob_get_clean()));
 
-        if ($rootpath > 0) {
+    if ($rootpath > 0) {
             $graph_array       = Wflinks\Lists::getListTypeAsArray(XOOPS_ROOT_PATH . '/' . $dirarray[$rootpath], $type = 'images');
             $indeximage_select = new \XoopsFormSelect('', 'linkfile', '');
             $indeximage_select->addOptionArray($graph_array);
