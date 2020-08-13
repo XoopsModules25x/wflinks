@@ -123,11 +123,11 @@ class ThumbsNails
     /**
      * ThumbsNails::createThumb()
      *
-     * @param int $img_width
-     * @param int $img_height
-     * @param int $img_quality
-     * @param int $img_update
-     * @param int $img_aspect
+     * @param int|null $img_width
+     * @param int|null $img_height
+     * @param int|null $img_quality
+     * @param int|null $img_update
+     * @param int|null $img_aspect
      *
      * @return bool|string
      */
@@ -143,23 +143,23 @@ class ThumbsNails
         $this->_source_url   = XOOPS_URL . "/{$this->_img_path}";
         $this->_source_image = "{$this->_source_path}/{$this->_img_name}";
 
-        if (null !== $img_width && isset($img_width)) {
+        if (null !== $img_width) {
             $this->img_width = (int)$img_width;
         }
 
-        if (null !== $img_height && isset($img_height)) {
+        if (null !== $img_height) {
             $this->img_height = (int)$img_height;
         }
 
-        if (null !== $img_quality && isset($img_quality)) {
+        if (null !== $img_quality) {
             $this->img_quality = (int)$img_quality;
         }
 
-        if (null !== $img_update && isset($img_update)) {
+        if (null !== $img_update) {
             $this->img_update = (int)$img_update;
         }
 
-        if (null !== $img_aspect && isset($img_aspect)) {
+        if (null !== $img_aspect) {
             $this->img_aspect = (int)$img_aspect;
         }
 
